@@ -54,7 +54,7 @@ pas_downloadParseRawData_2020 <- function(
 
   if ( httr::http_error(r) ) {  # web service failed to respond
 
-    # TODO:  Find a package with web servivce status codes
+    # TODO:  Find a package with web service status codes
 
     # https://digitalocean.com/community/tutorials/how-to-troubleshoot-common-http-error-codes
     if ( httr::status_code(r) == 429 ) {
