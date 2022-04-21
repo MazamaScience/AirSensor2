@@ -54,7 +54,7 @@
 #' ###initializeMazamaSpatialUtils()
 #' MazamaLocationUtils::mazama_initialize()
 #'
-#' pas <- pas_enhanceData(example_pas_raw, 'US')
+#' pas <- pas_enhanceData(example_pas_raw, "US")
 #'
 #' setdiff(names(pas), names(example_pas_raw))
 #' setdiff(names(example_pas_raw), names(pas))
@@ -87,7 +87,7 @@ pas_enhanceRawData_2020 <- function(
   # Set up spatial data before continuing
   MazamaLocationUtils::mazama_initialize()
 
-  # ----- Replicate fields to B channel ----------------------------------------
+  # ----- Harmonize table ------------------------------------------------------
 
   # > dplyr::glimpse(pas_raw, width=75)
   # Rows: 44,974
@@ -125,55 +125,13 @@ pas_enhanceRawData_2020 <- function(
   # $ lastModified                     <dbl> 1.650412e+12, 1.650412e+12, 1.65…
   # $ timeSinceModified                <dbl> 119982, 119983, 120009, 120009, …
 
-  # NOTE:  Both the "DEVICE_LOCATIONTYPE" and "Type" fields are present for the
-  # NOTE:  A channel but missing from the B channel. This generates confusion
-  # NOTE:  when people try to use dplyr to filter for "outside" sensors.
-
-  A <-
-    pas_raw %>%
-    # Limit to A channel
-    dplyr::filter(is.na(.data$ParentID)) %>%
-    # Retain columns to be replicated
-    dplyr::select(c("ID", "DEVICE_LOCATIONTYPE", "Type"))
-
-  B <-
-    pas_raw %>%
-    # Limit to B channel
-    dplyr::filter(!is.na(.data$ParentID)) %>%
-    # Retain only the A channel ID
-    dplyr::select(c("ID", "ParentID")) %>%
-    # Join, matching ParentID to ID
-    dplyr::left_join(A, by = c("ParentID" = "ID")) %>%
-    # Remove ParentID
-    dplyr::select(-"ParentID")
-
-  # Combine to get all rows
-  AB <- dplyr::bind_rows(A, B)
-
-  pas_raw <-
-    pas_raw %>%
-    # Remove the columns to be replicated
-    dplyr::select(-c("DEVICE_LOCATIONTYPE", "Type")) %>%
-    # Add the replicated columns found in AB
-    dplyr::left_join(AB, by = "ID")
-
-  # ----- Discard unwanted columns ---------------------------------------------
-
-  # Remove "pm" because it is redundant with the value in "v"
-  if ( "pm" %in% names(pas_raw) ) {
-    pas_raw$pm <- NULL
-  }
-
-  # ----- Rename columns -------------------------------------------------------
-
-  # Rename columns to have consistent lowerCamelCase and better human names
-  # based on the information in the document "Using PurpleAir Data".
-
   pas <-
     pas_raw %>%
+
+    # Rename columns to have consistent lowerCamelCase and better human names
     dplyr::rename(
       parentID = .data$ParentID,
-      locationName = .data$Label,
+      label = .data$Label,
       latitude = .data$Lat,
       longitude = .data$Lon,
       pm25 = .data$PM2_5Value,
@@ -193,12 +151,62 @@ pas_enhanceRawData_2020 <- function(
       pm25_1week = .data$v6,
       statsLastModifiedDate = .data$lastModified,
       statsLastModifiedInterval = .data$timeSinceModified
-    )
+    ) %>%
 
-  # ----- Remove invalid locations ---------------------------------------------
+    # Remove unwanted columns
+    dplyr::select(-c(
+      "Ozone1",        # "Ozone1" has never had any values
+      "pm"             # "pm" is redundant with the value in "v"
+    )) %>%
 
-    # # Add empty fields for core metadata
-    # MazamaLocationUtils::table_addCoreMetadata()
+    # Add new columns
+    dplyr::mutate(
+      deviceID = .data$ID
+    ) %>%
+
+    # Remove invalid locations
+    dplyr::filter(!is.na(.data$longitude)) %>%
+    dplyr::filter(!is.na(.data$latitude)) %>%
+
+    # Add core metadata
+    MazamaLocationUtils::table_addCoreMetadata()
+
+  # ----- Replicate fields to B channel ----------------------------------------
+
+  # NOTE:  Both the "DEVICE_LOCATIONTYPE" and "type" fields are present for the
+  # NOTE:  A channel but missing from the B channel. This generates confusion
+  # NOTE:  when people try to use dplyr to filter for "outside" sensors.
+  # NOTE:
+  # NOTE:  We also want to have a unique "deviceID" associated with each device.
+  # NOTE:  We will replicate the A channel "deviceID" for this purpose.
+
+  A <-
+    pas %>%
+    # Limit to A channel
+    dplyr::filter(is.na(.data$parentID)) %>%
+    # Retain columns to be replicated
+    dplyr::select(c("ID", "deviceID", "DEVICE_LOCATIONTYPE", "sensorType"))
+
+  B <-
+    pas %>%
+    # Limit to B channel
+    dplyr::filter(!is.na(.data$parentID)) %>%
+    # Retain only the A channel ID
+    dplyr::select(c("ID", "parentID")) %>%
+    # Join, matching parentID to ID
+    dplyr::left_join(A, by = c("parentID" = "ID")) %>%
+    # Remove parentID
+    dplyr::select(-"parentID")
+
+  # Combine to get all rows
+  AB <- dplyr::bind_rows(A, B)
+
+  pas <-
+    pas %>%
+    # Remove the columns to be replicated
+    dplyr::select(-c("deviceID", "DEVICE_LOCATIONTYPE", "sensorType")) %>%
+    # Add the replicated columns found in AB
+    dplyr::left_join(AB, by = "ID")
 
   # # ----- Add spatial metadata -------------------------------------------------
   #
