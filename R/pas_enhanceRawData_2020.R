@@ -9,7 +9,7 @@
 #'
 #' Steps include:
 #'
-#' 1) Replace variable with more consistent, more human readable names.
+#' 1) Replace variable with more consistent, human readable names.
 #'
 #' 2) Add spatial metadata for each sensor including:
 #' \itemize{
@@ -20,59 +20,74 @@
 #'
 #' 3) Convert data types from character to \code{POSIXct} and \code{numeric}.
 #'
-#' 4) Add distance and monitorID for the two closest PWFSL monitors
-#'
-#' 5) Add additional metadata items:
+#' 4) Add additional metadata items:
 #' \itemize{
 #' \item{sensorManufacturer = "Purple Air"}
-#' \item{targetPollutant = "PM"}
 #' }
 #'
 #' Filtering by country can speed up the process of enhancement and may be
 #' performed by providing a vector ISO country codes to the \code{countryCodes}
 #' argument. By default, no subsetting is performed.
 #'
-#' Setting \code{outsideOnly = TRUE} will return only those records marked as
-#' 'outside'.
-#'
-#' @note For data obtained on July 28, 2018 this will result in removal of all
-#' 'B' channels, even those whose parent 'A' channel is marked as 'outside'.
-#' This is useful if you want a quick, synoptic view of the network, e.g. for a
-#' map.
+#' Uses may also limit results by specifying \code{stateCodes} when
+#' \code{countryCodes} is limited to a single country.
 #'
 #' @param pas_raw Dataframe returned by \code{pas_downloadParseRawData_2020()}.
-#' @param countryCodes ISO country codes used to subset the data.
+#' @param countryCodes ISO 3166-1 alpha-2 country codes used to subset the data.
+#' @param stateCodes ISO-3166-2 alpha-2 state codes used to subset the data.
 #'
 #' @return Enhanced Dataframe of synoptic PurpleAir data.
 #'
-#' @seealso \link{pas_downloadParseRawData}
+#' @seealso \link{pas_downloadParseRawData_2020}
 #'
 #' @examples
 #' \donttest{
-#' library(AirSensor)
+#' # Fail gracefully if any resources are not available
+#' try({
 #'
-#' ###initializeMazamaSpatialUtils()
-#' MazamaLocationUtils::mazama_initialize()
+#' library(AirSensor2)
 #'
-#' pas <- pas_enhanceData(example_pas_raw, "US")
+#' initializeMazamaSpatialUtils()
 #'
-#' setdiff(names(pas), names(example_pas_raw))
-#' setdiff(names(example_pas_raw), names(pas))
+#' pas_raw <- pas_downloadParseRawData_2020()
 #'
-#' if ( interactive() ) {
-#'   View(pas[1:100,])
-#' }
+#' pas_AU <-
+#'   pas_enhanceRawData_2020(
+#'     pas_raw,
+#'     countryCodes = "AU"
+#'   ) %>%
+#'   dplyr::filter(
+#'     DEVICE_LOCATIONTYPE == "outside"
+#'   )
+#'
+#' if ( interactive() )
+#'   MazamaLocationUtils::table_leaflet(pas_AU)
+#'
+#' pas_WA <-
+#'   pas_enhanceRawData_2020(
+#'     pas_raw,
+#'     countryCodes = "US",
+#'     stateCodes = "WA"
+#'   ) %>%
+#'   dplyr::filter(
+#'     DEVICE_LOCATIONTYPE == "outside"
+#'   )
+#'
+#' if ( interactive() )
+#'   MazamaLocationUtils::table_leaflet(pas_WA)
+#'
+#' }, silent = FALSE)
 #' }
 
 pas_enhanceRawData_2020 <- function(
   pas_raw = NULL,
-  countryCodes = NULL
+  countryCodes = NULL,
+  stateCodes = NULL
 ) {
 
   # ----- Validate Parameters --------------------------------------------------
 
   MazamaCoreUtils::stopIfNull(pas_raw)
-  MazamaCoreUtils::stopIfNull(countryCodes)
 
   if ( !is.data.frame(pas_raw) )
     stop("parameter 'pas_raw' parameter is not a dataframe")
@@ -84,8 +99,13 @@ pas_enhanceRawData_2020 <- function(
   if ( any(!(countryCodes %in% countrycode::codelist$iso2c)) )
     stop("parameter 'countryCodes' has values that are not recognized as ISO-2 country codes")
 
-  # Set up spatial data before continuing
-  MazamaLocationUtils::mazama_initialize()
+  if ( !is.null(stateCodes) ) {
+    if ( is.null(countryCodes) ) {
+      stop("'stateCodes' can only be used when also specifying a single country with 'countryCodes'")
+    } else if ( length(countryCodes) != 1 ) {
+      stop("please limit 'countryCodes' to a single country when using 'stateCodes'")
+    }
+  }
 
   # ----- Harmonize table ------------------------------------------------------
 
@@ -128,7 +148,7 @@ pas_enhanceRawData_2020 <- function(
   pas <-
     pas_raw %>%
 
-    # Rename columns to have consistent lowerCamelCase and better human names
+    # * Rename columns -----
     dplyr::rename(
       parentID = .data$ParentID,
       label = .data$Label,
@@ -153,23 +173,84 @@ pas_enhanceRawData_2020 <- function(
       statsLastModifiedInterval = .data$timeSinceModified
     ) %>%
 
-    # Remove unwanted columns
+    # * Remove unwanted columns -----
     dplyr::select(-c(
       "Ozone1",        # "Ozone1" has never had any values
       "pm"             # "pm" is redundant with the value in "v"
     )) %>%
 
-    # Add new columns
+    # * Add new columns -----
     dplyr::mutate(
-      deviceID = .data$ID
+      deviceID = .data$ID,
+      sensorManufacturer = "Purple Air"
     ) %>%
 
-    # Remove invalid locations
-    dplyr::filter(!is.na(.data$longitude)) %>%
-    dplyr::filter(!is.na(.data$latitude)) %>%
+    # * Remove invalid locations -----
+    dplyr::filter( !is.na(.data$longitude) & !is.na(.data$latitude) ) %>%
+    dplyr::filter( .data$longitude >= -180 & .data$longitude <= 180 ) %>%
+    dplyr::filter( .data$latitude >= -90 & .data$latitude <= 90 ) %>%
 
-    # Add core metadata
+    # * Add core metadata -----
     MazamaLocationUtils::table_addCoreMetadata()
+
+  # ----- Limit to country bounding box ----------------------------------------
+
+  # NOTE:  Most PurpleAir sensors are in the the US (in California).
+
+  if ( !is.null(countryCodes) ) {
+
+    if ( is.null(stateCodes) ) {
+      bbox <-
+        subset(MazamaSpatialUtils::SimpleCountriesEEZ, countryCode %in% countryCodes) %>%
+        sp::bbox()
+    } else {
+      bbox <-
+        subset(NaturalEarthAdm1, (countryCode %in% countryCodes) & (stateCode %in% stateCodes) ) %>%
+        sp::bbox()
+    }
+
+    # > subset(EEZCountries, countryCode %in% c("PL")) %>% bbox()
+    # min      max
+    # x 14.12293 24.14581
+    # y 49.00211 55.92155
+
+    pas <-
+      pas %>%
+      dplyr::filter( .data$longitude >= bbox[1,1] & .data$longitude <= bbox[1,2] ) %>%
+      dplyr::filter( .data$latitude >= bbox[2,1] & .data$latitude <= bbox[2,2] )
+
+  }
+
+  # ----- Convert to proper types ----------------------------------------------
+
+  pas$ID <- as.character(pas$ID)
+  pas$parentID <- as.character(pas$parentID)
+  pas$pm25 <- as.numeric(pas$pm25)
+  pas$pm25_current <- as.numeric(pas$pm25_current)
+  pas$flag_hidden <- ifelse(pas$flag_hidden == 'true', TRUE, FALSE)
+  pas$flag_highValue <- ifelse(pas$flag_highValue == 1, TRUE, FALSE)
+  pas$flag_attenuation_hardware <- ifelse(pas$flag_attenuation_hardware == 'true', TRUE, FALSE)
+  pas$temperature <- as.numeric(pas$temperature)
+  pas$humidity <- as.numeric(pas$humidity)
+  pas$pressure <- as.numeric(pas$pressure)
+
+  pas$statsLastModifiedInterval <- pas$statsLastModifiedInterval / 1000   # seconds
+
+  # ----- Convert times to POSIXct ---------------------------------------------
+
+  pas$lastSeenDate <-
+    as.POSIXct(
+      pas$lastSeenDate,
+      tz = "UTC",
+      origin = lubridate::origin
+    )
+
+  pas$statsLastModifiedDate <-
+    as.POSIXct(
+      pas$statsLastModifiedDate / 1000,
+      tz = "UTC",
+      origin = lubridate::origin
+    )
 
   # ----- Replicate fields to B channel ----------------------------------------
 
@@ -185,7 +266,12 @@ pas_enhanceRawData_2020 <- function(
     # Limit to A channel
     dplyr::filter(is.na(.data$parentID)) %>%
     # Retain columns to be replicated
-    dplyr::select(c("ID", "deviceID", "DEVICE_LOCATIONTYPE", "sensorType"))
+    dplyr::select(c("ID", "deviceID", "DEVICE_LOCATIONTYPE", "sensorType", "label")) %>%
+    # Create locationName
+    dplyr::mutate(
+      locationName = .data$label
+    ) %>%
+    dplyr::select(-c("label"))
 
   B <-
     pas %>%
@@ -204,96 +290,87 @@ pas_enhanceRawData_2020 <- function(
   pas <-
     pas %>%
     # Remove the columns to be replicated
-    dplyr::select(-c("deviceID", "DEVICE_LOCATIONTYPE", "sensorType")) %>%
+    dplyr::select(-c("deviceID", "DEVICE_LOCATIONTYPE", "sensorType", "locationName")) %>%
     # Add the replicated columns found in AB
-    dplyr::left_join(AB, by = "ID")
+    dplyr::left_join(AB, by = "ID") %>%
 
-  # # ----- Add spatial metadata -------------------------------------------------
-  #
-  # pas <- pas_addSpatialMetadata(pas, countryCodes)
-  #
-  # # ----- Add unique identifiers -----------------------------------------------
-  #
-  # pas <- pas_addUniqueIDs(pas)
-  #
-  # # ----- Add an Air district --------------------------------------------------
-  #
-  # pas <- pas_addAirDistrict(pas)
-  #
-  # # ----- Convert times to POSIXct ---------------------------------------------
-  #
-  # pas$lastSeenDate <- as.POSIXct(pas$lastSeenDate,
-  #                                tz = "UTC",
-  #                                origin = lubridate::origin)
-  #
-  # pas$statsLastModifiedDate <- as.POSIXct(pas$statsLastModifiedDate / 1000,
-  #                                         tz = "UTC",
-  #                                         origin = lubridate::origin)
-  #
-  # # ----- Convert to proper type -----------------------------------------------
-  #
-  # pas$ID <- as.character(pas$ID)
-  # pas$parentID <- as.character(pas$parentID)
-  # pas$pm25 <- as.numeric(pas$pm25)
-  # pas$pm25_current <- as.numeric(pas$pm25_current)
-  # pas$flag_hidden <- ifelse(pas$flag_hidden == 'true', TRUE, FALSE)
-  # pas$flag_highValue <- ifelse(pas$flag_highValue == 1, TRUE, FALSE)
-  # pas$flag_attenuation_hardware <- ifelse(pas$flag_attenuation_hardware == 'true', TRUE, FALSE)
-  # pas$temperature <- as.numeric(pas$temperature)
-  # pas$humidity <- as.numeric(pas$humidity)
-  # pas$pressure <- as.numeric(pas$pressure)
-  #
-  # # ----- Convert to internally standard units ---------------------------------
-  #
-  # pas$statsLastModifiedInterval <- pas$statsLastModifiedInterval / 1000   # seconds
-  #
-  # # Round values to reflect resolution as specified in:
-  # #   https://www.purpleair.com/sensors
-  #
-  # # TODO:  Figure out why rounding breaks outlier detection
-  #
-  # # pas$pm25 <- round(pas$pm25)
-  # # pas$pm25_current <- round(pas$pm25_current)
-  # # pas$temperature <- round(pas$temperature)
-  # # pas$humidity <- round(pas$humidity)
-  # # pas$pressure <- round(pas$pressure)
-  #
-  # # ----- Find nearby PWFSL monitors -------------------------------------------
-  #
-  # # NOTE:  These columns need to exist even if they are all missing
-  # pas$pwfsl_closestDistance <- as.numeric(NA)
-  # pas$pwfsl_closestMonitorID <- as.character(NA)
-  #
-  # if ( includePWFSL ) {
-  #
-  #   if ( logger.isInitialized() ) {
-  #     logger.trace("Adding PWFSL monitor metadata")
-  #   }
-  #   if ( !exists('pwfsl') ) {
-  #     pwfsl <- PWFSLSmoke::loadLatest()
-  #   }
-  #   for ( i in seq_len(nrow(pas)) ) {
-  #     distances <- PWFSLSmoke::monitor_distance(pwfsl,
-  #                                               pas$longitude[i],
-  #                                               pas$latitude[i])
-  #     minDistIndex <- which.min(distances)
-  #     pas$pwfsl_closestDistance[i] <- distances[minDistIndex] * 1000 # To meters
-  #     pas$pwfsl_closestMonitorID[i] <- names(distances[minDistIndex])
-  #   }
-  #
-  # }
-  #
-  # # ----- Addditional metadata per SCAQMD request ------------------------------
-  #
-  # pas$sensorManufacturer <- "Purple Air"
-  # pas$targetPollutant <- "PM"
-  # pas$technologyType <- "consumer-grade"
-  #
-  # # ----- Add communityRegion --------------------------------------------------
-  #
-  # pas <- pas_addCommunityRegion(pas)
-  #
-  # # ----- Return ---------------------------------------------------------------
+    # Add deviceDeploymentID after deviceID has been sorted out
+    dplyr::mutate(
+      deviceDeploymentID = paste0(.data$locationID, "_", .data$deviceID)
+    )
+
+  # ----- Add spatial metadata -------------------------------------------------
+
+  # Get the unique locations
+  uniqueLocations <-
+    pas %>%
+    dplyr::select(c("locationID", "longitude", "latitude")) %>%
+    dplyr::distinct(.data$locationID, .keep_all = TRUE)
+
+  # * countryCode -----
+  uniqueLocations$countryCode <-
+    MazamaSpatialUtils::getCountryCode(
+      longitude = uniqueLocations$longitude,
+      latitude = uniqueLocations$latitude,
+      countryCodes = countryCodes,
+      allData = FALSE,
+      useBuffering = FALSE            # No buffering needed with the EEZ dataset
+    )
+
+  # Limit to valid countryCodes
+  uniqueLocations <-
+    uniqueLocations %>%
+    dplyr::filter(!is.na(.data$countryCode))
+
+  # * stateCode -----
+  # Suppress annoying 'Discarded datum Unknown' messages
+  suppressWarnings({
+    uniqueLocations$stateCode <-
+      MazamaSpatialUtils::getStateCode(
+        longitude = uniqueLocations$longitude,
+        latitude = uniqueLocations$latitude,
+        countryCodes = countryCodes,
+        allData = FALSE,
+        useBuffering = TRUE
+      )
+  })
+
+  # Limit to valid stateCodes
+  if ( !is.null(stateCodes) ) {
+    uniqueLocations <-
+      uniqueLocations %>%
+      dplyr::filter(.data$stateCode %in% stateCodes)
+  }
+
+  # * timezone -----
+  # Suppress annoying 'Discarded datum Unknown' messages
+  suppressWarnings({
+    uniqueLocations$timezone <-
+      MazamaSpatialUtils::getTimezone(
+        longitude = uniqueLocations$longitude,
+        latitude = uniqueLocations$latitude,
+        countryCodes = countryCodes,
+        allData = FALSE,
+        useBuffering = TRUE
+      )
+  })
+
+  # Limit uniqueLocations to 'locationID' and new variables
+  uniqueLocations <-
+    uniqueLocations %>%
+    dplyr::select(-c("longitude", "latitude"))
+
+  # Add spatial data to 'pas'
+  pas <-
+    pas %>%
+    # Remove empty fields that will be replaced
+    dplyr::select(-c("countryCode", "stateCode", "timezone")) %>%
+    # Add spatial data
+    dplyr::left_join(uniqueLocations, by = "locationID") %>%
+    # Limit to requested countries
+    dplyr::filter(!is.na(.data$countryCode))
+
+  # ----- Return ---------------------------------------------------------------
 
   # Guarantee the class name still exists
   class(pas) <- union('pa_synoptic', class(pas))

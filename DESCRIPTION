@@ -18,7 +18,7 @@ Imports:
     lubridate,
     magrittr,
     MazamaCoreUtils (>= 0.4.10),
-    MazamaLocationUtils (>= 0.3.3),
+    MazamaLocationUtils (>= 0.3.5),
     MazamaSpatialUtils (>= 0.7.6),
     rlang,
     stringr

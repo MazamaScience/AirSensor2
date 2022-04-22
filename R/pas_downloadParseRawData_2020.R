@@ -19,9 +19,10 @@
 #'
 #' @examples
 #' \donttest{
-#' library(AirSensor2)
 #' # Fail gracefully if any resources are not available
 #' try({
+#'
+#' library(AirSensor2)
 #'
 #' pas_raw <- pas_downloadParseRawData_2020()
 #'
