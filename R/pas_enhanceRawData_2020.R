@@ -149,49 +149,49 @@ pas_enhanceRawData_2020 <- function(
     pas_raw %>%
 
     # * Rename columns -----
-    dplyr::rename(
-      parentID = .data$ParentID,
-      label = .data$Label,
-      latitude = .data$Lat,
-      longitude = .data$Lon,
-      pm25 = .data$PM2_5Value,
-      lastSeenDate = .data$LastSeen,
-      sensorType = .data$Type,
-      flag_hidden = .data$Hidden,
-      flag_highValue = .data$Flag,
-      flag_attenuation_hardware = .data$A_H,
-      temperature = .data$temp_f,
-      age = .data$AGE,
-      pm25_current = .data$v,
-      pm25_10min = .data$v1,
-      pm25_30min = .data$v2,
-      pm25_1hr = .data$v3,
-      pm25_6hr = .data$v4,
-      pm25_1day = .data$v5,
-      pm25_1week = .data$v6,
-      statsLastModifiedDate = .data$lastModified,
-      statsLastModifiedInterval = .data$timeSinceModified
-    ) %>%
+  dplyr::rename(
+    parentID = .data$ParentID,
+    label = .data$Label,
+    latitude = .data$Lat,
+    longitude = .data$Lon,
+    pm25 = .data$PM2_5Value,
+    lastSeenDate = .data$LastSeen,
+    sensorType = .data$Type,
+    flag_hidden = .data$Hidden,
+    flag_highValue = .data$Flag,
+    flag_attenuation_hardware = .data$A_H,
+    temperature = .data$temp_f,
+    age = .data$AGE,
+    pm25_current = .data$v,
+    pm25_10min = .data$v1,
+    pm25_30min = .data$v2,
+    pm25_1hr = .data$v3,
+    pm25_6hr = .data$v4,
+    pm25_1day = .data$v5,
+    pm25_1week = .data$v6,
+    statsLastModifiedDate = .data$lastModified,
+    statsLastModifiedInterval = .data$timeSinceModified
+  ) %>%
 
     # * Remove unwanted columns -----
-    dplyr::select(-c(
-      "Ozone1",        # "Ozone1" has never had any values
-      "pm"             # "pm" is redundant with the value in "v"
-    )) %>%
+  dplyr::select(-c(
+    "Ozone1",        # "Ozone1" has never had any values
+    "pm"             # "pm" is redundant with the value in "v"
+  )) %>%
 
     # * Add new columns -----
-    dplyr::mutate(
-      deviceID = .data$ID,
-      sensorManufacturer = "Purple Air"
-    ) %>%
+  dplyr::mutate(
+    deviceID = .data$ID,
+    sensorManufacturer = "Purple Air"
+  ) %>%
 
     # * Remove invalid locations -----
-    dplyr::filter( !is.na(.data$longitude) & !is.na(.data$latitude) ) %>%
+  dplyr::filter( !is.na(.data$longitude) & !is.na(.data$latitude) ) %>%
     dplyr::filter( .data$longitude >= -180 & .data$longitude <= 180 ) %>%
     dplyr::filter( .data$latitude >= -90 & .data$latitude <= 90 ) %>%
 
     # * Add core metadata -----
-    MazamaLocationUtils::table_addCoreMetadata()
+  MazamaLocationUtils::table_addCoreMetadata()
 
   # ----- Limit to country bounding box ----------------------------------------
 
@@ -199,20 +199,20 @@ pas_enhanceRawData_2020 <- function(
 
   if ( !is.null(countryCodes) ) {
 
-    if ( is.null(stateCodes) ) {
+    if ( !is.null(stateCodes) && exists("NaturalEarthAdm1") ) {
+      SPDF <- get("NaturalEarthAdm1") # To pass R CMD check
+      mask <-
+        (SPDF@data$countryCode %in% countryCodes) &
+        (SPDF@data$stateCode %in% stateCodes)
       bbox <-
-        subset(MazamaSpatialUtils::SimpleCountriesEEZ, countryCode %in% countryCodes) %>%
+        subset(SPDF, mask ) %>%
         sp::bbox()
     } else {
+      mask <- MazamaSpatialUtils::SimpleCountriesEEZ@data$countryCode %in% countryCodes
       bbox <-
-        subset(NaturalEarthAdm1, (countryCode %in% countryCodes) & (stateCode %in% stateCodes) ) %>%
+        subset(MazamaSpatialUtils::SimpleCountriesEEZ, mask) %>%
         sp::bbox()
     }
-
-    # > subset(EEZCountries, countryCode %in% c("PL")) %>% bbox()
-    # min      max
-    # x 14.12293 24.14581
-    # y 49.00211 55.92155
 
     pas <-
       pas %>%

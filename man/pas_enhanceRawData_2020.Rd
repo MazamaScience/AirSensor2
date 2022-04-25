@@ -4,12 +4,7 @@
 \alias{pas_enhanceRawData_2020}
 \title{Enhance synoptic data from PurpleAir}
 \usage{
-pas_enhanceRawData_2020(
-  pas_raw = NULL,
-  countryCodes = NULL,
-  stateCodes = NULL,
-  spatialDataDir = "~/Data/Spatial"
-)
+pas_enhanceRawData_2020(pas_raw = NULL, countryCodes = NULL, stateCodes = NULL)
 }
 \arguments{
 \item{pas_raw}{Dataframe returned by \code{pas_downloadParseRawData_2020()}.}
@@ -17,8 +12,6 @@ pas_enhanceRawData_2020(
 \item{countryCodes}{ISO 3166-1 alpha-2 country codes used to subset the data.}
 
 \item{stateCodes}{ISO-3166-2 alpha-2 state codes used to subset the data.}
-
-\item{spatialDataDir}{Directory containing \pkg{MazamaSpatialUtils} datasets.}
 }
 \value{
 Enhanced Dataframe of synoptic PurpleAir data.
@@ -63,14 +56,13 @@ initializeMazamaSpatialUtils()
 
 pas_raw <- pas_downloadParseRawData_2020()
 
-
 pas_AU <-
   pas_enhanceRawData_2020(
     pas_raw,
     countryCodes = "AU"
   ) \%>\%
   dplyr::filter(
-    DEVICE_LOCATION_TYPE == "outside"
+    DEVICE_LOCATIONTYPE == "outside"
   )
 
 if ( interactive() )
@@ -83,7 +75,7 @@ pas_WA <-
     stateCodes = "WA"
   ) \%>\%
   dplyr::filter(
-    DEVICE_LOCATION_TYPE == "outside"
+    DEVICE_LOCATIONTYPE == "outside"
   )
 
 if ( interactive() )
