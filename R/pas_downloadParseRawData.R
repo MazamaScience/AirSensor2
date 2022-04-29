@@ -4,14 +4,15 @@
 #'
 #' @title Download synoptic data from PurpleAir with newer API
 #'
-#' @param baseUrl Base URL for the PurpleAir API.
 #' @param apiReadKey PurpleAir API Read Key.
 #' @param maxAge Filter results to only include sensors modified or updated
 #' within the last number of seconds. Using a value of 0 will match sensors of any age.
+#' @param outsideOnly Logical specifying whether to restrict requests to outside sensors only.
 #' @param west Longitude of the western edge of the bounding box in which to find sensors.
 #' @param east Longitude of the eastern edge of the bounding box in which to find sensors.
 #' @param south Latitude of the southern edge of the bounding box in which to find sensors.
 #' @param north Latitude of the northern edge of the bounding box in which to find sensors.
+#' @param baseUrl Base URL for the PurpleAir API.
 #'
 #' @return Dataframe of synoptic PurpleAir data.
 #'
@@ -30,34 +31,43 @@
 #'
 #' library(AirSensor2)
 #'
-#' pas_raw <- pas_downloadParseRawData()
+#' pas_raw <-
+#'   pas_downloadParseRawData(
+#'     API_READ_KEY,
+#'     maxAge = 3600 * 24,
+#'     outsideOnly = TRUE,
+#'     west = -124,
+#'     east = -123,
+#'     south = 48,
+#'     north = 50
+#'   )
 #'
-#' if ( interactive() ) View(pas_raw[1:100,])
+#' View(pas_raw[1:100,])
 #'
 #' }, silent = FALSE)
 #' }
 
 pas_downloadParseRawData <- function(
-  baseUrl = "https://api.purpleair.com/v1/sensors",
   apiReadKey = NULL,
   maxAge = 604800,
   outsideOnly = TRUE,
   west = NULL,
   east = NULL,
   south = NULL,
-  north = NULL
+  north = NULL,
+  baseUrl = "https://api.purpleair.com/v1/sensors"
 ) {
 
   # ----- Validate parameters --------------------------------------------------
 
-  MazamaCoreUtils::stopIfNull(baseUrl)
   MazamaCoreUtils::stopIfNull(apiReadKey)
   maxAge <- MazamaCoreUtils::setIfNull(maxAge, 604800)
-  outsideOnly <- MazamaCoreUtils::setIfNull(outsideOnly)
+  MazamaCoreUtils::stopIfNull(outsideOnly)
   MazamaCoreUtils::stopIfNull(west)
   MazamaCoreUtils::stopIfNull(east)
   MazamaCoreUtils::stopIfNull(south)
   MazamaCoreUtils::stopIfNull(north)
+  MazamaCoreUtils::stopIfNull(baseUrl)
 
   # ----- Request data ---------------------------------------------------------
 
@@ -278,5 +288,36 @@ pas_downloadParseRawData <- function(
   # ----- Return ---------------------------------------------------------------
 
   return(tbl)
+
+}
+
+# ===== DEBUGGING ==============================================================
+
+if ( FALSE ) {
+
+  apiReadKey = API_READ_KEY
+  maxAge = 604800
+  outsideOnly = TRUE
+  west = -124
+  east = -123
+  south = 48
+  north = 49
+  baseUrl = "https://api.purpleair.com/v1/sensors"
+
+  pas_raw <-
+    pas_downloadParseRawData(
+      apiReadKey,
+      maxAge,
+      outsideOnly,
+      west,
+      east,
+      south,
+      north,
+      baseUrl = "https://api.purpleair.com/v1/sensors"
+    )
+
+
+
+
 
 }
