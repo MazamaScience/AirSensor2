@@ -12,6 +12,7 @@ Depends:
 Imports:
     countrycode,
     dplyr (>= 1.0.0),
+    geodist,
     httpcode,
     httr,
     jsonlite,

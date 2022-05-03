@@ -5,7 +5,7 @@
 #' @title Create a new PurpleAir synoptic dataset
 #'
 #' @description Download, parse and enhance synoptic data from PurpleAir and
-#' return the results as a useful tibble with class \code{pa_synoptic}.
+#' return the results as a useful tibble with class \code{purple_air_synoptic}.
 #'
 #' Steps include:
 #'
@@ -198,7 +198,8 @@ pas_createNew <- function(
     pas_enhanceRawData(
       pas_raw,
       countryCodes,
-      stateCodes
+      stateCodes,
+      counties
     )
 
   # # Filter for age
@@ -208,7 +209,7 @@ pas_createNew <- function(
   # ----- Return ---------------------------------------------------------------
 
   # Add a class name
-  class(pas) <- union("pa_synoptic", class(pas))
+  class(pas) <- union("purple_air_synoptic", class(pas))
 
   return(pas)
 
@@ -219,8 +220,8 @@ pas_createNew <- function(
 if ( FALSE ) {
 
   countryCodes = "US"
-  stateCodes = "WA"
-  counties <- c("Okanogan", "Ferry")
+  stateCodes = c("WA", "OR")
+  counties <- NULL
   lookbackDays = 1
   outsideOnly = TRUE
   baseUrl = "https://api.purpleair.com/v1/sensors"

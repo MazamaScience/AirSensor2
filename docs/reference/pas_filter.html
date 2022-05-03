@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Changelog • AirSensor2</title>
+<title>General purpose filtering for PurpleAir synoptic objects — pas_filter • AirSensor2</title>
 
 
 <!-- jquery -->
@@ -39,7 +39,10 @@
 
 
 
-<meta property="og:title" content="Changelog" />
+<meta property="og:title" content="General purpose filtering for PurpleAir synoptic objects — pas_filter" />
+<meta property="og:description" content="A generalized data filter for pas objects to
+  choose rows/cases where conditions are true. Rows where the condition
+  evaluates to NA are dropped." />
 
 
 
@@ -58,7 +61,7 @@
   </head>
 
   <body data-spy="scroll" data-target="#toc">
-    <div class="container template-news">
+    <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -110,33 +113,47 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-      <h1 data-toc-skip>Changelog <small></small></h1>
-      <small>Source: <a href='https://github.com/MazamaScience/AirSensor2/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
+    <h1>General purpose filtering for PurpleAir synoptic objects</h1>
+    <small class="dont-index">Source: <a href='https://github.com/MazamaScience/AirSensor2/blob/master/R/pas_filter.R'><code>R/pas_filter.R</code></a></small>
+    <div class="hidden name"><code>pas_filter.Rd</code></div>
     </div>
 
-    <div id="airsensor2-010" class="section level1">
-<h1 class="page-header" data-toc-text="0.1.0">
-<a href="#airsensor2-010" class="anchor"></a>AirSensor2 0.1.0</h1>
-<p>The <strong>AirSensor2</strong> package is a refactoring of the core, data access and manipulation functionality found in the <strong>AirSensor</strong> package. The goal in <strong>AirSensor2</strong> is to create a lean and generic package focused on data ingest and basic data manipulation.</p>
-<p>Initial functions to download and work with Purple Air synoptic data.</p>
-<ul>
-<li><code><a href="../reference/initializeMazamaSpatialUtils.html">initializeMazamaSpatialUtils()</a></code></li>
-<li><code><a href="../reference/pas_createNew.html">pas_createNew()</a></code></li>
-<li><code><a href="../reference/pas_downloadParseRawData.html">pas_downloadParseRawData()</a></code></li>
-<li><code><a href="../reference/pas_enhanceRawData.html">pas_enhanceRawData()</a></code></li>
-<li><code><a href="../reference/pas_filter.html">pas_filter()</a></code></li>
-<li><code><a href="../reference/pas_filterArea.html">pas_filterArea()</a></code></li>
-<li><code><a href="../reference/pas_filterNear.html">pas_filterNear()</a></code></li>
-</ul>
-</div>
-  </div>
+    <div class="ref-description">
+    <p>A generalized data filter for <em>pas</em> objects to
+  choose rows/cases where conditions are true. Rows where the condition
+  evaluates to NA are dropped.</p>
+    </div>
 
+    <pre class="usage"><span class='fu'>pas_filter</span><span class='op'>(</span><span class='va'>pas</span>, <span class='va'>...</span><span class='op'>)</span></pre>
+
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>pas</th>
+      <td><p>PurpleAir Synoptic <em>pas</em> object.</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>Logical predicates defined in terms of the variables in the
+<code>pas</code>. Multiple conditions are combined with &amp; or seperated by a comma.
+Only rows where the condition evaluates to TRUE are kept.</p></td>
+    </tr>
+    </table>
+
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>A subset of the incoming <em>pas</em> object.</p>
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+
+    <div class='dont-index'><p><a href='pas_filterArea.html'>pas_filterArea</a>, <a href='pas_filterNear.html'>pas_filterNear</a></p></div>
+
+  </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
       <h2 data-toc-skip>Contents</h2>
     </nav>
   </div>
-
 </div>
 
 

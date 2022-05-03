@@ -55,10 +55,10 @@ pas_raw <-
     API_READ_KEY,
     maxAge = 3600 * 24,
     outsideOnly = TRUE,
-    west = -124,
-    east = -123,
-    south = 48,
-    north = 50
+    west = -125,
+    east = -117,
+    south = 42,
+    north = 49
   )
 
 View(pas_raw[1:100,])

@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Download synoptic data from PurpleAir with newer API — pas_downloadParseRawData • AirSensor2</title>
+<title>Rectangle area filtering for PurpleAir Synoptic objects — pas_filterArea • AirSensor2</title>
 
 
 <!-- jquery -->
@@ -39,11 +39,8 @@
 
 
 
-<meta property="og:title" content="Download synoptic data from PurpleAir with newer API — pas_downloadParseRawData" />
-<meta property="og:description" content="Download and parse synoptic data for the PurpleAir network
-of particulate sensors.
-The synoptic data provides a view of the entire PurpleAir network and
-includes both metadata and recent PM2.5 averages for each deployed sensor." />
+<meta property="og:title" content="Rectangle area filtering for PurpleAir Synoptic objects — pas_filterArea" />
+<meta property="og:description" content="Filters pas object sensors based on a bounding box." />
 
 
 
@@ -114,97 +111,71 @@ includes both metadata and recent PM2.5 averages for each deployed sensor." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Download synoptic data from PurpleAir with newer API</h1>
-    <small class="dont-index">Source: <a href='https://github.com/MazamaScience/AirSensor2/blob/master/R/pas_downloadParseRawData.R'><code>R/pas_downloadParseRawData.R</code></a></small>
-    <div class="hidden name"><code>pas_downloadParseRawData.Rd</code></div>
+    <h1>Rectangle area filtering for PurpleAir Synoptic objects</h1>
+    <small class="dont-index">Source: <a href='https://github.com/MazamaScience/AirSensor2/blob/master/R/pas_filterArea.R'><code>R/pas_filterArea.R</code></a></small>
+    <div class="hidden name"><code>pas_filterArea.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Download and parse synoptic data for the PurpleAir network
-of particulate sensors.</p>
-<p>The synoptic data provides a view of the entire PurpleAir network and
-includes both metadata and recent PM2.5 averages for each deployed sensor.</p>
+    <p>Filters <em>pas</em> object sensors based on a bounding box.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>pas_downloadParseRawData</span><span class='op'>(</span>
-  apiReadKey <span class='op'>=</span> <span class='cn'>NULL</span>,
-  maxAge <span class='op'>=</span> <span class='fl'>604800</span>,
-  outsideOnly <span class='op'>=</span> <span class='cn'>TRUE</span>,
-  west <span class='op'>=</span> <span class='cn'>NULL</span>,
-  east <span class='op'>=</span> <span class='cn'>NULL</span>,
-  south <span class='op'>=</span> <span class='cn'>NULL</span>,
-  north <span class='op'>=</span> <span class='cn'>NULL</span>,
-  baseUrl <span class='op'>=</span> <span class='st'>"https://api.purpleair.com/v1/sensors"</span>
-<span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>pas_filterArea</span><span class='op'>(</span>pas <span class='op'>=</span> <span class='cn'>NULL</span>, w <span class='op'>=</span> <span class='cn'>NULL</span>, e <span class='op'>=</span> <span class='cn'>NULL</span>, s <span class='op'>=</span> <span class='cn'>NULL</span>, n <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>apiReadKey</th>
-      <td><p>PurpleAir API Read Key.</p></td>
+      <th>pas</th>
+      <td><p>PurpleAir Synoptic <em>pas</em> object.</p></td>
     </tr>
     <tr>
-      <th>maxAge</th>
-      <td><p>Filter results to only include sensors modified or updated
-within the last number of seconds. Using a value of 0 will match sensors of any age.</p></td>
+      <th>w</th>
+      <td><p>West edge of area bounding box (deg E).</p></td>
     </tr>
     <tr>
-      <th>outsideOnly</th>
-      <td><p>Logical specifying whether to restrict requests to outside sensors only.</p></td>
+      <th>e</th>
+      <td><p>East edge of area bounding box (deg E).</p></td>
     </tr>
     <tr>
-      <th>west</th>
-      <td><p>Longitude of the western edge of the bounding box in which to find sensors.</p></td>
+      <th>s</th>
+      <td><p>South edge of area bounding box (deg N).</p></td>
     </tr>
     <tr>
-      <th>east</th>
-      <td><p>Longitude of the eastern edge of the bounding box in which to find sensors.</p></td>
-    </tr>
-    <tr>
-      <th>south</th>
-      <td><p>Latitude of the southern edge of the bounding box in which to find sensors.</p></td>
-    </tr>
-    <tr>
-      <th>north</th>
-      <td><p>Latitude of the northern edge of the bounding box in which to find sensors.</p></td>
-    </tr>
-    <tr>
-      <th>baseUrl</th>
-      <td><p>Base URL for the PurpleAir API.</p></td>
+      <th>n</th>
+      <td><p>North edge of area bounding box (deg N).</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>Dataframe of synoptic PurpleAir data.</p>
-    <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
+    <p>A subset of the given <em>pas</em> object.</p>
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <p><a href='https://api.purpleair.com'>PurpleAir API</a></p>
+    <div class='dont-index'><p><a href='pas_filter.html'>pas_filter</a>, <a href='pas_filterNear.html'>pas_filterNear</a></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># \donttest{</span>
-<span class='co'># Fail gracefully if any resources are not available</span>
-<span class='kw'><a href='https://rdrr.io/r/base/try.html'>try</a></span><span class='op'>(</span><span class='op'>{</span>
+    <pre class="examples"><div class='input'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://github.com/MazamaScience/AirSensor2'>AirSensor2</a></span><span class='op'>)</span>
 
-<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://github.com/MazamaScience/AirSensor2'>AirSensor2</a></span><span class='op'>)</span>
-
-<span class='va'>pas_raw</span> <span class='op'>&lt;-</span>
-  <span class='fu'>pas_downloadParseRawData</span><span class='op'>(</span>
-    <span class='va'>API_READ_KEY</span>,
-    maxAge <span class='op'>=</span> <span class='fl'>3600</span> <span class='op'>*</span> <span class='fl'>24</span>,
-    outsideOnly <span class='op'>=</span> <span class='cn'>TRUE</span>,
-    west <span class='op'>=</span> <span class='op'>-</span><span class='fl'>125</span>,
-    east <span class='op'>=</span> <span class='op'>-</span><span class='fl'>117</span>,
-    south <span class='op'>=</span> <span class='fl'>42</span>,
-    north <span class='op'>=</span> <span class='fl'>49</span>
+<span class='va'>pas</span> <span class='op'>&lt;-</span> <span class='va'>example_pas</span>
+<span class='fu'><a href='https://rdrr.io/r/base/range.html'>range</a></span><span class='op'>(</span><span class='va'>pas</span><span class='op'>$</span><span class='va'>longitude</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] -124.4982 -116.9929</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/range.html'>range</a></span><span class='op'>(</span><span class='va'>pas</span><span class='op'>$</span><span class='va'>latitude</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] 42.01015 48.98723</div><div class='input'>
+<span class='va'>Lane_County_pas</span> <span class='op'>&lt;-</span>
+  <span class='va'>pas</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>pas_filterArea</span><span class='op'>(</span>
+    w <span class='op'>=</span> <span class='op'>-</span><span class='fl'>124.16</span>,
+    e <span class='op'>=</span> <span class='op'>-</span><span class='fl'>121.76</span>,
+    s <span class='op'>=</span> <span class='fl'>43.43</span>,
+    n <span class='op'>=</span> <span class='fl'>44.30</span>
   <span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/range.html'>range</a></span><span class='op'>(</span><span class='va'>Lane_County_pas</span><span class='op'>$</span><span class='va'>longitude</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] -124.1089 -121.9334</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/range.html'>range</a></span><span class='op'>(</span><span class='va'>Lane_County_pas</span><span class='op'>$</span><span class='va'>latitude</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] 43.51040 44.28334</div><div class='input'>
+<span class='kw'>if</span> <span class='op'>(</span> <span class='fu'><a href='https://rdrr.io/r/base/interactive.html'>interactive</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>)</span> <span class='op'>{</span>
+  <span class='co'>###pas_leaflet(Lane_County_pas)</span>
+<span class='op'>}</span>
 
-<span class='fu'><a href='https://rdrr.io/r/utils/View.html'>View</a></span><span class='op'>(</span><span class='va'>pas_raw</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>100</span>,<span class='op'>]</span><span class='op'>)</span>
-
-<span class='op'>}</span>, silent <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; Error in MazamaCoreUtils::stopIfNull(apiReadKey) : 
-#&gt;   object 'API_READ_KEY' not found</div><div class='input'><span class='co'># }</span>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

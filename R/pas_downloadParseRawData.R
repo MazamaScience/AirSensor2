@@ -36,10 +36,10 @@
 #'     API_READ_KEY,
 #'     maxAge = 3600 * 24,
 #'     outsideOnly = TRUE,
-#'     west = -124,
-#'     east = -123,
-#'     south = 48,
-#'     north = 50
+#'     west = -125,
+#'     east = -117,
+#'     south = 42,
+#'     north = 49
 #'   )
 #'
 #' View(pas_raw[1:100,])
@@ -68,6 +68,12 @@ pas_downloadParseRawData <- function(
   MazamaCoreUtils::stopIfNull(south)
   MazamaCoreUtils::stopIfNull(north)
   MazamaCoreUtils::stopIfNull(baseUrl)
+
+  if ( west > east )
+    stop("west > east. Please specify longitudes in the correct order.")
+
+  if ( south > north)
+    stop("south > north. Please specify latitutdes in the correct order.")
 
   # ----- Request data ---------------------------------------------------------
 
@@ -207,6 +213,10 @@ pas_downloadParseRawData <- function(
       flatten = FALSE
     )
 
+  if ( length(PAList$data) == 0 ) {
+    stop("no data were returned")
+  }
+
   # > str(PAList)
   # List of 11
   # $ api_version             : chr "V1.0.10-0.0.17"
@@ -296,11 +306,11 @@ pas_downloadParseRawData <- function(
 if ( FALSE ) {
 
   apiReadKey = API_READ_KEY
-  maxAge = 604800
+  maxAge = 3600 * 24
   outsideOnly = TRUE
-  west = -124
-  east = -123
-  south = 48
+  west = -125
+  east = -117
+  south = 42
   north = 49
   baseUrl = "https://api.purpleair.com/v1/sensors"
 

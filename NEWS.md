@@ -12,5 +12,8 @@ Initial functions to download and work with Purple Air synoptic data.
 * `pas_createNew()`
 * `pas_downloadParseRawData()`
 * `pas_enhanceRawData()`
+* `pas_filter()`
+* `pas_filterArea()`
+* `pas_filterNear()`
 
 
