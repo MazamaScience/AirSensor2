@@ -4,7 +4,12 @@
 \alias{pas_enhanceRawData}
 \title{Enhance synoptic data from PurpleAir}
 \usage{
-pas_enhanceRawData(pas_raw = NULL, countryCodes = NULL, stateCodes = NULL)
+pas_enhanceRawData(
+  pas_raw = NULL,
+  countryCodes = NULL,
+  stateCodes = NULL,
+  counties = NULL
+)
 }
 \arguments{
 \item{pas_raw}{Dataframe returned by \code{pas_downloadParseRawData()}.}
@@ -12,6 +17,8 @@ pas_enhanceRawData(pas_raw = NULL, countryCodes = NULL, stateCodes = NULL)
 \item{countryCodes}{ISO 3166-1 alpha-2 country codes used to subset the data.}
 
 \item{stateCodes}{ISO-3166-2 alpha-2 state codes used to subset the data.}
+
+\item{counties}{US county names or 5-digit FIPS codes used to subset the data.}
 }
 \value{
 Enhanced dataframe of synoptic PurpleAir data.

@@ -8,6 +8,7 @@ pas_createNew(
   apiReadKey = NULL,
   countryCodes = NULL,
   stateCodes = NULL,
+  counties = NULL,
   lookbackDays = 1,
   outsideOnly = TRUE,
   baseUrl = "https://api.purpleair.com/v1/sensors"
@@ -21,6 +22,9 @@ At least one countryCode must be specified.}
 
 \item{stateCodes}{ISO-3166-2 alpha-2 state codes used to subset the data.
 Specifying stateCodes is optional.}
+
+\item{counties}{US county names or 5-digit FIPS codes used to subset the data.
+Specifying counties is optional.}
 
 \item{lookbackDays}{Number of days to "look back" for valid data. Data are
 filtered to only include sensors with data more recent than \code{lookbackDays} ago.}
@@ -54,7 +58,8 @@ Steps include:
 Data requests are made with a bounding box determined from the required
 \code{countryCodes} parameter. If a single country is specified and additional
 \code{stateCodes} are specified, the bounding box will be limited to those
-states.
+states. Withing a single state, \code{counties} may be used to further limit
+the data.
 }
 \examples{
 \donttest{
@@ -70,6 +75,7 @@ pas <-
     apiReadKey = API_READ_KEY,
     countryCodes = "US",
     stateCodes = "WA",
+    counties = c("Okanogan", "Ferry"),
     lookbackDays = 1,
     outsideOnly = TRUE
   )

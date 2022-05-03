@@ -34,6 +34,7 @@
 #' @param pas_raw Dataframe returned by \code{pas_downloadParseRawData()}.
 #' @param countryCodes ISO 3166-1 alpha-2 country codes used to subset the data.
 #' @param stateCodes ISO-3166-2 alpha-2 state codes used to subset the data.
+#' @param counties US county names or 5-digit FIPS codes used to subset the data.
 #'
 #' @return Enhanced dataframe of synoptic PurpleAir data.
 #'
@@ -45,7 +46,8 @@
 pas_enhanceRawData <- function(
   pas_raw = NULL,
   countryCodes = NULL,
-  stateCodes = NULL
+  stateCodes = NULL,
+  counties = NULL
 ) {
 
   # ----- Validate Parameters --------------------------------------------------
@@ -67,6 +69,11 @@ pas_enhanceRawData <- function(
       stop("'stateCodes' can only be used when also specifying a single country with 'countryCodes'")
     } else if ( length(countryCodes) != 1 ) {
       stop("please limit 'countryCodes' to a single country when using 'stateCodes'")
+    }
+    if ( !is.null(counties) ) {
+      if ( length(stateCodes) != 1 ) {
+        stop("please limit 'stateCodes' to a single state when using 'counties'")
+      }
     }
   }
 
@@ -125,57 +132,57 @@ pas_enhanceRawData <- function(
     pas_raw %>%
 
     # * Rename columns -----
-    dplyr::rename(
-      deviceID = .data$sensor_index,
-      privacy = .data$private
-    ) %>%
+  dplyr::rename(
+    privacy = .data$private
+  ) %>%
 
     # * Modify columns -----
-    dplyr::mutate(
-      sensorManufacturer = "Purple Air",
-      privacy = dplyr::if_else(.data$privacy == "0", "public", "private", as.character(NA)),
-      location_type = dplyr::if_else(.data$location_type == "0", "outside", "inside", as.character(NA)),
+  dplyr::mutate(
+    sensorManufacturer = "Purple Air",
+    deviceID = paste0("pa.", .data$sensor_index),
+    privacy = dplyr::if_else(.data$privacy == "0", "public", "private", as.character(NA)),
+    location_type = dplyr::if_else(.data$location_type == "0", "outside", "inside", as.character(NA)),
 
-      longitude = as.numeric(.data$longitude),
-      latitude = as.numeric(.data$latitude),
-      altitude = as.numeric(.data$altitude),
-      elevation = round(as.numeric(.data$altitude) * 0.3048), # convert from feet to meters
+    longitude = as.numeric(.data$longitude),
+    latitude = as.numeric(.data$latitude),
+    altitude = as.numeric(.data$altitude),
+    elevation = round(as.numeric(.data$altitude) * 0.3048), # convert from feet to meters
 
-      position_rating = as.numeric(.data$position_rating),
-      led_brightness = as.numeric(.data$led_brightness),
-      rssi = as.numeric(.data$rssi),
-      uptime = as.numeric(.data$uptime),
-      pa_latency = as.numeric(.data$pa_latency),
-      memory = as.numeric(.data$memory),
+    position_rating = as.numeric(.data$position_rating),
+    led_brightness = as.numeric(.data$led_brightness),
+    rssi = as.numeric(.data$rssi),
+    uptime = as.numeric(.data$uptime),
+    pa_latency = as.numeric(.data$pa_latency),
+    memory = as.numeric(.data$memory),
 
-      last_seen = as.POSIXct(as.numeric(.data$last_seen), tz = "UTC", origin = lubridate::origin),
-      last_modified = as.POSIXct(as.numeric(.data$last_modified), tz = "UTC", origin = lubridate::origin),
-      date_created = as.POSIXct(as.numeric(.data$date_created), tz = "UTC", origin = lubridate::origin),
+    last_seen = as.POSIXct(as.numeric(.data$last_seen), tz = "UTC", origin = lubridate::origin),
+    last_modified = as.POSIXct(as.numeric(.data$last_modified), tz = "UTC", origin = lubridate::origin),
+    date_created = as.POSIXct(as.numeric(.data$date_created), tz = "UTC", origin = lubridate::origin),
 
-      confidence = as.numeric(.data$confidence),
-      confidence_manual = as.numeric(.data$confidence_manual),
-      confidence_auto = as.numeric(.data$confidence_auto),
+    confidence = as.numeric(.data$confidence),
+    confidence_manual = as.numeric(.data$confidence_manual),
+    confidence_auto = as.numeric(.data$confidence_auto),
 
-      humidity = as.numeric(.data$humidity),
-      temperature = as.numeric(.data$temperature),
-      pressure = as.numeric(.data$pressure),
+    humidity = as.numeric(.data$humidity),
+    temperature = as.numeric(.data$temperature),
+    pressure = as.numeric(.data$pressure),
 
-      pm2.5_10minute = as.numeric(.data$pm2.5_10minute),
-      pm2.5_30minute = as.numeric(.data$pm2.5_30minute),
-      pm2.5_60minute = as.numeric(.data$pm2.5_60minute),
-      pm2.5_6hour = as.numeric(.data$pm2.5_6hour),
-      pm2.5_24hour = as.numeric(.data$pm2.5_24hour),
-      pm2.5_1week = as.numeric(.data$pm2.5_1week)
+    pm2.5_10minute = as.numeric(.data$pm2.5_10minute),
+    pm2.5_30minute = as.numeric(.data$pm2.5_30minute),
+    pm2.5_60minute = as.numeric(.data$pm2.5_60minute),
+    pm2.5_6hour = as.numeric(.data$pm2.5_6hour),
+    pm2.5_24hour = as.numeric(.data$pm2.5_24hour),
+    pm2.5_1week = as.numeric(.data$pm2.5_1week)
 
-    ) %>%
+  ) %>%
 
     # * Remove unwanted columns -----
-    dplyr::select(-c(
-      "icon"
-    )) %>%
+  dplyr::select(-c(
+    "icon"
+  )) %>%
 
     # * Add core metadata -----
-    MazamaLocationUtils::table_addCoreMetadata() %>%
+  MazamaLocationUtils::table_addCoreMetadata() %>%
 
     # Fill in new columns where possible
     dplyr::mutate(
@@ -191,6 +198,7 @@ pas_enhanceRawData <- function(
     dplyr::distinct(.data$locationID, .keep_all = TRUE)
 
   # * countryCode -----
+
   uniqueLocations$countryCode <-
     MazamaSpatialUtils::getCountryCode(
       longitude = uniqueLocations$longitude,
@@ -206,6 +214,7 @@ pas_enhanceRawData <- function(
     dplyr::filter(!is.na(.data$countryCode))
 
   # * stateCode -----
+
   # Suppress annoying 'Discarded datum Unknown' messages
   suppressWarnings({
     uniqueLocations$stateCode <-
@@ -225,7 +234,47 @@ pas_enhanceRawData <- function(
       dplyr::filter(.data$stateCode %in% stateCodes)
   }
 
+  # * countyName -----
+
+  if ( length(countryCodes) == 1 && countryCodes[1] == "US" ) {
+
+    # Suppress annoying 'Discarded datum Unknown' messages
+    suppressWarnings({
+      uniqueLocations$stateCode <-
+        MazamaSpatialUtils::getUSCounty(
+          longitude = uniqueLocations$longitude,
+          latitude = uniqueLocations$latitude,
+          stateCodes = stateCodes,
+          allData = FALSE,
+          useBuffering = TRUE
+        )
+    })
+
+    # Limit to valid counties
+    if ( !is.null(counties) ) {
+      counties <- as.character(counties)
+      # Convert from FIPS to countyName
+      if ( stringr::str_detect(counties[1], "[0-9]{5}") ) {
+        counties <-
+          MazamaSpatialUtils::US_countyFIPSToName(
+            state = stateCodes,
+            countyFIPS = counties
+          )
+      }
+      # Handle input inconsistencies
+      counties <-
+        stringr::str_to_title(counties) %>%
+        stringr::str_replace(" County", "")
+      # Limit to valid counties
+      uniqueLocations <-
+        uniqueLocations %>%
+        dplyr::filter(.data$countyName %in% counties)
+    }
+
+  }
+
   # * timezone -----
+
   # Suppress annoying 'Discarded datum Unknown' messages
   suppressWarnings({
     uniqueLocations$timezone <-

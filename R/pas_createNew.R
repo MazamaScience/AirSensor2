@@ -25,13 +25,16 @@
 #' Data requests are made with a bounding box determined from the required
 #' \code{countryCodes} parameter. If a single country is specified and additional
 #' \code{stateCodes} are specified, the bounding box will be limited to those
-#' states.
+#' states. Withing a single state, \code{counties} may be used to further limit
+#' the data.
 #'
 #' @param apiReadKey PurpleAir API Read Key.
 #' @param countryCodes ISO 3166-1 alpha-2 country codes used to subset the data.
 #' At least one countryCode must be specified.
 #' @param stateCodes ISO-3166-2 alpha-2 state codes used to subset the data.
 #' Specifying stateCodes is optional.
+#' @param counties US county names or 5-digit FIPS codes used to subset the data.
+#' Specifying counties is optional.
 #' @param lookbackDays Number of days to "look back" for valid data. Data are
 #' filtered to only include sensors with data more recent than \code{lookbackDays} ago.
 #' @param outsideOnly Logical specifying whether to restrict requests to outside sensors only.
@@ -56,6 +59,7 @@
 #'     apiReadKey = API_READ_KEY,
 #'     countryCodes = "US",
 #'     stateCodes = "WA",
+#'     counties = c("Okanogan", "Ferry"),
 #'     lookbackDays = 1,
 #'     outsideOnly = TRUE
 #'   )
@@ -69,6 +73,7 @@ pas_createNew <- function(
   apiReadKey = NULL,
   countryCodes = NULL,
   stateCodes = NULL,
+  counties = NULL,
   lookbackDays = 1,
   outsideOnly = TRUE,
   baseUrl = "https://api.purpleair.com/v1/sensors"
@@ -94,6 +99,12 @@ pas_createNew <- function(
       stop("'stateCodes' can only be used when also specifying a single country with 'countryCodes'")
     } else if ( length(countryCodes) != 1 ) {
       stop("please limit 'countryCodes' to a single country when using 'stateCodes'")
+    }
+    if ( !is.null(counties) ) {
+      if ( length(stateCodes) != 1 ) {
+        stop("please limit 'stateCodes' to a single state when using 'counties'")
+      }
+
     }
   }
 
@@ -121,6 +132,32 @@ pas_createNew <- function(
     bbox <-
       subset(SPDF, mask ) %>%
       sp::bbox()
+
+    if ( !is.null(counties) && exists("USCensusCounties") ) {
+
+      SPDF <- get("USCensusCounties") # To pass R CMD check
+      counties <- as.character(counties)
+      isFIPS <- stringr::str_detect(counties[1], "[0-9]{5}")
+
+      if ( isFIPS ) {
+        mask <-
+          (SPDF@data$stateCode %in% stateCodes) &
+          (SPDF@data$countyFIPS %in% counties)
+      } else {
+        # Handle input inconsistencies
+        counties <-
+          stringr::str_to_title(counties) %>%
+          stringr::str_replace(" County", "")
+        # Limit to valid counties
+        mask <-
+          (SPDF@data$stateCode %in% stateCodes) &
+          (SPDF@data$countyName %in% counties)
+      }
+      bbox <-
+        subset(SPDF, mask ) %>%
+        sp::bbox()
+
+    }
 
   } else {
 
@@ -183,6 +220,7 @@ if ( FALSE ) {
 
   countryCodes = "US"
   stateCodes = "WA"
+  counties <- c("Okanogan", "Ferry")
   lookbackDays = 1
   outsideOnly = TRUE
   baseUrl = "https://api.purpleair.com/v1/sensors"
