@@ -1,6 +1,6 @@
-[![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/AirSensor)](https://cran.r-project.org/package=AirSensor2)
-[![Downloads](http://cranlogs.r-pkg.org/badges/AirSensor)](https://cran.r-project.org/package=AirSensor2)
-[![Build Status](https://travis-ci.org/MazamaScience/AirSensor.svg?branch=master)](https://travis-ci.org/MazamaScience/AirSensor2)
+[![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/AirSensor2)](https://cran.r-project.org/package=AirSensor2)
+[![Downloads](http://cranlogs.r-pkg.org/badges/AirSensor2)](https://cran.r-project.org/package=AirSensor2)
+[![Build Status](https://travis-ci.org/MazamaScience/AirSensor2.svg?branch=master)](https://travis-ci.org/MazamaScience/AirSensor2)
 [![DOI](https://zenodo.org/badge/327964561.svg)](https://zenodo.org/badge/latestdoi/327964561)
 
 # AirSensor R Package
