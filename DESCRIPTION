@@ -1,6 +1,6 @@
 Type: Package
 Package: AirSensor2
-Version: 0.1.0
+Version: 0.1.1
 Title: Process and Display Air Quality Data from Air Quality Sensors
 Authors@R: c(
     person("Jonathan", "Callahan", email="jonathan.s.callahan@gmail.com", role=c("aut","cre"))
@@ -16,6 +16,7 @@ Imports:
     httpcode,
     httr,
     jsonlite,
+    leaflet,
     lubridate,
     magrittr,
     MazamaCoreUtils (>= 0.4.10),

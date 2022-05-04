@@ -186,41 +186,42 @@ pas_enhanceRawData <- function(
 
     # Fill in new columns where possible
     dplyr::mutate(
+      deviceDeploymentID = paste0(.data$locationID, "_", .data$deviceID),
       locationName = .data$name
     )
 
-  # ----- Add spatial metadata -------------------------------------------------
+  # Put 'deviceDeploymentID' and 'deviceID' in front
+  startingIDs <- c("deviceDeploymentID", "deviceID", "locationID")
+  otherColumns <- setdiff(names(pas), startingIDs)
+  orderedColumns <- c(startingIDs, otherColumns)
+  pas <- pas %>% dplyr::select(orderedColumns)
 
-  # Get the unique locations
-  uniqueLocations <-
-    pas %>%
-    dplyr::select(c("locationID", "longitude", "latitude")) %>%
-    dplyr::distinct(.data$locationID, .keep_all = TRUE)
+  # ----- Add spatial metadata -------------------------------------------------
 
   # * countryCode -----
 
-  uniqueLocations$countryCode <-
+  pas$countryCode <-
     MazamaSpatialUtils::getCountryCode(
-      longitude = uniqueLocations$longitude,
-      latitude = uniqueLocations$latitude,
+      longitude = pas$longitude,
+      latitude = pas$latitude,
       countryCodes = countryCodes,
       allData = FALSE,
       useBuffering = FALSE            # No buffering needed with the EEZ dataset
     )
 
   # Limit to valid countryCodes
-  uniqueLocations <-
-    uniqueLocations %>%
+  pas <-
+    pas %>%
     dplyr::filter(!is.na(.data$countryCode))
 
   # * stateCode -----
 
   # Suppress annoying 'Discarded datum Unknown' messages
   suppressWarnings({
-    uniqueLocations$stateCode <-
+    pas$stateCode <-
       MazamaSpatialUtils::getStateCode(
-        longitude = uniqueLocations$longitude,
-        latitude = uniqueLocations$latitude,
+        longitude = pas$longitude,
+        latitude = pas$latitude,
         countryCodes = countryCodes,
         allData = FALSE,
         useBuffering = TRUE
@@ -229,8 +230,8 @@ pas_enhanceRawData <- function(
 
   # Limit to valid stateCodes
   if ( !is.null(stateCodes) ) {
-    uniqueLocations <-
-      uniqueLocations %>%
+    pas <-
+      pas %>%
       dplyr::filter(.data$stateCode %in% stateCodes)
   }
 
@@ -240,10 +241,10 @@ pas_enhanceRawData <- function(
 
     # Suppress annoying 'Discarded datum Unknown' messages
     suppressWarnings({
-      uniqueLocations$countyName <-
+      pas$countyName <-
         MazamaSpatialUtils::getUSCounty(
-          longitude = uniqueLocations$longitude,
-          latitude = uniqueLocations$latitude,
+          longitude = pas$longitude,
+          latitude = pas$latitude,
           stateCodes = stateCodes,
           allData = FALSE,
           useBuffering = TRUE
@@ -266,8 +267,8 @@ pas_enhanceRawData <- function(
         stringr::str_to_title(counties) %>%
         stringr::str_replace(" County", "")
       # Limit to valid counties
-      uniqueLocations <-
-        uniqueLocations %>%
+      pas <-
+        pas %>%
         dplyr::filter(.data$countyName %in% counties)
     }
 
@@ -277,42 +278,15 @@ pas_enhanceRawData <- function(
 
   # Suppress annoying 'Discarded datum Unknown' messages
   suppressWarnings({
-    uniqueLocations$timezone <-
+    pas$timezone <-
       MazamaSpatialUtils::getTimezone(
-        longitude = uniqueLocations$longitude,
-        latitude = uniqueLocations$latitude,
+        longitude = pas$longitude,
+        latitude = pas$latitude,
         countryCodes = countryCodes,
         allData = FALSE,
         useBuffering = TRUE
       )
   })
-
-  # Limit uniqueLocations to 'locationID' and new variables
-  uniqueLocations <-
-    uniqueLocations %>%
-    dplyr::select(-c("longitude", "latitude"))
-
-  # Add spatial data to 'pas'
-  pas <-
-    pas %>%
-    # Remove empty fields that will be replaced
-    dplyr::select(-c("countryCode", "stateCode", "countyName", "timezone")) %>%
-    # Add spatial data
-    dplyr::left_join(uniqueLocations, by = "locationID") %>%
-    # Limit to requested countries
-    dplyr::filter(!is.na(.data$countryCode))
-
-  if ( !is.null(stateCodes) ) {
-    pas <-
-      pas %>%
-      dplyr::filter(!is.na(.data$stateCode))
-  }
-
-  if ( !is.null(counties) ) {
-    pas <-
-      pas %>%
-      dplyr::filter(!is.na(.data$countyName))
-  }
 
   # ----- Return ---------------------------------------------------------------
 

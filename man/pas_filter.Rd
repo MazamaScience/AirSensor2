@@ -21,6 +21,26 @@ A generalized data filter for \emph{pas} objects to
   choose rows/cases where conditions are true. Rows where the condition
   evaluates to NA are dropped.
 }
+\examples{
+library(AirSensor2)
+
+nrow(example_pas)
+
+# Washington
+WA_pas <-
+  example_pas \%>\%
+  pas_filter(stateCode == "WA")
+
+nrow(WA_pas)
+
+# Okanogan and Ferry Counties
+Colville_Tribes_pas <-
+  example_pas \%>\%
+  pas_filter(stateCode == "WA") \%>\%
+  pas_filter(countyName \%in\% c("Okanogan", "Ferry"))
+
+nrow(Colville_Tribes_pas)
+}
 \seealso{
 \link{pas_filterArea}, \link{pas_filterNear}
 }

@@ -35,7 +35,6 @@
 #'   pas_filter(countyName %in% c("Okanogan", "Ferry"))
 #'
 #' nrow(Colville_Tribes_pas)
-#' }
 
 pas_filter <- function(
   pas,

@@ -160,32 +160,14 @@ pas_downloadParseRawData <- function(
 
   if ( httr::http_error(r) ) {  # web service failed to respond
 
-    # TODO:  Find a package with web service status codes
+    status_code <- httr::status_code(r)
 
-    # https://digitalocean.com/community/tutorials/how-to-troubleshoot-common-http-error-codes
-    if ( httr::status_code(r) == 400 ) {
-      err_msg <- paste0("web service error 400 from ", webserviceUrl,
-                        ": Bad Request")
-    } else if ( httr::status_code(r) == 429 ) {
-      err_msg <- paste0("web service error 429 from ", webserviceUrl,
-                        ": Too Many Requests")
-    } else if ( httr::status_code(r) == 500 ) {
-      err_msg <- paste0("web service error 500 from ", webserviceUrl,
-                        ": Internal Server Error")
-    } else if ( httr::status_code(r) == 502 ) {
-      err_msg <- paste0("web service error 502", webserviceUrl,
-                        ": Bad Gateway")
-    } else if ( httr::status_code(r) == 503 ) {
-      err_msg <- paste0("web service error 503", webserviceUrl,
-                        ": Service Unavailable")
-    } else if ( httr::status_code(r) == 504 ) {
-      err_msg <- paste0("web service error 504 from ", webserviceUrl,
-                        ": Gateway Timeout from ",
-                        webserviceUrl)
-    } else {
-      err_msg <- paste0("web service error ", httr::status_code(r), " from ",
-                        webserviceUrl)
-    }
+    err_msg <- sprintf(
+      "web service error %s from:\n  %s\n\n%s",
+      status_code,
+      webserviceUrl,
+      httpcode::http_code(status_code)$explanation
+    )
 
     if ( logger.isInitialized() ) {
       logger.error("Web service failed to respond: %s", webserviceUrl)

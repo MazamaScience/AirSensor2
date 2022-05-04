@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Check if MazamaSpatialUtils has been initialized — spatialIsInitialized • AirSensor2</title>
+<title>Color palettes for PurpleAir — pas_palette • AirSensor2</title>
 
 
 <!-- jquery -->
@@ -39,9 +39,15 @@
 
 
 
-<meta property="og:title" content="Check if MazamaSpatialUtils has been initialized — spatialIsInitialized" />
-<meta property="og:description" content="Logical convenience function to check if
-initializeMazamaSpatialUtils() has been run." />
+<meta property="og:title" content="Color palettes for PurpleAir — pas_palette" />
+<meta property="og:description" content="Generates color palettes for PurpleAir synoptic data with the
+intention of having a reproducible functional color generator. Default palettes
+are available for the following parameters:
+&quot;pm2.5_~&quot;
+&quot;humidity
+&quot;temperature
+
+" />
 
 
 
@@ -112,22 +118,50 @@ initializeMazamaSpatialUtils() has been run." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Check if MazamaSpatialUtils has been initialized</h1>
-    <small class="dont-index">Source: <a href='https://github.com/MazamaScience/AirSensor2/blob/master/R/initializeMazamaSpatialUtils.R'><code>R/initializeMazamaSpatialUtils.R</code></a></small>
-    <div class="hidden name"><code>spatialIsInitialized.Rd</code></div>
+    <h1>Color palettes for PurpleAir</h1>
+    <small class="dont-index">Source: <a href='https://github.com/MazamaScience/AirSensor2/blob/master/R/utils-plot.R'><code>R/utils-plot.R</code></a></small>
+    <div class="hidden name"><code>pas_palette.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Logical convenience function to check if
-<code><a href='initializeMazamaSpatialUtils.html'>initializeMazamaSpatialUtils()</a></code> has been run.</p>
+    <p>Generates color palettes for PurpleAir synoptic data with the
+intention of having a reproducible functional color generator. Default palettes
+are available for the following parameters:</p><ul>
+<li><p>"pm2.5_~"</p></li>
+<li><p>"humidity</p></li>
+<li><p>"temperature</p></li>
+</ul>
+
     </div>
 
-    <pre class="usage"><span class='fu'>spatialIsInitialized</span><span class='op'>(</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>pas_palette</span><span class='op'>(</span>pas <span class='op'>=</span> <span class='cn'>NULL</span>, parameter <span class='op'>=</span> <span class='st'>"pm2.5_60minutes"</span>, paletteName <span class='op'>=</span> <span class='cn'>NULL</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>pas</th>
+      <td><p>PurpleAir Synoptic <em>pas</em> object.</p></td>
+    </tr>
+    <tr>
+      <th>parameter</th>
+      <td><p>Value to generate colors for, e.g. <code>pm2.5_1hour</code>.</p></td>
+    </tr>
+    <tr>
+      <th>paletteName</th>
+      <td><p>Optional name of an RColorBrewer paeltte, <em>e.g.</em>
+<code>"BuPu"</code> or <code>"Greens"</code> to use when a default paleltte is unavailable.</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>Additional arguments passed on to <code>leaflet::color~</code> functions.</p></td>
+    </tr>
+    </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>Logical.</p>
+    <p>An object that consists of a label and color dataframe, and
+calculated color values from PurpleAir sensors</p>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

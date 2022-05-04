@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>General purpose filtering for PurpleAir synoptic objects — pas_filter • AirSensor2</title>
+<title>Leaflet interactive map of PurpleAir sensors — pas_leaflet • AirSensor2</title>
 
 
 <!-- jquery -->
@@ -39,10 +39,19 @@
 
 
 
-<meta property="og:title" content="General purpose filtering for PurpleAir synoptic objects — pas_filter" />
-<meta property="og:description" content="A generalized data filter for pas objects to
-  choose rows/cases where conditions are true. Rows where the condition
-  evaluates to NA are dropped." />
+<meta property="og:title" content="Leaflet interactive map of PurpleAir sensors — pas_leaflet" />
+<meta property="og:description" content="This function creates interactive maps that will be displayed in
+RStudio's 'Viewer' tab.
+Typical usage would be to use the parameter argument to display pm25
+values from one of:
+&quot;pm2.5_10minute&quot;
+&quot;pm2.5_30minute&quot;
+&quot;pm2.5_60minute&quot;
+&quot;pm2.5_6hour&quot;
+&quot;pm2.5_24hour&quot;
+&quot;pm2.5_1week&quot;
+
+" />
 
 
 
@@ -113,18 +122,34 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>General purpose filtering for PurpleAir synoptic objects</h1>
-    <small class="dont-index">Source: <a href='https://github.com/MazamaScience/AirSensor2/blob/master/R/pas_filter.R'><code>R/pas_filter.R</code></a></small>
-    <div class="hidden name"><code>pas_filter.Rd</code></div>
+    <h1>Leaflet interactive map of PurpleAir sensors</h1>
+    <small class="dont-index">Source: <a href='https://github.com/MazamaScience/AirSensor2/blob/master/R/pas_leaflet.R'><code>R/pas_leaflet.R</code></a></small>
+    <div class="hidden name"><code>pas_leaflet.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>A generalized data filter for <em>pas</em> objects to
-  choose rows/cases where conditions are true. Rows where the condition
-  evaluates to NA are dropped.</p>
+    <p>This function creates interactive maps that will be displayed in
+RStudio's 'Viewer' tab.</p>
+<p>Typical usage would be to use the <code>parameter</code> argument to display pm25
+values from one of:</p><ul>
+<li><p>"pm2.5_10minute"</p></li>
+<li><p>"pm2.5_30minute"</p></li>
+<li><p>"pm2.5_60minute"</p></li>
+<li><p>"pm2.5_6hour"</p></li>
+<li><p>"pm2.5_24hour"</p></li>
+<li><p>"pm2.5_1week"</p></li>
+</ul>
+
     </div>
 
-    <pre class="usage"><span class='fu'>pas_filter</span><span class='op'>(</span><span class='va'>pas</span>, <span class='va'>...</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>pas_leaflet</span><span class='op'>(</span>
+  pas <span class='op'>=</span> <span class='cn'>NULL</span>,
+  parameter <span class='op'>=</span> <span class='st'>"pm2.5_60minute"</span>,
+  paletteName <span class='op'>=</span> <span class='cn'>NULL</span>,
+  radius <span class='op'>=</span> <span class='fl'>10</span>,
+  opacity <span class='op'>=</span> <span class='fl'>0.8</span>,
+  maptype <span class='op'>=</span> <span class='st'>"terrain"</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -134,40 +159,66 @@
       <td><p>PurpleAir Synoptic <em>pas</em> object.</p></td>
     </tr>
     <tr>
-      <th>...</th>
-      <td><p>Logical predicates defined in terms of the variables in the
-<code>pas</code>. Multiple conditions are combined with &amp; or seperated by a comma.
-Only rows where the condition evaluates to TRUE are kept.</p></td>
+      <th>parameter</th>
+      <td><p>Value to plot, e.g. <code>pm25_1hr</code>.</p></td>
+    </tr>
+    <tr>
+      <th>paletteName</th>
+      <td><p><span class="pkg">RColorBrewer</span> palette name to use when <code>parameter</code>
+is something other than:</p><ul>
+<li><p>"pm2.5_~"</p></li>
+<li><p>"humidity</p></li>
+<li><p>"temperature</p></li>
+</ul></td>
+    </tr>
+    <tr>
+      <th>radius</th>
+      <td><p>Radius (pixels) of monitor circles.</p></td>
+    </tr>
+    <tr>
+      <th>opacity</th>
+      <td><p>Opacity of monitor circles.</p></td>
+    </tr>
+    <tr>
+      <th>maptype</th>
+      <td><p>Optional name of leaflet ProviderTiles to use, e.g. <code>terrain</code>.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A subset of the incoming <em>pas</em> object.</p>
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+    <p>A leaflet "plot" object which, if not assigned, is rendered in
+Rstudio's 'Viewer' tab.</p>
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <div class='dont-index'><p><a href='pas_filterArea.html'>pas_filterArea</a>, <a href='pas_filterNear.html'>pas_filterNear</a></p></div>
+    <p>The <code>maptype</code> argument is mapped onto leaflet "ProviderTile"
+names. Current mappings include:</p><ol>
+<li><p>"roadmap" -- "OpenStreetMap"</p></li>
+<li><p>"satellite" -- "Esri.WorldImagery"</p></li>
+<li><p>"terrain" -- "Esri.WorldTopoMap"</p></li>
+<li><p>"toner" -- "Stamen.Toner"</p></li>
+</ol>
+
+<p>If a character string not listed above is provided, it will be used as the
+underlying map tile if available. See
+<a href='https://leaflet-extras.github.io/leaflet-providers/'>https://leaflet-extras.github.io/leaflet-providers/</a> for a list of
+"provider tiles" to use as the background map.</p>
+    <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
+
+    <p>The <code>paletteName</code> parameter can take the name of an RColorBrewer
+paeltte, <em>e.g.</em> <code>"BuPu"</code> or <code>"Greens"</code>.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://github.com/MazamaScience/AirSensor2'>AirSensor2</a></span><span class='op'>)</span>
 
-<span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span><span class='op'>(</span><span class='va'>example_pas</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1] 1482</div><div class='input'>
-<span class='co'># Washington</span>
-<span class='va'>WA_pas</span> <span class='op'>&lt;-</span>
-  <span class='va'>example_pas</span> <span class='op'>%&gt;%</span>
-  <span class='fu'>pas_filter</span><span class='op'>(</span><span class='va'>stateCode</span> <span class='op'>==</span> <span class='st'>"WA"</span><span class='op'>)</span>
+<span class='kw'>if</span> <span class='op'>(</span> <span class='fu'><a href='https://rdrr.io/r/base/interactive.html'>interactive</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>)</span> <span class='op'>{</span>
+  <span class='fu'>pas_leaflet</span><span class='op'>(</span><span class='va'>example_pas</span>, parameter <span class='op'>=</span> <span class='st'>"pm2.5_60minute"</span><span class='op'>)</span>
 
-<span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span><span class='op'>(</span><span class='va'>WA_pas</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1] 839</div><div class='input'>
-<span class='co'># Okanogan and Ferry Counties</span>
-<span class='va'>Colville_Tribes_pas</span> <span class='op'>&lt;-</span>
-  <span class='va'>example_pas</span> <span class='op'>%&gt;%</span>
-  <span class='fu'>pas_filter</span><span class='op'>(</span><span class='va'>stateCode</span> <span class='op'>==</span> <span class='st'>"WA"</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'>pas_filter</span><span class='op'>(</span><span class='va'>countyName</span> <span class='op'>%in%</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Okanogan"</span>, <span class='st'>"Ferry"</span><span class='op'>)</span><span class='op'>)</span>
+  <span class='fu'>pas_leaflet</span><span class='op'>(</span><span class='va'>example_pas</span>, parameter <span class='op'>=</span> <span class='st'>"temperature"</span><span class='op'>)</span>
 
-<span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span><span class='op'>(</span><span class='va'>Colville_Tribes_pas</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1] 72</div></pre>
+  <span class='fu'>pas_leaflet</span><span class='op'>(</span><span class='va'>example_pas</span>, parameter <span class='op'>=</span> <span class='st'>"humidity"</span><span class='op'>)</span>
+<span class='op'>}</span>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
