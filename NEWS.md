@@ -1,4 +1,9 @@
 
+# AirSensor2 0.1.2
+
+* Now _Depending_ on **MazamaCoreUtils**
+* Now using APIKey functionality.
+
 # AirSensor2 0.1.1
 
 * Full _pas_ functionality and documentation. Passes checks. 

@@ -1,10 +1,13 @@
 #' @export
 #' @importFrom rlang .data
 #' @importFrom MazamaCoreUtils logger.error logger.debug logger.isInitialized
+#' @importFrom MazamaCoreUtils getAPIKey
 #'
 #' @title Download synoptic data from PurpleAir with newer API
 #'
-#' @param apiReadKey PurpleAir API Read Key.
+#' @param apiReadKey PurpleAir API Read Key. If \code{apiReadKey = NULL}, it
+#' will be obtained using \code{getAPIKey("PurpleAir-read")}.
+#' See \code{MazamaCoreUtils::\link[MazamaCoreUtils:setAPIKey]{setAPIKey}}.
 #' @param maxAge Filter results to only include sensors modified or updated
 #' within the last number of seconds. Using a value of 0 will match sensors of any age.
 #' @param outsideOnly Logical specifying whether to restrict requests to outside sensors only.
@@ -33,7 +36,7 @@
 #'
 #' pas_raw <-
 #'   pas_downloadParseRawData(
-#'     API_READ_KEY,
+#'     apiReadKey = NULL,
 #'     maxAge = 3600 * 24,
 #'     outsideOnly = TRUE,
 #'     west = -125,
@@ -60,6 +63,9 @@ pas_downloadParseRawData <- function(
 
   # ----- Validate parameters --------------------------------------------------
 
+  if ( is.null(apiReadKey) )
+    apiReadKey <- MazamaCoreUtils::getAPIKey("PurpleAir-read")
+
   MazamaCoreUtils::stopIfNull(apiReadKey)
   maxAge <- MazamaCoreUtils::setIfNull(maxAge, 604800)
   MazamaCoreUtils::stopIfNull(outsideOnly)
@@ -68,6 +74,7 @@ pas_downloadParseRawData <- function(
   MazamaCoreUtils::stopIfNull(south)
   MazamaCoreUtils::stopIfNull(north)
   MazamaCoreUtils::stopIfNull(baseUrl)
+
 
   if ( west > east )
     stop("west > east. Please specify longitudes in the correct order.")
