@@ -129,9 +129,8 @@ pas_createNew <- function(
     mask <-
       (SPDF@data$countryCode %in% countryCodes) &
       (SPDF@data$stateCode %in% stateCodes)
-    bbox <-
-      subset(SPDF, mask ) %>%
-      sp::bbox()
+    SPDF <-
+      subset(SPDF, mask)
 
     if ( !is.null(counties) && exists("USCensusCounties") ) {
 
@@ -153,25 +152,23 @@ pas_createNew <- function(
           (SPDF@data$stateCode %in% stateCodes) &
           (SPDF@data$countyName %in% counties)
       }
-      bbox <-
-        subset(SPDF, mask ) %>%
-        sp::bbox()
+      SPDF <-
+        subset(SPDF, mask)
 
     }
 
   } else {
 
     mask <- MazamaSpatialUtils::SimpleCountriesEEZ@data$countryCode %in% countryCodes
-    bbox <-
-      subset(MazamaSpatialUtils::SimpleCountriesEEZ, mask) %>%
-      sp::bbox()
+    SPDF <-
+      subset(MazamaSpatialUtils::SimpleCountriesEEZ, mask)
 
   }
 
-  west <- bbox[1,1]
-  east <- bbox[1,2]
-  south <- bbox[2,1]
-  north <- bbox[2,2]
+  west <- min(SPDF@data$longitude, na.rm = TRUE)
+  east <- max(SPDF@data$longitude, na.rm = TRUE)
+  south <- min(SPDF@data$latitude, na.rm = TRUE)
+  north <- max(SPDF@data$latitude, na.rm = TRUE)
 
   # ----- Load data ------------------------------------------------------------
 

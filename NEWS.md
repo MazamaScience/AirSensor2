@@ -2,7 +2,10 @@
 # AirSensor2 0.1.2
 
 * Now _Depending_ on **MazamaCoreUtils**
+* Added **AirMonitor** dependency.
+* Removed **sp** dependency.
 * Now using APIKey functionality.
+* Added initial vignettes.
 
 # AirSensor2 0.1.1
 

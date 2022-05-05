@@ -1,0 +1,98 @@
+---
+title: "Introduction to AirSensor2"
+author: "Jonathan Callahan"
+date: "2022-05-05"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Introduction to AirSensor2}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, fig.width = 7, fig.height = 5)
+```
+
+## Installation
+
+Install the latest version from GitHub with:
+
+`devtools::install_github('mazamascience/AirSensor2')`
+
+## Data Models
+
+**Synoptic data** (many measurements at a single point in time) are stored as a
+tibble (modern dataframe) for easy use with **dplyr**.
+
+**Time series data** are stored using the [MazamaTimeSeries](https://mazamascience.github.io/MazamaTimeSeries/)
+**S**ingle**T**ime**S**eries (_sts_) data model:
+
+Time series data from a single environmental sensor typically consists of multiple 
+parameters measured at successive times. This data is stored in an R list 
+containing two dataframes.
+
+`sts$meta` – 1 row = unique device-deployment; cols = device/location metadata
+
+`sts$data` – rows = UTC times; cols = measured parameters (plus an additional datetime column)
+
+
+## API Keys
+
+Many data providers require an API key before you can access their data. When
+this is the case, **AirSensor2** data access functions will have an API key
+argument.
+
+The package also allows users to specify API keys once per R session using the
+`setAPIKey()` function. Each data access function will require it's own named
+API key. Specific names for each key are described in the function documentation.
+
+Example usage:
+
+```
+library(AirSensor2)
+
+setAPIKey("PurpleAir-read", "<MY_PURPLE_AIR_READ_KEY>")
+
+WA_pas <-
+  pas_createNew(
+    countryCodes = "US",
+    stateCodes = "WA",
+    lookbackDays = 1,
+    outsideOnly = TRUE
+  )
+```
+
+## Function classes
+
+The **AirSensor2** packages handles variety of data sources within the world of 
+low-cost sensors with classes of functions tailored to the specifics of each
+data source. Functions with names of the form `<class>_<action>()` are designed
+to perform a particular _\<action>_ on a particular _\<class>_ of data.
+
+Currently supported classes of data inclucde:
+
+* `pas` -- **P**uruple**A**ir**S**ynoptic. Data for many PurpleAir sensors
+at a specific point in time. Each _pas_ object is a simple tibble.
+* `pat` -- **P**uruple**A**ir**T**imeseries. Time series data for a specific
+PurpleAir sensor. Each _pat_ object is a list with two tibbles: `meta` and `data`.
+
+## Data pipelines
+
+We encourage people to embrace "data pipeline" style coding as encouraged by
+**dplyr** and related packages. The special `%>%` operator uses the output
+of one function as the first argument of the next function, thus allowing for 
+easy "chaining" of results. Many of the functions supporting a particular
+class take an object of that class as their first argument and return an object
+of that class. As a result, they can be chained together as in:
+
+```
+Colville_Tribes_pas <-
+  example_pas %>%
+  pas_filter(stateCode == "WA") %>%
+  pas_filter(countyName %in% c("Okanogan", "Ferry"))
+```
+
+----
+
+Best of luck analyzing your local air quality data!
+

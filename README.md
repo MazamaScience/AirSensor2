@@ -14,9 +14,18 @@ produced by 'PurpleAir' <https://www2.purpleair.com>.
 ## Background
 
 The **AirSensor2** package is a refactoring of the core, data access and 
-manipulation functionality found in the **AirSensor** package. The goal in 
+manipulation functionality found in the 
+[AirSensor](https://mazamascience.github.io/AirSensor/) package. The goal in 
 **AirSensor2** is to create a lean and generic package focused on data ingest
 and basic data manipulation.
+
+Development of the original **AirSensor** package was supported by the 
+[South Coast Air Quality Management District](http://scaqmd.org)
+with funds from a US EPA STAR grant.
+
+Current development of **AirSensor2** is supported by the US Forest Service
+[AirFire Research Team](https://www.airfire.org).
+
 
 ----
 

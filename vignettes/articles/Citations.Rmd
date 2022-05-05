@@ -1,0 +1,35 @@
+---
+title: "Citations"
+author: "Jonathan Callahan"
+date: "2022-05-05"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+The **AirSensor2** package's predecessor, the 
+[AirSensor](https://github.com/MazamaScience/AirSensor)**Airsensor** package
+is widely used in air quality analysis throughout North America and the world.
+This document provides links to projects and publications that mention the
+**AirSensor** and **AirSensor2** packages.
+
+### Publications using the **AirSensor** package
+
+* **Mar, 2022 -- Sensors for Indoor and Outdoor Air Quality Monitoring: From Research to Citizen Science Applications**<br>
+https://doi.org/10.3390/s22072543<br>
+Towards the Development of a Sensor Educational Toolkit to Support Community and Citizen Science
+
+* **Feb, 2022 -- Environmental Modeling & Software**<br>
+https://doi.org/10.1016/j.envsoft.2021.105256<br>
+AirSensor v1.0: Enhancements to the open-source R package to enable deep understanding of the long-term performance and reliability of PurpleAir sensors
+
+* **Jan, 2022 -- Journal of Aerosol Science**<br>
+https://doi.org/10.1016/j.jaerosci.2021.105872<br>
+Tutorial: Guidelines for implementing low-cost sensor networks for aerosol monitoring
+
+* **Dec, 2020 -- Environmental Modeling & Software**<br>
+https://doi.org/10.1016/j.envsoft.2020.104832<br>
+The AirSensor open-source R-package and DataViewer web application for interpreting community data collected by low-cost sensor networks
+

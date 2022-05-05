@@ -1,12 +1,12 @@
 Type: Package
 Package: AirSensor2
 Version: 0.1.2
-Title: Process and Display Air Quality Data from Air Quality Sensors
+Title: Process and Display Data from Air Quality Sensors
 Authors@R: c(
     person("Jonathan", "Callahan", email="jonathan.s.callahan@gmail.com", role=c("aut","cre"))
     )
 Maintainer: Jonathan Callahan <jonathan.s.callahan@gmail.com>
-Description: Process and display data from air quality sensors.
+Description: Process and display data from low-cost air quality sensors.
     Initial focus is on PM2.5 measurements from sensors produced by 'PurpleAir'
     <https://www2.purpleair.com>.
 License: GPL-3
@@ -16,6 +16,7 @@ Depends:
     R (>= 4.0.0),
     MazamaCoreUtils (>= 0.4.10)
 Imports:
+    AirMonitor (>= 0.2.2),
     countrycode,
     dplyr (>= 1.0.0),
     geodist,
@@ -28,7 +29,6 @@ Imports:
     MazamaLocationUtils (>= 0.3.5),
     MazamaSpatialUtils (>= 0.7.6),
     rlang,
-    sp,
     stringr
 Suggests:
     knitr,

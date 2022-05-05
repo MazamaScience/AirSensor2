@@ -191,11 +191,6 @@ pas_leaflet <- function(
     zoom <- 12
   }
 
-  # Convert locations to SpatialPointsDataFrame
-  # pas <- pas[!is.na(pas$latitude),]
-  # SPDF <- sp::SpatialPointsDataFrame(coords = cbind(pas$longitude,pas$latitude),
-  #                                    data = as.data.frame(pas))
-
   # Convert maptype to a character string that addProviderTiles can read
   if ( missing(maptype) || maptype == 'terrain') {
     providerTiles <- "Esri.WorldTopoMap"
