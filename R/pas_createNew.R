@@ -165,10 +165,12 @@ pas_createNew <- function(
 
   }
 
-  west <- min(SPDF@data$longitude, na.rm = TRUE)
-  east <- max(SPDF@data$longitude, na.rm = TRUE)
-  south <- min(SPDF@data$latitude, na.rm = TRUE)
-  north <- max(SPDF@data$latitude, na.rm = TRUE)
+  bbox <- .my_bbox(SPDF)
+
+  west <- bbox[1,1]
+  east <- bbox[1,2]
+  south <- bbox[2,1]
+  north <- bbox[2,2]
 
   # ----- Load data ------------------------------------------------------------
 
@@ -212,7 +214,37 @@ pas_createNew <- function(
 
 }
 
-# ===== DEBUGGING ============================================================
+# ===== INTERNAL FUNCTIONS =====================================================
+
+# NOTE:  We implement our own version of sp::bbox so that we don't have to
+# NOTE:  include the *sp* package in our imports.  The *sp* package is
+# NOTE:  deprecated in favor of *sf* but *MazamaSpatialUtils* has not yet
+# NOTE:  switched over. (2022-05-10)
+
+# See https://github.com/edzer/sp/blob/main/R/SpatialPolygons-methods.R
+.my_bbox <- function(SPDF) {
+
+  MazamaCoreUtils::stopIfNull(SPDF)
+
+  if ( !"SpatialPolygonsDataFrame" %in% class(SPDF) )
+    stop("SPDF is not a SpatialPolygonsDataFrame")
+
+  polygonsRange <- function(obj, column) {
+    range(c(sapply(obj@Polygons, function(x) range(x@coords[,column]))))
+  }
+
+  xRange <- range(c(sapply(SPDF@polygons, polygonsRange, 1)))
+  yRange <- range(c(sapply(SPDF@polygons, polygonsRange, 2)))
+
+  bbox <- rbind(x = xRange, y = yRange)
+  colnames(bbox) <- c("min", "max")
+
+  return(bbox)
+
+}
+
+
+# ===== DEBUGGING ==============================================================
 
 if ( FALSE ) {
 
