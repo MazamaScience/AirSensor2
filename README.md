@@ -13,21 +13,27 @@ produced by 'PurpleAir' <https://www2.purpleair.com>.
 
 ## Background
 
-The **AirSensor2** package is a refactoring of the core, data access and 
+The **AirSensor2** package is a refactoring of the core data access and 
 manipulation functionality found in the 
 [AirSensor](https://mazamascience.github.io/AirSensor/) package. The goal in 
-**AirSensor2** is to create a lean and generic package focused on data ingest
-and basic data manipulation.
+**AirSensor2** is to create a lean, generic package that is more easily 
+maintained and is focused on data ingest and basic data manipulation.
+
+While initially focused on data from PurpleAir sensors, **AirSensor2** 
+aims to provide tools that can be used with a wide variety of low-cost
+air quality sensors so that local communities can more easily access, QC and
+visualize local air quality.
 
 Development of the original **AirSensor** package was supported by the 
 [South Coast Air Quality Management District](http://scaqmd.org)
-with funds from a US EPA STAR grant.
+with funds from a US EPA STAR grant. Additional support was provided by the US 
+Forest Service [AirFire Research Team](https://www.airfire.org).
 
-Current development of **AirSensor2** is supported by the US Forest Service
-[AirFire Research Team](https://www.airfire.org).
-
+The **AirSensor2** is currently seeking sponsors for further development.
 
 ----
 
-This R package was created with funding from the USFS 
-[AirFire Research Team](https://www.airfire.org).
+Initial development of this R package has been supported with funding from the 
+folloing institutions:
+
+* USFS [AirFire Research Team](https://www.airfire.org).
