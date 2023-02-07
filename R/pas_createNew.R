@@ -125,23 +125,22 @@ pas_createNew <- function(
 
   if ( !is.null(stateCodes) && exists("NaturalEarthAdm1") ) {
 
-    SPDF <- get("NaturalEarthAdm1") # To pass R CMD check
+    SFDF <- get("NaturalEarthAdm1") # To pass R CMD check
     mask <-
-      (SPDF@data$countryCode %in% countryCodes) &
-      (SPDF@data$stateCode %in% stateCodes)
-    SPDF <-
-      subset(SPDF, mask)
+      (SFDF$countryCode %in% countryCodes) &
+      (SFDF$stateCode %in% stateCodes)
+    SFDF <- subset(SFDF, mask)
 
     if ( !is.null(counties) && exists("USCensusCounties") ) {
 
-      SPDF <- get("USCensusCounties") # To pass R CMD check
+      SFDF <- get("USCensusCounties") # To pass R CMD check
       counties <- as.character(counties)
       isFIPS <- stringr::str_detect(counties[1], "[0-9]{5}")
 
       if ( isFIPS ) {
         mask <-
-          (SPDF@data$stateCode %in% stateCodes) &
-          (SPDF@data$countyFIPS %in% counties)
+          (SFDF$stateCode %in% stateCodes) &
+          (SFDF$countyFIPS %in% counties)
       } else {
         # Handle input inconsistencies
         counties <-
@@ -149,28 +148,27 @@ pas_createNew <- function(
           stringr::str_replace(" County", "")
         # Limit to valid counties
         mask <-
-          (SPDF@data$stateCode %in% stateCodes) &
-          (SPDF@data$countyName %in% counties)
+          (SFDF$stateCode %in% stateCodes) &
+          (SFDF$countyName %in% counties)
       }
-      SPDF <-
-        subset(SPDF, mask)
+      SFDF <- subset(SFDF, mask)
 
     }
 
   } else {
 
-    mask <- MazamaSpatialUtils::SimpleCountriesEEZ@data$countryCode %in% countryCodes
-    SPDF <-
+    mask <- MazamaSpatialUtils::SimpleCountriesEEZ$countryCode %in% countryCodes
+    SFDF <-
       subset(MazamaSpatialUtils::SimpleCountriesEEZ, mask)
 
   }
 
-  bbox <- .my_bbox(SPDF)
+  bbox <- sf::st_bbox(SFDF)
 
-  west <- bbox[1,1]
-  east <- bbox[1,2]
-  south <- bbox[2,1]
-  north <- bbox[2,2]
+  west <- bbox$xmin
+  east <- bbox$xmax
+  south <- bbox$ymin
+  north <- bbox$ymax
 
   # ----- Load data ------------------------------------------------------------
 
@@ -213,36 +211,6 @@ pas_createNew <- function(
   return(pas)
 
 }
-
-# ===== INTERNAL FUNCTIONS =====================================================
-
-# NOTE:  We implement our own version of sp::bbox so that we don't have to
-# NOTE:  include the *sp* package in our imports.  The *sp* package is
-# NOTE:  deprecated in favor of *sf* but *MazamaSpatialUtils* has not yet
-# NOTE:  switched over. (2022-05-10)
-
-# See https://github.com/edzer/sp/blob/main/R/SpatialPolygons-methods.R
-.my_bbox <- function(SPDF) {
-
-  MazamaCoreUtils::stopIfNull(SPDF)
-
-  if ( !"SpatialPolygonsDataFrame" %in% class(SPDF) )
-    stop("SPDF is not a SpatialPolygonsDataFrame")
-
-  polygonsRange <- function(obj, column) {
-    range(c(sapply(obj@Polygons, function(x) range(x@coords[,column]))))
-  }
-
-  xRange <- range(c(sapply(SPDF@polygons, polygonsRange, 1)))
-  yRange <- range(c(sapply(SPDF@polygons, polygonsRange, 2)))
-
-  bbox <- rbind(x = xRange, y = yRange)
-  colnames(bbox) <- c("min", "max")
-
-  return(bbox)
-
-}
-
 
 # ===== DEBUGGING ==============================================================
 

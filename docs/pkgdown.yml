@@ -1,9 +1,9 @@
-pandoc: 2.11.4
-pkgdown: 1.6.1
+pandoc: 2.19.2
+pkgdown: 2.0.6
 pkgdown_sha: ~
 articles:
   AirSensor2: AirSensor2.html
   Developer_Style_Guide: Developer_Style_Guide.html
-  articles/Citations: Citations.html
-last_built: 2022-05-05T15:07Z
+  Citations: Citations.html
+last_built: 2023-02-07T17:13Z
 

@@ -1,4 +1,9 @@
 
+# AirSensor2 0.1.3
+
+* Updated to use **sf** based **MazamaSpatialUtils** >= 0.8.
+* Added **sf** dependency.
+
 # AirSensor2 0.1.2
 
 * Now _Depending_ on **MazamaCoreUtils**

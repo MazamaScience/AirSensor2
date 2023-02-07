@@ -19,6 +19,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -31,18 +33,12 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AirSensor2</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.3</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
-<li>
-  <a href="../index.html">
-    <span class="fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
 <li>
   <a href="../articles/AirSensor2.html">Get started</a>
 </li>
@@ -50,7 +46,7 @@
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -60,7 +56,7 @@
       <a href="../articles/Developer_Style_Guide.html">Developer Style Guide</a>
     </li>
     <li>
-      <a href="../articles/articles/Citations.html">Citations</a>
+      <a href="../articles/Citations.html">Citations</a>
     </li>
   </ul>
 </li>
@@ -70,7 +66,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/MazamaScience/AirSensor2/">
+  <a href="https://github.com/MazamaScience/AirSensor2/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -85,74 +81,106 @@
 
       
 
-      </header><script src="AirSensor2_files/header-attrs-2.10/header-attrs.js"></script><div class="row">
+      </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Introduction to AirSensor2</h1>
-                        <h4 class="author">Jonathan Callahan</h4>
+                        <h4 data-toc-skip class="author">Jonathan
+Callahan</h4>
             
-            <h4 class="date">2022-05-05</h4>
+            <h4 data-toc-skip class="date">2022-05-05</h4>
       
-      <small class="dont-index">Source: <a href="https://github.com/MazamaScience/AirSensor2/blob/master/vignettes/AirSensor2.Rmd"><code>vignettes/AirSensor2.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/MazamaScience/AirSensor2/blob/HEAD/vignettes/AirSensor2.Rmd" class="external-link"><code>vignettes/AirSensor2.Rmd</code></a></small>
       <div class="hidden name"><code>AirSensor2.Rmd</code></div>
 
     </div>
 
     
     
-<div id="installation" class="section level2">
-<h2 class="hasAnchor">
-<a href="#installation" class="anchor"></a>Installation</h2>
+<div class="section level2">
+<h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
+</h2>
 <p>Install the latest version from GitHub with:</p>
-<p><code><a href="https://devtools.r-lib.org/reference/remote-reexports.html">devtools::install_github('mazamascience/AirSensor2')</a></code></p>
+<p><code>devtools::install_github('mazamascience/AirSensor2')</code></p>
 </div>
-<div id="data-models" class="section level2">
-<h2 class="hasAnchor">
-<a href="#data-models" class="anchor"></a>Data Models</h2>
-<p><strong>Synoptic data</strong> (many measurements at a single point in time) are stored as a tibble (modern dataframe) for easy use with <strong>dplyr</strong>.</p>
-<p><strong>Time series data</strong> are stored using the <a href="https://mazamascience.github.io/MazamaTimeSeries/">MazamaTimeSeries</a> <strong>S</strong>ingle<strong>T</strong>ime<strong>S</strong>eries (<em>sts</em>) data model:</p>
-<p>Time series data from a single environmental sensor typically consists of multiple parameters measured at successive times. This data is stored in an R list containing two dataframes.</p>
-<p><code>sts$meta</code> – 1 row = unique device-deployment; cols = device/location metadata</p>
-<p><code>sts$data</code> – rows = UTC times; cols = measured parameters (plus an additional datetime column)</p>
+<div class="section level2">
+<h2 id="data-models">Data Models<a class="anchor" aria-label="anchor" href="#data-models"></a>
+</h2>
+<p><strong>Synoptic data</strong> (many measurements at a single point
+in time) are stored as a tibble (modern dataframe) for easy use with
+<strong>dplyr</strong>.</p>
+<p><strong>Time series data</strong> are stored using the <a href="https://mazamascience.github.io/MazamaTimeSeries/" class="external-link">MazamaTimeSeries</a>
+<strong>S</strong>ingle<strong>T</strong>ime<strong>S</strong>eries
+(<em>sts</em>) data model:</p>
+<p>Time series data from a single environmental sensor typically
+consists of multiple parameters measured at successive times. This data
+is stored in an R list containing two dataframes.</p>
+<p><code>sts$meta</code> – 1 row = unique device-deployment; cols =
+device/location metadata</p>
+<p><code>sts$data</code> – rows = UTC times; cols = measured parameters
+(plus an additional datetime column)</p>
 </div>
-<div id="api-keys" class="section level2">
-<h2 class="hasAnchor">
-<a href="#api-keys" class="anchor"></a>API Keys</h2>
-<p>Many data providers require an API key before you can access their data. When this is the case, <strong>AirSensor2</strong> data access functions will have an API key argument.</p>
-<p>The package also allows users to specify API keys once per R session using the <code>setAPIKey()</code> function. Each data access function will require it’s own named API key. Specific names for each key are described in the function documentation.</p>
+<div class="section level2">
+<h2 id="api-keys">API Keys<a class="anchor" aria-label="anchor" href="#api-keys"></a>
+</h2>
+<p>Many data providers require an API key before you can access their
+data. When this is the case, <strong>AirSensor2</strong> data access
+functions will have an API key argument.</p>
+<p>The package also allows users to specify API keys once per R session
+using the <code><a href="https://rdrr.io/pkg/MazamaCoreUtils/man/setAPIKey.html" class="external-link">setAPIKey()</a></code> function. Each data access function
+will require it’s own named API key. Specific names for each key are
+described in the function documentation.</p>
 <p>Example usage:</p>
-<pre><code><a href="https://github.com/MazamaScience/AirSensor2">library(AirSensor2)
-
-setAPIKey("PurpleAir-read", "&lt;MY_PURPLE_AIR_READ_KEY&gt;")
-
-WA_pas &lt;-
-  pas_createNew(
-    countryCodes = "US",
-    stateCodes = "WA",
-    lookbackDays = 1,
-    outsideOnly = TRUE
-  )</a></code></pre>
+<pre><code><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/MazamaScience/AirSensor2" class="external-link">AirSensor2</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/MazamaCoreUtils/man/setAPIKey.html" class="external-link">setAPIKey</a></span><span class="op">(</span><span class="st">"PurpleAir-read"</span>, <span class="st">"&lt;MY_PURPLE_AIR_READ_KEY&gt;"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">WA_pas</span> <span class="op">&lt;-</span></span>
+<span>  <span class="fu"><a href="../reference/pas_createNew.html">pas_createNew</a></span><span class="op">(</span></span>
+<span>    countryCodes <span class="op">=</span> <span class="st">"US"</span>,</span>
+<span>    stateCodes <span class="op">=</span> <span class="st">"WA"</span>,</span>
+<span>    lookbackDays <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>    outsideOnly <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span>  <span class="op">)</span></span></code></pre>
 </div>
-<div id="function-classes" class="section level2">
-<h2 class="hasAnchor">
-<a href="#function-classes" class="anchor"></a>Function classes</h2>
-<p>The <strong>AirSensor2</strong> packages handles variety of data sources within the world of low-cost sensors with classes of functions tailored to the specifics of each data source. Functions with names of the form <code>&lt;class&gt;_&lt;action&gt;()</code> are designed to perform a particular <em>&lt;action&gt;</em> on a particular <em>&lt;class&gt;</em> of data.</p>
+<div class="section level2">
+<h2 id="function-classes">Function classes<a class="anchor" aria-label="anchor" href="#function-classes"></a>
+</h2>
+<p>The <strong>AirSensor2</strong> packages handles variety of data
+sources within the world of low-cost sensors with classes of functions
+tailored to the specifics of each data source. Functions with names of
+the form <code>&lt;class&gt;_&lt;action&gt;()</code> are designed to
+perform a particular <em>&lt;action&gt;</em> on a particular
+<em>&lt;class&gt;</em> of data.</p>
 <p>Currently supported classes of data inclucde:</p>
 <ul>
 <li>
-<code>pas</code> – <strong>P</strong>uruple<strong>A</strong>ir<strong>S</strong>ynoptic. Data for many PurpleAir sensors at a specific point in time. Each <em>pas</em> object is a simple tibble.</li>
+<code>pas</code> –
+<strong>P</strong>uruple<strong>A</strong>ir<strong>S</strong>ynoptic.
+Data for many PurpleAir sensors at a specific point in time. Each
+<em>pas</em> object is a simple tibble.</li>
 <li>
-<code>pat</code> – <strong>P</strong>uruple<strong>A</strong>ir<strong>T</strong>imeseries. Time series data for a specific PurpleAir sensor. Each <em>pat</em> object is a list with two tibbles: <code>meta</code> and <code>data</code>.</li>
+<code>pat</code> –
+<strong>P</strong>uruple<strong>A</strong>ir<strong>T</strong>imeseries.
+Time series data for a specific PurpleAir sensor. Each <em>pat</em>
+object is a list with two tibbles: <code>meta</code> and
+<code>data</code>.</li>
 </ul>
 </div>
-<div id="data-pipelines" class="section level2">
-<h2 class="hasAnchor">
-<a href="#data-pipelines" class="anchor"></a>Data pipelines</h2>
-<p>We encourage people to embrace “data pipeline” style coding as encouraged by <strong>dplyr</strong> and related packages. The special <code><a href="../reference/%&gt;%.html">%&gt;%</a></code> operator uses the output of one function as the first argument of the next function, thus allowing for easy “chaining” of results. Many of the functions supporting a particular class take an object of that class as their first argument and return an object of that class. As a result, they can be chained together as in:</p>
-<pre><code>Colville_Tribes_pas &lt;-
-  example_pas %&gt;%
-  pas_filter(stateCode == "WA") %&gt;%
-  pas_filter(countyName %in% c("Okanogan", "Ferry"))</code></pre>
+<div class="section level2">
+<h2 id="data-pipelines">Data pipelines<a class="anchor" aria-label="anchor" href="#data-pipelines"></a>
+</h2>
+<p>We encourage people to embrace “data pipeline” style coding as
+encouraged by <strong>dplyr</strong> and related packages. The special
+<code>%&gt;%</code> operator uses the output of one function as the
+first argument of the next function, thus allowing for easy “chaining”
+of results. Many of the functions supporting a particular class take an
+object of that class as their first argument and return an object of
+that class. As a result, they can be chained together as in:</p>
+<pre><code><span><span class="va">Colville_Tribes_pas</span> <span class="op">&lt;-</span></span>
+<span>  <span class="va">example_pas</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/pas_filter.html">pas_filter</a></span><span class="op">(</span><span class="va">stateCode</span> <span class="op">==</span> <span class="st">"WA"</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/pas_filter.html">pas_filter</a></span><span class="op">(</span><span class="va">countyName</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Okanogan"</span>, <span class="st">"Ferry"</span><span class="op">)</span><span class="op">)</span></span></code></pre>
 <hr>
 <p>Best of luck analyzing your local air quality data!</p>
 </div>
@@ -169,11 +197,13 @@ WA_pas &lt;-
 
 
       <footer><div class="copyright">
-  <p>Developed by Jonathan Callahan.</p>
+  <p></p>
+<p>Developed by Jonathan Callahan.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer>
@@ -181,6 +211,8 @@ WA_pas &lt;-
 
   
 
+
+  
 
   </body>
 </html>
