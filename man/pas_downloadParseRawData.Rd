@@ -2,11 +2,11 @@
 % Please edit documentation in R/pas_downloadParseRawData.R
 \name{pas_downloadParseRawData}
 \alias{pas_downloadParseRawData}
-\title{Download synoptic data from PurpleAir with newer API}
+\title{Download synoptic data from PurpleAir}
 \usage{
 pas_downloadParseRawData(
   apiReadKey = NULL,
-  maxAge = 604800,
+  maxAge = 3600 * 24 * 7,
   outsideOnly = TRUE,
   west = NULL,
   east = NULL,
@@ -20,8 +20,8 @@ pas_downloadParseRawData(
 will be obtained using \code{getAPIKey("PurpleAir-read")}.
 See \code{MazamaCoreUtils::\link[MazamaCoreUtils:setAPIKey]{setAPIKey}}.}
 
-\item{maxAge}{Filter results to only include sensors modified or updated
-within the last number of seconds. Using a value of 0 will match sensors of any age.}
+\item{maxAge}{Number of seconds used to filter results to only include sensors
+modified or updated within the \code{maxAge} seconds. Using a value of 0 will match all sensors.}
 
 \item{outsideOnly}{Logical specifying whether to restrict requests to outside sensors only.}
 
@@ -39,11 +39,12 @@ within the last number of seconds. Using a value of 0 will match sensors of any 
 Dataframe of synoptic PurpleAir data.
 }
 \description{
-Download and parse synoptic data for the PurpleAir network
-of particulate sensors.
+Download and parse synoptic data for PurpleAir within the
+specified region.
 
-The synoptic data provides a view of the entire PurpleAir network and
-includes both metadata and recent PM2.5 averages for each deployed sensor.
+The synoptic data provides access to data from many PurpleAir sensors at
+a moment in time and includes both metadata and recent PM2.5 averages for
+each sensor.
 }
 \examples{
 \donttest{
@@ -54,7 +55,7 @@ library(AirSensor2)
 
 pas_raw <-
   pas_downloadParseRawData(
-    apiReadKey = NULL,
+    apiReadKey = API_READ_KEY,
     maxAge = 3600 * 24,
     outsideOnly = TRUE,
     west = -125,
@@ -69,5 +70,13 @@ View(pas_raw[1:100,])
 }
 }
 \references{
+\href{https://www2.purpleair.com}{PurpleAir}
+
 \href{https://api.purpleair.com}{PurpleAir API}
+
+\href{https://www2.purpleair.com/policies/terms-of-service}{PurpleAir Terms of service}
+
+\href{https://www2.purpleair.com/pages/license}{PurpleAir Data license}
+
+\href{https://www2.purpleair.com/pages/attribution}{PurpleAir Data Attribution}
 }

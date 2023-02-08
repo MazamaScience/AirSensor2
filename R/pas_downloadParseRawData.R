@@ -3,13 +3,13 @@
 #' @importFrom MazamaCoreUtils logger.error logger.debug logger.isInitialized
 #' @importFrom MazamaCoreUtils getAPIKey
 #'
-#' @title Download synoptic data from PurpleAir with newer API
+#' @title Download synoptic data from PurpleAir
 #'
 #' @param apiReadKey PurpleAir API Read Key. If \code{apiReadKey = NULL}, it
 #' will be obtained using \code{getAPIKey("PurpleAir-read")}.
 #' See \code{MazamaCoreUtils::\link[MazamaCoreUtils:setAPIKey]{setAPIKey}}.
-#' @param maxAge Filter results to only include sensors modified or updated
-#' within the last number of seconds. Using a value of 0 will match sensors of any age.
+#' @param maxAge Number of seconds used to filter results to only include sensors
+#' modified or updated within the \code{maxAge} seconds. Using a value of 0 will match all sensors.
 #' @param outsideOnly Logical specifying whether to restrict requests to outside sensors only.
 #' @param west Longitude of the western edge of the bounding box in which to find sensors.
 #' @param east Longitude of the eastern edge of the bounding box in which to find sensors.
@@ -19,13 +19,18 @@
 #'
 #' @return Dataframe of synoptic PurpleAir data.
 #'
-#' @description Download and parse synoptic data for the PurpleAir network
-#' of particulate sensors.
+#' @description Download and parse synoptic data for PurpleAir within the
+#' specified region.
 #'
-#' The synoptic data provides a view of the entire PurpleAir network and
-#' includes both metadata and recent PM2.5 averages for each deployed sensor.
+#' The synoptic data provides access to data from many PurpleAir sensors at
+#' a moment in time and includes both metadata and recent PM2.5 averages for
+#' each sensor.
 #'
+#' @references \href{https://www2.purpleair.com}{PurpleAir}
 #' @references \href{https://api.purpleair.com}{PurpleAir API}
+#' @references \href{https://www2.purpleair.com/policies/terms-of-service}{PurpleAir Terms of service}
+#' @references \href{https://www2.purpleair.com/pages/license}{PurpleAir Data license}
+#' @references \href{https://www2.purpleair.com/pages/attribution}{PurpleAir Data Attribution}
 #'
 #' @examples
 #' \donttest{
@@ -36,7 +41,7 @@
 #'
 #' pas_raw <-
 #'   pas_downloadParseRawData(
-#'     apiReadKey = NULL,
+#'     apiReadKey = API_READ_KEY,
 #'     maxAge = 3600 * 24,
 #'     outsideOnly = TRUE,
 #'     west = -125,
@@ -52,7 +57,7 @@
 
 pas_downloadParseRawData <- function(
   apiReadKey = NULL,
-  maxAge = 604800,
+  maxAge = 3600 * 24 * 7,
   outsideOnly = TRUE,
   west = NULL,
   east = NULL,
@@ -67,7 +72,7 @@ pas_downloadParseRawData <- function(
     apiReadKey <- MazamaCoreUtils::getAPIKey("PurpleAir-read")
 
   MazamaCoreUtils::stopIfNull(apiReadKey)
-  maxAge <- MazamaCoreUtils::setIfNull(maxAge, 604800)
+  maxAge <- MazamaCoreUtils::setIfNull(maxAge, 3600 * 7 * 24)
   MazamaCoreUtils::stopIfNull(outsideOnly)
   MazamaCoreUtils::stopIfNull(west)
   MazamaCoreUtils::stopIfNull(east)
@@ -75,12 +80,19 @@ pas_downloadParseRawData <- function(
   MazamaCoreUtils::stopIfNull(north)
   MazamaCoreUtils::stopIfNull(baseUrl)
 
+  # Ensure correct order of longitudes
+  if ( west > east ) {
+    a <- east
+    east <- west
+    west <- a
+  }
 
-  if ( west > east )
-    stop("west > east. Please specify longitudes in the correct order.")
-
-  if ( south > north)
-    stop("south > north. Please specify latitutdes in the correct order.")
+  # Ensure correct order of latitudes
+  if ( south > north) {
+    a <- north
+    north <- south
+    south <- a
+  }
 
   # ----- Request data ---------------------------------------------------------
 
@@ -154,8 +166,7 @@ pas_downloadParseRawData <- function(
     queryList$location_type <- 0
   }
 
-  # NOTE:  using Hadley Wickham style:
-  # NOTE:  https://github.com/hadley/httr/blob/master/vignettes/quickstart.Rmd
+  # NOTE:  https://httr.r-lib.org/articles/quickstart.html
   r <-
     httr::GET(
       webserviceUrl,

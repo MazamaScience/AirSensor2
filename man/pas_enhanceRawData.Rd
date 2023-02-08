@@ -29,7 +29,7 @@ dataframe compatible with the \pkg{MazamaLocationUtils} package.
 
 Steps include:
 
-1) Replace variable with more consistent, human readable names.
+1) Replace variable names with more consistent, human readable names.
 
 2) Add spatial metadata for each sensor including:
 \itemize{
@@ -46,14 +46,25 @@ Steps include:
 }
 
 Filtering by country can speed up the process of enhancement and may be
-performed by providing a vector ISO country codes to the \code{countryCodes}
+performed by providing a vector of ISO country codes to the \code{countryCodes}
 argument. By default, no subsetting is performed.
 
-Uses may also limit results by specifying \code{stateCodes} when
+Users may also limit results by specifying \code{stateCodes} when
 \code{countryCodes} is limited to a single country.
+
+When a single US state is specified, named \code{counties} may be specified
+to further limit the results.
 }
 \references{
+\href{https://www2.purpleair.com}{PurpleAir}
+
 \href{https://api.purpleair.com/}{PurpleAir API}
+
+\href{https://www2.purpleair.com/policies/terms-of-service}{PurpleAir Terms of service}
+
+\href{https://www2.purpleair.com/pages/license}{PurpleAir Data license}
+
+\href{https://www2.purpleair.com/pages/attribution}{PurpleAir Data Attribution}
 }
 \seealso{
 \link{pas_downloadParseRawData}

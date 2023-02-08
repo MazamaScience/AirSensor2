@@ -60,5 +60,13 @@ showAPIKeys()
 
 }
 \references{
+\href{https://www2.purpleair.com}{PurpleAir}
+
 \href{https://api.purpleair.com/}{PurpleAir API}
+
+\href{https://www2.purpleair.com/policies/terms-of-service}{PurpleAir Terms of service}
+
+\href{https://www2.purpleair.com/pages/license}{PurpleAir Data license}
+
+\href{https://www2.purpleair.com/pages/attribution}{PurpleAir Data Attribution}
 }

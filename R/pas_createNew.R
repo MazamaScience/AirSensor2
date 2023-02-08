@@ -11,7 +11,7 @@
 #'
 #' 1) Download and parse synoptic data
 #'
-#' 2) Replace variable with more consistent, more human readable names.
+#' 2) Replace variable names with more consistent, more human readable names.
 #'
 #' 3) Add spatial metadata for each sensor including:
 #' \itemize{
@@ -38,12 +38,18 @@
 #' @param lookbackDays Number of days to "look back" for valid data. Data are
 #' filtered to only include sensors with data more recent than \code{lookbackDays} ago.
 #' @param outsideOnly Logical specifying whether to restrict requests to outside sensors only.
-#' @param baseUrl Base URL for synoptic data.
+#' @param baseUrl Base URL for the PurpleAir API.
 #'
 #' @return A PurpleAir Synoptic \emph{pas} object.
 #'
 #' @seealso \link{pas_downloadParseRawData}
 #' @seealso \link{pas_enhanceRawData}
+#'
+#' @references \href{https://www2.purpleair.com}{PurpleAir}
+#' @references \href{https://api.purpleair.com/}{PurpleAir API}
+#' @references \href{https://www2.purpleair.com/policies/terms-of-service}{PurpleAir Terms of service}
+#' @references \href{https://www2.purpleair.com/pages/license}{PurpleAir Data license}
+#' @references \href{https://www2.purpleair.com/pages/attribution}{PurpleAir Data Attribution}
 #'
 #' @examples
 #' \donttest{
@@ -198,10 +204,6 @@ pas_createNew <- function(
       stateCodes,
       counties
     )
-
-  # # Filter for age
-  # starttime <- lubridate::now(tzone = "UTC") - lubridate::ddays(lookbackDays)
-  # pas <- dplyr::filter(pas, .data$lastSeenDate >= starttime)
 
   # ----- Return ---------------------------------------------------------------
 

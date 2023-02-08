@@ -1,4 +1,9 @@
 
+# AirSensor2 0.1.4
+
+Documentation improvements to include links to PurpleAir Terms of service and
+Data license.
+
 # AirSensor2 0.1.3
 
 * Updated to use **sf** based **MazamaSpatialUtils** >= 0.8.

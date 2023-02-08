@@ -8,6 +8,12 @@
 #' with a focus on small particulates (PM2.5). Initial focus is on sensors
 #' produced by 'PurpleAir' <https://www2.purpleair.com>.
 #' }
+#'
+#' @references \href{https://www2.purpleair.com}{PurpleAir}
+#' @references \href{https://api.purpleair.com}{PurpleAir API}
+#' @references \href{https://www2.purpleair.com/policies/terms-of-service}{PurpleAir Terms of service}
+#' @references \href{https://www2.purpleair.com/pages/license}{PurpleAir Data license}
+#' @references \href{https://www2.purpleair.com/pages/attribution}{PurpleAir Data Attribution}
 NULL
 
 

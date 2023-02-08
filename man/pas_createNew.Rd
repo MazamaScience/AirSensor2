@@ -31,7 +31,7 @@ filtered to only include sensors with data more recent than \code{lookbackDays} 
 
 \item{outsideOnly}{Logical specifying whether to restrict requests to outside sensors only.}
 
-\item{baseUrl}{Base URL for synoptic data.}
+\item{baseUrl}{Base URL for the PurpleAir API.}
 }
 \value{
 A PurpleAir Synoptic \emph{pas} object.
@@ -44,7 +44,7 @@ Steps include:
 
 1) Download and parse synoptic data
 
-2) Replace variable with more consistent, more human readable names.
+2) Replace variable names with more consistent, more human readable names.
 
 3) Add spatial metadata for each sensor including:
 \itemize{
@@ -84,6 +84,17 @@ pas \%>\% pas_leaflet()
 
 }, silent = FALSE)
 }
+}
+\references{
+\href{https://www2.purpleair.com}{PurpleAir}
+
+\href{https://api.purpleair.com/}{PurpleAir API}
+
+\href{https://www2.purpleair.com/policies/terms-of-service}{PurpleAir Terms of service}
+
+\href{https://www2.purpleair.com/pages/license}{PurpleAir Data license}
+
+\href{https://www2.purpleair.com/pages/attribution}{PurpleAir Data Attribution}
 }
 \seealso{
 \link{pas_downloadParseRawData}
