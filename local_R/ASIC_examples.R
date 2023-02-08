@@ -4,7 +4,8 @@ library(AirSensor2)
 
 initializeMazamaSpatialUtils("~/Data/Spatial")
 
-setAPIKey("PurpleAir-read", "8C087B59-2A00-11EB-A8CD-42010A800126")
+source("global_vars.R")
+setAPIKey("PurpleAir-read", PA_API_READ_KEY)
 
 # ----- Colville ---------------------------------------------------------------
 
@@ -56,7 +57,19 @@ Pasadena_pas %>% pas_leaflet("pm2.5_24hour")
 Pasadena_pas %>% pas_leaflet("elevation")
 
 
-# ----- XXX --------------------------------------------------------------------
+# ----- California -------------------------------------------------------------
+
+CA_pas <-
+  pas_createNew(
+    countryCodes = "US",
+    stateCodes = "CA",
+    lookbackDays = 1,
+    outsideOnly = TRUE
+  )
+
+CA_pas %>% pas_leaflet("pm2.5_60minute")
+
+CA_pas %>% pas_leaflet("elevation")
 
 
 
