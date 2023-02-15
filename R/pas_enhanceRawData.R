@@ -126,14 +126,6 @@ pas_enhanceRawData <- function(
   # $ pm2.5_6hour          <chr> "1", "4", "4.6", "3.4", "2.4", "3.8", "1.4",…
   # $ pm2.5_24hour         <chr> "1.2", "3.2", "4.8", "3.8", "2.4", "3.2", "1…
   # $ pm2.5_1week          <chr> "2.6", "4.5", "6.8", "4.8", "4.4", "3.9", "1…
-  # $ primary_id_a         <chr> "1528330", "214110", "214181", "214469", "21…
-  # $ primary_key_a        <chr> "9UCNK357N813BXAS", "U7OR5QH16KYA2MPE", "7WQ…
-  # $ secondary_id_a       <chr> "1528331", "214111", "214182", "214470", "21…
-  # $ secondary_key_a      <chr> "2U3LINBJK83JFXNE", "RA40WAKD0ZHVDH1K", "2M0…
-  # $ primary_id_b         <chr> "1528332", "214112", "214183", "214471", "21…
-  # $ primary_key_b        <chr> "9ZNIQQM2ZQKCRFYF", "5X8IIT6314C8SK3I", "0VQ…
-  # $ secondary_id_b       <chr> "1528333", "214113", "214184", "214472", "21…
-  # $ secondary_key_b      <chr> "ICJZ9D888O7TB21S", "26HVB5N9565P603J", "L9C…
 
   pas <-
     pas_raw %>%
@@ -191,6 +183,13 @@ pas_enhanceRawData <- function(
     # * Add core metadata -----
     MazamaLocationUtils::table_addCoreMetadata() %>%
 
+    # TODO:  This step can be removed when MLU gets upgraded to use geohash
+    # TODO:  to create a locationID.
+    # * Replace MLU version 0.3.8 locationID with geohash
+    dplyr::mutate(
+      locationID = geohashTools::gh_encode(.data$latitude, .data$longitude, precision = 10)
+    ) %>%
+
     # Fill in new columns where possible
     dplyr::mutate(
       deviceDeploymentID = paste0(.data$locationID, "_", .data$deviceID),
@@ -201,7 +200,7 @@ pas_enhanceRawData <- function(
   startingIDs <- c("deviceDeploymentID", "deviceID", "locationID")
   otherColumns <- setdiff(names(pas), startingIDs)
   orderedColumns <- c(startingIDs, otherColumns)
-  pas <- pas %>% dplyr::select(orderedColumns)
+  pas <- pas %>% dplyr::select(dplyr::all_of(orderedColumns))
 
   # ----- Add spatial metadata -------------------------------------------------
 

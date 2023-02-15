@@ -29,6 +29,7 @@
 #' the data.
 #'
 #' @param apiReadKey PurpleAir API Read Key.
+#' @param fields Character string with PurpleAir field names for the Get Sensor Data API.
 #' @param countryCodes ISO 3166-1 alpha-2 country codes used to subset the data.
 #' At least one countryCode must be specified.
 #' @param stateCodes ISO-3166-2 alpha-2 state codes used to subset the data.
@@ -62,7 +63,8 @@
 #'
 #' pas <-
 #'   pas_createNew(
-#'     apiReadKey = API_READ_KEY,
+#'     apiReadKey = MY_API_READ_KEY,
+#'     fields = pas_PM25_FIELDS,
 #'     countryCodes = "US",
 #'     stateCodes = "WA",
 #'     counties = c("Okanogan", "Ferry"),
@@ -77,6 +79,7 @@
 
 pas_createNew <- function(
   apiReadKey = NULL,
+  fields = pas_PM25_FIELDS,
   countryCodes = NULL,
   stateCodes = NULL,
   counties = NULL,
@@ -185,6 +188,7 @@ pas_createNew <- function(
   pas_raw <-
     pas_downloadParseRawData(
       apiReadKey = apiReadKey,
+      fields = fields,
       maxAge = lookbackDays * 24 * 3600,
       outsideOnly = outsideOnly,
       west = west,

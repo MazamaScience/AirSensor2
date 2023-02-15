@@ -52,6 +52,9 @@
     <loc>/reference/initializeMazamaSpatialUtils.html</loc>
   </url>
   <url>
+    <loc>/reference/pas_PM25_FIELDS.html</loc>
+  </url>
+  <url>
     <loc>/reference/pas_createNew.html</loc>
   </url>
   <url>
@@ -68,6 +71,12 @@
   </url>
   <url>
     <loc>/reference/pas_filterNear.html</loc>
+  </url>
+  <url>
+    <loc>/reference/pas_hasSpatial.html</loc>
+  </url>
+  <url>
+    <loc>/reference/pas_isEmpty.html</loc>
   </url>
   <url>
     <loc>/reference/pas_leaflet.html</loc>

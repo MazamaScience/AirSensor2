@@ -6,6 +6,7 @@
 \usage{
 pas_downloadParseRawData(
   apiReadKey = NULL,
+  fields = pas_PM25_FIELDS,
   maxAge = 3600 * 24 * 7,
   outsideOnly = TRUE,
   west = NULL,
@@ -19,6 +20,8 @@ pas_downloadParseRawData(
 \item{apiReadKey}{PurpleAir API Read Key. If \code{apiReadKey = NULL}, it
 will be obtained using \code{getAPIKey("PurpleAir-read")}.
 See \code{MazamaCoreUtils::\link[MazamaCoreUtils:setAPIKey]{setAPIKey}}.}
+
+\item{fields}{Character string with PurpleAir field names for the Get Sensor Data API.}
 
 \item{maxAge}{Number of seconds used to filter results to only include sensors
 modified or updated within the \code{maxAge} seconds. Using a value of 0 will match all sensors.}
@@ -55,7 +58,8 @@ library(AirSensor2)
 
 pas_raw <-
   pas_downloadParseRawData(
-    apiReadKey = API_READ_KEY,
+    apiReadKey = MY_API_READ_KEY,
+    fields = pas_PM25_FIELDS,
     maxAge = 3600 * 24,
     outsideOnly = TRUE,
     west = -125,

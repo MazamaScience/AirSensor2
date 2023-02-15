@@ -4,7 +4,7 @@
 #' @description The \code{example_pas_raw} dataset provides a quickly loadable
 #' version of raw Purple Air synoptic data for practicing and code
 #' examples. This dataset contains data for sensors in Washington and Oregon
-#' and was generated on 2022-05-03 by running:
+#' and was generated on 2023-02-15 by running:
 #'
 #' \preformatted{
 #' library(AirSensor2)
@@ -13,7 +13,8 @@
 #'
 #' example_pas_raw <-
 #'   pas_downloadParseRawData(
-#'     API_READ_KEY,
+#'     MY_API_READ_KEY,
+#'     fields = pas_PM25_FIELDS,
 #'     maxAge = 3600 * 24,
 #'     outsideOnly = TRUE,
 #'     west = -125,
@@ -28,7 +29,7 @@
 #' This dataset can be converted into a standard \emph{pas} object with:
 #'
 #' \preformatted{
-#' pas <- pas_enhanceData(example_pas_raw)
+#' pas <- pas_enhanceRawData(example_pas_raw)
 #' }
 #'
 #' @seealso example_pas
@@ -42,7 +43,7 @@
 #' @description The \code{example_pas} dataset provides a quickly loadable
 #' version of a \emph{pas} object for practicing and code examples.
 #' This dataset contains data for sensors in Washington and Oregon
-#' and was generated on 2022-05-03 by running:
+#' and was generated on 2023-02-15 by running:
 #'
 #' \preformatted{
 #' library(AirSensor2)
@@ -51,7 +52,7 @@
 #'
 #' example_pas <-
 #'   pas_createNew(
-#'     apiReadKey = API_READ_KEY,
+#'     apiReadKey = MY_API_READ_KEY,
 #'     countryCodes = "US",
 #'     stateCodes = c("WA", "OR"),
 #'     counties = NULL,

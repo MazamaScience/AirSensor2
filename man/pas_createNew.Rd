@@ -6,6 +6,7 @@
 \usage{
 pas_createNew(
   apiReadKey = NULL,
+  fields = pas_PM25_FIELDS,
   countryCodes = NULL,
   stateCodes = NULL,
   counties = NULL,
@@ -16,6 +17,8 @@ pas_createNew(
 }
 \arguments{
 \item{apiReadKey}{PurpleAir API Read Key.}
+
+\item{fields}{Character string with PurpleAir field names for the Get Sensor Data API.}
 
 \item{countryCodes}{ISO 3166-1 alpha-2 country codes used to subset the data.
 At least one countryCode must be specified.}
@@ -72,7 +75,8 @@ initializeMazamaSpatialUtils()
 
 pas <-
   pas_createNew(
-    apiReadKey = API_READ_KEY,
+    apiReadKey = MY_API_READ_KEY,
+    fields = pas_PM25_FIELDS,
     countryCodes = "US",
     stateCodes = "WA",
     counties = c("Okanogan", "Ferry"),

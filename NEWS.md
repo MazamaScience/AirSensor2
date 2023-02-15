@@ -1,4 +1,10 @@
 
+# AirSensor2 0.1.5
+
+* Added `fields` argument to `pas_downloadParseRawData()`.
+* Added `pas_PM25_FIELDS` string containing all pas fields used by default.
+* Now using a 10-character geohash as the `locationID`.
+
 # AirSensor2 0.1.4
 
 Documentation improvements to include links to PurpleAir Terms of service and

@@ -8,6 +8,7 @@
 #' @param apiReadKey PurpleAir API Read Key. If \code{apiReadKey = NULL}, it
 #' will be obtained using \code{getAPIKey("PurpleAir-read")}.
 #' See \code{MazamaCoreUtils::\link[MazamaCoreUtils:setAPIKey]{setAPIKey}}.
+#' @param fields Character string with PurpleAir field names for the Get Sensor Data API.
 #' @param maxAge Number of seconds used to filter results to only include sensors
 #' modified or updated within the \code{maxAge} seconds. Using a value of 0 will match all sensors.
 #' @param outsideOnly Logical specifying whether to restrict requests to outside sensors only.
@@ -41,7 +42,8 @@
 #'
 #' pas_raw <-
 #'   pas_downloadParseRawData(
-#'     apiReadKey = API_READ_KEY,
+#'     apiReadKey = MY_API_READ_KEY,
+#'     fields = pas_PM25_FIELDS,
 #'     maxAge = 3600 * 24,
 #'     outsideOnly = TRUE,
 #'     west = -125,
@@ -57,6 +59,7 @@
 
 pas_downloadParseRawData <- function(
   apiReadKey = NULL,
+  fields = pas_PM25_FIELDS,
   maxAge = 3600 * 24 * 7,
   outsideOnly = TRUE,
   west = NULL,
@@ -72,6 +75,7 @@ pas_downloadParseRawData <- function(
     apiReadKey <- MazamaCoreUtils::getAPIKey("PurpleAir-read")
 
   MazamaCoreUtils::stopIfNull(apiReadKey)
+  MazamaCoreUtils::stopIfNull(fields)
   maxAge <- MazamaCoreUtils::setIfNull(maxAge, 3600 * 7 * 24)
   MazamaCoreUtils::stopIfNull(outsideOnly)
   MazamaCoreUtils::stopIfNull(west)
@@ -101,57 +105,6 @@ pas_downloadParseRawData <- function(
 
   # Placeholder in case things get more complicated
   webserviceUrl <- baseUrl
-
-  # From: https://api.purpleair.com/#api-sensors-get-sensor-data
-  #
-  # The 'Fields' parameter specifies which 'sensor data fields' to include in the response. It is a comma separated list with one or more of the following:
-  #
-  # Station information and status fields:
-  #   name, icon, model, hardware, location_type, private, latitude, longitude, altitude, position_rating, led_brightness, firmware_version, firmware_upgrade, rssi, uptime, pa_latency, memory, last_seen, last_modified, date_created, channel_state, channel_flags, channel_flags_manual, channel_flags_auto, confidence, confidence_manual, confidence_auto
-  #
-  # Environmental fields:
-  #   humidity, humidity_a, humidity_b, temperature, temperature_a, temperature_b, pressure, pressure_a, pressure_b
-  #
-  # Miscellaneous fields:
-  #   voc, voc_a, voc_b, ozone1, analog_input
-  #
-  # PM1.0 fields:
-  #   pm1.0, pm1.0_a, pm1.0_b, pm1.0_atm, pm1.0_atm_a, pm1.0_atm_b, pm1.0_cf_1, pm1.0_cf_1_a, pm1.0_cf_1_b
-  #
-  # PM2.5 fields:
-  #   pm2.5_alt, pm2.5_alt_a, pm2.5_alt_b, pm2.5, pm2.5_a, pm2.5_b, pm2.5_atm, pm2.5_atm_a, pm2.5_atm_b, pm2.5_cf_1, pm2.5_cf_1_a, pm2.5_cf_1_b
-  #
-  # PM2.5 pseudo (simple running) average fields:
-  #   pm2.5_10minute, pm2.5_10minute_a, pm2.5_10minute_b, pm2.5_30minute, pm2.5_30minute_a, pm2.5_30minute_b, pm2.5_60minute, pm2.5_60minute_a, pm2.5_60minute_b, pm2.5_6hour, pm2.5_6hour_a, pm2.5_6hour_b, pm2.5_24hour, pm2.5_24hour_a, pm2.5_24hour_b, pm2.5_1week, pm2.5_1week_a, pm2.5_1week_b
-  #
-  # PM10.0 fields:
-  #   pm10.0, pm10.0_a, pm10.0_b, pm10.0_atm, pm10.0_atm_a, pm10.0_atm_b, pm10.0_cf_1, pm10.0_cf_1_a, pm10.0_cf_1_b
-  #
-  # Particle count fields:
-  #   0.3_um_count, 0.3_um_count_a, 0.3_um_count_b, 0.5_um_count, 0.5_um_count_a, 0.5_um_count_b, 1.0_um_count, 1.0_um_count_a, 1.0_um_count_b, 2.5_um_count, 2.5_um_count_a, 2.5_um_count_b, 5.0_um_count, 5.0_um_count_a, 5.0_um_count_b, 10.0_um_count 10.0_um_count_a, 10.0_um_count_b
-  #
-  # ThingSpeak fields, used to retrieve data from api.thingspeak.com:
-  #   primary_id_a, primary_key_a, secondary_id_a, secondary_key_a, primary_id_b, primary_key_b, secondary_id_b, secondary_key_b
-
-  fields <-
-    paste(
-      # Station information and status fields:
-      "name, icon, model, hardware, location_type, private, latitude, longitude, altitude, position_rating, led_brightness, firmware_version, firmware_upgrade, rssi, uptime, pa_latency, memory, last_seen, last_modified, date_created, channel_state, channel_flags, channel_flags_manual, channel_flags_auto, confidence, confidence_manual, confidence_auto",
-      # Environmental fields:
-      "humidity, temperature, pressure",
-      # Miscellaneous fields:
-      # PM1.0 fields:
-      # PM2.5 fields:
-      # PM2.5 pseudo average fields:
-      "pm2.5_10minute, pm2.5_30minute, pm2.5_60minute, pm2.5_6hour, pm2.5_24hour, pm2.5_1week",
-      # PM10.0 fields:
-      # Particle count field:
-      # ThingSpeak fields:
-      "primary_id_a, primary_key_a, secondary_id_a, secondary_key_a, primary_id_b, primary_key_b, secondary_id_b, secondary_key_b",
-      sep = ",",
-      collapse = ","
-    ) %>%
-    stringr::str_replace_all(" ", "")
 
   queryList <-
     list(
@@ -286,14 +239,6 @@ pas_downloadParseRawData <- function(
   # $ pm2.5_6hour          <chr> "2.1", "2", "6.3", "2.6", "1.9", "2.4", "1.7…
   # $ pm2.5_24hour         <chr> "1.2", "4", "7.2", "4.4", "2.9", "3.8", "1.9…
   # $ pm2.5_1week          <chr> "2.8", "5.2", "7.6", "5.2", "5.2", "4.3", "1…
-  # $ primary_id_a         <chr> "1528330", "214110", "214181", "214469", "21…
-  # $ primary_key_a        <chr> "9UCNK357N813BXAS", "U7OR5QH16KYA2MPE", "7WQ…
-  # $ secondary_id_a       <chr> "1528331", "214111", "214182", "214470", "21…
-  # $ secondary_key_a      <chr> "2U3LINBJK83JFXNE", "RA40WAKD0ZHVDH1K", "2M0…
-  # $ primary_id_b         <chr> "1528332", "214112", "214183", "214471", "21…
-  # $ primary_key_b        <chr> "9ZNIQQM2ZQKCRFYF", "5X8IIT6314C8SK3I", "0VQ…
-  # $ secondary_id_b       <chr> "1528333", "214113", "214184", "214472", "21…
-  # $ secondary_key_b      <chr> "ICJZ9D888O7TB21S", "26HVB5N9565P603J", "L9C…
 
   # ----- Return ---------------------------------------------------------------
 
@@ -305,7 +250,7 @@ pas_downloadParseRawData <- function(
 
 if ( FALSE ) {
 
-  apiReadKey = API_READ_KEY
+  apiReadKey = MY_API_READ_KEY
   maxAge = 3600 * 24
   outsideOnly = TRUE
   west = -125

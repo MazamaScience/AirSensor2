@@ -3,7 +3,7 @@
 return the results as a useful tibble with class purple_air_synoptic.
 Steps include:
 1) Download and parse synoptic data
-2) Replace variable with more consistent, more human readable names.
+2) Replace variable names with more consistent, more human readable names.
 3) Add spatial metadata for each sensor including:
 timezone -- olson timezone
 countryCode -- ISO 3166-1 alpha-2
@@ -33,7 +33,7 @@ the data."><!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/m
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AirSensor2</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.5</span>
       </span>
     </div>
 
@@ -85,7 +85,7 @@ the data."><!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/m
 return the results as a useful tibble with class <code>purple_air_synoptic</code>.</p>
 <p>Steps include:</p>
 <p>1) Download and parse synoptic data</p>
-<p>2) Replace variable with more consistent, more human readable names.</p>
+<p>2) Replace variable names with more consistent, more human readable names.</p>
 <p>3) Add spatial metadata for each sensor including:</p><ul><li><p>timezone -- olson timezone</p></li>
 <li><p>countryCode -- ISO 3166-1 alpha-2</p></li>
 <li><p>stateCode -- ISO 3166-2 alpha-2</p></li>
@@ -100,6 +100,7 @@ the data.</p>
     <div id="ref-usage">
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">pas_createNew</span><span class="op">(</span></span>
 <span>  apiReadKey <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  fields <span class="op">=</span> <span class="va">pas_PM25_FIELDS</span>,</span>
 <span>  countryCodes <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  stateCodes <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  counties <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -113,6 +114,10 @@ the data.</p>
     <h2>Arguments</h2>
     <dl><dt>apiReadKey</dt>
 <dd><p>PurpleAir API Read Key.</p></dd>
+
+
+<dt>fields</dt>
+<dd><p>Character string with PurpleAir field names for the Get Sensor Data API.</p></dd>
 
 
 <dt>countryCodes</dt>
@@ -140,7 +145,7 @@ filtered to only include sensors with data more recent than <code>lookbackDays</
 
 
 <dt>baseUrl</dt>
-<dd><p>Base URL for synoptic data.</p></dd>
+<dd><p>Base URL for the PurpleAir API.</p></dd>
 
 </dl></div>
     <div id="value">
@@ -148,6 +153,14 @@ filtered to only include sensors with data more recent than <code>lookbackDays</
     
 
 <p>A PurpleAir Synoptic <em>pas</em> object.</p>
+    </div>
+    <div id="references">
+    <h2>References</h2>
+    <p><a href="https://www2.purpleair.com" class="external-link">PurpleAir</a></p>
+<p><a href="https://api.purpleair.com/" class="external-link">PurpleAir API</a></p>
+<p><a href="https://www2.purpleair.com/policies/terms-of-service" class="external-link">PurpleAir Terms of service</a></p>
+<p><a href="https://www2.purpleair.com/pages/license" class="external-link">PurpleAir Data license</a></p>
+<p><a href="https://www2.purpleair.com/pages/attribution" class="external-link">PurpleAir Data Attribution</a></p>
     </div>
     <div id="see-also">
     <h2>See also</h2>
@@ -167,7 +180,8 @@ filtered to only include sensors with data more recent than <code>lookbackDays</
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">pas</span> <span class="op">&lt;-</span></span></span>
 <span class="r-in"><span>  <span class="fu">pas_createNew</span><span class="op">(</span></span></span>
-<span class="r-in"><span>    apiReadKey <span class="op">=</span> <span class="va">API_READ_KEY</span>,</span></span>
+<span class="r-in"><span>    apiReadKey <span class="op">=</span> <span class="va">MY_API_READ_KEY</span>,</span></span>
+<span class="r-in"><span>    fields <span class="op">=</span> <span class="va">pas_PM25_FIELDS</span>,</span></span>
 <span class="r-in"><span>    countryCodes <span class="op">=</span> <span class="st">"US"</span>,</span></span>
 <span class="r-in"><span>    stateCodes <span class="op">=</span> <span class="st">"WA"</span>,</span></span>
 <span class="r-in"><span>    counties <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Okanogan"</span>, <span class="st">"Ferry"</span><span class="op">)</span>,</span></span>

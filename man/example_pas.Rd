@@ -18,7 +18,7 @@ example_pas
 The \code{example_pas} dataset provides a quickly loadable
 version of a \emph{pas} object for practicing and code examples.
 This dataset contains data for sensors in Washington and Oregon
-and was generated on 2022-05-03 by running:
+and was generated on 2023-02-15 by running:
 
 \preformatted{
 library(AirSensor2)
@@ -27,7 +27,7 @@ initializeMazamaSpatialUtils()
 
 example_pas <-
   pas_createNew(
-    apiReadKey = API_READ_KEY,
+    apiReadKey = MY_API_READ_KEY,
     countryCodes = "US",
     stateCodes = c("WA", "OR"),
     counties = NULL,
