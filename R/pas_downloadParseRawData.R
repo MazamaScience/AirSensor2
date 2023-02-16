@@ -134,10 +134,9 @@ pas_downloadParseRawData <- function(
     status_code <- httr::status_code(r)
 
     err_msg <- sprintf(
-      "web service error %s from:\n  %s\n\n%s",
+      "web service error %s from:\n  %s\n\n TODO",
       status_code,
-      webserviceUrl,
-      httpcode::http_code(status_code)$explanation
+      webserviceUrl
     )
 
     if ( logger.isInitialized() ) {
