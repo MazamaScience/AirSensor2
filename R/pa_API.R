@@ -1,3 +1,5 @@
+# ===== Keys ===================================================================
+
 #' @export
 #'
 #' @title Check the validity and type for the provided \code{api_key}.
@@ -55,6 +57,213 @@ pa_checkAPIKey <- function(
   return(PAList)
 
 }
+
+
+# ===== Sensors ================================================================
+
+
+#' @export
+#'
+#' @title Retrieve the latest data of a single sensor.
+#'
+#' @param api_key PurpleAir API READ key.
+#' @param sensor_index The \code{sensor_index} as found in the JSON for this
+#' specific sensor.
+#' @param fields Optional parameter specifying sensor data fields to return.
+#' @param baseUrl URL endpoint for the "Get Member Data" API.
+#'
+#' @return List containing all recent data for a single sensor.
+#'
+#' @description Sends a request to the PurpleAir API endpoint described at:
+#' \url{https://api.purpleair.com/#api-sensors-get-sensor-data}
+#'
+#' @examples
+#' \donttest{
+#' # Fail gracefully if any resources are not available
+#' try({
+#'
+#' library(AirSensor2)
+#'
+#'   pa_getSensorData(
+#'     api_key = MY_API_READ_KEY,
+#'     sensor_index = MY_SENSOR_INDEX,
+#'     fields = SENSOR_DATA_PM25_FIELDS
+#'   )
+#'
+#' }, silent = FALSE)
+#' }
+
+pa_getSensorData <- function(
+    api_key = NULL,
+    sensor_index = NULL,
+    fields = SENSOR_DATA_PM25_FIELDS,
+    baseUrl = "https://api.purpleair.com/v1/sensors"
+) {
+
+  # ----- Validate parameters --------------------------------------------------
+
+  MazamaCoreUtils::stopIfNull(api_key)
+  MazamaCoreUtils::stopIfNull(sensor_index)
+  MazamaCoreUtils::stopIfNull(fields)
+  MazamaCoreUtils::stopIfNull(baseUrl)
+
+  # ----- Request data ---------------------------------------------------------
+
+  # Strip off any final "/"
+  baseUrl <- stringr::str_replace(baseUrl, "/$", "")
+
+  # See: https://api.purpleair.com/#api-sensors-get-sensor-data
+  webserviceUrl <- sprintf("%s/%s", sensor_index)
+
+  if ( is.null(fields) ) {
+    queryList <- list()
+  } else {
+    queryList <-
+      list(
+        fields = fields
+      )
+  }
+
+  PAList <- PurpleAir_API_GET(
+    webserviceUrl = webserviceUrl,
+    api_key = api_key,
+    queryList = queryList
+  )
+
+  return(PAList)
+
+}
+
+
+#' @export
+#'
+#' @title Retrieve the latest data of multiple sensors matching the provided parameters.
+#'
+#' @param api_key PurpleAir API READ key.
+#' @param sensor_index The \code{sensor_index} as found in the JSON for this
+#' specific sensor.
+#' @param fields Optional parameter specifying sensor data fields to return.
+#' @param location_type The \code{location_type} of the sensors. Possible values
+#' are: 0 = Outside or 1 = Inside.
+#' @param modified_since The modified_since parameter causes only sensors modified
+#' after the provided time stamp to be included in the results. Using the
+#' time_stamp value from a previous call (recommended) will limit results to
+#' those with new values since the last request. Using a value of 0 will match
+#' sensors modified at any time.
+#' @param max_age Filter results to only include sensors modified or updated
+#' within the last \code{max_age} seconds. Using a value of 0 will match sensors of any age.
+#' @param nwlng A north west longitude for the bounding box.
+#' @param nwlat A north west latitude for the bounding box.
+#' @param selng A south east longitude for the bounding box.
+#' @param selat A south east latitude for the bounding box.
+#' @param baseUrl URL endpoint for the "Get Member Data" API.
+#'
+#' @return List containing latest data for multiple sensors.
+#'
+#' @description Sends a request to the PurpleAir API endpoint described at:
+#' \url{https://api.purpleair.com/#api-sensors-get-sensors-data}
+#'
+#' @examples
+#' \donttest{
+#' # Fail gracefully if any resources are not available
+#' try({
+#'
+#' library(AirSensor2)
+#'
+#'   pa_getSensorsData(
+#'     api_key = MY_API_READ_KEY,
+#'     fields = SENSOR_DATA_PM25_FIELDS
+#'   )
+#'
+#' }, silent = FALSE)
+#' }
+
+pa_getSensorsData <- function(
+    api_key = NULL,
+    fields = SENSOR_DATA_PM25_FIELDS,
+    location_type = NULL,
+    modified_since = NULL,
+    max_age = 604800,
+    nwlng = NULL,
+    nwlat = NULL,
+    selng = NULL,
+    selat = NULL,
+    baseUrl = "https://api.purpleair.com/v1/sensors"
+) {
+
+  # ----- Validate parameters --------------------------------------------------
+
+  MazamaCoreUtils::stopIfNull(api_key)
+  MazamaCoreUtils::stopIfNull(fields)
+  MazamaCoreUtils::stopIfNull(max_age)
+  MazamaCoreUtils::stopIfNull(nwlng)
+  MazamaCoreUtils::stopIfNull(nwlat)
+  MazamaCoreUtils::stopIfNull(selng)
+  MazamaCoreUtils::stopIfNull(selat)
+  MazamaCoreUtils::stopIfNull(baseUrl)
+
+  if ( !is.null(location_type) ) {
+    location_type <- as.numeric(location_type)
+    if ( !location_type %in% c(0, 1) ) {
+      stop("'location_type' must be one of 0 (outside) or 1 (inside).")
+    }
+  }
+
+  # ----- Request data ---------------------------------------------------------
+
+  # Strip off any final "/"
+  baseUrl <- stringr::str_replace(baseUrl, "/$", "")
+
+  # See: https://api.purpleair.com/#api-sensors-get-sensors-data
+  webserviceUrl <- baseUrl
+
+  queryList <-
+    list(
+      fields = fields,
+      max_age = max_age,
+      nwlng = nwlng,
+      nwlat = nwlat,
+      selng = selng,
+      selat = selat
+    )
+
+  if ( !is.null(location_type) ) {
+    queryList$location_type <- location_type
+  }
+
+  if ( !is.null(modified_since) ) {
+    # NOTE:  this will work with numeric and POSIXct input
+    queryList$modified_since <- as.numeric(modified_since)
+  }
+
+  PAList <- PurpleAir_API_GET(
+    webserviceUrl = webserviceUrl,
+    api_key = api_key,
+    queryList = queryList
+  )
+
+  # ----- Fix returned data ----------------------------------------------------
+
+  colnames(PAList$data) <- PAList$fields
+  tbl <- dplyr::as_tibble(PAList$data)
+
+  # Convert from character to numeric and POSIXct
+  for ( name in names(tbl) ) {
+    if ( name %in% PurpleAir_Numeric_Fields ) {
+      tbl[[name]] <- as.numeric(tbl[[name]])
+    } else if ( name %in% PurpleAir_POSIXct_Fields ) {
+      tbl[[name]] <- lubridate::as_datetime(as.numeric(tbl[[name]]))
+    }
+  }
+
+  PAList$data <- tbl
+
+  return(PAList)
+
+}
+
+
+# ===== Groups =================================================================
 
 
 #' @export
@@ -379,6 +588,13 @@ pa_getGroupDetail <- function(
     queryList = queryList
   )
 
+  # ----- Fix returned data ----------------------------------------------------
+
+  tbl <- dplyr::as_tibble(PAList$members)
+  tbl$created <- lubridate::as_datetime(tbl$created)
+
+  PAList$members <- tbl
+
   return(PAList)
 
 }
@@ -437,6 +653,13 @@ pa_getGroupsList <- function(
     api_key = api_key,
     queryList = queryList
   )
+
+  # ----- Fix returned data ----------------------------------------------------
+
+  tbl <- dplyr::as_tibble(PAList$groups)
+  tbl$created <- lubridate::as_datetime(tbl$created)
+
+  PAList$groups <- tbl
 
   return(PAList)
 
@@ -515,19 +738,18 @@ pa_getMemberData <- function(
 
   # ----- Fix returned data ----------------------------------------------------
 
-  # Convert from numeric to POSIXct
-  for ( name in names(PAList) ) {
-    if ( name %in% PurpleAir_POSIXct_Fields ) {
-      PAList[[name]] <- lubridate::as_datetime(as.numeric(PAList[[name]]))
-    }
-  }
-
-  # Convert from numeric to POSIXct
   for ( name in names(PAList$sensor) ) {
     if ( name %in% PurpleAir_POSIXct_Fields ) {
       PAList$sensor[[name]] <- lubridate::as_datetime(as.numeric(PAList$sensor[[name]]))
     }
   }
+
+  PAList$sensor$stats$time_stamp <-
+    lubridate::as_datetime(as.numeric(PAList$sensor$stats$time_stamp))
+  PAList$sensor$stats_a$time_stamp <-
+    lubridate::as_datetime(as.numeric(PAList$sensor$stats_a$time_stamp))
+  PAList$sensor$stats_b$time_stamp <-
+    lubridate::as_datetime(as.numeric(PAList$sensor$stats_b$time_stamp))
 
   return(PAList)
 
@@ -904,20 +1126,9 @@ PurpleAir_API_GET <- function(
 
   # * Convert times to POSIXct -----
 
-  if ( "time_stamp" %in% names(PAList) ) {
-    PAList$time_stamp <- lubridate::as_datetime(PAList$time_stamp)
-  }
-
-  if ( "data_time_stamp" %in% names(PAList) ) {
-    PAList$data_time_stamp <- lubridate::as_datetime(PAList$data_time_stamp)
-  }
-
-  # returned dataframes with a "created" columns
   for ( name in names(PAList) ) {
-    if ( is.data.frame(PAList[[name]]) ) {
-      if ( "created" %in% names(PAList[[name]]) ) {
-        PAList[[name]]$created <- lubridate::as_datetime(PAList[[name]]$created)
-      }
+    if ( name %in% PurpleAir_POSIXct_Fields ) {
+      PAList[[name]] <- lubridate::as_datetime(as.numeric(PAList[[name]]))
     }
   }
 
@@ -1060,8 +1271,10 @@ PurpleAir_API_POST <- function(
 
   # * Convert times to POSIXct -----
 
-  if ( "time_stamp" %in% names(PAList) ) {
-    PAList$time_stamp <- lubridate::as_datetime(PAList$time_stamp)
+  for ( name in names(PAList) ) {
+    if ( name %in% PurpleAir_POSIXct_Fields ) {
+      PAList[[name]] <- lubridate::as_datetime(as.numeric(PAList[[name]]))
+    }
   }
 
   return(PAList)
@@ -1270,6 +1483,8 @@ PurpleAir_Numeric_Fields <- c(
 
 
 PurpleAir_POSIXct_Fields <- c(
+  "time_stamp",
+  "data_time_stamp",
   "last_seen",
   "last_modified",
   "date_created"

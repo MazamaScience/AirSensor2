@@ -6,6 +6,21 @@ pa_checkAPIKey(
   api_key = MY_API_READ_KEY
 )
 
+a <- pat_getSensorData(
+  api_key = MY_API_READ_KEY,
+  sensor_index = 896
+)
+
+a <- pat_getSensorsData(
+  api_key = MY_API_READ_KEY,
+  location_type = 0,
+  max_age = 3600 * 3,
+  nwlng = -125,
+  nwlat = 49,
+  selng = -117,
+  selat = 42
+)
+
 pa_createGroup(
   api_key = MY_API_WRITE_KEY,
   name = "Ballard"
