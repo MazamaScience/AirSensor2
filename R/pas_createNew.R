@@ -64,7 +64,7 @@
 #' pas <-
 #'   pas_createNew(
 #'     apiReadKey = MY_API_READ_KEY,
-#'     fields = pas_PM25_FIELDS,
+#'     fields = SENSOR_DATA_PM25_FIELDS,
 #'     countryCodes = "US",
 #'     stateCodes = "WA",
 #'     counties = c("Okanogan", "Ferry"),
@@ -79,7 +79,7 @@
 
 pas_createNew <- function(
   apiReadKey = NULL,
-  fields = pas_PM25_FIELDS,
+  fields = SENSOR_DATA_PM25_FIELDS,
   countryCodes = NULL,
   stateCodes = NULL,
   counties = NULL,

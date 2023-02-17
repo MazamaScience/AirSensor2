@@ -43,7 +43,7 @@
 #' pas_raw <-
 #'   pas_downloadParseRawData(
 #'     apiReadKey = MY_API_READ_KEY,
-#'     fields = pas_PM25_FIELDS,
+#'     fields = SENSOR_DATA_PM25_FIELDS,
 #'     maxAge = 3600 * 24,
 #'     outsideOnly = TRUE,
 #'     west = -125,
@@ -59,7 +59,7 @@
 
 pas_downloadParseRawData <- function(
   apiReadKey = NULL,
-  fields = pas_PM25_FIELDS,
+  fields = SENSOR_DATA_PM25_FIELDS,
   maxAge = 3600 * 24 * 7,
   outsideOnly = TRUE,
   west = NULL,
