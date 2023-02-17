@@ -88,6 +88,18 @@
     <loc>/reference/pa_getMembersData.html</loc>
   </url>
   <url>
+    <loc>/reference/pa_getSensorData.html</loc>
+  </url>
+  <url>
+    <loc>/reference/pa_getSensorHistory.html</loc>
+  </url>
+  <url>
+    <loc>/reference/pa_getSensorHistoryCSV.html</loc>
+  </url>
+  <url>
+    <loc>/reference/pa_getSensorsData.html</loc>
+  </url>
+  <url>
     <loc>/reference/pas_PM25_FIELDS.html</loc>
   </url>
   <url>

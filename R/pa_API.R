@@ -113,7 +113,7 @@ pa_getSensorData <- function(
   baseUrl <- stringr::str_replace(baseUrl, "/$", "")
 
   # See: https://api.purpleair.com/#api-sensors-get-sensor-data
-  webserviceUrl <- sprintf("%s/%s", sensor_index)
+  webserviceUrl <- sprintf("%s/%s", baseUrl, sensor_index)
 
   if ( is.null(fields) ) {
     queryList <- list()
@@ -130,6 +130,239 @@ pa_getSensorData <- function(
     queryList = queryList
   )
 
+  # ----- Fix returned data ----------------------------------------------------
+
+  for ( name in names(PAList$sensor) ) {
+    if ( name %in% PurpleAir_POSIXct_Fields ) {
+      PAList$sensor[[name]] <- lubridate::as_datetime(as.numeric(PAList$sensor[[name]]))
+    }
+  }
+
+  PAList$sensor$stats$time_stamp <-
+    lubridate::as_datetime(as.numeric(PAList$sensor$stats$time_stamp))
+  PAList$sensor$stats_a$time_stamp <-
+    lubridate::as_datetime(as.numeric(PAList$sensor$stats_a$time_stamp))
+  PAList$sensor$stats_b$time_stamp <-
+    lubridate::as_datetime(as.numeric(PAList$sensor$stats_b$time_stamp))
+
+  return(PAList)
+
+}
+
+
+#' @export
+#'
+#' @title Retrieve historical data for a single sensor as CSV.
+#'
+#' @param api_key PurpleAir API READ key.
+#' @param sensor_index The \code{sensor_index} as found in the JSON for this
+#' specific sensor.
+#' @param start_timestamp Desired start datetime (ISO 8601).
+#' @param end_timestamp Desired end datetime (ISO 8601).
+#' @param average Temporal averaging in minutes performed by PurpleAir. One of:
+#' 0 (raw), 10, 30, 60 (hour), 360, 1440 (day).
+#' @param fields Character string specifying which 'sensor data fields' to include in the response.
+#' @param baseUrl URL endpoint for the "Get Sensor History (CSV)" API.
+#'
+#' @return Tibble with historical data for a single sensor.
+#'
+#' @description Sends a request to the PurpleAir API endpoint described at:
+#' \url{https://api.purpleair.com/#api-sensors-get-sensor-history-csv}
+#'
+#' @examples
+#' \donttest{
+#' # Fail gracefully if any resources are not available
+#' try({
+#'
+#' library(AirSensor2)
+#'
+#' start <-
+#'   MazamaCoreUtils::parseDatetime("2023-01-29 00:00:00", timezone = "UTC") %>%
+#'   as.numeric()
+#'
+#' end <-
+#'   MazamaCoreUtils::parseDatetime("2023-01-30 00:00:00", timezone = "UTC") %>%
+#'   as.numeric()
+#'
+#' pa_getSensorHistoryCSV(
+#'   api_key = MY_API_READ_KEY,
+#'   sensor_index = 896,
+#'   start_timestamp = start,
+#'   end_timestamp = end,
+#'   average = 0,
+#'   fields = SENSOR_HISTORY_PM25_FIELDS
+#' )
+#'
+#' }, silent = FALSE)
+#' }
+
+pa_getSensorHistoryCSV <- function(
+    api_key = NULL,
+    sensor_index = NULL,
+    start_timestamp = NULL,
+    end_timestamp = NULL,
+    average = 10,
+    fields = SENSOR_DATA_PM25_FIELDS,
+    baseUrl = "https://api.purpleair.com/v1/sensors"
+) {
+
+  # ----- Validate parameters --------------------------------------------------
+
+  MazamaCoreUtils::stopIfNull(api_key)
+  MazamaCoreUtils::stopIfNull(sensor_index)
+  MazamaCoreUtils::stopIfNull(average)
+  MazamaCoreUtils::stopIfNull(fields)
+  MazamaCoreUtils::stopIfNull(baseUrl)
+
+  if ( !average %in% c(0, 10, 30, 60, 360, 1440, 10080, 44640, 53560) ) {
+    stop("'average' must be one of: 0, 10, 30, 60, 360, 1440, 10080, 44640, 53560")
+  }
+
+  # ----- Request data ---------------------------------------------------------
+
+  # Strip off any final "/"
+  baseUrl <- stringr::str_replace(baseUrl, "/$", "")
+
+  # See: https://api.purpleair.com/#api-sensors-get-sensor-history-csv
+  webserviceUrl <- sprintf("%s/%s/history/csv", baseUrl, sensor_index)
+
+  queryList <-
+    list(
+      average = average,
+      fields = fields
+    )
+
+  if ( !is.null(start_timestamp) ) {
+    queryList$start_timestamp <- start_timestamp
+  }
+
+  if ( !is.null(end_timestamp) ) {
+    queryList$end_timestamp <- end_timestamp
+  }
+
+  tbl <- PurpleAir_API_csvGET(
+    webserviceUrl = webserviceUrl,
+    api_key = api_key,
+    queryList = queryList
+  )
+
+  return(tbl)
+
+}
+
+
+#' @export
+#'
+#' @title Retrieve historical data for a single sensor.
+#'
+#' @param api_key PurpleAir API READ key.
+#' @param sensor_index The \code{sensor_index} as found in the JSON for this
+#' specific sensor.
+#' @param start_timestamp Desired start datetime (ISO 8601).
+#' @param end_timestamp Desired end datetime (ISO 8601).
+#' @param average Temporal averaging in minutes performed by PurpleAir. One of:
+#' 0 (raw), 10, 30, 60 (hour), 360, 1440 (day).
+#' @param fields Character string specifying which 'sensor data fields' to include in the response.
+#' @param baseUrl URL endpoint for the "Get Sensor History" API.
+#'
+#' @return List with historical data for a single sensor.
+#'
+#' @description Sends a request to the PurpleAir API endpoint described at:
+#' \url{https://api.purpleair.com/#api-sensors-get-sensor-history}
+#'
+#' @examples
+#' \donttest{
+#' # Fail gracefully if any resources are not available
+#' try({
+#'
+#' library(AirSensor2)
+#'
+#' start <-
+#'   MazamaCoreUtils::parseDatetime("2023-01-29 00:00:00", timezone = "UTC") %>%
+#'   as.numeric()
+#'
+#' end <-
+#'   MazamaCoreUtils::parseDatetime("2023-01-30 00:00:00", timezone = "UTC") %>%
+#'   as.numeric()
+#'
+#' pa_getSensorHistory(
+#'   api_key = MY_API_READ_KEY,
+#'   sensor_index = 896,
+#'   start_timestamp = start,
+#'   end_timestamp = end,
+#'   average = 0,
+#'   fields = SENSOR_HISTORY_PM25_FIELDS
+#' )
+#'
+#' }, silent = FALSE)
+#' }
+
+pa_getSensorHistory <- function(
+    api_key = NULL,
+    sensor_index = NULL,
+    start_timestamp = NULL,
+    end_timestamp = NULL,
+    average = 10,
+    fields = SENSOR_HISTORY_PM25_FIELDS,
+    baseUrl = "https://api.purpleair.com/v1/sensors"
+) {
+
+  # ----- Validate parameters --------------------------------------------------
+
+  MazamaCoreUtils::stopIfNull(api_key)
+  MazamaCoreUtils::stopIfNull(sensor_index)
+  MazamaCoreUtils::stopIfNull(average)
+  MazamaCoreUtils::stopIfNull(fields)
+  MazamaCoreUtils::stopIfNull(baseUrl)
+
+  if ( !average %in% c(0, 10, 30, 60, 360, 1440, 10080, 44640, 53560) ) {
+    stop("'average' must be one of: 0, 10, 30, 60, 360, 1440, 10080, 44640, 53560")
+  }
+
+  # ----- Request data ---------------------------------------------------------
+
+  # Strip off any final "/"
+  baseUrl <- stringr::str_replace(baseUrl, "/$", "")
+
+  # See: https://api.purpleair.com/#api-sensors-get-sensor-history
+  webserviceUrl <- sprintf("%s/%s/history", baseUrl, sensor_index)
+
+  queryList <-
+    list(
+      average = average,
+      fields = fields
+    )
+
+  if ( !is.null(start_timestamp) ) {
+    queryList$start_timestamp <- start_timestamp
+  }
+
+  if ( !is.null(end_timestamp) ) {
+    queryList$end_timestamp <- end_timestamp
+  }
+
+  PAList <- PurpleAir_API_GET(
+    webserviceUrl = webserviceUrl,
+    api_key = api_key,
+    queryList = queryList
+  )
+
+  # ----- Fix returned data ----------------------------------------------------
+
+  colnames(PAList$data) <- PAList$fields
+  tbl <- dplyr::as_tibble(PAList$data)
+
+  # Convert from character to numeric and POSIXct
+  for ( name in names(tbl) ) {
+    if ( name %in% PurpleAir_Numeric_Fields ) {
+      tbl[[name]] <- as.numeric(tbl[[name]])
+    } else if ( name %in% PurpleAir_POSIXct_Fields ) {
+      tbl[[name]] <- lubridate::as_datetime(as.numeric(tbl[[name]]))
+    }
+  }
+
+  PAList$data <- tbl
+
   return(PAList)
 
 }
@@ -140,8 +373,6 @@ pa_getSensorData <- function(
 #' @title Retrieve the latest data of multiple sensors matching the provided parameters.
 #'
 #' @param api_key PurpleAir API READ key.
-#' @param sensor_index The \code{sensor_index} as found in the JSON for this
-#' specific sensor.
 #' @param fields Optional parameter specifying sensor data fields to return.
 #' @param location_type The \code{location_type} of the sensors. Possible values
 #' are: 0 = Outside or 1 = Inside.
@@ -758,7 +989,7 @@ pa_getMemberData <- function(
 
 #' @export
 #'
-#' @title Retrieve recent data for a single sensor of the specified group.
+#' @title Retrieve historical data for a single sensor of the specified group.
 #'
 #' @param api_key PurpleAir API READ key.
 #' @param group_id The \code{group_id} of the requested group. This group must
@@ -768,10 +999,10 @@ pa_getMemberData <- function(
 #' @param end_timestamp Desired end datetime (ISO 8601).
 #' @param average Temporal averaging in minutes performed by PurpleAir. One of:
 #' 0 (raw), 10, 30, 60 (hour), 360, 1440 (day).
-#' @param fields Character string specifies which 'sensor data fields' to include in the response.
+#' @param fields Character string specifying which 'sensor data fields' to include in the response.
 #' @param baseUrl URL endpoint for the "Get Groups list" API.
 #'
-#' @return List containing real-time history data for a single sensor.
+#' @return Tibble with historical data for a single sensor.
 #'
 #' @description Sends a request to the PurpleAirAPI API endpoint described at:
 #' \url{https://api.purpleair.com/#api-groups-get-member-history}
@@ -838,13 +1069,13 @@ pa_getMemberHistory <- function(
     queryList$end_timestamp <- end_timestamp
   }
 
-  PAList <- PurpleAir_API_csvGET(
+  tbl <- PurpleAir_API_csvGET(
     webserviceUrl = webserviceUrl,
     api_key = api_key,
     queryList = queryList
   )
 
-  return(PAList)
+  return(tbl)
 
 }
 
@@ -1193,14 +1424,12 @@ PurpleAir_API_csvGET <- function(
     show_col_types = FALSE
   )
 
-  # Convert to POSIXct
-  if ( "time_stamp" %in% names(tbl) ) {
-    tbl$time_stamp <- lubridate::as_datetime(tbl$time_stamp)
+  # Convert from numeric to POSIXct
+  for ( name in names(tbl) ) {
+    if ( name %in% PurpleAir_POSIXct_Fields ) {
+      tbl[[name]] <- lubridate::as_datetime(as.numeric(tbl[[name]]))
+    }
   }
-
-  # Convert to character
-  tbl$group_id <- as.character(tbl$group_id)
-  tbl$member_id <- as.character(tbl$member_id)
 
   return(tbl)
 
@@ -1485,6 +1714,8 @@ PurpleAir_Numeric_Fields <- c(
 PurpleAir_POSIXct_Fields <- c(
   "time_stamp",
   "data_time_stamp",
+  "start_timestamp",
+  "end_timestamp",
   "last_seen",
   "last_modified",
   "date_created"

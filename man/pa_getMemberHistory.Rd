@@ -2,7 +2,7 @@
 % Please edit documentation in R/pa_API.R
 \name{pa_getMemberHistory}
 \alias{pa_getMemberHistory}
-\title{Retrieve recent data for a single sensor of the specified group.}
+\title{Retrieve historical data for a single sensor of the specified group.}
 \usage{
 pa_getMemberHistory(
   api_key = NULL,
@@ -30,12 +30,12 @@ be owned by the \code{api_key}.}
 \item{average}{Temporal averaging in minutes performed by PurpleAir. One of:
 0 (raw), 10, 30, 60 (hour), 360, 1440 (day).}
 
-\item{fields}{Character string specifies which 'sensor data fields' to include in the response.}
+\item{fields}{Character string specifying which 'sensor data fields' to include in the response.}
 
 \item{baseUrl}{URL endpoint for the "Get Groups list" API.}
 }
 \value{
-List containing real-time history data for a single sensor.
+Tibble with historical data for a single sensor.
 }
 \description{
 Sends a request to the PurpleAirAPI API endpoint described at:
