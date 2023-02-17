@@ -37,6 +37,12 @@
     <loc>/reference/AirSensor2.html</loc>
   </url>
   <url>
+    <loc>/reference/SENSOR_DATA_PM25_FIELDS.html</loc>
+  </url>
+  <url>
+    <loc>/reference/SENSOR_HISTORY_PM25_FIELDS.html</loc>
+  </url>
+  <url>
     <loc>/reference/US_AQI.html</loc>
   </url>
   <url>
@@ -50,6 +56,36 @@
   </url>
   <url>
     <loc>/reference/initializeMazamaSpatialUtils.html</loc>
+  </url>
+  <url>
+    <loc>/reference/pa_checkAPIKey.html</loc>
+  </url>
+  <url>
+    <loc>/reference/pa_createGroup.html</loc>
+  </url>
+  <url>
+    <loc>/reference/pa_createMember.html</loc>
+  </url>
+  <url>
+    <loc>/reference/pa_deleteGroup.html</loc>
+  </url>
+  <url>
+    <loc>/reference/pa_deleteMember.html</loc>
+  </url>
+  <url>
+    <loc>/reference/pa_getGroupDetail.html</loc>
+  </url>
+  <url>
+    <loc>/reference/pa_getGroupsList.html</loc>
+  </url>
+  <url>
+    <loc>/reference/pa_getMemberData.html</loc>
+  </url>
+  <url>
+    <loc>/reference/pa_getMemberHistory.html</loc>
+  </url>
+  <url>
+    <loc>/reference/pa_getMembersData.html</loc>
   </url>
   <url>
     <loc>/reference/pas_PM25_FIELDS.html</loc>

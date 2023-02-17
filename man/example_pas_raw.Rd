@@ -28,7 +28,7 @@ initializeMazamaSpatialUtils()
 example_pas_raw <-
   pas_downloadParseRawData(
     MY_API_READ_KEY,
-    fields = pas_PM25_FIELDS,
+    fields = SENSOR_DATA_PM25_FIELDS,
     maxAge = 3600 * 24,
     outsideOnly = TRUE,
     west = -125,

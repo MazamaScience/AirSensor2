@@ -2,7 +2,7 @@
 % Please edit documentation in R/pa_API.R
 \name{pa_checkAPIKey}
 \alias{pa_checkAPIKey}
-\title{Checks the validity and returns the key type for the provided \code{api_key}.}
+\title{Check the validity and type for the provided \code{api_key}.}
 \usage{
 pa_checkAPIKey(api_key = NULL, baseUrl = "https://api.purpleair.com/v1/keys")
 }

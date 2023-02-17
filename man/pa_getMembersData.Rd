@@ -2,12 +2,13 @@
 % Please edit documentation in R/pa_API.R
 \name{pa_getMembersData}
 \alias{pa_getMembersData}
-\title{Retrieves a list of all sensors in the specified group.}
+\title{Retrieve current data for all sensors in the specified group.}
 \usage{
 pa_getMembersData(
   api_key = NULL,
   group_id = NULL,
-  fields = pas_PM25_FIELDS,
+  fields = SENSOR_DATA_PM25_FIELDS,
+  location_type = NULL,
   max_age = 604800,
   baseUrl = "https://api.purpleair.com/v1/groups"
 )
@@ -20,16 +21,19 @@ be owned by the \code{api_key}.}
 
 \item{fields}{Comma-separated list of 'sensor data fields' to include in the response.}
 
+\item{location_type}{The \code{location_type} of the sensors. Possible values
+are: 0 = Outside or 1 = Inside.}
+
 \item{max_age}{Filter results to only include sensors modified or updated
 within the last \code{max_age} seconds. Using a value of 0 will match sensors of any age.}
 
 \item{baseUrl}{URL endpoint for the "Get Members Data" API.}
 }
 \value{
-List containing all sensors in the specified group.
+List containing current data for all sensors in the specified group.
 }
 \description{
-Sends a request to the PurpleAirAPI API endpoint described at:
+Sends a request to the PurpleAir API endpoint described at:
 \url{https://api.purpleair.com/#api-groups-get-members-data}
 
 Retrieves data for all sensors in the specified group.

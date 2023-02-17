@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AirSensor2</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.2.0</span>
       </span>
     </div>
 
@@ -75,6 +75,14 @@
         </td>
         <td><p>Air Quality Data Analysis for low-cost Sensors</p></td>
       </tr><tr><td>
+          <p><code><a href="SENSOR_DATA_PM25_FIELDS.html">SENSOR_DATA_PM25_FIELDS</a></code> </p>
+        </td>
+        <td><p>Comma-separated list of fields needed for PM2.5 data analysis.</p></td>
+      </tr><tr><td>
+          <p><code><a href="SENSOR_HISTORY_PM25_FIELDS.html">SENSOR_HISTORY_PM25_FIELDS</a></code> </p>
+        </td>
+        <td><p>Comma-separated list of fields needed for PM2.5 data analysis.</p></td>
+      </tr><tr><td>
           <p><code><a href="US_AQI.html">US_AQI</a></code> </p>
         </td>
         <td><p>US EPA AQI Index levels, names, colors and action text</p></td>
@@ -91,9 +99,45 @@
         </td>
         <td><p>Initialize MazamaSpatialUtils package</p></td>
       </tr><tr><td>
-          <p><code><a href="pas_PM25_FIELDS.html">pas_PM25_FIELDS</a></code> </p>
+          <p><code><a href="pa_checkAPIKey.html">pa_checkAPIKey()</a></code> </p>
         </td>
-        <td><p>Comma-separated list of fields needed for PM2.5 data analysis.</p></td>
+        <td><p>Check the validity and type for the provided <code>api_key</code>.</p></td>
+      </tr><tr><td>
+          <p><code><a href="pa_createGroup.html">pa_createGroup()</a></code> </p>
+        </td>
+        <td><p>Create a new group.</p></td>
+      </tr><tr><td>
+          <p><code><a href="pa_createMember.html">pa_createMember()</a></code> </p>
+        </td>
+        <td><p>Create a new member within the specified group.</p></td>
+      </tr><tr><td>
+          <p><code><a href="pa_deleteGroup.html">pa_deleteGroup()</a></code> </p>
+        </td>
+        <td><p>Delete the specified group.</p></td>
+      </tr><tr><td>
+          <p><code><a href="pa_deleteMember.html">pa_deleteMember()</a></code> </p>
+        </td>
+        <td><p>Delete a member from the specified group.</p></td>
+      </tr><tr><td>
+          <p><code><a href="pa_getGroupDetail.html">pa_getGroupDetail()</a></code> </p>
+        </td>
+        <td><p>Retrieve all members of the specified group.</p></td>
+      </tr><tr><td>
+          <p><code><a href="pa_getGroupsList.html">pa_getGroupsList()</a></code> </p>
+        </td>
+        <td><p>Retrieve all groups owned by the provided <code>api_key</code>.</p></td>
+      </tr><tr><td>
+          <p><code><a href="pa_getMemberData.html">pa_getMemberData()</a></code> </p>
+        </td>
+        <td><p>Retrieve recent data for a single sensor in the specified group.</p></td>
+      </tr><tr><td>
+          <p><code><a href="pa_getMemberHistory.html">pa_getMemberHistory()</a></code> </p>
+        </td>
+        <td><p>Retrieve recent data for a single sensor of the specified group.</p></td>
+      </tr><tr><td>
+          <p><code><a href="pa_getMembersData.html">pa_getMembersData()</a></code> </p>
+        </td>
+        <td><p>Retrieve current data for all sensors in the specified group.</p></td>
       </tr><tr><td>
           <p><code><a href="pas_createNew.html">pas_createNew()</a></code> </p>
         </td>
@@ -134,10 +178,6 @@
           <p><code><a href="pas_palette.html">pas_palette()</a></code> </p>
         </td>
         <td><p>Color palettes for PurpleAir</p></td>
-      </tr><tr><td>
-          <p><code><a href="pat_PM25_FIELDS.html">pat_PM25_FIELDS</a></code> </p>
-        </td>
-        <td><p>Comma-separated list of fields needed for PM2.5 data analysis.</p></td>
       </tr><tr><td>
           <p><code><a href="pat_downloadParseRawData.html">pat_downloadParseRawData()</a></code> </p>
         </td>

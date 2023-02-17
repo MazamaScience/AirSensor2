@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AirSensor2</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.2.0</span>
       </span>
     </div>
 
@@ -64,10 +64,21 @@
     </div>
 
     <div class="section level2">
-<h2 class="page-header" data-toc-text="0.1.5" id="airsensor2-015">AirSensor2 0.1.5<a class="anchor" aria-label="anchor" href="#airsensor2-015"></a></h2>
-<ul><li>Added <code>fields</code> argument to <code><a href="../reference/pas_downloadParseRawData.html">pas_downloadParseRawData()</a></code>.</li>
-<li>Added <code>pas_PM25_FIELDS</code> string containing all pas fields used by default.</li>
-<li>Now using a 10-character geohash as the <code>locationID</code>.</li>
+<h2 class="page-header" data-toc-text="0.2.0" id="airsensor2-020">AirSensor2 0.2.0<a class="anchor" aria-label="anchor" href="#airsensor2-020"></a></h2>
+<p>Added full support for the PurpleAir API described at <a href="https://api.purpleair.com" class="external-link uri">https://api.purpleair.com</a>.</p>
+<p>Improvments include wrapper functions for PurpleAir API endpoints:</p>
+<ul><li><code>pa_pa_checkApiKey()</code></li>
+<li>
+<code>pa_getSensorData()</code>, <code>pa_getSensorHistoryCSV()</code>, <code>pa_getSensorHistory()</code>, <code>pa_getSensorsData()</code>
+</li>
+<li>
+<code><a href="../reference/pa_createGroup.html">pa_createGroup()</a></code>, <code><a href="../reference/pa_createMember.html">pa_createMember()</a></code>, <code>pa_delteGroup()</code>, <code><a href="../reference/pa_deleteMember.html">pa_deleteMember()</a></code>, <code><a href="../reference/pa_getGroupDetail.html">pa_getGroupDetail()</a></code>, <code><a href="../reference/pa_getGroupsList.html">pa_getGroupsList()</a></code>, <code><a href="../reference/pa_getMemberData.html">pa_getMemberData()</a></code>, <code><a href="../reference/pa_getMemberHistory.html">pa_getMemberHistory()</a></code>, <code>pa_getMembemrsData()</code>
+</li>
+</ul><p>Additional updates include:</p>
+<ul><li>Default <code>fields</code> strings for <code>SENSOR_DATA_PM25_FIELDS</code> and <code>SENSOR_HISTORY_PM25_FIELDS</code>
+</li>
+<li>Added <code>fields</code> argument to <code><a href="../reference/pas_downloadParseRawData.html">pas_downloadParseRawData()</a></code>.</li>
+<li>Now using a 10-character geohash as the <code>locationID</code>. (See <a href="https://github.com/MichaelChirico/geohashTools" class="external-link">geohashTools</a> for reasons to use a geohash as a unique location identifier.)</li>
 </ul></div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="0.1.4" id="airsensor2-014">AirSensor2 0.1.4<a class="anchor" aria-label="anchor" href="#airsensor2-014"></a></h2>

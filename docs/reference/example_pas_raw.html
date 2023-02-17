@@ -11,7 +11,7 @@ initializeMazamaSpatialUtils()
 example_pas_raw &amp;lt;-
   pas_downloadParseRawData(
     MY_API_READ_KEY,
-    fields = pas_PM25_FIELDS,
+    fields = SENSOR_DATA_PM25_FIELDS,
     maxAge = 3600 * 24,
     outsideOnly = TRUE,
     west = -125,
@@ -45,7 +45,7 @@ pas &amp;lt;- pas_enhanceRawData(example_pas_raw)
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AirSensor2</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.2.0</span>
       </span>
     </div>
 
@@ -105,7 +105,7 @@ and was generated on 2023-02-15 by running:</p>
 <span><span class="va">example_pas_raw</span> <span class="op">&lt;-</span></span>
 <span>  <span class="fu"><a href="../reference/pas_downloadParseRawData.html">pas_downloadParseRawData</a></span><span class="op">(</span></span>
 <span>    <span class="va">MY_API_READ_KEY</span>,</span>
-<span>    fields <span class="op">=</span> <span class="va">pas_PM25_FIELDS</span>,</span>
+<span>    fields <span class="op">=</span> <span class="va">SENSOR_DATA_PM25_FIELDS</span>,</span>
 <span>    maxAge <span class="op">=</span> <span class="fl">3600</span> <span class="op">*</span> <span class="fl">24</span>,</span>
 <span>    outsideOnly <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>    west <span class="op">=</span> <span class="op">-</span><span class="fl">125</span>,</span>

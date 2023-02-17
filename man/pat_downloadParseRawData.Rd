@@ -11,7 +11,7 @@ pat_downloadParseRawData(
   enddate = NULL,
   timezone = "UTC",
   average = 0,
-  fields = pat_PM25_FIELDS,
+  fields = SENSOR_HISTORY_PM25_FIELDS,
   baseUrl = "https://api.purpleair.com/v1/sensors/:sensor_index/history/csv"
 )
 }
@@ -55,7 +55,7 @@ pat_raw <-
     startdate = "2023-01-01",
     enddate = "2023-02-01",
     timezone = "UTC",
-    fields = pat_PM25_FIELDS,
+    fields = SENSOR_HISTORY_PM25_FIELDS,
   )
 
 View(pat_raw[1:100,])

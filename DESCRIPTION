@@ -1,6 +1,6 @@
 Type: Package
 Package: AirSensor2
-Version: 0.1.5
+Version: 0.2.0
 Title: Process and Display Data from Air Quality Sensors
 Authors@R: c(
     person("Jonathan", "Callahan", email="jonathan.s.callahan@gmail.com", role=c("aut","cre"))
@@ -28,6 +28,7 @@ Imports:
     magrittr,
     MazamaLocationUtils (>= 0.3.8),
     MazamaSpatialUtils (>= 0.8.1),
+    readr,
     rlang,
     sf,
     stringr

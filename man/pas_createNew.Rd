@@ -6,7 +6,7 @@
 \usage{
 pas_createNew(
   apiReadKey = NULL,
-  fields = pas_PM25_FIELDS,
+  fields = SENSOR_DATA_PM25_FIELDS,
   countryCodes = NULL,
   stateCodes = NULL,
   counties = NULL,
@@ -76,7 +76,7 @@ initializeMazamaSpatialUtils()
 pas <-
   pas_createNew(
     apiReadKey = MY_API_READ_KEY,
-    fields = pas_PM25_FIELDS,
+    fields = SENSOR_DATA_PM25_FIELDS,
     countryCodes = "US",
     stateCodes = "WA",
     counties = c("Okanogan", "Ferry"),

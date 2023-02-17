@@ -2,7 +2,7 @@
 % Please edit documentation in R/pa_API.R
 \name{pa_getGroupsList}
 \alias{pa_getGroupsList}
-\title{Retrieves a list of all groups owned by the provided \code{api_key}.}
+\title{Retrieve all groups owned by the provided \code{api_key}.}
 \usage{
 pa_getGroupsList(
   api_key = NULL,
@@ -12,10 +12,10 @@ pa_getGroupsList(
 \arguments{
 \item{api_key}{PurpleAir API READ ey.}
 
-\item{baseUrl}{URL endpoint for the "get groups list" API.}
+\item{baseUrl}{URL endpoint for the "Get Groups List" API.}
 }
 \value{
-List containing all gropus owned by \code{api_key}.
+List containing all groups owned by \code{api_key}.
 }
 \description{
 Sends a request to the PurpleAirAPI API endpoint described at:

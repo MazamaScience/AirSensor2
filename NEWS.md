@@ -1,9 +1,25 @@
 
-# AirSensor2 0.1.5
+# AirSensor2 0.2.0
 
+Added full support for the PurpleAir API described at 
+https://api.purpleair.com.
+
+Improvments include wrapper functions for PurpleAir API endpoints:
+
+* `pa_pa_checkApiKey()`
+* `pa_getSensorData()`, `pa_getSensorHistoryCSV()`, `pa_getSensorHistory()`, `pa_getSensorsData()`
+* `pa_createGroup()`, `pa_createMember()`, `pa_delteGroup()`, `pa_deleteMember()`,
+`pa_getGroupDetail()`, `pa_getGroupsList()`, `pa_getMemberData()`, `pa_getMemberHistory()`,
+`pa_getMembemrsData()`
+
+Additional updates include:
+
+* Default `fields` strings for `SENSOR_DATA_PM25_FIELDS` and 
+`SENSOR_HISTORY_PM25_FIELDS`
 * Added `fields` argument to `pas_downloadParseRawData()`.
-* Added `pas_PM25_FIELDS` string containing all pas fields used by default.
-* Now using a 10-character geohash as the `locationID`.
+* Now using a 10-character geohash as the `locationID`. (See 
+[geohashTools](https://github.com/MichaelChirico/geohashTools) for reasons
+to use a geohash as a unique location identifier.)
 
 # AirSensor2 0.1.4
 

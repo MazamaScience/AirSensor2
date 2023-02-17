@@ -1,6 +1,6 @@
 #' @export
 #'
-#' @title Checks the validity and returns the key type for the provided \code{api_key}.
+#' @title Check the validity and type for the provided \code{api_key}.
 #'
 #' @param api_key PurpleAir API key.
 #' @param baseUrl URL endpoint for the "Check Key" API.
@@ -46,7 +46,7 @@ pa_checkAPIKey <- function(
     list(
     )
 
-  PAList <- PurpleAir_API_Request(
+  PAList <- PurpleAir_API_GET(
     webserviceUrl = webserviceUrl,
     api_key = api_key,
     queryList = queryList
@@ -59,12 +59,275 @@ pa_checkAPIKey <- function(
 
 #' @export
 #'
-#' @title Retrieves a list of all members of the specified group.
+#' @title Create a new group.
+#'
+#' @param api_key PurpleAir API WRITE key.
+#' @param name Human readable name associated with the new group.
+#' @param baseUrl URL endpoint for the "Create Group" API.
+#'
+#' @return List containing all members of the specified group.
+#'
+#' @description Sends a request to the PurpleAirAPI API endpoint described at:
+#' \url{https://api.purpleair.com/#api-groups-create-group}
+#'
+#' @examples
+#' \donttest{
+#' # Fail gracefully if any resources are not available
+#' try({
+#'
+#' library(AirSensor2)
+#'
+#'   pa_createGroup(
+#'     api_key = MY_API_WRITE_KEY,
+#'     name = "My new group"
+#'   )
+#'
+#' }, silent = FALSE)
+#' }
+
+pa_createGroup <- function(
+    api_key = NULL,
+    name = NULL,
+    baseUrl = "https://api.purpleair.com/v1/groups"
+) {
+
+  # ----- Validate parameters --------------------------------------------------
+
+  MazamaCoreUtils::stopIfNull(api_key)
+  MazamaCoreUtils::stopIfNull(name)
+  MazamaCoreUtils::stopIfNull(baseUrl)
+
+  # ----- Request data ---------------------------------------------------------
+
+  # Strip off any final "/"
+  baseUrl <- stringr::str_replace(baseUrl, "/$", "")
+
+  # See: https://api.purpleair.com/#api-groups-create-group
+  webserviceUrl <- baseUrl
+
+  queryList <-
+    list(
+      name = name
+    )
+
+  PAList <- PurpleAir_API_POST(
+    webserviceUrl = webserviceUrl,
+    api_key = api_key,
+    queryList = queryList
+  )
+
+  return(PAList)
+
+}
+
+
+#' @export
+#'
+#' @title Create a new member within the specified group.
+#'
+#' @param api_key PurpleAir API WRITE key.
+#' @param group_id The \code{group_id} of the requested group. This group must
+#' be owned by the \code{api_key}.
+#' @param sensor_index Sensor index as returned by \code{pa_getSensorsData()}.
+#' @param baseUrl URL endpoint for the "Create Member" API.
+#'
+#' @return List containing data associated with this this sensor.
+#'
+#' @description Sends a request to the PurpleAir API endpoint described at:
+#' \url{https://api.purpleair.com/#api-groups-create-member}
+#'
+#' @examples
+#' \donttest{
+#' # Fail gracefully if any resources are not available
+#' try({
+#'
+#' library(AirSensor2)
+#'
+#'   pa_getGroupDetail(
+#'     api_key = MY_API_READ_KEY,
+#'     group_id = MY_GROUP_ID,
+#'     sensor_index = MY_SENSOR_INDEX
+#'   )
+#'
+#' }, silent = FALSE)
+#' }
+
+pa_createMember <- function(
+    api_key = NULL,
+    group_id = NULL,
+    sensor_index = NULL,
+    baseUrl = "https://api.purpleair.com/#api-groups-create-member"
+) {
+
+  # ----- Validate parameters --------------------------------------------------
+
+  MazamaCoreUtils::stopIfNull(api_key)
+  MazamaCoreUtils::stopIfNull(group_id)
+  MazamaCoreUtils::stopIfNull(sensor_index)
+  MazamaCoreUtils::stopIfNull(baseUrl)
+
+  # ----- Request data ---------------------------------------------------------
+
+  # Strip off any final "/"
+  baseUrl <- stringr::str_replace(baseUrl, "/$", "")
+
+  # See: https://api.purpleair.com/#api-groups-get-group-detail
+  webserviceUrl <- sprintf("%s/%s/members", baseUrl, group_id)
+
+  queryList <-
+    list(
+      sensor_index = sensor_index
+    )
+
+  PAList <- PurpleAir_API_POST(
+    webserviceUrl = webserviceUrl,
+    api_key = api_key,
+    queryList = queryList
+  )
+
+  return(PAList)
+
+}
+
+
+#' @export
+#'
+#' @title Delete the specified group.
+#'
+#' @param api_key PurpleAir API WITE key.
+#' @param group_id The \code{group_id} to be deleted. This group must
+#' be owned by the \code{api_key}.
+#' @param baseUrl URL endpoint for the "Delete Group" API.
+#'
+#' @return No return.
+#'
+#' @description Sends a request to the PurpleAirAPI API endpoint described at:
+#' \url{https://api.purpleair.com/#api-groups-delete-group}
+#'
+#' @examples
+#' \donttest{
+#' # Fail gracefully if any resources are not available
+#' try({
+#'
+#' library(AirSensor2)
+#'
+#'   pa_deleteGroup(
+#'     api_key = MY_API_READ_KEY,
+#'     group_id = MY_GROUP_ID
+#'   )
+#'
+#' }, silent = FALSE)
+#' }
+
+pa_deleteGroup <- function(
+    api_key = NULL,
+    group_id = NULL,
+    baseUrl = "https://api.purpleair.com/v1/groups"
+) {
+
+  # ----- Validate parameters --------------------------------------------------
+
+  MazamaCoreUtils::stopIfNull(api_key)
+  MazamaCoreUtils::stopIfNull(group_id)
+  MazamaCoreUtils::stopIfNull(baseUrl)
+
+  # ----- Request data ---------------------------------------------------------
+
+  # Strip off any final "/"
+  baseUrl <- stringr::str_replace(baseUrl, "/$", "")
+
+  # See: https://api.purpleair.com/#api-groups-delete-group
+  webserviceUrl <- sprintf("%s/%s", baseUrl, group_id)
+
+  queryList <-
+    list(
+    )
+
+  PAList <- PurpleAir_API_DELETE(
+    webserviceUrl = webserviceUrl,
+    api_key = api_key,
+    queryList = queryList
+  )
+
+  return(PAList)
+
+}
+
+
+#' @export
+#'
+#' @title Delete a member from the specified group.
+#'
+#' @param api_key PurpleAir API WITE key.
+#' @param group_id The \code{group_id} of the requested group.
+#' @param member_id The \code{member_id} to be deleted.
+#' @param baseUrl URL endpoint for the "Delete Member" API.
+#'
+#' @return No return.
+#'
+#' @description Sends a request to the PurpleAirAPI API endpoint described at:
+#' \url{https://api.purpleair.com/#api-groups-delete-member}
+#'
+#' @examples
+#' \donttest{
+#' # Fail gracefully if any resources are not available
+#' try({
+#'
+#' library(AirSensor2)
+#'
+#'   pa_getGroupDetail(
+#'     api_key = MY_API_READ_KEY,
+#'     group_id = MY_GROUP_ID
+#'   )
+#'
+#' }, silent = FALSE)
+#' }
+
+pa_deleteMember <- function(
+    api_key = NULL,
+    group_id = NULL,
+    member_id = NULL,
+    baseUrl = "https://api.purpleair.com/v1/groups"
+) {
+
+  # ----- Validate parameters --------------------------------------------------
+
+  MazamaCoreUtils::stopIfNull(api_key)
+  MazamaCoreUtils::stopIfNull(group_id)
+  MazamaCoreUtils::stopIfNull(member_id)
+  MazamaCoreUtils::stopIfNull(baseUrl)
+
+  # ----- Request data ---------------------------------------------------------
+
+  # Strip off any final "/"
+  baseUrl <- stringr::str_replace(baseUrl, "/$", "")
+
+  # See: https://api.purpleair.com/#api-groups-delete-member
+  webserviceUrl <- sprintf("%s/%s/members/%s", baseUrl, group_id, member_id)
+
+  queryList <-
+    list(
+    )
+
+  PAList <- PurpleAir_API_DELETE(
+    webserviceUrl = webserviceUrl,
+    api_key = api_key,
+    queryList = queryList
+  )
+
+  return(PAList)
+
+}
+
+
+#' @export
+#'
+#' @title Retrieve all members of the specified group.
 #'
 #' @param api_key PurpleAir API READ key.
 #' @param group_id The \code{group_id} of the requested group. This group must
 #' be owned by the \code{api_key}.
-#' @param baseUrl URL endpoint for the "Get Groups list" API.
+#' @param baseUrl URL endpoint for the "Get Group Detail" API.
 #'
 #' @return List containing all members of the specified group.
 #'
@@ -110,7 +373,7 @@ pa_getGroupDetail <- function(
     list(
     )
 
-  PAList <- PurpleAir_API_Request(
+  PAList <- PurpleAir_API_GET(
     webserviceUrl = webserviceUrl,
     api_key = api_key,
     queryList = queryList
@@ -123,12 +386,12 @@ pa_getGroupDetail <- function(
 
 #' @export
 #'
-#' @title Retrieves a list of all groups owned by the provided \code{api_key}.
+#' @title Retrieve all groups owned by the provided \code{api_key}.
 #'
 #' @param api_key PurpleAir API READ ey.
-#' @param baseUrl URL endpoint for the "get groups list" API.
+#' @param baseUrl URL endpoint for the "Get Groups List" API.
 #'
-#' @return List containing all gropus owned by \code{api_key}.
+#' @return List containing all groups owned by \code{api_key}.
 #'
 #' @description Sends a request to the PurpleAirAPI API endpoint described at:
 #' \url{https://api.purpleair.com/#api-groups-get-groups-list}
@@ -169,7 +432,7 @@ pa_getGroupsList <- function(
     list(
     )
 
-  PAList <- PurpleAir_API_Request(
+  PAList <- PurpleAir_API_GET(
     webserviceUrl = webserviceUrl,
     api_key = api_key,
     queryList = queryList
@@ -182,18 +445,18 @@ pa_getGroupsList <- function(
 
 #' @export
 #'
-#' @title Retrieves recent data for a single sensor of the specified group.
+#' @title Retrieve recent data for a single sensor in the specified group.
 #'
 #' @param api_key PurpleAir API READ key.
 #' @param group_id The \code{group_id} of the requested group. This group must
 #' be owned by the \code{api_key}.
 #' @param member_id Unique \code{member_id} for a sensor within \code{group_id}.
 #' @param fields Optional parameter specifying sensor data fields to return.
-#' @param baseUrl URL endpoint for the "Get Groups list" API.
+#' @param baseUrl URL endpoint for the "Get Member Data" API.
 #'
 #' @return List containing all recent data for a single sensor.
 #'
-#' @description Sends a request to the PurpleAirAPI API endpoint described at:
+#' @description Sends a request to the PurpleAir API endpoint described at:
 #' \url{https://api.purpleair.com/#api-groups-get-member-data}
 #'
 #' @examples
@@ -244,11 +507,27 @@ pa_getMemberData <- function(
       )
   }
 
-  PAList <- PurpleAir_API_Request(
+  PAList <- PurpleAir_API_GET(
     webserviceUrl = webserviceUrl,
     api_key = api_key,
     queryList = queryList
   )
+
+  # ----- Fix returned data ----------------------------------------------------
+
+  # Convert from numeric to POSIXct
+  for ( name in names(PAList) ) {
+    if ( name %in% PurpleAir_POSIXct_Fields ) {
+      PAList[[name]] <- lubridate::as_datetime(as.numeric(PAList[[name]]))
+    }
+  }
+
+  # Convert from numeric to POSIXct
+  for ( name in names(PAList$sensor) ) {
+    if ( name %in% PurpleAir_POSIXct_Fields ) {
+      PAList$sensor[[name]] <- lubridate::as_datetime(as.numeric(PAList$sensor[[name]]))
+    }
+  }
 
   return(PAList)
 
@@ -257,7 +536,7 @@ pa_getMemberData <- function(
 
 #' @export
 #'
-#' @title Retrieves real-time history data for a single sensor of the specified group.
+#' @title Retrieve recent data for a single sensor of the specified group.
 #'
 #' @param api_key PurpleAir API READ key.
 #' @param group_id The \code{group_id} of the requested group. This group must
@@ -297,7 +576,7 @@ pa_getMemberHistory <- function(
     member_id = NULL,
     start_timestamp = NULL,
     end_timestamp = NULL,
-    average = 0,
+    average = 10,
     fields = SENSOR_HISTORY_PM25_FIELDS,
     baseUrl = "https://api.purpleair.com/v1/groups"
 ) {
@@ -312,7 +591,7 @@ pa_getMemberHistory <- function(
   MazamaCoreUtils::stopIfNull(baseUrl)
 
   if ( !average %in% c(0, 10, 30, 60, 360, 1440, 10080, 44640, 53560) ) {
-    stop("average must be one of: 0, 10, 30, 60, 360, 1440, 10080, 44640, 53560")
+    stop("'average' must be one of: 0, 10, 30, 60, 360, 1440, 10080, 44640, 53560")
   }
 
   # ----- Request data ---------------------------------------------------------
@@ -337,7 +616,7 @@ pa_getMemberHistory <- function(
     queryList$end_timestamp <- end_timestamp
   }
 
-  PAList <- PurpleAir_API_HistoryRequest(
+  PAList <- PurpleAir_API_csvGET(
     webserviceUrl = webserviceUrl,
     api_key = api_key,
     queryList = queryList
@@ -350,19 +629,21 @@ pa_getMemberHistory <- function(
 
 #' @export
 #'
-#' @title Retrieves a list of all sensors in the specified group.
+#' @title Retrieve current data for all sensors in the specified group.
 #'
 #' @param api_key PurpleAir API READ key.
 #' @param group_id The \code{group_id} of the requested group. This group must
 #' be owned by the \code{api_key}.
 #' @param fields Comma-separated list of 'sensor data fields' to include in the response.
+#' @param location_type The \code{location_type} of the sensors. Possible values
+#' are: 0 = Outside or 1 = Inside.
 #' @param max_age Filter results to only include sensors modified or updated
 #' within the last \code{max_age} seconds. Using a value of 0 will match sensors of any age.
 #' @param baseUrl URL endpoint for the "Get Members Data" API.
 #'
-#' @return List containing all sensors in the specified group.
+#' @return List containing current data for all sensors in the specified group.
 #'
-#' @description Sends a request to the PurpleAirAPI API endpoint described at:
+#' @description Sends a request to the PurpleAir API endpoint described at:
 #' \url{https://api.purpleair.com/#api-groups-get-members-data}
 #'
 #' Retrieves data for all sensors in the specified group.
@@ -386,6 +667,7 @@ pa_getMembersData <- function(
     api_key = NULL,
     group_id = NULL,
     fields = SENSOR_DATA_PM25_FIELDS,
+    location_type = NULL,
     max_age = 604800,
     baseUrl = "https://api.purpleair.com/v1/groups"
 ) {
@@ -397,6 +679,13 @@ pa_getMembersData <- function(
   MazamaCoreUtils::stopIfNull(fields)
   MazamaCoreUtils::stopIfNull(max_age)
   MazamaCoreUtils::stopIfNull(baseUrl)
+
+  if ( !is.null(location_type) ) {
+    location_type <- as.numeric(location_type)
+    if ( !location_type %in% c(0, 1) ) {
+      stop("'location_type' must be one of 0 (outside) or 1 (inside).")
+    }
+  }
 
   # ----- Request data ---------------------------------------------------------
 
@@ -412,7 +701,11 @@ pa_getMembersData <- function(
       max_age = max_age
     )
 
-  PAList <- PurpleAir_API_Request(
+  if ( !is.null(location_type) ) {
+    queryList$location_type <- location_type
+  }
+
+  PAList <- PurpleAir_API_GET(
     webserviceUrl = webserviceUrl,
     api_key = api_key,
     queryList = queryList
@@ -441,8 +734,6 @@ pa_getMembersData <- function(
 
 # ===== Public Data ============================================================
 
-#' SENSOR_DATA_PM25_FIELDS
-#'
 #' @export
 #' @docType data
 #' @name SENSOR_DATA_PM25_FIELDS
@@ -461,7 +752,8 @@ SENSOR_DATA_PM25_FIELDS <-
     "name, icon, model, hardware, location_type, private, latitude, longitude, altitude, position_rating, led_brightness, firmware_version, firmware_upgrade, rssi, uptime, pa_latency, memory, last_seen, last_modified, date_created, channel_state, channel_flags, channel_flags_manual, channel_flags_auto, confidence, confidence_manual, confidence_auto",
     #
     # Environmental fields:
-    "humidity, humidity_a, humidity_b, temperature, temperature_a, temperature_b, pressure, pressure_a, pressure_b",
+    ###"humidity, humidity_a, humidity_b, temperature, temperature_a, temperature_b, pressure, pressure_a, pressure_b",
+    "humidity, temperature, pressure",
     #
     # Miscellaneous fields:
     #   "voc, voc_a, voc_b, ozone1, analog_input"
@@ -491,8 +783,6 @@ SENSOR_DATA_PM25_FIELDS <-
 
 
 
-#' SENSOR_HISTORY_PM25_FIELDS
-#'
 #' @export
 #' @docType data
 #' @name SENSOR_HISTORY_PM25_FIELDS
@@ -521,7 +811,8 @@ SENSOR_HISTORY_PM25_FIELDS <-
     "rssi, uptime, pa_latency, memory",
     #
     # Environmental fields:
-    "humidity, humidity_a, humidity_b, temperature, temperature_a, temperature_b, pressure, pressure_a, pressure_b",
+    ###"humidity, humidity_a, humidity_b, temperature, temperature_a, temperature_b, pressure, pressure_a, pressure_b",
+    "humidity, temperature, pressure",
     #
     # Miscellaneous fields:
     #   "voc, voc_a, voc_b, analog_input",
@@ -549,12 +840,9 @@ SENSOR_HISTORY_PM25_FIELDS <-
 # ===== Private Functions ======================================================
 
 
-#' @importFrom rlang .data
-#' @importFrom MazamaCoreUtils logger.error logger.debug logger.isInitialized
-#'
-#' Request and parse a JSON return
+# GET and parse a JSON return
 
-PurpleAir_API_Request <- function(
+PurpleAir_API_GET <- function(
     webserviceUrl = NULL,
     api_key = NULL,
     queryList = NULL
@@ -638,12 +926,9 @@ PurpleAir_API_Request <- function(
 }
 
 
-#' @importFrom rlang .data
-#' @importFrom MazamaCoreUtils logger.error logger.debug logger.isInitialized
-#'
-#' Request and parse a CSV return
+# GET and parse a CSV return
 
-PurpleAir_API_HistoryRequest <- function(
+PurpleAir_API_csvGET <- function(
     webserviceUrl = NULL,
     api_key = NULL,
     queryList = NULL
@@ -707,6 +992,131 @@ PurpleAir_API_HistoryRequest <- function(
   tbl$member_id <- as.character(tbl$member_id)
 
   return(tbl)
+
+}
+
+
+# POST and parse a JSON return
+
+PurpleAir_API_POST <- function(
+    webserviceUrl = NULL,
+    api_key = NULL,
+    queryList = NULL
+) {
+
+  # ----- Validate parameters --------------------------------------------------
+
+  MazamaCoreUtils::stopIfNull(webserviceUrl)
+  MazamaCoreUtils::stopIfNull(api_key)
+  MazamaCoreUtils::stopIfNull(queryList)
+
+  # ----- Request data ---------------------------------------------------------
+
+  # NOTE:  https://httr.r-lib.org/articles/quickstart.html
+  r <-
+    httr::POST(
+      webserviceUrl,
+      httr::add_headers("X-API-Key" = api_key),
+      query = queryList
+    )
+
+  # * Error response -----
+
+  if ( httr::http_error(r) ) {  # web service failed to respond
+
+    content <- httr::content(r)
+
+    err_msg <- sprintf(
+      "%s - %s",
+      content$error,
+      content$description
+    )
+
+    if ( logger.isInitialized() ) {
+      logger.error("Web service failed to respond: %s", webserviceUrl)
+      logger.error(err_msg)
+    }
+
+    stop(err_msg)
+
+  }
+
+  # * Success response -----
+
+  content <- httr::content(r, as = "text", encoding = "UTF-8") # don't interpret
+
+  # ----- Parse JSON -----------------------------------------------------------
+
+  # * Convert JSON to an R list -----
+
+  PAList <-
+    jsonlite::fromJSON(
+      content,
+      simplifyVector = TRUE,
+      simplifyDataFrame = TRUE,
+      simplifyMatrix = TRUE,
+      flatten = FALSE
+    )
+
+  # * Convert times to POSIXct -----
+
+  if ( "time_stamp" %in% names(PAList) ) {
+    PAList$time_stamp <- lubridate::as_datetime(PAList$time_stamp)
+  }
+
+  return(PAList)
+
+}
+
+
+# DELETE and parse a JSON return
+
+PurpleAir_API_DELETE <- function(
+    webserviceUrl = NULL,
+    api_key = NULL,
+    queryList = NULL
+) {
+
+  # ----- Validate parameters --------------------------------------------------
+
+  MazamaCoreUtils::stopIfNull(webserviceUrl)
+  MazamaCoreUtils::stopIfNull(api_key)
+  MazamaCoreUtils::stopIfNull(queryList)
+
+  # ----- Request data ---------------------------------------------------------
+
+  # NOTE:  https://httr.r-lib.org/articles/quickstart.html
+  r <-
+    httr::DELETE(
+      webserviceUrl,
+      httr::add_headers("X-API-Key" = api_key),
+      query = queryList
+    )
+
+  # * Error response -----
+
+  if ( httr::http_error(r) ) {  # web service failed to respond
+
+    content <- httr::content(r)
+
+    err_msg <- sprintf(
+      "%s - %s",
+      content$error,
+      content$description
+    )
+
+    if ( logger.isInitialized() ) {
+      logger.error("Web service failed to respond: %s", webserviceUrl)
+      logger.error(err_msg)
+    }
+
+    stop(err_msg)
+
+  }
+
+  # Nothing returned upon success.
+
+  return()
 
 }
 
