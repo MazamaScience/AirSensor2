@@ -2,14 +2,13 @@ library(AirSensor2)
 
 source("global_vars.R")
 
+# ===== Keys ===================================================================
+
 pa_checkAPIKey(
   api_key = MY_API_READ_KEY
 )
 
-a <- pa_getSensorData(
-  api_key = MY_API_READ_KEY,
-  sensor_index = 896
-)
+# ===== Sensors ================================================================
 
 start <-
   MazamaCoreUtils::parseDatetime("2022-01-29 00:00:00", timezone = "UTC") %>%
@@ -19,13 +18,17 @@ end <-
   MazamaCoreUtils::parseDatetime("2022-01-30 00:00:00", timezone = "UTC") %>%
   as.numeric()
 
+a <- pa_getSensorData(
+  api_key = MY_API_READ_KEY,
+  sensor_index = 896
+)
+
 a <- pa_getSensorHistoryCSV(
   api_key = MY_API_READ_KEY,
   sensor_index = 896,
   start_timestamp = start,
   end_timestamp = end,
-  average = 60,
-  fields = SENSOR_HISTORY_PM25_FIELDS
+  average = 0
 )
 
 a <- pa_getSensorHistory(
@@ -46,6 +49,8 @@ a <- pa_getSensorsData(
   selng = -117,
   selat = 42
 )
+
+# ===== Groups =================================================================
 
 pa_createGroup(
   api_key = MY_API_WRITE_KEY,

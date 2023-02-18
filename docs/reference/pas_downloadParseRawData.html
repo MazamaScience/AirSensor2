@@ -81,6 +81,8 @@ each sensor.</p>
 <span>  api_key <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  fields <span class="op">=</span> <span class="va">SENSOR_DATA_AVG_PM25_FIELDS</span>,</span>
 <span>  location_type <span class="op">=</span> <span class="fl">0</span>,</span>
+<span>  read_keys <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  show_only <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  modified_since <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  max_age <span class="op">=</span> <span class="fl">3600</span> <span class="op">*</span> <span class="fl">24</span> <span class="op">*</span> <span class="fl">7</span>,</span>
 <span>  west <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -106,6 +108,18 @@ See <code>MazamaCoreUtils::<a href="https://rdrr.io/pkg/MazamaCoreUtils/man/setA
 <dt>location_type</dt>
 <dd><p>The <code>location_type</code> of the sensors. Possible values
 are: 0 = Outside, 1 = Inside or <code>NULL</code> = both.</p></dd>
+
+
+<dt>read_keys</dt>
+<dd><p>Optional comma separated list of sensor read_keys is required
+for private devices. It is separate to the api_key and each sensor has its own
+read_key. Submit multiple keys by separating them with a comma (,) character
+for example: key-one,key-two,key-three.</p></dd>
+
+
+<dt>show_only</dt>
+<dd><p>Optional comma separated list of sensor_index values. When
+provided, the results are limited only to the sensors included in this list.</p></dd>
 
 
 <dt>modified_since</dt>

@@ -11,6 +11,12 @@
 #' @param fields Character string with PurpleAir field names for the Get Sensor Data API.
 #' @param location_type The \code{location_type} of the sensors. Possible values
 #' are: 0 = Outside, 1 = Inside or \code{NULL} = both.
+#' @param read_keys Optional comma separated list of sensor read_keys is required
+#' for private devices. It is separate to the api_key and each sensor has its own
+#' read_key. Submit multiple keys by separating them with a comma (,) character
+#' for example: key-one,key-two,key-three.
+#' @param show_only Optional comma separated list of sensor_index values. When
+#' provided, the results are limited only to the sensors included in this list.
 #' @param modified_since The modified_since parameter causes only sensors modified
 #' after the provided time stamp to be included in the results. Using the
 #' time_stamp value from a previous call (recommended) will limit results to
@@ -70,6 +76,8 @@ pas_downloadParseRawData <- function(
   api_key = NULL,
   fields = SENSOR_DATA_AVG_PM25_FIELDS,
   location_type = 0,
+  read_keys = NULL,
+  show_only = NULL,
   modified_since = NULL,
   max_age = 3600 * 24 * 7,
   west = NULL,
@@ -121,12 +129,15 @@ pas_downloadParseRawData <- function(
       api_key = api_key,
       fields = fields,
       location_type = location_type,
+      read_keys = read_keys,
+      show_only = show_only,
       modified_since = modified_since,
       max_age = max_age,
       nwlng = west,
       nwlat = north,
       selng = east,
-      selat = south
+      selat = south,
+      baseUrl = baseUrl
     )
 
   # > str(PAList)

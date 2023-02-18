@@ -11,6 +11,8 @@ pas_createNew(
   counties = NULL,
   lookbackDays = 1,
   location_type = 0,
+  read_keys = NULL,
+  show_only = NULL,
   baseUrl = "https://api.purpleair.com/v1/sensors"
 )
 }
@@ -31,6 +33,14 @@ filtered to only include sensors with data more recent than \code{lookbackDays} 
 
 \item{location_type}{The \code{location_type} of the sensors. Possible values
 are: 0 = Outside, 1 = Inside or \code{NULL} = both.}
+
+\item{read_keys}{Optional comma separated list of sensor read_keys is required
+for private devices. It is separate to the api_key and each sensor has its own
+read_key. Submit multiple keys by separating them with a comma (,) character
+for example: key-one,key-two,key-three.}
+
+\item{show_only}{Optional comma separated list of sensor_index values. When
+provided, the results are limited only to the sensors included in this list.}
 
 \item{baseUrl}{Base URL for the PurpleAir API.}
 }

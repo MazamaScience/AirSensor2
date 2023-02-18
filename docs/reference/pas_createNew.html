@@ -105,6 +105,8 @@ the data.</p>
 <span>  counties <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  lookbackDays <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>  location_type <span class="op">=</span> <span class="fl">0</span>,</span>
+<span>  read_keys <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  show_only <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  baseUrl <span class="op">=</span> <span class="st">"https://api.purpleair.com/v1/sensors"</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -138,6 +140,18 @@ filtered to only include sensors with data more recent than <code>lookbackDays</
 <dt>location_type</dt>
 <dd><p>The <code>location_type</code> of the sensors. Possible values
 are: 0 = Outside, 1 = Inside or <code>NULL</code> = both.</p></dd>
+
+
+<dt>read_keys</dt>
+<dd><p>Optional comma separated list of sensor read_keys is required
+for private devices. It is separate to the api_key and each sensor has its own
+read_key. Submit multiple keys by separating them with a comma (,) character
+for example: key-one,key-two,key-three.</p></dd>
+
+
+<dt>show_only</dt>
+<dd><p>Optional comma separated list of sensor_index values. When
+provided, the results are limited only to the sensors included in this list.</p></dd>
 
 
 <dt>baseUrl</dt>
@@ -187,8 +201,8 @@ are: 0 = Outside, 1 = Inside or <code>NULL</code> = both.</p></dd>
 <span class="r-in"><span><span class="va">pas</span> <span class="op"><a href="pipe.html">%&gt;%</a></span> <span class="fu"><a href="pas_leaflet.html">pas_leaflet</a></span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="op">}</span>, silent <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Error in .subset2(x, i, exact = exact) : </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   attempt to select less than one element in get1index</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Error in vec_size() : </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   `x` must be a vector, not a &lt;sfc_MULTIPOLYGON/sfc&gt; object.</span>
 <span class="r-in"><span><span class="co"># }</span></span></span>
 </code></pre></div>
     </div>

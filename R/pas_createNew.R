@@ -39,6 +39,12 @@
 #' filtered to only include sensors with data more recent than \code{lookbackDays} ago.
 #' @param location_type The \code{location_type} of the sensors. Possible values
 #' are: 0 = Outside, 1 = Inside or \code{NULL} = both.
+#' @param read_keys Optional comma separated list of sensor read_keys is required
+#' for private devices. It is separate to the api_key and each sensor has its own
+#' read_key. Submit multiple keys by separating them with a comma (,) character
+#' for example: key-one,key-two,key-three.
+#' @param show_only Optional comma separated list of sensor_index values. When
+#' provided, the results are limited only to the sensors included in this list.
 #' @param baseUrl Base URL for the PurpleAir API.
 #'
 #' @return A PurpleAir Synoptic \emph{pas} object.
@@ -83,6 +89,8 @@ pas_createNew <- function(
   counties = NULL,
   lookbackDays = 1,
   location_type = 0,
+  read_keys = NULL,
+  show_only = NULL,
   baseUrl = "https://api.purpleair.com/v1/sensors"
 ) {
 
@@ -127,45 +135,50 @@ pas_createNew <- function(
 
   # ----- Get country/state bounding box ---------------------------------------
 
+  if ( logger.isInitialized() )
+    logger.debug("----- create bounding box -----")
+
   # NOTE:  Most PurpleAir sensors are in the the US (in California).
 
   if ( !is.null(stateCodes) && exists("NaturalEarthAdm1") ) {
 
-    SFDF <- get("NaturalEarthAdm1") # To pass R CMD check
-    mask <-
-      (SFDF$countryCode %in% countryCodes) &
-      (SFDF$stateCode %in% stateCodes)
-    SFDF <- subset(SFDF, mask)
-
     if ( !is.null(counties) && exists("USCensusCounties") ) {
 
-      SFDF <- get("USCensusCounties") # To pass R CMD check
       counties <- as.character(counties)
       isFIPS <- stringr::str_detect(counties[1], "[0-9]{5}")
 
       if ( isFIPS ) {
-        mask <-
-          (SFDF$stateCode %in% stateCodes) &
-          (SFDF$countyFIPS %in% counties)
+        SFDF <-
+          get("USCensusCounties") %>%  # To pass R CMD check
+          dplyr::filter(.data$stateCode %in% stateCodes) %>%
+          dplyr::filter(.data$countyFIPS %in% counties)
       } else {
         # Handle input inconsistencies
         counties <-
           stringr::str_to_title(counties) %>%
           stringr::str_replace(" County", "")
-        # Limit to valid counties
-        mask <-
-          (SFDF$stateCode %in% stateCodes) &
-          (SFDF$countyName %in% counties)
+        SFDF <-
+          get("USCensusCounties") %>%  # To pass R CMD check
+          dplyr::filter(.data$stateCode %in% stateCodes) %>%
+          dplyr::filter(.data$countyName %in% counties)
       }
-      SFDF <- subset(SFDF, mask)
+
+    } else {
+
+      # Use state but not counties
+      SFDF <-
+        get("NaturalEarthAdm1") %>% # To pass R CMD check
+        dplyr::filter(.data$countryCode %in% countryCodes) %>%
+        dplyr::filter(.data$stateCode %in% stateCodes)
 
     }
 
   } else {
 
-    mask <- MazamaSpatialUtils::SimpleCountriesEEZ$countryCode %in% countryCodes
+    # Neither state nor county is specified
     SFDF <-
-      subset(MazamaSpatialUtils::SimpleCountriesEEZ, mask)
+      MazamaSpatialUtils::SimpleCountriesEEZ %>%
+      dplyr::filter(.data$countryCode %in% countryCodes)
 
   }
 
@@ -187,6 +200,8 @@ pas_createNew <- function(
       api_key = api_key,
       fields = SENSOR_DATA_AVG_PM25_FIELDS,
       location_type = location_type,
+      read_keys = read_keys,
+      show_only = show_only,
       modified_since = NULL, # get all data more recent than max_age
       max_age = lookbackDays * 24 * 3600,
       west = west,
@@ -206,6 +221,9 @@ pas_createNew <- function(
       stateCodes,
       counties
     )
+
+  if ( logger.isInitialized() )
+    logger.debug("----- finished enhancing -----")
 
   # ----- Return ---------------------------------------------------------------
 

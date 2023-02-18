@@ -12,7 +12,7 @@ pat_downloadParseRawData(
   timezone = "UTC",
   average = 0,
   fields = SENSOR_HISTORY_PM25_FIELDS,
-  baseUrl = "https://api.purpleair.com/v1/sensors/:sensor_index/history/csv"
+  baseUrl = "https://api.purpleair.com/v1/sensors"
 )
 }
 \arguments{

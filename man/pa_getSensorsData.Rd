@@ -8,6 +8,8 @@ pa_getSensorsData(
   api_key = NULL,
   fields = SENSOR_DATA_PM25_FIELDS,
   location_type = NULL,
+  read_keys = NULL,
+  show_only = NULL,
   modified_since = NULL,
   max_age = 604800,
   nwlng = NULL,
@@ -24,6 +26,14 @@ pa_getSensorsData(
 
 \item{location_type}{The \code{location_type} of the sensors. Possible values
 are: 0 = Outside, 1 = Inside or \code{NULL} = both.}
+
+\item{read_keys}{Optional comma separated list of sensor read_keys is required
+for private devices. It is separate to the api_key and each sensor has its own
+read_key. Submit multiple keys by separating them with a comma (,) character
+for example: key-one,key-two,key-three.}
+
+\item{show_only}{Optional comma separated list of sensor_index values. When
+provided, the results are limited only to the sensors included in this list.}
 
 \item{modified_since}{The modified_since parameter causes only sensors modified
 after the provided time stamp to be included in the results. Using the

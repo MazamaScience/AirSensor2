@@ -1,3 +1,8 @@
+#
+# Wrapper functions for all API endpoints described at:
+#   https://api.purpleair.com/
+#
+
 # ===== Keys ===================================================================
 
 #' @export
@@ -157,8 +162,8 @@ pa_getSensorData <- function(
 #' @param api_key PurpleAir API READ key.
 #' @param sensor_index The \code{sensor_index} as found in the JSON for this
 #' specific sensor.
-#' @param start_timestamp Desired start datetime (ISO 8601).
-#' @param end_timestamp Desired end datetime (ISO 8601).
+#' @param start_timestamp Optional Unix timestamp in seconds since Jan 1, 1970.
+#' @param end_timestamp Optional Unix timestamp in seconds since Jan 1, 1970.
 #' @param average Temporal averaging in minutes performed by PurpleAir. One of:
 #' 0 (raw), 10, 30, 60 (hour), 360, 1440 (day).
 #' @param fields Character string specifying which 'sensor data fields' to include in the response.
@@ -202,7 +207,7 @@ pa_getSensorHistoryCSV <- function(
     start_timestamp = NULL,
     end_timestamp = NULL,
     average = 10,
-    fields = SENSOR_DATA_PM25_FIELDS,
+    fields = SENSOR_HISTORY_PM25_FIELDS,
     baseUrl = "https://api.purpleair.com/v1/sensors"
 ) {
 
@@ -258,8 +263,8 @@ pa_getSensorHistoryCSV <- function(
 #' @param api_key PurpleAir API READ key.
 #' @param sensor_index The \code{sensor_index} as found in the JSON for this
 #' specific sensor.
-#' @param start_timestamp Desired start datetime (ISO 8601).
-#' @param end_timestamp Desired end datetime (ISO 8601).
+#' @param start_timestamp Optional Unix timestamp in seconds since Jan 1, 1970.
+#' @param end_timestamp Optional Unix timestamp in seconds since Jan 1, 1970.
 #' @param average Temporal averaging in minutes performed by PurpleAir. One of:
 #' 0 (raw), 10, 30, 60 (hour), 360, 1440 (day).
 #' @param fields Character string specifying which 'sensor data fields' to include in the response.
@@ -376,6 +381,12 @@ pa_getSensorHistory <- function(
 #' @param fields Optional parameter specifying sensor data fields to return.
 #' @param location_type The \code{location_type} of the sensors. Possible values
 #' are: 0 = Outside, 1 = Inside or \code{NULL} = both.
+#' @param read_keys Optional comma separated list of sensor read_keys is required
+#' for private devices. It is separate to the api_key and each sensor has its own
+#' read_key. Submit multiple keys by separating them with a comma (,) character
+#' for example: key-one,key-two,key-three.
+#' @param show_only Optional comma separated list of sensor_index values. When
+#' provided, the results are limited only to the sensors included in this list.
 #' @param modified_since The modified_since parameter causes only sensors modified
 #' after the provided time stamp to be included in the results. Using the
 #' time_stamp value from a previous call (recommended) will limit results to
@@ -413,6 +424,8 @@ pa_getSensorsData <- function(
     api_key = NULL,
     fields = SENSOR_DATA_PM25_FIELDS,
     location_type = NULL,
+    read_keys = NULL,
+    show_only = NULL,
     modified_since = NULL,
     max_age = 604800,
     nwlng = NULL,
@@ -460,6 +473,14 @@ pa_getSensorsData <- function(
 
   if ( !is.null(location_type) ) {
     queryList$location_type <- location_type
+  }
+
+  if ( !is.null(read_keys) ) {
+    queryList$read_keys <- read_keys
+  }
+
+  if ( !is.null(show_only) ) {
+    queryList$show_only <- show_only
   }
 
   if ( !is.null(modified_since) ) {

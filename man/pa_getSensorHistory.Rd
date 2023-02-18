@@ -20,9 +20,9 @@ pa_getSensorHistory(
 \item{sensor_index}{The \code{sensor_index} as found in the JSON for this
 specific sensor.}
 
-\item{start_timestamp}{Desired start datetime (ISO 8601).}
+\item{start_timestamp}{Optional Unix timestamp in seconds since Jan 1, 1970.}
 
-\item{end_timestamp}{Desired end datetime (ISO 8601).}
+\item{end_timestamp}{Optional Unix timestamp in seconds since Jan 1, 1970.}
 
 \item{average}{Temporal averaging in minutes performed by PurpleAir. One of:
 0 (raw), 10, 30, 60 (hour), 360, 1440 (day).}
