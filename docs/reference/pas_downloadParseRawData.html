@@ -78,10 +78,11 @@ each sensor.</p>
 
     <div id="ref-usage">
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">pas_downloadParseRawData</span><span class="op">(</span></span>
-<span>  apiReadKey <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  fields <span class="op">=</span> <span class="va">SENSOR_DATA_PM25_FIELDS</span>,</span>
-<span>  maxAge <span class="op">=</span> <span class="fl">3600</span> <span class="op">*</span> <span class="fl">24</span> <span class="op">*</span> <span class="fl">7</span>,</span>
-<span>  outsideOnly <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  api_key <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  fields <span class="op">=</span> <span class="va">SENSOR_DATA_AVG_PM25_FIELDS</span>,</span>
+<span>  location_type <span class="op">=</span> <span class="fl">0</span>,</span>
+<span>  modified_since <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  max_age <span class="op">=</span> <span class="fl">3600</span> <span class="op">*</span> <span class="fl">24</span> <span class="op">*</span> <span class="fl">7</span>,</span>
 <span>  west <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  east <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  south <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -92,8 +93,8 @@ each sensor.</p>
 
     <div id="arguments">
     <h2>Arguments</h2>
-    <dl><dt>apiReadKey</dt>
-<dd><p>PurpleAir API Read Key. If <code>apiReadKey = NULL</code>, it
+    <dl><dt>api_key</dt>
+<dd><p>PurpleAir API READ Key. If <code>api_key = NULL</code>, it
 will be obtained using <code>getAPIKey("PurpleAir-read")</code>.
 See <code>MazamaCoreUtils::<a href="https://rdrr.io/pkg/MazamaCoreUtils/man/setAPIKey.html" class="external-link">setAPIKey</a></code>.</p></dd>
 
@@ -102,13 +103,22 @@ See <code>MazamaCoreUtils::<a href="https://rdrr.io/pkg/MazamaCoreUtils/man/setA
 <dd><p>Character string with PurpleAir field names for the Get Sensor Data API.</p></dd>
 
 
-<dt>maxAge</dt>
+<dt>location_type</dt>
+<dd><p>The <code>location_type</code> of the sensors. Possible values
+are: 0 = Outside, 1 = Inside or <code>NULL</code> = both.</p></dd>
+
+
+<dt>modified_since</dt>
+<dd><p>The modified_since parameter causes only sensors modified
+after the provided time stamp to be included in the results. Using the
+time_stamp value from a previous call (recommended) will limit results to
+those with new values since the last request. Using a value of 0 will match
+sensors modified at any time.</p></dd>
+
+
+<dt>max_age</dt>
 <dd><p>Number of seconds used to filter results to only include sensors
-modified or updated within the <code>maxAge</code> seconds. Using a value of 0 will match all sensors.</p></dd>
-
-
-<dt>outsideOnly</dt>
-<dd><p>Logical specifying whether to restrict requests to outside sensors only.</p></dd>
+modified or updated within the <code>max_age</code> seconds. Using a value of 0 will match all sensors.</p></dd>
 
 
 <dt>west</dt>
@@ -154,12 +164,15 @@ modified or updated within the <code>maxAge</code> seconds. Using a value of 0 w
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/MazamaScience/AirSensor2" class="external-link">AirSensor2</a></span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu"><a href="initializeMazamaSpatialUtils.html">initializeMazamaSpatialUtils</a></span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">pas_raw</span> <span class="op">&lt;-</span></span></span>
 <span class="r-in"><span>  <span class="fu">pas_downloadParseRawData</span><span class="op">(</span></span></span>
-<span class="r-in"><span>    apiReadKey <span class="op">=</span> <span class="va">MY_API_READ_KEY</span>,</span></span>
-<span class="r-in"><span>    fields <span class="op">=</span> <span class="va">SENSOR_DATA_PM25_FIELDS</span>,</span></span>
-<span class="r-in"><span>    maxAge <span class="op">=</span> <span class="fl">3600</span> <span class="op">*</span> <span class="fl">24</span>,</span></span>
-<span class="r-in"><span>    outsideOnly <span class="op">=</span> <span class="cn">TRUE</span>,</span></span>
+<span class="r-in"><span>    api_key <span class="op">=</span> <span class="va">MY_API_READ_KEY</span>,</span></span>
+<span class="r-in"><span>    fields <span class="op">=</span> <span class="va">SENSOR_DATA_AVG_PM25_FIELDS</span>,</span></span>
+<span class="r-in"><span>    location_type <span class="op">=</span> <span class="fl">0</span>,</span></span>
+<span class="r-in"><span>    modified_since <span class="op">=</span> <span class="cn">NULL</span>,</span></span>
+<span class="r-in"><span>    max_age <span class="op">=</span> <span class="fl">3600</span> <span class="op">*</span> <span class="fl">24</span>,</span></span>
 <span class="r-in"><span>    west <span class="op">=</span> <span class="op">-</span><span class="fl">125</span>,</span></span>
 <span class="r-in"><span>    east <span class="op">=</span> <span class="op">-</span><span class="fl">117</span>,</span></span>
 <span class="r-in"><span>    south <span class="op">=</span> <span class="fl">42</span>,</span></span>
@@ -169,7 +182,7 @@ modified or updated within the <code>maxAge</code> seconds. Using a value of 0 w
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/View.html" class="external-link">View</a></span><span class="op">(</span><span class="va">pas_raw</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">100</span>,<span class="op">]</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="op">}</span>, silent <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Error in pas_downloadParseRawData(apiReadKey = MY_API_READ_KEY, fields = SENSOR_DATA_PM25_FIELDS,  : </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Error in pas_downloadParseRawData(api_key = MY_API_READ_KEY, fields = SENSOR_DATA_AVG_PM25_FIELDS,  : </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   object 'MY_API_READ_KEY' not found</span>
 <span class="r-in"><span><span class="co"># }</span></span></span>
 </code></pre></div>

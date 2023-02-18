@@ -5,7 +5,7 @@
 #'
 #' @title Download time series data from PurpleAir
 #'
-#' @param apiReadKey PurpleAir API Read Key. If \code{apiReadKey = NULL}, it
+#' @param api_key PurpleAir API Read Key. If \code{api_key = NULL}, it
 #' will be obtained using \code{getAPIKey("PurpleAir-read")}.
 #' See \code{MazamaCoreUtils::\link[MazamaCoreUtils:setAPIKey]{setAPIKey}}.
 #' @param sensor_index PurpleAir sensor unique identifier.
@@ -36,7 +36,7 @@
 #'
 #' pat_raw <-
 #'   pat_downloadParseRawData(
-#'     apiReadKey = MY_API_READ_KEY,
+#'     api_key = MY_API_READ_KEY,
 #'     sensor_index = "131611",
 #'     startdate = "2023-01-01",
 #'     enddate = "2023-02-01",
@@ -50,7 +50,7 @@
 #' }
 
 pat_downloadParseRawData <- function(
-  apiReadKey = NULL,
+  api_key = NULL,
   sensor_index = NULL,
   startdate = NULL,
   enddate = NULL,
@@ -62,10 +62,10 @@ pat_downloadParseRawData <- function(
 
   # ----- Validate parameters --------------------------------------------------
 
-  if ( is.null(apiReadKey) )
-    apiReadKey <- MazamaCoreUtils::getAPIKey("PurpleAir-read")
+  if ( is.null(api_key) )
+    api_key <- MazamaCoreUtils::getAPIKey("PurpleAir-read")
 
-  MazamaCoreUtils::stopIfNull(apiReadKey)
+  MazamaCoreUtils::stopIfNull(api_key)
   MazamaCoreUtils::stopIfNull(sensor_index)
   MazamaCoreUtils::stopIfNull(startdate)
   MazamaCoreUtils::stopIfNull(enddate)
@@ -106,7 +106,7 @@ pat_downloadParseRawData <- function(
   r <-
     httr::GET(
       webserviceUrl,
-      httr::add_headers("X-API-Key" = apiReadKey),
+      httr::add_headers("X-API-Key" = api_key),
       query = queryList
     )
 
@@ -232,13 +232,13 @@ pat_downloadParseRawData <- function(
 
 if ( FALSE ) {
 
-  apiReadKey = MY_API_READ_KEY
+  api_key = MY_API_READ_KEY
 
   baseUrl = "https://api.purpleair.com/v1/sensors"
 
   pat_raw <-
     pat_downloadParseRawData(
-      apiReadKey,
+      api_key,
       sensor_index = "131611",
       startdate = "2023-01-22",
       enddate = "2023-02-01",

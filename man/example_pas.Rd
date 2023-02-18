@@ -27,12 +27,12 @@ initializeMazamaSpatialUtils()
 
 example_pas <-
   pas_createNew(
-    apiReadKey = MY_API_READ_KEY,
+    api_key = MY_API_READ_KEY,
     countryCodes = "US",
     stateCodes = c("WA", "OR"),
     counties = NULL,
     lookbackDays = 1,
-    outsideOnly = TRUE
+    location_type = 0
   )
 
 save(example_pas, file = "data/example_pas.rda")

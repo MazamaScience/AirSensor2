@@ -28,8 +28,7 @@
 #' states. Withing a single state, \code{counties} may be used to further limit
 #' the data.
 #'
-#' @param apiReadKey PurpleAir API Read Key.
-#' @param fields Character string with PurpleAir field names for the Get Sensor Data API.
+#' @param api_key PurpleAir API Read Key.
 #' @param countryCodes ISO 3166-1 alpha-2 country codes used to subset the data.
 #' At least one countryCode must be specified.
 #' @param stateCodes ISO-3166-2 alpha-2 state codes used to subset the data.
@@ -38,7 +37,8 @@
 #' Specifying counties is optional.
 #' @param lookbackDays Number of days to "look back" for valid data. Data are
 #' filtered to only include sensors with data more recent than \code{lookbackDays} ago.
-#' @param outsideOnly Logical specifying whether to restrict requests to outside sensors only.
+#' @param location_type The \code{location_type} of the sensors. Possible values
+#' are: 0 = Outside, 1 = Inside or \code{NULL} = both.
 #' @param baseUrl Base URL for the PurpleAir API.
 #'
 #' @return A PurpleAir Synoptic \emph{pas} object.
@@ -63,13 +63,12 @@
 #'
 #' pas <-
 #'   pas_createNew(
-#'     apiReadKey = MY_API_READ_KEY,
-#'     fields = SENSOR_DATA_PM25_FIELDS,
+#'     api_key = MY_API_READ_KEY,
 #'     countryCodes = "US",
 #'     stateCodes = "WA",
 #'     counties = c("Okanogan", "Ferry"),
 #'     lookbackDays = 1,
-#'     outsideOnly = TRUE
+#'     location_type = 0
 #'   )
 #'
 #' pas %>% pas_leaflet()
@@ -78,13 +77,12 @@
 #' }
 
 pas_createNew <- function(
-  apiReadKey = NULL,
-  fields = SENSOR_DATA_PM25_FIELDS,
+  api_key = NULL,
   countryCodes = NULL,
   stateCodes = NULL,
   counties = NULL,
   lookbackDays = 1,
-  outsideOnly = TRUE,
+  location_type = 0,
   baseUrl = "https://api.purpleair.com/v1/sensors"
 ) {
 
@@ -93,7 +91,6 @@ pas_createNew <- function(
   MazamaCoreUtils::stopIfNull(countryCodes)
   # NOTE:  stateCodes are optional
   lookbackDays <- MazamaCoreUtils::setIfNull(lookbackDays, 1)
-  outsideOnly <- MazamaCoreUtils::setIfNull(outsideOnly, TRUE)
   MazamaCoreUtils::stopIfNull(baseUrl)
 
   # Guarantee uppercase codes
@@ -187,10 +184,11 @@ pas_createNew <- function(
 
   pas_raw <-
     pas_downloadParseRawData(
-      apiReadKey = apiReadKey,
-      fields = fields,
-      maxAge = lookbackDays * 24 * 3600,
-      outsideOnly = outsideOnly,
+      api_key = api_key,
+      fields = SENSOR_DATA_AVG_PM25_FIELDS,
+      location_type = location_type,
+      modified_since = NULL, # get all data more recent than max_age
+      max_age = lookbackDays * 24 * 3600,
       west = west,
       east = east,
       south = south,
@@ -226,7 +224,6 @@ if ( FALSE ) {
   stateCodes = c("WA", "OR")
   counties <- NULL
   lookbackDays = 1
-  outsideOnly = TRUE
   baseUrl = "https://api.purpleair.com/v1/sensors"
 
 }

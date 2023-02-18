@@ -12,8 +12,9 @@ example_pas_raw &amp;lt;-
   pas_downloadParseRawData(
     MY_API_READ_KEY,
     fields = SENSOR_DATA_PM25_FIELDS,
-    maxAge = 3600 * 24,
-    outsideOnly = TRUE,
+    location_type = 0,
+    modified_since = NULL,
+    max_age = 3600 * 24,
     west = -125,
     east = -117,
     south = 42,
@@ -106,8 +107,9 @@ and was generated on 2023-02-15 by running:</p>
 <span>  <span class="fu"><a href="../reference/pas_downloadParseRawData.html">pas_downloadParseRawData</a></span><span class="op">(</span></span>
 <span>    <span class="va">MY_API_READ_KEY</span>,</span>
 <span>    fields <span class="op">=</span> <span class="va">SENSOR_DATA_PM25_FIELDS</span>,</span>
-<span>    maxAge <span class="op">=</span> <span class="fl">3600</span> <span class="op">*</span> <span class="fl">24</span>,</span>
-<span>    outsideOnly <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>    location_type <span class="op">=</span> <span class="fl">0</span>,</span>
+<span>    modified_since <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>    max_age <span class="op">=</span> <span class="fl">3600</span> <span class="op">*</span> <span class="fl">24</span>,</span>
 <span>    west <span class="op">=</span> <span class="op">-</span><span class="fl">125</span>,</span>
 <span>    east <span class="op">=</span> <span class="op">-</span><span class="fl">117</span>,</span>
 <span>    south <span class="op">=</span> <span class="fl">42</span>,</span>

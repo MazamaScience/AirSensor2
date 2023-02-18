@@ -23,7 +23,7 @@ pa_getSensorsData(
 \item{fields}{Optional parameter specifying sensor data fields to return.}
 
 \item{location_type}{The \code{location_type} of the sensors. Possible values
-are: 0 = Outside or 1 = Inside.}
+are: 0 = Outside, 1 = Inside or \code{NULL} = both.}
 
 \item{modified_since}{The modified_since parameter causes only sensors modified
 after the provided time stamp to be included in the results. Using the

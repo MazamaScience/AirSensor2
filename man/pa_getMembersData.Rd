@@ -22,7 +22,7 @@ be owned by the \code{api_key}.}
 \item{fields}{Comma-separated list of 'sensor data fields' to include in the response.}
 
 \item{location_type}{The \code{location_type} of the sensors. Possible values
-are: 0 = Outside or 1 = Inside.}
+are: 0 = Outside, 1 = Inside or \code{NULL} = both.}
 
 \item{max_age}{Filter results to only include sensors modified or updated
 within the last \code{max_age} seconds. Using a value of 0 will match sensors of any age.}

@@ -156,11 +156,13 @@ pas_leaflet <- function(
   pas$popupText <- paste0(
     "<b>", pas$locationName, "</b><br/>",
     pas$deviceDeploymentID, "<br/>",
+    "sensor_index = ", pas$sensor_index, " <br/>",
     "location_type = ", pas$location_type, " <br/>",
+    "elevation = ", pas$elevation, " m <br/>",
     "temperature = ", round(pas$temperature, 0), " \U2109<br/>",
     "humidity = ", round(pas$humidity, 0), "%<br/>",
-    "pm2.5_60minute = ", round(pas$pm2.5_60minute, 1), " \U00B5g/m3<br/>",
-    "pm2.5_24hour = ", round(pas$pm2.5_24hour, 1), " \U00B5g/m3<br/>",
+    "pm2.5_60minute = ", round(pas$pm2.5_60minute, 1), " \U00B5g/m\U00B3<br/>",
+    "pm2.5_24hour = ", round(pas$pm2.5_24hour, 1), " \U00B5g/m\U00B3<br/>",
     "<br/>",
     "<b>", parameter, " = ", value, " ", unit, "</b>"
   )

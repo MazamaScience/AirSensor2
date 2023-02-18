@@ -20,6 +20,9 @@ Additional updates include:
 * Now using a 10-character geohash as the `locationID`. (See 
 [geohashTools](https://github.com/MichaelChirico/geohashTools) for reasons
 to use a geohash as a unique location identifier.)
+* Updated `pas_downloadParseRawData()` to use the new wrapper functions.
+* Updated `pas_enhanceRawData()` and `pas_createNew()` to harmonize argument
+names. 
 
 # AirSensor2 0.1.4
 

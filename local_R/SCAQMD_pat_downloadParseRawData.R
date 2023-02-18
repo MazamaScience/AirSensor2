@@ -11,7 +11,7 @@
 #' @param enddate Desired end time (ISO 8601).
 #' @param timezone Timezone used to interpret start and end dates.
 #' @param baseUrl Base URL for PurpleAir API.
-#' @param apiReadKey PurpleAir API Read Key. If \code{apiReadKey = NULL}, it
+#' @param api_key PurpleAir API Read Key. If \code{api_key = NULL}, it
 #' will be obtained using \code{getAPIKey("PurpleAir-read")}.
 #' See \code{MazamaCoreUtils::\link[MazamaCoreUtils:setAPIKey]{setAPIKey}}.
 #'
@@ -33,7 +33,7 @@ pat_downloadParseRawData <- function(
   enddate = NULL,
   timezone = NULL,
   baseUrl = "https://api.purpleair.com/v1/sensors/",
-  apiReadKey = NULL,
+  api_key = NULL,
 ) {
 
   # ----- Validate parameters --------------------------------------------------
@@ -49,10 +49,10 @@ pat_downloadParseRawData <- function(
   MazamaCoreUtils::stopIfNull(endtime)
   MazamaCoreUtils::stopIfNull(baseUrl)
 
-  if ( is.null(apiReadKey) )
-    apiReadKey <- MazamaCoreUtils::getAPIKey("PurpleAir-read")
+  if ( is.null(api_key) )
+    api_key <- MazamaCoreUtils::getAPIKey("PurpleAir-read")
 
-  MazamaCoreUtils::stopIfNull(apiReadKey)
+  MazamaCoreUtils::stopIfNull(api_key)
 
   # ----- Request parameters ---------------------------------------------------
 
@@ -141,7 +141,7 @@ pat_downloadParseRawData <- function(
   r <-
     httr::GET(
       webserviceUrl,
-      httr::add_headers("X-API-Key" = apiReadKey),
+      httr::add_headers("X-API-Key" = api_key),
       query = queryList
     )
 
@@ -282,7 +282,7 @@ if ( FALSE ) {
 
   pas <-
     pas_createNew(
-      apiReadKey = PA_API_READ_KEY,
+      api_key = PA_API_READ_KEY,
       countryCodes = "US",
       stateCodes = "WA",
       counties = c("Okanogan", "Ferry"),
@@ -299,11 +299,11 @@ if ( FALSE ) {
   startdate <- MazamaCoreUtils::parseDatetime("2022-03-01", timezone = "America/Los_Angeles")
   enddate <- MazamaCoreUtils::parseDatetime("2022-04-01", timezone = "America/Los_Angeles")
   baseUrl <- "https://api.purpleair.com/v1/sensors/:sensor_index/history/csv"
-  apiReadKey <- PA_API_READ_KEY
+  api_key <- PA_API_READ_KEY
 
 
 
-  apiReadKey = PA_API_READ_KEY
+  api_key = PA_API_READ_KEY
 
   pat_raw <-
     pat_downloadParseRawData(
@@ -313,7 +313,7 @@ if ( FALSE ) {
       enddate = eneddate,
       timezone = "America/Los_Angeles",
       baseUrl = "https://api.purpleair.com/v1/sensors/:sensor_index/history/csv",
-      apiReadKey,
+      api_key,
     )
 
 

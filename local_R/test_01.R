@@ -3,8 +3,8 @@
 library(AirSensor2)
 
 MazamaCoreUtils::getAPIKey(PA_API_READ_KEY)
-apiReadKey = PA_API_READ_KEY
-maxAge = 3600 * 24
+api_key = PA_API_READ_KEY
+max_age = 3600 * 24
 outsideOnly = TRUE
 west = -180  #-125
 east = 180   #-117

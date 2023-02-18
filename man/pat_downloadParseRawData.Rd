@@ -5,7 +5,7 @@
 \title{Download time series data from PurpleAir}
 \usage{
 pat_downloadParseRawData(
-  apiReadKey = NULL,
+  api_key = NULL,
   sensor_index = NULL,
   startdate = NULL,
   enddate = NULL,
@@ -16,7 +16,7 @@ pat_downloadParseRawData(
 )
 }
 \arguments{
-\item{apiReadKey}{PurpleAir API Read Key. If \code{apiReadKey = NULL}, it
+\item{api_key}{PurpleAir API Read Key. If \code{api_key = NULL}, it
 will be obtained using \code{getAPIKey("PurpleAir-read")}.
 See \code{MazamaCoreUtils::\link[MazamaCoreUtils:setAPIKey]{setAPIKey}}.}
 
@@ -50,7 +50,7 @@ library(AirSensor2)
 
 pat_raw <-
   pat_downloadParseRawData(
-    apiReadKey = MY_API_READ_KEY,
+    api_key = MY_API_READ_KEY,
     sensor_index = "131611",
     startdate = "2023-01-01",
     enddate = "2023-02-01",

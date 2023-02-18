@@ -5,20 +5,17 @@
 \title{Create a new PurpleAir synoptic dataset}
 \usage{
 pas_createNew(
-  apiReadKey = NULL,
-  fields = SENSOR_DATA_PM25_FIELDS,
+  api_key = NULL,
   countryCodes = NULL,
   stateCodes = NULL,
   counties = NULL,
   lookbackDays = 1,
-  outsideOnly = TRUE,
+  location_type = 0,
   baseUrl = "https://api.purpleair.com/v1/sensors"
 )
 }
 \arguments{
-\item{apiReadKey}{PurpleAir API Read Key.}
-
-\item{fields}{Character string with PurpleAir field names for the Get Sensor Data API.}
+\item{api_key}{PurpleAir API Read Key.}
 
 \item{countryCodes}{ISO 3166-1 alpha-2 country codes used to subset the data.
 At least one countryCode must be specified.}
@@ -32,7 +29,8 @@ Specifying counties is optional.}
 \item{lookbackDays}{Number of days to "look back" for valid data. Data are
 filtered to only include sensors with data more recent than \code{lookbackDays} ago.}
 
-\item{outsideOnly}{Logical specifying whether to restrict requests to outside sensors only.}
+\item{location_type}{The \code{location_type} of the sensors. Possible values
+are: 0 = Outside, 1 = Inside or \code{NULL} = both.}
 
 \item{baseUrl}{Base URL for the PurpleAir API.}
 }
@@ -75,13 +73,12 @@ initializeMazamaSpatialUtils()
 
 pas <-
   pas_createNew(
-    apiReadKey = MY_API_READ_KEY,
-    fields = SENSOR_DATA_PM25_FIELDS,
+    api_key = MY_API_READ_KEY,
     countryCodes = "US",
     stateCodes = "WA",
     counties = c("Okanogan", "Ferry"),
     lookbackDays = 1,
-    outsideOnly = TRUE
+    location_type = 0
   )
 
 pas \%>\% pas_leaflet()

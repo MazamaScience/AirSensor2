@@ -15,8 +15,9 @@
 #'   pas_downloadParseRawData(
 #'     MY_API_READ_KEY,
 #'     fields = SENSOR_DATA_PM25_FIELDS,
-#'     maxAge = 3600 * 24,
-#'     outsideOnly = TRUE,
+#'     location_type = 0,
+#'     modified_since = NULL,
+#'     max_age = 3600 * 24,
 #'     west = -125,
 #'     east = -117,
 #'     south = 42,
@@ -52,12 +53,12 @@
 #'
 #' example_pas <-
 #'   pas_createNew(
-#'     apiReadKey = MY_API_READ_KEY,
+#'     api_key = MY_API_READ_KEY,
 #'     countryCodes = "US",
 #'     stateCodes = c("WA", "OR"),
 #'     counties = NULL,
 #'     lookbackDays = 1,
-#'     outsideOnly = TRUE
+#'     location_type = 0
 #'   )
 #'
 #' save(example_pas, file = "data/example_pas.rda")
