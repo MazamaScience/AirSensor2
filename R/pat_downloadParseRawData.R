@@ -34,12 +34,14 @@
 #'
 #' library(AirSensor2)
 #'
+#' initializeMazamaSpatialUtils()
+#'
 #' pat_raw <-
 #'   pat_downloadParseRawData(
 #'     api_key = MY_API_READ_KEY,
-#'     sensor_index = "131611",
-#'     startdate = "2023-01-01",
-#'     enddate = "2023-02-01",
+#'     sensor_index = "2323",
+#'     startdate = "2023-02-01",
+#'     enddate = "2023-02-02",
 #'     timezone = "UTC",
 #'     fields = SENSOR_HISTORY_PM25_FIELDS,
 #'   )
@@ -111,8 +113,8 @@ if ( FALSE ) {
     pat_downloadParseRawData(
       api_key,
       sensor_index = "131611",
-      startdate = "2023-01-22",
-      enddate = "2023-02-01",
+      startdate = "2023-01-01",
+      enddate = "2023-01-01",
       timezone = "UTC",
       average = 0,
       fields = SENSOR_HISTORY_PM25_FIELDS,

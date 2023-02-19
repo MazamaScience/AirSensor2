@@ -4,7 +4,7 @@
 #' @description The \code{example_pas_raw} dataset provides a quickly loadable
 #' version of raw Purple Air synoptic data for practicing and code
 #' examples. This dataset contains data for sensors in Washington and Oregon
-#' and was generated on 2023-02-15 by running:
+#' and was generated on 2023-02-18 by running:
 #'
 #' \preformatted{
 #' library(AirSensor2)
@@ -14,7 +14,7 @@
 #' example_pas_raw <-
 #'   pas_downloadParseRawData(
 #'     MY_API_READ_KEY,
-#'     fields = SENSOR_DATA_PM25_FIELDS,
+#'     fields = SENSOR_DATA_AVG_PM25_FIELDS,
 #'     location_type = 0,
 #'     modified_since = NULL,
 #'     max_age = 3600 * 24,

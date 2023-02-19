@@ -31,7 +31,7 @@
 #'   )
 #'
 #' if ( interactive() ) {
-#'   ###pas_leaflet(Omak_pas)
+#'   pas_leaflet(Omak_pas)
 #' }
 #'
 
@@ -97,7 +97,6 @@ pas_filterNear <- function(
       ),
       measure = "geode"
     )
-
 
   # ----- Return ---------------------------------------------------------------
 

@@ -138,7 +138,9 @@ pa_getSensorData <- function(
   # ----- Fix returned data ----------------------------------------------------
 
   for ( name in names(PAList$sensor) ) {
-    if ( name %in% PurpleAir_POSIXct_Fields ) {
+    if ( name %in% PurpleAir_Numeric_Fields ) {
+      PAList$sensor[[name]] <- as.numeric(PAList$sensor[[name]])
+    } else if ( name %in% PurpleAir_POSIXct_Fields ) {
       PAList$sensor[[name]] <- lubridate::as_datetime(as.numeric(PAList$sensor[[name]]))
     }
   }
@@ -245,11 +247,13 @@ pa_getSensorHistoryCSV <- function(
     queryList$end_timestamp <- end_timestamp
   }
 
-  tbl <- PurpleAir_API_csvGET(
-    webserviceUrl = webserviceUrl,
-    api_key = api_key,
-    queryList = queryList
-  )
+  tbl <-
+    PurpleAir_API_csvGET(
+      webserviceUrl = webserviceUrl,
+      api_key = api_key,
+      queryList = queryList
+    ) %>%
+    dplyr::arrange(.data$time_stamp)
 
   return(tbl)
 
@@ -357,7 +361,7 @@ pa_getSensorHistory <- function(
   colnames(PAList$data) <- PAList$fields
   tbl <- dplyr::as_tibble(PAList$data)
 
-  # Convert from character to numeric and POSIXct
+  # Convert to proper class
   for ( name in names(tbl) ) {
     if ( name %in% PurpleAir_Numeric_Fields ) {
       tbl[[name]] <- as.numeric(tbl[[name]])
@@ -366,7 +370,9 @@ pa_getSensorHistory <- function(
     }
   }
 
-  PAList$data <- tbl
+  PAList$data <-
+    tbl %>%
+    dplyr::arrange(.data$time_stamp)
 
   return(PAList)
 
@@ -499,7 +505,7 @@ pa_getSensorsData <- function(
   colnames(PAList$data) <- PAList$fields
   tbl <- dplyr::as_tibble(PAList$data)
 
-  # Convert from character to numeric and POSIXct
+  # Convert to proper class
   for ( name in names(tbl) ) {
     if ( name %in% PurpleAir_Numeric_Fields ) {
       tbl[[name]] <- as.numeric(tbl[[name]])
@@ -991,7 +997,9 @@ pa_getMemberData <- function(
   # ----- Fix returned data ----------------------------------------------------
 
   for ( name in names(PAList$sensor) ) {
-    if ( name %in% PurpleAir_POSIXct_Fields ) {
+    if ( name %in% PurpleAir_Numeric_Fields ) {
+      PAList$sensor[[name]] <- as.numeric(PAList$sensor[[name]])
+    } else if ( name %in% PurpleAir_POSIXct_Fields ) {
       PAList$sensor[[name]] <- lubridate::as_datetime(as.numeric(PAList$sensor[[name]]))
     }
   }
@@ -1090,11 +1098,13 @@ pa_getMemberHistory <- function(
     queryList$end_timestamp <- end_timestamp
   }
 
-  tbl <- PurpleAir_API_csvGET(
-    webserviceUrl = webserviceUrl,
-    api_key = api_key,
-    queryList = queryList
-  )
+  tbl <-
+    PurpleAir_API_csvGET(
+      webserviceUrl = webserviceUrl,
+      api_key = api_key,
+      queryList = queryList
+    ) %>%
+    dplyr::arrange(.data$time_stamp)
 
   return(tbl)
 
@@ -1190,7 +1200,7 @@ pa_getMembersData <- function(
   colnames(PAList$data) <- PAList$fields
   tbl <- dplyr::as_tibble(PAList$data)
 
-  # Convert from character to numeric and POSIXct
+  # Convert to proper class
   for ( name in names(tbl) ) {
     if ( name %in% PurpleAir_Numeric_Fields ) {
       tbl[[name]] <- as.numeric(tbl[[name]])
@@ -1424,10 +1434,12 @@ PurpleAir_API_GET <- function(
       flatten = FALSE
     )
 
-  # * Convert times to POSIXct -----
+  # * Convert to proper class -----
 
   for ( name in names(PAList) ) {
-    if ( name %in% PurpleAir_POSIXct_Fields ) {
+    if ( name %in% PurpleAir_Numeric_Fields ) {
+      PAList[[name]] <- as.numeric(PAList[[name]])
+    } else if ( name %in% PurpleAir_POSIXct_Fields ) {
       PAList[[name]] <- lubridate::as_datetime(as.numeric(PAList[[name]]))
     }
   }
@@ -1493,9 +1505,11 @@ PurpleAir_API_csvGET <- function(
     show_col_types = FALSE
   )
 
-  # Convert from numeric to POSIXct
+  # Convert to proper class
   for ( name in names(tbl) ) {
-    if ( name %in% PurpleAir_POSIXct_Fields ) {
+    if ( name %in% PurpleAir_Numeric_Fields ) {
+      tbl[[name]] <- as.numeric(tbl[[name]])
+    } else if ( name %in% PurpleAir_POSIXct_Fields ) {
       tbl[[name]] <- lubridate::as_datetime(as.numeric(tbl[[name]]))
     }
   }
@@ -1567,10 +1581,12 @@ PurpleAir_API_POST <- function(
       flatten = FALSE
     )
 
-  # * Convert times to POSIXct -----
+  # * Convert to proper class -----
 
   for ( name in names(PAList) ) {
-    if ( name %in% PurpleAir_POSIXct_Fields ) {
+    if ( name %in% PurpleAir_Numeric_Fields ) {
+      PAList[[name]] <- as.numeric(PAList[[name]])
+    } else if ( name %in% PurpleAir_POSIXct_Fields ) {
       PAList[[name]] <- lubridate::as_datetime(as.numeric(PAList[[name]]))
     }
   }

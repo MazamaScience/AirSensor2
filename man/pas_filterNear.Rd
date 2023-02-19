@@ -39,7 +39,7 @@ Omak_pas <-
   )
 
 if ( interactive() ) {
-  ###pas_leaflet(Omak_pas)
+  pas_leaflet(Omak_pas)
 }
 
 }

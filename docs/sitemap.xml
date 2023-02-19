@@ -124,6 +124,9 @@
     <loc>/reference/pas_filterNear.html</loc>
   </url>
   <url>
+    <loc>/reference/pas_get.html</loc>
+  </url>
+  <url>
     <loc>/reference/pas_hasSpatial.html</loc>
   </url>
   <url>
@@ -137,6 +140,9 @@
   </url>
   <url>
     <loc>/reference/pat_PM25_FIELDS.html</loc>
+  </url>
+  <url>
+    <loc>/reference/pat_createNew.html</loc>
   </url>
   <url>
     <loc>/reference/pat_downloadParseRawData.html</loc>

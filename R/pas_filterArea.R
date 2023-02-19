@@ -34,7 +34,7 @@
 #' range(Lane_County_pas$latitude)
 #'
 #' if ( interactive() ) {
-#'   ###pas_leaflet(Lane_County_pas)
+#'   pas_leaflet(Lane_County_pas)
 #' }
 #'
 

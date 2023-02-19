@@ -24,6 +24,7 @@ to use a geohash as a unique location identifier.)
 * Updated `pas_enhanceRawData()` and `pas_createNew()` to harmonize argument
 names. 
 * Addded `pat_downloadParseRawData()` using the new wrapper functions.
+* Added `pat_createNew()`.
 
 # AirSensor2 0.1.4
 
