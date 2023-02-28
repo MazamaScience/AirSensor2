@@ -44,4 +44,4 @@ Language: en-US
 LazyData: true
 Repository: CRAN
 VignetteBuilder: knitr
-RoxygenNote: 7.2.1
+RoxygenNote: 7.2.3
