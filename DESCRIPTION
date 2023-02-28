@@ -28,6 +28,7 @@ Imports:
     magrittr,
     MazamaLocationUtils (>= 0.3.8),
     MazamaSpatialUtils (>= 0.8.1),
+    MazamaTimeSeries (>= 0.2.10),
     readr,
     rlang,
     sf,

@@ -183,7 +183,10 @@ pat_createNew <- function(
 
   }
 
-  data <- dplyr::bind_rows(dataList)
+  data <-
+    dplyr::bind_rows(dataList) %>%
+    dplyr::rename(datetime = .data$time_stamp) %>%
+    dplyr::arrange(.data$datetime)
 
   # ----- Create meta ----------------------------------------------------------
 

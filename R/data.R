@@ -1,6 +1,6 @@
 #' @encoding UTF-8
 #' @title Example raw Purple Air Synoptic dataset
-#' @format A tibble with 1523 rows and 45 columns of data.
+#' @format A tibble with 1996 rows and 37 columns of data.
 #' @description The \code{example_pas_raw} dataset provides a quickly loadable
 #' version of raw Purple Air synoptic data for practicing and code
 #' examples. This dataset contains data for sensors in Washington and Oregon
@@ -40,7 +40,7 @@
 
 #' @encoding UTF-8
 #' @title Example enhanced Purple Air Synoptic dataset
-#' @format A tibble with 1481 rows and 57 columns of data.
+#' @format A tibble with 1948 rows and 50 columns of data.
 #' @description The \code{example_pas} dataset provides a quickly loadable
 #' version of a \emph{pas} object for practicing and code examples.
 #' This dataset contains data for sensors in Washington and Oregon
@@ -67,5 +67,34 @@
 #' @seealso example_pas_raw
 #' @source https://www2.purpleair.com
 "example_pas"
+
+
+#' @encoding UTF-8
+#' @title Example enhanced Purple Air Synoptic dataset
+#' @format A tibble with 1948 rows and 50 columns of data.
+#' @description The \code{example_pas} dataset provides a quickly loadable
+#' version of a \emph{pas} object for practicing and code examples.
+#' This dataset contains data for sensors in Washington and Oregon
+#' and was generated on 2023-02-15 by running:
+#'
+#' \preformatted{
+#' library(AirSensor2)
+#'
+#' example_pat <-
+#'   pat_createNew(
+#'     api_key = MY_API_READ_KEY,
+#'     pas = example_pas,
+#'     sensor_index = "76545",
+#'     startdate = "2023-01-01",
+#'     enddate = "2023-01-02",
+#'     timezone = "America/Los_Angeles"
+#'   )
+#'
+#' save(example_pat, file = "data/example_pat.rda")
+#' }
+#'
+#' @seealso example_pas
+#' @source https://www2.purpleair.com
+"example_pat"
 
 

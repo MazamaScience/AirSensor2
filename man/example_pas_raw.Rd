@@ -6,7 +6,7 @@
 \alias{example_pas_raw}
 \title{Example raw Purple Air Synoptic dataset}
 \format{
-A tibble with 1523 rows and 45 columns of data.
+A tibble with 1996 rows and 37 columns of data.
 }
 \source{
 https://www2.purpleair.com

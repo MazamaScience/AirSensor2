@@ -55,6 +55,9 @@
     <loc>/reference/example_pas_raw.html</loc>
   </url>
   <url>
+    <loc>/reference/example_pat.html</loc>
+  </url>
+  <url>
     <loc>/reference/index.html</loc>
   </url>
   <url>
@@ -142,10 +145,25 @@
     <loc>/reference/pat_PM25_FIELDS.html</loc>
   </url>
   <url>
+    <loc>/reference/pat_check.html</loc>
+  </url>
+  <url>
     <loc>/reference/pat_createNew.html</loc>
   </url>
   <url>
+    <loc>/reference/pat_distinct.html</loc>
+  </url>
+  <url>
     <loc>/reference/pat_downloadParseRawData.html</loc>
+  </url>
+  <url>
+    <loc>/reference/pat_getDataFrame.html</loc>
+  </url>
+  <url>
+    <loc>/reference/pat_isEmpty.html</loc>
+  </url>
+  <url>
+    <loc>/reference/pat_isValid.html</loc>
   </url>
   <url>
     <loc>/reference/pipe.html</loc>

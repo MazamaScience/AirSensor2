@@ -38,6 +38,15 @@ pat_raw <-
     timezone = "UTC"
   )
 
+pat <-
+  pat_createNew(
+    api_key = MY_API_READ_KEY,
+    pas = pas_SCAQMD,
+    sensor_index = "2323",
+    startdate = "2023-02-01",
+    enddate = "2023-02-03",
+    timezone = "UTC"
+  )
 
 # ===== OTHER STUFF ============================================================
 

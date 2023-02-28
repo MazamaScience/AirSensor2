@@ -4,7 +4,7 @@
 Added full support for the PurpleAir API described at 
 https://api.purpleair.com.
 
-Improvments include wrapper functions for PurpleAir API endpoints:
+Improvements include wrapper functions for PurpleAir API endpoints:
 
 * `pa_pa_checkApiKey()`
 * `pa_getSensorData()`, `pa_getSensorHistoryCSV()`, `pa_getSensorHistory()`, `pa_getSensorsData()`
@@ -24,7 +24,9 @@ to use a geohash as a unique location identifier.)
 * Updated `pas_enhanceRawData()` and `pas_createNew()` to harmonize argument
 names. 
 * Addded `pat_downloadParseRawData()` using the new wrapper functions.
-* Added `pat_createNew()`.
+* Added `pat_createNew()` and `example_pat` dataset.
+* Added utility functions: `pat_check()`, `pat_isValid()`, `pat_isEmpty()`,
+`pat_distinct()`, `pat_getData()`, `pat_getMeta()`.
 
 # AirSensor2 0.1.4
 
