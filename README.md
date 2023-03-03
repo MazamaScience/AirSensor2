@@ -36,4 +36,5 @@ The **AirSensor2** is currently seeking sponsors for further development.
 Initial development of this R package has been supported with funding from the 
 folloing institutions:
 
-* USFS [AirFire Research Team](https://www.airfire.org).
+* USFS [AirFire Research Team](https://www.airfire.org)
+* [South Coast Air Quality Management District](http://www.aqmd.gov)
