@@ -3,6 +3,13 @@
 
 * Changed examples to use `PURPLE_AIR_API_READY_KEY` instead of `MY_API_READ_KEY`.
 * Added "Working with PurpleAir API Keys" article.
+* When `show_only` is used, spatial bounding information is ignored in: 
+`pa_getSensorsData()`, `pas_downloadParseRawData()` and `pas_createNew()`.
+* Added the following _pat_ functions for subsetting the data:
+  - `pat_filter()`
+  - `pat_filterDate()`
+  - `pat_filiterDatetime()`
+  - `pat_trimDate()`
 
 # AirSensor2 0.2.0
 

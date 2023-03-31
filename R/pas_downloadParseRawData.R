@@ -39,6 +39,9 @@
 #' a moment in time and includes both metadata and recent PM2.5 averages for
 #' each sensor.
 #'
+#' If \code{show_only} is used to request specific sensors, the bounding box
+#' information is ignored.
+#'
 #' @references \href{https://www2.purpleair.com}{PurpleAir}
 #' @references \href{https://api.purpleair.com}{PurpleAir API}
 #' @references \href{https://www2.purpleair.com/policies/terms-of-service}{PurpleAir Terms of service}
@@ -95,10 +98,6 @@ pas_downloadParseRawData <- function(
   MazamaCoreUtils::stopIfNull(api_key)
   MazamaCoreUtils::stopIfNull(fields)
   max_age <- MazamaCoreUtils::setIfNull(max_age, 3600 * 7 * 24) # 1 day
-  MazamaCoreUtils::stopIfNull(west)
-  MazamaCoreUtils::stopIfNull(east)
-  MazamaCoreUtils::stopIfNull(south)
-  MazamaCoreUtils::stopIfNull(north)
   MazamaCoreUtils::stopIfNull(baseUrl)
 
   if ( !is.null(location_type) ) {
@@ -108,20 +107,36 @@ pas_downloadParseRawData <- function(
     }
   }
 
-  # Ensure correct order of longitudes
-  if ( west > east ) {
-    a <- east
-    east <- west
-    west <- a
+  if ( !is.null(show_only) ) {
+    
+    west <- NULL
+    north <- NULL
+    east <- NULL
+    south <- NULL
+    
+  } else {
+    
+    MazamaCoreUtils::stopIfNull(west)
+    MazamaCoreUtils::stopIfNull(east)
+    MazamaCoreUtils::stopIfNull(south)
+    MazamaCoreUtils::stopIfNull(north)
+    
+    # Ensure correct order of longitudes
+    if ( west > east ) {
+      a <- east
+      east <- west
+      west <- a
+    }
+    
+    # Ensure correct order of latitudes
+    if ( south > north) {
+      a <- north
+      north <- south
+      south <- a
+    }
+    
   }
-
-  # Ensure correct order of latitudes
-  if ( south > north) {
-    a <- north
-    north <- south
-    south <- a
-  }
-
+  
   # ----- Request data ---------------------------------------------------------
 
   PAList <-

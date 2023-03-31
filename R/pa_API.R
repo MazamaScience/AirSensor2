@@ -411,6 +411,9 @@ pa_getSensorHistory <- function(
 #' @description Sends a request to the PurpleAir API endpoint described at:
 #' \url{https://api.purpleair.com/#api-sensors-get-sensors-data}
 #'
+#' If \code{show_only} is used to request specific sensors, the bounding box
+#' information is ignored.
+#'
 #' @examples
 #' \donttest{
 #' # Fail gracefully if any resources are not available
@@ -446,10 +449,6 @@ pa_getSensorsData <- function(
   MazamaCoreUtils::stopIfNull(api_key)
   MazamaCoreUtils::stopIfNull(fields)
   MazamaCoreUtils::stopIfNull(max_age)
-  MazamaCoreUtils::stopIfNull(nwlng)
-  MazamaCoreUtils::stopIfNull(nwlat)
-  MazamaCoreUtils::stopIfNull(selng)
-  MazamaCoreUtils::stopIfNull(selat)
   MazamaCoreUtils::stopIfNull(baseUrl)
 
   if ( !is.null(location_type) ) {
@@ -457,6 +456,13 @@ pa_getSensorsData <- function(
     if ( !location_type %in% c(0, 1) ) {
       stop("'location_type' must be one of 0 (outside) or 1 (inside).")
     }
+  }
+  
+  if ( !is.null(show_only) ) {
+    nwlng <- NULL
+    nwlat <- NULL
+    selng <- NULL
+    selat <- NULL
   }
 
   # ----- Request data ---------------------------------------------------------

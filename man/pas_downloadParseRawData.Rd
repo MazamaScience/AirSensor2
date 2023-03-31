@@ -66,6 +66,9 @@ specified region.
 The synoptic data provides access to data from many PurpleAir sensors at
 a moment in time and includes both metadata and recent PM2.5 averages for
 each sensor.
+
+If \code{show_only} is used to request specific sensors, the bounding box
+information is ignored.
 }
 \examples{
 \donttest{

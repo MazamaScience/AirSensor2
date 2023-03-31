@@ -16,6 +16,9 @@
     <loc>/articles/Developer_Style_Guide.html</loc>
   </url>
   <url>
+    <loc>/articles/Working_with_PurpleAir_API_Keys.html</loc>
+  </url>
+  <url>
     <loc>/articles/index.html</loc>
   </url>
   <url>
@@ -148,6 +151,15 @@
     <loc>/reference/pat_downloadParseRawData.html</loc>
   </url>
   <url>
+    <loc>/reference/pat_filter.html</loc>
+  </url>
+  <url>
+    <loc>/reference/pat_filterDate.html</loc>
+  </url>
+  <url>
+    <loc>/reference/pat_filterDatetime.html</loc>
+  </url>
+  <url>
     <loc>/reference/pat_getDataFrame.html</loc>
   </url>
   <url>
@@ -155,6 +167,9 @@
   </url>
   <url>
     <loc>/reference/pat_isValid.html</loc>
+  </url>
+  <url>
+    <loc>/reference/pat_trimDate.html</loc>
   </url>
   <url>
     <loc>/reference/pipe.html</loc>
