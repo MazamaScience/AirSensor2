@@ -69,7 +69,7 @@ try({
 library(AirSensor2)
 
   pa_getSensorsData(
-    api_key = MY_API_READ_KEY,
+    api_key = PURPLE_AIR_API_READ_KEY,
     fields = SENSOR_DATA_PM25_FIELDS
   )
 

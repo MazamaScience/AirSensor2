@@ -1,4 +1,9 @@
 
+# AirSensor2 0.2.1
+
+* Changed examples to use `PURPLE_AIR_API_READY_KEY` instead of `MY_API_READ_KEY`.
+* Added "Working with PurpleAir API Keys" article.
+
 # AirSensor2 0.2.0
 
 Added full support for the PurpleAir API described at 

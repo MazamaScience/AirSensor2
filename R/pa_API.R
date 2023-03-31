@@ -25,7 +25,7 @@
 #' library(AirSensor2)
 #'
 #'   pa_checkAPIKey(
-#'     api_key = MY_API_READ_KEY
+#'     api_key = PURPLE_AIR_API_READ_KEY
 #'   )
 #'
 #' }, silent = FALSE)
@@ -90,7 +90,7 @@ pa_checkAPIKey <- function(
 #' library(AirSensor2)
 #'
 #'   pa_getSensorData(
-#'     api_key = MY_API_READ_KEY,
+#'     api_key = PURPLE_AIR_API_READ_KEY,
 #'     sensor_index = MY_SENSOR_INDEX,
 #'     fields = SENSOR_DATA_PM25_FIELDS
 #'   )
@@ -192,7 +192,7 @@ pa_getSensorData <- function(
 #'   as.numeric()
 #'
 #' pa_getSensorHistoryCSV(
-#'   api_key = MY_API_READ_KEY,
+#'   api_key = PURPLE_AIR_API_READ_KEY,
 #'   sensor_index = 896,
 #'   start_timestamp = start,
 #'   end_timestamp = end,
@@ -295,7 +295,7 @@ pa_getSensorHistoryCSV <- function(
 #'   as.numeric()
 #'
 #' pa_getSensorHistory(
-#'   api_key = MY_API_READ_KEY,
+#'   api_key = PURPLE_AIR_API_READ_KEY,
 #'   sensor_index = 896,
 #'   start_timestamp = start,
 #'   end_timestamp = end,
@@ -419,7 +419,7 @@ pa_getSensorHistory <- function(
 #' library(AirSensor2)
 #'
 #'   pa_getSensorsData(
-#'     api_key = MY_API_READ_KEY,
+#'     api_key = PURPLE_AIR_API_READ_KEY,
 #'     fields = SENSOR_DATA_PM25_FIELDS
 #'   )
 #'
@@ -545,7 +545,7 @@ pa_getSensorsData <- function(
 #' library(AirSensor2)
 #'
 #'   pa_createGroup(
-#'     api_key = MY_API_WRITE_KEY,
+#'     api_key = PURPLE_AIR_API_WRITE_KEY,
 #'     name = "My new group"
 #'   )
 #'
@@ -611,7 +611,7 @@ pa_createGroup <- function(
 #' library(AirSensor2)
 #'
 #'   pa_getGroupDetail(
-#'     api_key = MY_API_READ_KEY,
+#'     api_key = PURPLE_AIR_API_READ_KEY,
 #'     group_id = MY_GROUP_ID,
 #'     sensor_index = MY_SENSOR_INDEX
 #'   )
@@ -679,7 +679,7 @@ pa_createMember <- function(
 #' library(AirSensor2)
 #'
 #'   pa_deleteGroup(
-#'     api_key = MY_API_READ_KEY,
+#'     api_key = PURPLE_AIR_API_READ_KEY,
 #'     group_id = MY_GROUP_ID
 #'   )
 #'
@@ -743,7 +743,7 @@ pa_deleteGroup <- function(
 #' library(AirSensor2)
 #'
 #'   pa_getGroupDetail(
-#'     api_key = MY_API_READ_KEY,
+#'     api_key = PURPLE_AIR_API_READ_KEY,
 #'     group_id = MY_GROUP_ID
 #'   )
 #'
@@ -809,7 +809,7 @@ pa_deleteMember <- function(
 #' library(AirSensor2)
 #'
 #'   pa_getGroupDetail(
-#'     api_key = MY_API_READ_KEY,
+#'     api_key = PURPLE_AIR_API_READ_KEY,
 #'     group_id = MY_GROUP_ID
 #'   )
 #'
@@ -878,7 +878,7 @@ pa_getGroupDetail <- function(
 #' library(AirSensor2)
 #'
 #'   pa_getGroupsList(
-#'     api_key = MY_API_READ_KEY
+#'     api_key = PURPLE_AIR_API_READ_KEY
 #'   )
 #'
 #' }, silent = FALSE)
@@ -948,7 +948,7 @@ pa_getGroupsList <- function(
 #' library(AirSensor2)
 #'
 #'   pa_getMemberData(
-#'     api_key = MY_API_READ_KEY,
+#'     api_key = PURPLE_AIR_API_READ_KEY,
 #'     group_id = MY_GROUP_ID,
 #'     member_id = MY_MEMBER_ID
 #'   )
@@ -1044,7 +1044,7 @@ pa_getMemberData <- function(
 #' library(AirSensor2)
 #'
 #'   pa_getMemberData(
-#'     api_key = MY_API_READ_KEY,
+#'     api_key = PURPLE_AIR_API_READ_KEY,
 #'     group_id = MY_GROUP_ID,
 #'     member_id = MY_MEMBER_ID
 #'   )
@@ -1140,7 +1140,7 @@ pa_getMemberHistory <- function(
 #' library(AirSensor2)
 #'
 #'   pa_getMembersData(
-#'     api_key = MY_API_READ_KEY,
+#'     api_key = PURPLE_AIR_API_READ_KEY,
 #'     group_id = MY_GROUP_ID
 #'   )
 #'

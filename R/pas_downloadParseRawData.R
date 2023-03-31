@@ -56,7 +56,7 @@
 #'
 #' pas_raw <-
 #'   pas_downloadParseRawData(
-#'     api_key = MY_API_READ_KEY,
+#'     api_key = PURPLE_AIR_API_READ_KEY,
 #'     fields = SENSOR_DATA_AVG_PM25_FIELDS,
 #'     location_type = 0,
 #'     modified_since = NULL,
@@ -166,7 +166,7 @@ pas_downloadParseRawData <- function(
 
 if ( FALSE ) {
 
-  api_key = MY_API_READ_KEY
+  api_key = PURPLE_AIR_API_READ_KEY
   fields = SENSOR_DATA_AVG_PM25_FIELDS
   location_type = 0
   modified_since = NULL

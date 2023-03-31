@@ -56,7 +56,7 @@ library(AirSensor2)
 
 pat <-
   pat_createNew(
-    api_key = MY_API_READ_KEY,
+    api_key = PURPLE_AIR_API_READ_KEY,
     pas = MY_PAS,
     sensor_index = "76545",
     startdate = "2023-01-01",

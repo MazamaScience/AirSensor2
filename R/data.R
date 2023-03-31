@@ -13,7 +13,7 @@
 #'
 #' example_pas_raw <-
 #'   pas_downloadParseRawData(
-#'     MY_API_READ_KEY,
+#'     PURPLE_AIR_API_READ_KEY,
 #'     fields = SENSOR_DATA_AVG_PM25_FIELDS,
 #'     location_type = 0,
 #'     modified_since = NULL,
@@ -53,7 +53,7 @@
 #'
 #' example_pas <-
 #'   pas_createNew(
-#'     api_key = MY_API_READ_KEY,
+#'     api_key = PURPLE_AIR_API_READ_KEY,
 #'     countryCodes = "US",
 #'     stateCodes = c("WA", "OR"),
 #'     counties = NULL,
@@ -82,7 +82,7 @@
 #'
 #' example_pat <-
 #'   pat_createNew(
-#'     api_key = MY_API_READ_KEY,
+#'     api_key = PURPLE_AIR_API_READ_KEY,
 #'     pas = example_pas,
 #'     sensor_index = "76545",
 #'     startdate = "2023-01-01",

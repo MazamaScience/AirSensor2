@@ -9,7 +9,7 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-Version 1.1.x of the **AirSensor** package allows users to work with the PurpleAir
+The **AirSensor2** package allows users to work with the PurpleAir
 API which requires API keys. This document describes how to automate work with
 private API keys without including them in a code reposotory where they might
 be seen by others.
@@ -100,7 +100,7 @@ global_vars.R
 
 ## Use API keys in your scripts
 
-The **AirSensor** package maintains an internal set of API keys which users can 
+The **AirSensor2** package maintains an internal set of API keys which users can 
 set using `setAPIKey()`. These keys will be remembered for the duration of an R 
 session. In functions that accept an API key argument, if the passed in API key 
 is `NULL`, code will look up a specific named API key to see if that key has 
@@ -117,7 +117,7 @@ Scripts can take advantage of this as seen below:
 ```
 # Script to create new pas or pat objectss
 
-library(AirSensor)
+library(AirSensor2)
 
 source("./global_vars.R")
 setAPIKey("PurpleAir-read", "PURPLE_AIR_API_READ_KEY")
@@ -125,7 +125,7 @@ setAPIKey("PurpleAir-read", "PURPLE_AIR_API_READ_KEY")
 ...
 ```
 
-From this point on in the R session, all **AirSensor** functions that need to pull data from
+From this point on in the R session, all **AirSensor2** functions that need to pull data from
 the PurpleAir API will send the appropriate API key and everything should work.
 
 ----

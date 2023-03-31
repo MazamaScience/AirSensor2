@@ -44,8 +44,8 @@
 #' getAPIKey("PurpleAir-read")
 #'
 #' # Set specific keys
-#' setAPIKey("PurpleAir-read", "MY_API_READ_KEY")
-#' setAPIKey("PurpleAir-write", "MY_API_WRITE_KEY")
+#' setAPIKey("PurpleAir-read", "PURPLE_AIR_API_READ_KEY")
+#' setAPIKey("PurpleAir-write", "PURPLE_AIR_API_WRITE_KEY")
 #' showAPIKeys()
 #' getAPIKey("PurpleAir-read")
 #'
