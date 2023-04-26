@@ -1,7 +1,8 @@
 [![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/AirSensor2)](https://cran.r-project.org/package=AirSensor2)
 [![Downloads](http://cranlogs.r-pkg.org/badges/AirSensor2)](https://cran.r-project.org/package=AirSensor2)
-[![Build Status](https://travis-ci.org/MazamaScience/AirSensor2.svg?branch=master)](https://travis-ci.org/MazamaScience/AirSensor2)
 [![DOI](https://zenodo.org/badge/483432538.svg)](https://zenodo.org/badge/latestdoi/483432538)
+
+A dedicated Slack channel has been created for announcements, support and to help build a community of practice around this open source package. You may request an invitation to join from jonathan.callahan@dri.com.
 
 # AirSensor2 R Package
 
