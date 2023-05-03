@@ -5,7 +5,7 @@
 #' @title Create a new PurpleAir synoptic dataset
 #'
 #' @description Download, parse and enhance synoptic data from PurpleAir and
-#' return the results as a useful tibble with class \code{purple_air_synoptic}.
+#' return the results as a useful tibble with class \code{PurpleAir_synoptic}.
 #'
 #' Steps include:
 #'
@@ -254,7 +254,7 @@ pas_createNew <- function(
   # ----- Return ---------------------------------------------------------------
 
   # Add a class name
-  class(pas) <- union("purple_air_synoptic", class(pas))
+  class(pas) <- union("PurpleAir_synoptic", class(pas))
 
   return(pas)
 

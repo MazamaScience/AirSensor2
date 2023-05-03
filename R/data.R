@@ -4,7 +4,7 @@
 #' @description The \code{example_pas_raw} dataset provides a quickly loadable
 #' version of raw Purple Air synoptic data for practicing and code
 #' examples. This dataset contains data for sensors in Washington and Oregon
-#' and was generated on 2023-02-18 by running:
+#' and was generated on 2023-05-03 by running:
 #'
 #' \preformatted{
 #' library(AirSensor2)
@@ -44,7 +44,7 @@
 #' @description The \code{example_pas} dataset provides a quickly loadable
 #' version of a \emph{pas} object for practicing and code examples.
 #' This dataset contains data for sensors in Washington and Oregon
-#' and was generated on 2023-02-15 by running:
+#' and was generated on 2023-05-03 by running:
 #'
 #' \preformatted{
 #' library(AirSensor2)
@@ -75,7 +75,7 @@
 #' @description The \code{example_pas} dataset provides a quickly loadable
 #' version of a \emph{pas} object for practicing and code examples.
 #' This dataset contains data for sensors in Washington and Oregon
-#' and was generated on 2023-02-15 by running:
+#' and was generated on 2023-05-03 by running:
 #'
 #' \preformatted{
 #' library(AirSensor2)

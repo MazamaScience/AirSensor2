@@ -34,8 +34,8 @@ pas_get <- function(
   # A little involved to catch the case where the user forgets to pass in 'pas'
 
   result <- try({
-    if ( !"purple_air_synoptic" %in% class(pas) )
-      stop("First argument is not of class 'purple_air_synoptic'.")
+    if ( !"PurpleAir_synoptic" %in% class(pas) )
+      stop("First argument is not of class 'PurpleAir_synoptic'.")
   }, silent = TRUE)
 
   if ( class(result) %in% "try-error" ) {

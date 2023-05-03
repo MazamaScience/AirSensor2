@@ -265,8 +265,8 @@ pas_enhanceRawData <- function(
 
   # ----- Return ---------------------------------------------------------------
 
-  # Add the "purple_air_synoptic" class name
-  class(pas) <- union("purple_air_synoptic", class(pas))
+  # Add the "PurpleAir_synoptic" class name
+  class(pas) <- union("PurpleAir_synoptic", class(pas))
 
   return(pas)
 

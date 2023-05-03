@@ -14,3 +14,11 @@ a <- Clarity_getAllOpenIndividual(
   format = "USFS"
 )
 
+# ===== Synoptic ===============================================================
+
+syn <- Clarity_createSynoptic(
+  api_key = Clarity_API_READ_KEY,
+  format = "USFS"
+)
+
+

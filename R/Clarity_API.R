@@ -13,8 +13,8 @@
 #' @param format Customized output format (currently only "USFS").
 #' @param baseUrl URL endpoint.
 #'
-#' @return List containing four data frames: \code{meta}, \code{QCFlag},
-#' \code{pm25} and \code{nowcast}.
+#' @return List containing four data frames: \code{synoptic}, \code{QCFlag},
+#' \code{pm2.5} and \code{nowcast}.
 #'
 #' @description Sends a request to the Clarity API endpoint for Open Data.
 #'
@@ -101,14 +101,6 @@ Clarity_getAllOpenHourly <- function(
   # [2,] "2023-05-03T01Z" "1"  "3.44" "3.71"
   # [3,] "2023-05-03T00Z" "1"  "3.45" "3.83"
 
-  # ----- * meta -----
-  meta <-
-    dplyr::as_tibble(responseDF[,1:3]) %>%
-    dplyr::rename(
-      longitude = "lon",
-      latitude = "lat"
-    )
-
   # All open datasources, hourly values
   # GET /v1/open/all-recent-measurement/pm25/hourly ? format=USFS
   # returns a list of the following example object
@@ -128,21 +120,25 @@ Clarity_getAllOpenHourly <- function(
   # Time portion omits minute:second
   # Sorted descending in time
 
-  # ----- * various data -----
-
   DFList <- list()
 
   for ( i in seq_len(nrow(responseDF)) ) {
 
     datasourceId <- responseDF$datasourceId[i]
+    longitude <- responseDF$lon[i]
+    latitude <- responseDF$lat[i]
 
     matrix <- responseDF$data[i][[1]]
-    colnames(matrix) <- c("timestamp", "QCFlag", "pm25", "nowcast")
+    colnames(matrix) <- c("timestamp", "QCFlag", "pm2.5", "nowcast")
 
-    # NOTE: Each dataframe will have three hourly records with QCFlag, pm25, nowcast and datasourceId
+    # NOTE: Each dataframe will have three hourly records with QCFlag, pm2.5, nowcast and datasourceId
     DFList[[datasourceId]] <-
       dplyr::as_tibble(matrix) %>%
-      dplyr::mutate(datasourceId = !!datasourceId)
+      dplyr::mutate(
+        datasourceId = !!datasourceId,
+        longitude = !!longitude,
+        latitude = !!latitude
+      )
 
   }
 
@@ -151,18 +147,31 @@ Clarity_getAllOpenHourly <- function(
     dplyr::mutate(
       datetime = MazamaCoreUtils::parseDatetime(.data$timestamp, timezone = "UTC"),
       QCFlag = as.numeric(.data$QCFlag),
-      pm25 = as.numeric(.data$pm25),
+      pm2.5 = as.numeric(.data$pm2.5),
       nowcast = as.numeric(.data$nowcast)
     )
 
   # > dplyr::glimpse(tidyDF, width = 75)
-  # Rows: 1,811
-  # Columns: 5
-  # $ timestamp     <dttm> 2023-05-03 02:00:00, 2023-05-03 01:00:00, 2023-05-03 0…
-  # $ QCFlag        <dbl> 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1…
-  # $ pm25          <dbl> 3.21, 3.44, 3.45, 2.88, 3.22, 2.98, 15.50, 14.31, 20.10…
-  # $ nowcast       <dbl> 3.51, 3.71, 3.83, 3.00, 3.09, 3.01, 15.52, 15.54, 16.66…
-  # $ datasourceId  <chr> "DAABL1560", "DAABL1560", "DAABL1560", "DAAZI7074", "DA…
+  # Rows: 1,808
+  # Columns: 8
+  # $ timestamp    <chr> "2023-05-03T18Z", "2023-05-03T17Z", "2023-05-03T16Z"…
+  # $ QCFlag       <dbl> 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1…
+  # $ pm2.5         <dbl> 5.00, 5.00, 4.20, 3.28, 3.05, 2.31, 22.05, 22.32, 15…
+  # $ nowcast      <dbl> 4.58, 4.39, 4.10, 3.01, 2.86, 2.69, 19.63, 17.96, 14…
+  # $ datasourceId <chr> "DAABL1560", "DAABL1560", "DAABL1560", "DAAZI7074", …
+  # $ longitude    <dbl> -118.20581, -118.20581, -118.20581, -122.05722, -122…
+  # $ latitude     <dbl> 34.07283, 34.07283, 34.07283, 37.06706, 37.06706, 37…
+  # $ datetime     <dttm> 2023-05-03 18:00:00, 2023-05-03 17:00:00, 2023-05-0…
+
+  # ----- * synoptic dataframe-----
+
+  last_timestamp <- max(tidyDF$timestamp)
+
+  synoptic <-
+    tidyDF %>%
+    dplyr::filter(.data$timestamp == !!last_timestamp)
+
+  # ----- * various 'data' dataframes -----
 
   QC <-
     tidyDF %>%
@@ -173,12 +182,12 @@ Clarity_getAllOpenHourly <- function(
     ) %>%
     dplyr::arrange(.data$datetime)
 
-  pm25 <-
+  pm2.5 <-
     tidyDF %>%
-    dplyr::select(dplyr::all_of(c("datetime", "pm25", "datasourceId"))) %>%
+    dplyr::select(dplyr::all_of(c("datetime", "pm2.5", "datasourceId"))) %>%
     tidyr::pivot_wider(
       names_from = "datasourceId",
-      values_from = "pm25"
+      values_from = "pm2.5"
     ) %>%
     dplyr::arrange(.data$datetime)
 
@@ -193,13 +202,13 @@ Clarity_getAllOpenHourly <- function(
 
   # ----- Return ---------------------------------------------------------------
 
-  # NOTE:  The 'meta' dataframe is the $meta part of an 'mts' object
-  # NOTE:  Other dataframes are each the $data part of an 'mts' object.
+  # NOTE:  The 'synoptic' dataframe is ready for ~_enhanceRawSynopticData().
+  # NOTE:  Other 'data' dataframes are equivalent the $data part of an 'mts' object.
 
   returnList <- list(
-    meta = meta,
+    synoptic = synoptic,
     QC = QC,
-    pm25 = pm25,
+    pm2.5 = pm2.5,
     nowcast = nowcast
   )
 
@@ -216,7 +225,7 @@ Clarity_getAllOpenHourly <- function(
 #' @param baseUrl URL endpoint.
 #'
 #' @return List containing four data frames: \code{meta}, \code{QCFlag},
-#' \code{pm25} and \code{nowcast}.
+#' \code{pm2.5} and \code{nowcast}.
 #'
 #' @description Sends a request to the Clarity API endpoint for Open Data.
 #'
@@ -624,7 +633,7 @@ Clarity_getOpenIndividual <- function(
 
 # GET and parse a JSON return
 
-Clarity_API_GET <- function(
+ Clarity_API_GET <- function(
     webserviceUrl = NULL,
     api_key = NULL,
     queryList = NULL

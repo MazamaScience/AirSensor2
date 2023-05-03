@@ -49,7 +49,7 @@ A PurpleAir Synoptic \emph{pas} object.
 }
 \description{
 Download, parse and enhance synoptic data from PurpleAir and
-return the results as a useful tibble with class \code{purple_air_synoptic}.
+return the results as a useful tibble with class \code{PurpleAir_synoptic}.
 
 Steps include:
 

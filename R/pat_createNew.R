@@ -224,8 +224,8 @@ pat_createNew <- function(
     pas_single %>%
     dplyr::select(dplyr::all_of(pat_metaNames))
 
-  # Remove "purple_air_synoptic" class
-  attributes(meta)$class <- setdiff(attributes(meta)$class, "purple_air_synoptic")
+  # Remove "PurpleAir_synoptic" class
+  attributes(meta)$class <- setdiff(attributes(meta)$class, "PurpleAir_synoptic")
 
   # ----- Return ---------------------------------------------------------------
 

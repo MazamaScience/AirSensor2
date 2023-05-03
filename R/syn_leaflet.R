@@ -1,9 +1,9 @@
 #' @export
 #'
-#' @title Leaflet interactive map of PurpleAir sensors
+#' @title Leaflet interactive map sensor metadata
 #'
-#' @param pas PurpleAir Synoptic \emph{pas} object.
-#' @param parameter Value to plot, e.g. \code{pm25_1hr}.
+#' @param syn Synoptic metadata \emph{~_synoptic} object.
+#' @param parameter Value to plot, e.g. \code{pm25}.
 #' @param paletteName \pkg{RColorBrewer} palette name to use when \code{parameter}
 #' is something other than:
 #' \itemize{
@@ -53,16 +53,16 @@
 #' library(AirSensor2)
 #'
 #' if ( interactive() ) {
-#'   pas_leaflet(example_pas, parameter = "pm2.5_60minute")
+#'   syn_leaflet(example_syn, parameter = "pm2.5_60minute")
 #'
-#'   pas_leaflet(example_pas, parameter = "temperature")
+#'   syn_leaflet(example_syn, parameter = "temperature")
 #'
-#'   pas_leaflet(example_pas, parameter = "humidity")
+#'   syn_leaflet(example_syn, parameter = "humidity")
 #' }
 
-pas_leaflet <- function(
-  pas = NULL,
-  parameter = "pm2.5_60minute",
+syn_leaflet <- function(
+  syn = NULL,
+  parameter = "pm2.5",
   paletteName = NULL,
   radius = 10,
   opacity = 0.8,
@@ -71,65 +71,65 @@ pas_leaflet <- function(
 
   # ----- Validate parameters --------------------------------------------------
 
-  MazamaCoreUtils::stopIfNull(pas)
+  MazamaCoreUtils::stopIfNull(syn)
 
-  if ( !"PurpleAir_synoptic" %in% class(pas) )
-    stop("parameter 'pas' is not a valid 'PurpleAir_synoptic' object.")
+  if ( !"synoptic" %in% class(syn) )
+    stop("parameter 'syn' is not a valid 'synoptic' object.")
 
-  if ( nrow(pas) == 0 )
-    stop("parameter 'pas' has no data")
+  if ( nrow(syn) == 0 )
+    stop("parameter 'syn' has no data")
 
-  if ( !parameter %in% names(pas) )
-    stop(sprintf("parameter = '%s' is not found in the 'pas' object", parameter))
+  if ( !parameter %in% names(syn) )
+    stop(sprintf("parameter = '%s' is not found in the 'syn' object", parameter))
 
   if ( !is.numeric(radius) )
-    stop(paste0("parameter 'radius' must be numeric"))
+    stop("parameter 'radius' must be numeric")
 
   # ----- Choose colors and title ----------------------------------------------
 
   # Ignore warnings from RColorBrewer as leaflet::colorBin() does the right thing
   suppressWarnings({
 
-    if ( stringr::str_detect(tolower(parameter), "^pm2\\.5_") ) { # AQI
+    if ( stringr::str_detect(tolower(parameter), "^pm2\\.5") ) { # AQI
 
-      colorInfo <- pas_palette(pas, parameter)
+      colorInfo <- syn_palette(syn, parameter)
 
       cols <- colorInfo$colors
       labels <- colorInfo$key[,1]
       colors <- colorInfo$key[,2]
 
       legendTitle <- 'AQI'
-      value <- round(pas[[parameter]], 1)
+      value <- round(syn[[parameter]], 1)
       unit <- '\U00B5g/m3'
 
     } else if ( parameter == "temperature" ) {       # Temperature
 
-      colorInfo <- pas_palette(pas, "temperature", reverse = TRUE)
+      colorInfo <- syn_palette(syn, "temperature", reverse = TRUE)
 
       cols <- colorInfo$colors
       labels <- colorInfo$key[,1]
       colors <- colorInfo$key[,2]
 
       legendTitle <- 'Temp in \U2109'
-      value <- round(pas[[parameter]], 0)
+      value <- round(syn[[parameter]], 0)
       unit <- '\U2109'
 
     } else if ( parameter == "humidity" ) {          # Humidity
 
-      colorInfo <- pas_palette(pas, "humidity", reverse = FALSE)
+      colorInfo <- syn_palette(syn, "humidity", reverse = FALSE)
 
       cols <- colorInfo$colors
       labels <- colorInfo$key[,1]
       colors <- colorInfo$key[,2]
 
-      value <- round(pas[[parameter]], 0)
+      value <- round(syn[[parameter]], 0)
       legendTitle <- 'Relative Humidity'
       unit <- '%'
 
     } else {
 
       # All other parameters
-      domain <- range(pas[[parameter]], na.rm = TRUE)
+      domain <- range(syn[[parameter]], na.rm = TRUE)
       colorFunc <-
         leaflet::colorNumeric(
           "Purples",
@@ -137,13 +137,13 @@ pas_leaflet <- function(
           na.color = "#bbbbbb",
           reverse = FALSE
         )
-      cols <- colorFunc(pas[[parameter]])
+      cols <- colorFunc(syn[[parameter]])
       breaks <- seq(domain[1], domain[2], length.out = 6)
       offset <- diff(breaks)[1] / 2
       levels <- signif(seq(breaks[1] + offset, breaks[6] - offset, length.out = 5), digits = 4)
       colors <- leaflet::colorBin("Purples", domain = range(breaks), bins = breaks, reverse = FALSE)(levels)
       labels <- as.character(levels)
-      value <- signif(pas[[parameter]], 4)
+      value <- signif(syn[[parameter]], 4)
       legendTitle <- parameter
       unit <- ''
 
@@ -153,24 +153,17 @@ pas_leaflet <- function(
 
   # * Create popupText -----
 
-  pas$popupText <- paste0(
-    "<b>", pas$locationName, "</b><br/>",
-    pas$deviceDeploymentID, "<br/>",
-    "sensor_index = ", pas$sensor_index, " <br/>",
-    "location_type = ", pas$location_type, " <br/>",
-    "elevation = ", pas$elevation, " m <br/>",
-    "temperature = ", round(pas$temperature, 0), " \U2109<br/>",
-    "humidity = ", round(pas$humidity, 0), "%<br/>",
-    "pm2.5_60minute = ", round(pas$pm2.5_60minute, 1), " \U00B5g/m\U00B3<br/>",
-    "pm2.5_24hour = ", round(pas$pm2.5_24hour, 1), " \U00B5g/m\U00B3<br/>",
+  syn$popupText <- paste0(
+    "<b>", syn$locationName, "</b><br/>",
+    syn$deviceDeploymentID, "<br/>",
     "<br/>",
     "<b>", parameter, " = ", value, " ", unit, "</b>"
   )
 
   # * Extract view information -----
 
-  lonRange <- range(pas$longitude, na.rm = TRUE)
-  latRange <- range(pas$latitude, na.rm = TRUE)
+  lonRange <- range(syn$longitude, na.rm = TRUE)
+  latRange <- range(syn$latitude, na.rm = TRUE)
   maxRange <- max(diff(lonRange), diff(latRange), na.rm = TRUE)
   # Determine appropriate zoom level
   if (maxRange > 20) {
@@ -209,7 +202,7 @@ pas_leaflet <- function(
   # ----- Create leaflet map ---------------------------------------------------
 
   m <-
-    leaflet::leaflet(dplyr::select(pas, c("longitude", "latitude"))) %>%
+    leaflet::leaflet(dplyr::select(syn, c("longitude", "latitude"))) %>%
     leaflet::setView(lng = mean(lonRange), lat = mean(latRange), zoom = zoom) %>%
     leaflet::addProviderTiles(providerTiles) %>%
     leaflet::addCircleMarkers(
@@ -217,8 +210,8 @@ pas_leaflet <- function(
       fillColor = cols,
       fillOpacity = opacity,
       stroke = FALSE,
-      popup = pas$popupText,
-      layerId = pas$locationName
+      popup = syn$popupText,
+      layerId = syn$locationName
     ) %>%
     leaflet::addLegend(
       position = 'bottomright',
