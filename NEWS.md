@@ -7,6 +7,11 @@ shorthand will be renamed with a more explicit `"PurpleAir"`.
 
 - Renamed all `PurpleAir_~()` functions to `PurpleAir_~()`.
 - Renamed `PURPLE_AIR_API_~` keys to `PurpleAir_API_~`.
+- Added Clarity API functions:
+  - `Clarity_getAllOpenHourly()`
+  - `Clarity_getAllOpenIndividual()`
+  - `Clarity_getOpenHourly()`
+  - `Clarity_getOpenIndividual()`
 
 # AirSensor2 0.2.1
 

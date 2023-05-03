@@ -23,8 +23,9 @@ convenience that simplifies the scripts written by end users.
 Currently supported API keys and associated functions include:
 
 \itemize{
-  \item{\code{"PurpleAir-read"}} -- Purple Air \code{api_key} used in
-  \link{pas_downloadParseRawData}.
+  \item{\code{"PurpleAir-read"} -- PurpleAir \code{API_READ_KEY}}
+  \item{\code{"PurpleAir-write"} -- PurpleAir \code{API_WRITE_KEY}}
+  \item{\code{"Clarity-read"} -- Clarity \code{API_READ_KEY}}
 }
 }
 \details{
@@ -69,4 +70,6 @@ showAPIKeys()
 \href{https://www2.purpleair.com/pages/license}{PurpleAir Data license}
 
 \href{https://www2.purpleair.com/pages/attribution}{PurpleAir Data Attribution}
+
+\href{https://api-guide.clarity.io/getting-started/}{Clarity API Guide}
 }

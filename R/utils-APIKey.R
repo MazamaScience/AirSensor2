@@ -18,12 +18,9 @@
 #' Currently supported API keys and associated functions include:
 #'
 #' \itemize{
-#'   \item{\code{"PurpleAir-read"}} -- PurpleAir \code{API_READ_KEY} used in
-#'   \link{pas_downloadParseRawData}.
-#'   \item{\code{"PurpleAir-write"}} -- PurpleAir \code{API_WRITE_KEY} used in
-#'   \link{PurpleAir_createMember}.
-#'   \item{\code{"Clarity-read"}} -- Clarity \code{API_READ_KEY} used in
-#'   \link{Clarity_downloadParseRawData.
+#'   \item{\code{"PurpleAir-read"} -- PurpleAir \code{API_READ_KEY}}
+#'   \item{\code{"PurpleAir-write"} -- PurpleAir \code{API_WRITE_KEY}}
+#'   \item{\code{"Clarity-read"} -- Clarity \code{API_READ_KEY}}
 #' }
 #'
 #' @details Three API key support functions are imported from the \pkg{MazamaCoreUtils}
