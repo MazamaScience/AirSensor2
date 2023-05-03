@@ -38,7 +38,7 @@
 #'
 #' pat <-
 #'   pat_createNew(
-#'     api_key = PURPLE_AIR_API_READ_KEY,
+#'     api_key = PurpleAir_API_READ_KEY,
 #'     pas = MY_PAS,
 #'     sensor_index = "76545",
 #'     startdate = "2023-01-01",
@@ -60,7 +60,7 @@ pat_createNew <- function(
     enddate = NULL,
     timezone = "UTC",
     average = 0,
-    fields = SENSOR_HISTORY_PM25_FIELDS,
+    fields = PurpleAir_HISTORY_PM25_FIELDS,
     baseUrl = "https://api.purpleair.com/v1/sensors",
     verbose = FALSE
 ) {
@@ -241,14 +241,14 @@ pat_createNew <- function(
 
 if ( FALSE ) {
 
-  api_key = PURPLE_AIR_API_READ_KEY
+  api_key = PurpleAir_API_READ_KEY
   pas = example_pas
   sensor_index = "76545"
   startdate = "2023-01-01"
   enddate = "2023-01-08"
   timezone = "America/Los_Angeles"
   average = 0
-  fields = SENSOR_HISTORY_PM25_FIELDS
+  fields = PurpleAir_HISTORY_PM25_FIELDS
   baseUrl = "https://api.purpleair.com/v1/sensors"
   verbose = TRUE
 

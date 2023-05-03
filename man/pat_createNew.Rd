@@ -12,7 +12,7 @@ pat_createNew(
   enddate = NULL,
   timezone = "UTC",
   average = 0,
-  fields = SENSOR_HISTORY_PM25_FIELDS,
+  fields = PurpleAir_HISTORY_PM25_FIELDS,
   baseUrl = "https://api.purpleair.com/v1/sensors",
   verbose = FALSE
 )
@@ -56,7 +56,7 @@ library(AirSensor2)
 
 pat <-
   pat_createNew(
-    api_key = PURPLE_AIR_API_READ_KEY,
+    api_key = PurpleAir_API_READ_KEY,
     pas = MY_PAS,
     sensor_index = "76545",
     startdate = "2023-01-01",

@@ -1,10 +1,19 @@
 
+# AirSensor2 0.3.0
+
+This version introduces data ingest functions for Clarity. In preparation for 
+additional data providers, many of the PurpleAir functions using `"pa"` as 
+shorthand will be renamed with a more explicit `"PurpleAir"`.
+
+- Renamed all `PurpleAir_~()` functions to `PurpleAir_~()`.
+- Renamed `PURPLE_AIR_API_~` keys to `PurpleAir_API_~`.
+
 # AirSensor2 0.2.1
 
-* Changed examples to use `PURPLE_AIR_API_READY_KEY` instead of `MY_API_READ_KEY`.
+* Changed examples to use `PurpleAir_API_READY_KEY` instead of `MY_API_READ_KEY`.
 * Added "Working with PurpleAir API Keys" article.
 * When `show_only` is used, spatial bounding information is ignored in: 
-`pa_getSensorsData()`, `pas_downloadParseRawData()` and `pas_createNew()`.
+`PurpleAir_getSensorsData()`, `pas_downloadParseRawData()` and `pas_createNew()`.
 * Added the following _pat_ functions for subsetting the data:
   - `pat_filter()`
   - `pat_filterDate()`
@@ -18,16 +27,16 @@ https://api.purpleair.com.
 
 Improvements include wrapper functions for PurpleAir API endpoints:
 
-* `pa_pa_checkApiKey()`
-* `pa_getSensorData()`, `pa_getSensorHistoryCSV()`, `pa_getSensorHistory()`, `pa_getSensorsData()`
-* `pa_createGroup()`, `pa_createMember()`, `pa_delteGroup()`, `pa_deleteMember()`,
-`pa_getGroupDetail()`, `pa_getGroupsList()`, `pa_getMemberData()`, `pa_getMemberHistory()`,
-`pa_getMembemrsData()`
+* `PurpleAir_PurpleAir_checkApiKey()`
+* `PurpleAir_getSensorData()`, `PurpleAir_getSensorHistoryCSV()`, `PurpleAir_getSensorHistory()`, `PurpleAir_getSensorsData()`
+* `PurpleAir_createGroup()`, `PurpleAir_createMember()`, `PurpleAir_delteGroup()`, `PurpleAir_deleteMember()`,
+`PurpleAir_getGroupDetail()`, `PurpleAir_getGroupsList()`, `PurpleAir_getMemberData()`, `PurpleAir_getMemberHistory()`,
+`PurpleAir_getMembemrsData()`
 
 Additional updates include:
 
-* Default `fields` strings for `SENSOR_DATA_PM25_FIELDS` and 
-`SENSOR_HISTORY_PM25_FIELDS`
+* Default `fields` strings for `PurpleAir_DATA_PM25_FIELDS` and 
+`PurpleAir_HISTORY_PM25_FIELDS`
 * Added `fields` argument to `pas_downloadParseRawData()`.
 * Now using a 10-character geohash as the `locationID`. (See 
 [geohashTools](https://github.com/MichaelChirico/geohashTools) for reasons

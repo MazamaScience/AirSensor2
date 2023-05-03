@@ -68,9 +68,9 @@
 
     <div class="section level2">
 <h2 class="page-header" data-toc-text="0.2.1" id="airsensor2-021">AirSensor2 0.2.1<a class="anchor" aria-label="anchor" href="#airsensor2-021"></a></h2>
-<ul><li>Changed examples to use <code>PURPLE_AIR_API_READY_KEY</code> instead of <code>MY_API_READ_KEY</code>.</li>
+<ul><li>Changed examples to use <code>PurpleAir_API_READY_KEY</code> instead of <code>MY_API_READ_KEY</code>.</li>
 <li>Added “Working with PurpleAir API Keys” article.</li>
-<li>When <code>show_only</code> is used, spatial bounding information is ignored in: <code><a href="../reference/pa_getSensorsData.html">pa_getSensorsData()</a></code>, <code><a href="../reference/pas_downloadParseRawData.html">pas_downloadParseRawData()</a></code> and <code><a href="../reference/pas_createNew.html">pas_createNew()</a></code>.</li>
+<li>When <code>show_only</code> is used, spatial bounding information is ignored in: <code><a href="../reference/PurpleAir_getSensorsData.html">PurpleAir_getSensorsData()</a></code>, <code><a href="../reference/pas_downloadParseRawData.html">pas_downloadParseRawData()</a></code> and <code><a href="../reference/pas_createNew.html">pas_createNew()</a></code>.</li>
 <li>Added the following <em>pat</em> functions for subsetting the data:
 <ul><li><code><a href="../reference/pat_filter.html">pat_filter()</a></code></li>
 <li><code><a href="../reference/pat_filterDate.html">pat_filterDate()</a></code></li>
@@ -82,15 +82,15 @@
 <h2 class="page-header" data-toc-text="0.2.0" id="airsensor2-020">AirSensor2 0.2.0<a class="anchor" aria-label="anchor" href="#airsensor2-020"></a></h2>
 <p>Added full support for the PurpleAir API described at <a href="https://api.purpleair.com" class="external-link uri">https://api.purpleair.com</a>.</p>
 <p>Improvements include wrapper functions for PurpleAir API endpoints:</p>
-<ul><li><code>pa_pa_checkApiKey()</code></li>
+<ul><li><code>PurpleAir_PurpleAir_checkApiKey()</code></li>
 <li>
-<code><a href="../reference/pa_getSensorData.html">pa_getSensorData()</a></code>, <code><a href="../reference/pa_getSensorHistoryCSV.html">pa_getSensorHistoryCSV()</a></code>, <code><a href="../reference/pa_getSensorHistory.html">pa_getSensorHistory()</a></code>, <code><a href="../reference/pa_getSensorsData.html">pa_getSensorsData()</a></code>
+<code><a href="../reference/PurpleAir_getSensorData.html">PurpleAir_getSensorData()</a></code>, <code><a href="../reference/PurpleAir_getSensorHistoryCSV.html">PurpleAir_getSensorHistoryCSV()</a></code>, <code><a href="../reference/PurpleAir_getSensorHistory.html">PurpleAir_getSensorHistory()</a></code>, <code><a href="../reference/PurpleAir_getSensorsData.html">PurpleAir_getSensorsData()</a></code>
 </li>
 <li>
-<code><a href="../reference/pa_createGroup.html">pa_createGroup()</a></code>, <code><a href="../reference/pa_createMember.html">pa_createMember()</a></code>, <code>pa_delteGroup()</code>, <code><a href="../reference/pa_deleteMember.html">pa_deleteMember()</a></code>, <code><a href="../reference/pa_getGroupDetail.html">pa_getGroupDetail()</a></code>, <code><a href="../reference/pa_getGroupsList.html">pa_getGroupsList()</a></code>, <code><a href="../reference/pa_getMemberData.html">pa_getMemberData()</a></code>, <code><a href="../reference/pa_getMemberHistory.html">pa_getMemberHistory()</a></code>, <code>pa_getMembemrsData()</code>
+<code><a href="../reference/PurpleAir_createGroup.html">PurpleAir_createGroup()</a></code>, <code><a href="../reference/PurpleAir_createMember.html">PurpleAir_createMember()</a></code>, <code>PurpleAir_delteGroup()</code>, <code><a href="../reference/PurpleAir_deleteMember.html">PurpleAir_deleteMember()</a></code>, <code><a href="../reference/PurpleAir_getGroupDetail.html">PurpleAir_getGroupDetail()</a></code>, <code><a href="../reference/PurpleAir_getGroupsList.html">PurpleAir_getGroupsList()</a></code>, <code><a href="../reference/PurpleAir_getMemberData.html">PurpleAir_getMemberData()</a></code>, <code><a href="../reference/PurpleAir_getMemberHistory.html">PurpleAir_getMemberHistory()</a></code>, <code>PurpleAir_getMembemrsData()</code>
 </li>
 </ul><p>Additional updates include:</p>
-<ul><li>Default <code>fields</code> strings for <code>SENSOR_DATA_PM25_FIELDS</code> and <code>SENSOR_HISTORY_PM25_FIELDS</code>
+<ul><li>Default <code>fields</code> strings for <code>PurpleAir_DATA_PM25_FIELDS</code> and <code>PurpleAir_HISTORY_PM25_FIELDS</code>
 </li>
 <li>Added <code>fields</code> argument to <code><a href="../reference/pas_downloadParseRawData.html">pas_downloadParseRawData()</a></code>.</li>
 <li>Now using a 10-character geohash as the <code>locationID</code>. (See <a href="https://github.com/MichaelChirico/geohashTools" class="external-link">geohashTools</a> for reasons to use a geohash as a unique location identifier.)</li>

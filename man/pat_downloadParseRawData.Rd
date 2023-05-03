@@ -11,7 +11,7 @@ pat_downloadParseRawData(
   enddate = NULL,
   timezone = "UTC",
   average = 0,
-  fields = SENSOR_HISTORY_PM25_FIELDS,
+  fields = PurpleAir_HISTORY_PM25_FIELDS,
   baseUrl = "https://api.purpleair.com/v1/sensors"
 )
 }
@@ -52,12 +52,12 @@ initializeMazamaSpatialUtils()
 
 pat_raw <-
   pat_downloadParseRawData(
-    api_key = PURPLE_AIR_API_READ_KEY,
+    api_key = PurpleAir_API_READ_KEY,
     sensor_index = "2323",
     startdate = "2023-02-01",
     enddate = "2023-02-02",
     timezone = "UTC",
-    fields = SENSOR_HISTORY_PM25_FIELDS,
+    fields = PurpleAir_HISTORY_PM25_FIELDS,
   )
 
 View(pat_raw[1:100,])

@@ -18,8 +18,12 @@
 #' Currently supported API keys and associated functions include:
 #'
 #' \itemize{
-#'   \item{\code{"PurpleAir-read"}} -- Purple Air \code{api_key} used in
+#'   \item{\code{"PurpleAir-read"}} -- PurpleAir \code{API_READ_KEY} used in
 #'   \link{pas_downloadParseRawData}.
+#'   \item{\code{"PurpleAir-write"}} -- PurpleAir \code{API_WRITE_KEY} used in
+#'   \link{PurpleAir_createMember}.
+#'   \item{\code{"Clarity-read"}} -- Clarity \code{API_READ_KEY} used in
+#'   \link{Clarity_downloadParseRawData.
 #' }
 #'
 #' @details Three API key support functions are imported from the \pkg{MazamaCoreUtils}
@@ -36,6 +40,8 @@
 #' @references \href{https://www2.purpleair.com/pages/license}{PurpleAir Data license}
 #' @references \href{https://www2.purpleair.com/pages/attribution}{PurpleAir Data Attribution}
 #'
+#' @references \href{https://api-guide.clarity.io/getting-started/}{Clarity API Guide}
+#'
 #' @examples
 #' library(AirSensor2)
 #'
@@ -44,8 +50,8 @@
 #' getAPIKey("PurpleAir-read")
 #'
 #' # Set specific keys
-#' setAPIKey("PurpleAir-read", "PURPLE_AIR_API_READ_KEY")
-#' setAPIKey("PurpleAir-write", "PURPLE_AIR_API_WRITE_KEY")
+#' setAPIKey("PurpleAir-read", "PurpleAir_API_READ_KEY")
+#' setAPIKey("PurpleAir-write", "PurpleAir_API_WRITE_KEY")
 #' showAPIKeys()
 #' getAPIKey("PurpleAir-read")
 #'

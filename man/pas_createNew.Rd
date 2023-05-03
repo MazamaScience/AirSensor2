@@ -87,7 +87,7 @@ initializeMazamaSpatialUtils()
 
 pas <-
   pas_createNew(
-    api_key = PURPLE_AIR_API_READ_KEY,
+    api_key = PurpleAir_API_READ_KEY,
     countryCodes = "US",
     stateCodes = "WA",
     counties = c("Okanogan", "Ferry"),

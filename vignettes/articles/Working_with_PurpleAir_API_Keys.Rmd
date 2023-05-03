@@ -39,8 +39,8 @@ example:
 
 # ----- PurpleAir API keys ----------------------------------------------------
 
-PURPLE_AIR_API_READ_KEY <- "********-2A00-11EB-A8CD-42010A800126"     # associated.email@gmail.com
-PURPLE_AIR_API_WRITE_KEY <- "********-2A00-11EB-A8CD-42010A800126"    # associated.email@gmail.com
+PurpleAir_API_READ_KEY <- "********-2A00-11EB-A8CD-42010A800126"     # associated.email@gmail.com
+PurpleAir_API_WRITE_KEY <- "********-2A00-11EB-A8CD-42010A800126"    # associated.email@gmail.com
 ```
 
 ## Update the `.gitignore` file
@@ -120,7 +120,7 @@ Scripts can take advantage of this as seen below:
 library(AirSensor2)
 
 source("./global_vars.R")
-setAPIKey("PurpleAir-read", "PURPLE_AIR_API_READ_KEY")
+setAPIKey("PurpleAir-read", "PurpleAir_API_READ_KEY")
 
 ...
 ```

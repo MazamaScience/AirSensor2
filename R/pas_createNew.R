@@ -73,7 +73,7 @@
 #'
 #' pas <-
 #'   pas_createNew(
-#'     api_key = PURPLE_AIR_API_READ_KEY,
+#'     api_key = PurpleAir_API_READ_KEY,
 #'     countryCodes = "US",
 #'     stateCodes = "WA",
 #'     counties = c("Okanogan", "Ferry"),
@@ -224,7 +224,7 @@ pas_createNew <- function(
   pas_raw <-
     pas_downloadParseRawData(
       api_key = api_key,
-      fields = SENSOR_DATA_AVG_PM25_FIELDS,
+      fields = PurpleAir_DATA_AVG_PM25_FIELDS,
       location_type = location_type,
       read_keys = read_keys,
       show_only = show_only,

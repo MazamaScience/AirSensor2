@@ -6,7 +6,7 @@
 \usage{
 pas_downloadParseRawData(
   api_key = NULL,
-  fields = SENSOR_DATA_AVG_PM25_FIELDS,
+  fields = PurpleAir_DATA_AVG_PM25_FIELDS,
   location_type = 0,
   read_keys = NULL,
   show_only = NULL,
@@ -81,8 +81,8 @@ initializeMazamaSpatialUtils()
 
 pas_raw <-
   pas_downloadParseRawData(
-    api_key = PURPLE_AIR_API_READ_KEY,
-    fields = SENSOR_DATA_AVG_PM25_FIELDS,
+    api_key = PurpleAir_API_READ_KEY,
+    fields = PurpleAir_DATA_AVG_PM25_FIELDS,
     location_type = 0,
     modified_since = NULL,
     max_age = 3600 * 24,

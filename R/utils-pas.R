@@ -2,7 +2,7 @@
 #'
 #' @title Test for an empty \emph{pas} object
 #'
-#' @param pas A \emph{pa_synoptic} object.
+#' @param pas A \emph{PurpleAir_synoptic} object.
 #'
 #' @return \code{TRUE} if no data exist in \code{pas}, \code{FALSE} otherwise.
 #'

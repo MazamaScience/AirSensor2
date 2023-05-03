@@ -132,8 +132,8 @@ at the beginning of a script. Here is an example:</p>
 <span></span>
 <span><span class="co"># ----- PurpleAir API keys ----------------------------------------------------</span></span>
 <span></span>
-<span><span class="va">PURPLE_AIR_API_READ_KEY</span> <span class="op">&lt;-</span> <span class="st">"********-2A00-11EB-A8CD-42010A800126"</span>     <span class="co"># associated.email@gmail.com</span></span>
-<span><span class="va">PURPLE_AIR_API_WRITE_KEY</span> <span class="op">&lt;-</span> <span class="st">"********-2A00-11EB-A8CD-42010A800126"</span>    <span class="co"># associated.email@gmail.com</span></span></code></pre>
+<span><span class="va">PurpleAir_API_READ_KEY</span> <span class="op">&lt;-</span> <span class="st">"********-2A00-11EB-A8CD-42010A800126"</span>     <span class="co"># associated.email@gmail.com</span></span>
+<span><span class="va">PurpleAir_API_WRITE_KEY</span> <span class="op">&lt;-</span> <span class="st">"********-2A00-11EB-A8CD-42010A800126"</span>    <span class="co"># associated.email@gmail.com</span></span></code></pre>
 </div>
 <div class="section level2">
 <h2 id="update-the--gitignore-file">Update the <code>.gitignore</code> file<a class="anchor" aria-label="anchor" href="#update-the--gitignore-file"></a>
@@ -212,7 +212,7 @@ that simplifies the scripts written by end users.</p>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/MazamaScience/AirSensor2" class="external-link">AirSensor2</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/source.html" class="external-link">source</a></span><span class="op">(</span><span class="st">"./global_vars.R"</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/pkg/MazamaCoreUtils/man/setAPIKey.html" class="external-link">setAPIKey</a></span><span class="op">(</span><span class="st">"PurpleAir-read"</span>, <span class="st">"PURPLE_AIR_API_READ_KEY"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/MazamaCoreUtils/man/setAPIKey.html" class="external-link">setAPIKey</a></span><span class="op">(</span><span class="st">"PurpleAir-read"</span>, <span class="st">"PurpleAir_API_READ_KEY"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">...</span></span></code></pre>
 <p>From this point on in the R session, all <strong>AirSensor2</strong>

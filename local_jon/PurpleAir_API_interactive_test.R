@@ -4,8 +4,8 @@ source("global_vars.R")
 
 # ===== Keys ===================================================================
 
-pa_checkAPIKey(
-  api_key = PURPLE_AIR_API_READ_KEY
+PurpleAir_checkAPIKey(
+  api_key = PurpleAir_API_READ_KEY
 )
 
 # ===== Sensors ================================================================
@@ -18,30 +18,30 @@ end <-
   MazamaCoreUtils::parseDatetime("2022-01-30 00:00:00", timezone = "UTC") %>%
   as.numeric()
 
-a <- pa_getSensorData(
-  api_key = PURPLE_AIR_API_READ_KEY,
+a <- PurpleAir_getSensorData(
+  api_key = PurpleAir_API_READ_KEY,
   sensor_index = 896
 )
 
-a <- pa_getSensorHistoryCSV(
-  api_key = PURPLE_AIR_API_READ_KEY,
+a <- PurpleAir_getSensorHistoryCSV(
+  api_key = PurpleAir_API_READ_KEY,
   sensor_index = 896,
   start_timestamp = start,
   end_timestamp = end,
   average = 0
 )
 
-a <- pa_getSensorHistory(
-  api_key = PURPLE_AIR_API_READ_KEY,
+a <- PurpleAir_getSensorHistory(
+  api_key = PurpleAir_API_READ_KEY,
   sensor_index = 896,
   start_timestamp = start,
   end_timestamp = end,
   average = 0,
-  fields = SENSOR_HISTORY_PM25_FIELDS
+  fields = PurpleAir_HISTORY_PM25_FIELDS
 )
 
-a <- pa_getSensorsData(
-  api_key = PURPLE_AIR_API_READ_KEY,
+a <- PurpleAir_getSensorsData(
+  api_key = PurpleAir_API_READ_KEY,
   location_type = 0,
   max_age = 3600 * 3,
   nwlng = -125,
@@ -52,51 +52,51 @@ a <- pa_getSensorsData(
 
 # ===== Groups =================================================================
 
-pa_createGroup(
-  api_key = PURPLE_AIR_API_WRITE_KEY,
+PurpleAir_createGroup(
+  api_key = PurpleAir_API_WRITE_KEY,
   name = "Ballard"
 )
 
-pa_createMember(
-  api_key = PURPLE_AIR_API_WRITE_KEY,
+PurpleAir_createMember(
+  api_key = PurpleAir_API_WRITE_KEY,
   sensor_index = NULL
 )
 
-pa_deleteGroup(
-  api_key = PURPLE_AIR_API_WRITE_KEY,
+PurpleAir_deleteGroup(
+  api_key = PurpleAir_API_WRITE_KEY,
   group_id = 1652
 )
 
-pa_deleteMember(
-  api_key = PURPLE_AIR_API_WRITE_KEY,
+PurpleAir_deleteMember(
+  api_key = PurpleAir_API_WRITE_KEY,
   group_id = 505,
   member_id = 3855
 )
 
-pa_getGroupsList(
-  api_key = PURPLE_AIR_API_READ_KEY
+PurpleAir_getGroupsList(
+  api_key = PurpleAir_API_READ_KEY
 )
 
-pa_getGroupDetail(
-  api_key = PURPLE_AIR_API_READ_KEY,
+PurpleAir_getGroupDetail(
+  api_key = PurpleAir_API_READ_KEY,
   group_id = 505
 )
 
-a <- pa_getMemberData(
-  api_key = PURPLE_AIR_API_READ_KEY,
+a <- PurpleAir_getMemberData(
+  api_key = PurpleAir_API_READ_KEY,
   group_id = 505,
   member_id = 3856
 )
 
-a <- pa_getMemberHistory(
-  api_key = PURPLE_AIR_API_READ_KEY,
+a <- PurpleAir_getMemberHistory(
+  api_key = PurpleAir_API_READ_KEY,
   group_id = 505,
   member_id = 3856,
   average = 0
 )
 
-a <- pa_getMemberHistory(
-  api_key = PURPLE_AIR_API_READ_KEY,
+a <- PurpleAir_getMemberHistory(
+  api_key = PurpleAir_API_READ_KEY,
   group_id = 505,
   member_id = 3856,
   start_timestamp = start,
@@ -104,8 +104,8 @@ a <- pa_getMemberHistory(
   average = 0
 )
 
-a <- pa_getMembersData(
-  api_key = PURPLE_AIR_API_READ_KEY,
+a <- PurpleAir_getMembersData(
+  api_key = PurpleAir_API_READ_KEY,
   group_id = 505
 )
 

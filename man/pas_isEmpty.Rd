@@ -7,7 +7,7 @@
 pas_isEmpty(pas = NULL)
 }
 \arguments{
-\item{pas}{A \emph{pa_synoptic} object.}
+\item{pas}{A \emph{PurpleAir_synoptic} object.}
 }
 \value{
 \code{TRUE} if no data exist in \code{pas}, \code{FALSE} otherwise.

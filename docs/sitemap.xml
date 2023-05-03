@@ -37,13 +37,13 @@
     <loc>/reference/AirSensor2.html</loc>
   </url>
   <url>
-    <loc>/reference/SENSOR_DATA_AVG_PM25_FIELDS.html</loc>
+    <loc>/reference/PurpleAir_DATA_AVG_PM25_FIELDS.html</loc>
   </url>
   <url>
-    <loc>/reference/SENSOR_DATA_PM25_FIELDS.html</loc>
+    <loc>/reference/PurpleAir_DATA_PM25_FIELDS.html</loc>
   </url>
   <url>
-    <loc>/reference/SENSOR_HISTORY_PM25_FIELDS.html</loc>
+    <loc>/reference/PurpleAir_HISTORY_PM25_FIELDS.html</loc>
   </url>
   <url>
     <loc>/reference/US_AQI.html</loc>
@@ -64,46 +64,46 @@
     <loc>/reference/initializeMazamaSpatialUtils.html</loc>
   </url>
   <url>
-    <loc>/reference/pa_checkAPIKey.html</loc>
+    <loc>/reference/PurpleAir_checkAPIKey.html</loc>
   </url>
   <url>
-    <loc>/reference/pa_createGroup.html</loc>
+    <loc>/reference/PurpleAir_createGroup.html</loc>
   </url>
   <url>
-    <loc>/reference/pa_createMember.html</loc>
+    <loc>/reference/PurpleAir_createMember.html</loc>
   </url>
   <url>
-    <loc>/reference/pa_deleteGroup.html</loc>
+    <loc>/reference/PurpleAir_deleteGroup.html</loc>
   </url>
   <url>
-    <loc>/reference/pa_deleteMember.html</loc>
+    <loc>/reference/PurpleAir_deleteMember.html</loc>
   </url>
   <url>
-    <loc>/reference/pa_getGroupDetail.html</loc>
+    <loc>/reference/PurpleAir_getGroupDetail.html</loc>
   </url>
   <url>
-    <loc>/reference/pa_getGroupsList.html</loc>
+    <loc>/reference/PurpleAir_getGroupsList.html</loc>
   </url>
   <url>
-    <loc>/reference/pa_getMemberData.html</loc>
+    <loc>/reference/PurpleAir_getMemberData.html</loc>
   </url>
   <url>
-    <loc>/reference/pa_getMemberHistory.html</loc>
+    <loc>/reference/PurpleAir_getMemberHistory.html</loc>
   </url>
   <url>
-    <loc>/reference/pa_getMembersData.html</loc>
+    <loc>/reference/PurpleAir_getMembersData.html</loc>
   </url>
   <url>
-    <loc>/reference/pa_getSensorData.html</loc>
+    <loc>/reference/PurpleAir_getSensorData.html</loc>
   </url>
   <url>
-    <loc>/reference/pa_getSensorHistory.html</loc>
+    <loc>/reference/PurpleAir_getSensorHistory.html</loc>
   </url>
   <url>
-    <loc>/reference/pa_getSensorHistoryCSV.html</loc>
+    <loc>/reference/PurpleAir_getSensorHistoryCSV.html</loc>
   </url>
   <url>
-    <loc>/reference/pa_getSensorsData.html</loc>
+    <loc>/reference/PurpleAir_getSensorsData.html</loc>
   </url>
   <url>
     <loc>/reference/pas_createNew.html</loc>

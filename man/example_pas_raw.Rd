@@ -27,8 +27,8 @@ initializeMazamaSpatialUtils()
 
 example_pas_raw <-
   pas_downloadParseRawData(
-    PURPLE_AIR_API_READ_KEY,
-    fields = SENSOR_DATA_AVG_PM25_FIELDS,
+    PurpleAir_API_READ_KEY,
+    fields = PurpleAir_DATA_AVG_PM25_FIELDS,
     location_type = 0,
     modified_since = NULL,
     max_age = 3600 * 24,

@@ -25,7 +25,7 @@ library(AirSensor2)
 
 example_pat <-
   pat_createNew(
-    api_key = PURPLE_AIR_API_READ_KEY,
+    api_key = PurpleAir_API_READ_KEY,
     pas = example_pas,
     sensor_index = "76545",
     startdate = "2023-01-01",

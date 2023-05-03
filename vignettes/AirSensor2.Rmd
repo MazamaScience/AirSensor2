@@ -51,7 +51,7 @@ Example usage:
 ```
 library(AirSensor2)
 
-setAPIKey("PurpleAir-read", "<MY_PURPLE_AIR_READ_KEY>")
+setAPIKey("PurpleAir-read", "<MY_PurpleAir_READ_KEY>")
 
 WA_pas <-
   pas_createNew(

@@ -20,7 +20,7 @@ show_only <-
 
 pas_SCAQMD <-
   pas_createNew(
-    api_key = PURPLE_AIR_API_READ_KEY,
+    api_key = PurpleAir_API_READ_KEY,
     countryCodes = "US",
     stateCodes = "CA",
     lookbackDays = 1,
@@ -31,7 +31,7 @@ pas_SCAQMD <-
 
 pat_raw <-
   pat_downloadParseRawData(
-    api_key = PURPLE_AIR_API_READ_KEY,
+    api_key = PurpleAir_API_READ_KEY,
     sensor_index = "2323",
     startdate = "2023-02-01",
     enddate = "2023-02-03",
@@ -40,7 +40,7 @@ pat_raw <-
 
 pat <-
   pat_createNew(
-    api_key = PURPLE_AIR_API_READ_KEY,
+    api_key = PurpleAir_API_READ_KEY,
     pas = pas_SCAQMD,
     sensor_index = "2323",
     startdate = "2023-02-01",
@@ -54,7 +54,7 @@ if ( FALSE ) {
 
   pas_CA <-
     pas_createNew(
-      api_key = PURPLE_AIR_API_READ_KEY,
+      api_key = PurpleAir_API_READ_KEY,
       countryCodes = "US",
       stateCodes = "CA",
       lookbackDays = 1,

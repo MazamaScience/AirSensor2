@@ -24,14 +24,14 @@
 #'
 #' library(AirSensor2)
 #'
-#'   pa_checkAPIKey(
-#'     api_key = PURPLE_AIR_API_READ_KEY
+#'   PurpleAir_checkAPIKey(
+#'     api_key = PurpleAir_API_READ_KEY
 #'   )
 #'
 #' }, silent = FALSE)
 #' }
 
-pa_checkAPIKey <- function(
+PurpleAir_checkAPIKey <- function(
     api_key = NULL,
     baseUrl = "https://api.purpleair.com/v1/keys"
 ) {
@@ -89,19 +89,19 @@ pa_checkAPIKey <- function(
 #'
 #' library(AirSensor2)
 #'
-#'   pa_getSensorData(
-#'     api_key = PURPLE_AIR_API_READ_KEY,
+#'   PurpleAir_getSensorData(
+#'     api_key = PurpleAir_API_READ_KEY,
 #'     sensor_index = MY_SENSOR_INDEX,
-#'     fields = SENSOR_DATA_PM25_FIELDS
+#'     fields = PurpleAir_DATA_PM25_FIELDS
 #'   )
 #'
 #' }, silent = FALSE)
 #' }
 
-pa_getSensorData <- function(
+PurpleAir_getSensorData <- function(
     api_key = NULL,
     sensor_index = NULL,
-    fields = SENSOR_DATA_PM25_FIELDS,
+    fields = PurpleAir_DATA_PM25_FIELDS,
     baseUrl = "https://api.purpleair.com/v1/sensors"
 ) {
 
@@ -191,25 +191,25 @@ pa_getSensorData <- function(
 #'   MazamaCoreUtils::parseDatetime("2023-01-30 00:00:00", timezone = "UTC") %>%
 #'   as.numeric()
 #'
-#' pa_getSensorHistoryCSV(
-#'   api_key = PURPLE_AIR_API_READ_KEY,
+#' PurpleAir_getSensorHistoryCSV(
+#'   api_key = PurpleAir_API_READ_KEY,
 #'   sensor_index = 896,
 #'   start_timestamp = start,
 #'   end_timestamp = end,
 #'   average = 0,
-#'   fields = SENSOR_HISTORY_PM25_FIELDS
+#'   fields = PurpleAir_HISTORY_PM25_FIELDS
 #' )
 #'
 #' }, silent = FALSE)
 #' }
 
-pa_getSensorHistoryCSV <- function(
+PurpleAir_getSensorHistoryCSV <- function(
     api_key = NULL,
     sensor_index = NULL,
     start_timestamp = NULL,
     end_timestamp = NULL,
     average = 10,
-    fields = SENSOR_HISTORY_PM25_FIELDS,
+    fields = PurpleAir_HISTORY_PM25_FIELDS,
     baseUrl = "https://api.purpleair.com/v1/sensors"
 ) {
 
@@ -294,25 +294,25 @@ pa_getSensorHistoryCSV <- function(
 #'   MazamaCoreUtils::parseDatetime("2023-01-30 00:00:00", timezone = "UTC") %>%
 #'   as.numeric()
 #'
-#' pa_getSensorHistory(
-#'   api_key = PURPLE_AIR_API_READ_KEY,
+#' PurpleAir_getSensorHistory(
+#'   api_key = PurpleAir_API_READ_KEY,
 #'   sensor_index = 896,
 #'   start_timestamp = start,
 #'   end_timestamp = end,
 #'   average = 0,
-#'   fields = SENSOR_HISTORY_PM25_FIELDS
+#'   fields = PurpleAir_HISTORY_PM25_FIELDS
 #' )
 #'
 #' }, silent = FALSE)
 #' }
 
-pa_getSensorHistory <- function(
+PurpleAir_getSensorHistory <- function(
     api_key = NULL,
     sensor_index = NULL,
     start_timestamp = NULL,
     end_timestamp = NULL,
     average = 10,
-    fields = SENSOR_HISTORY_PM25_FIELDS,
+    fields = PurpleAir_HISTORY_PM25_FIELDS,
     baseUrl = "https://api.purpleair.com/v1/sensors"
 ) {
 
@@ -421,17 +421,17 @@ pa_getSensorHistory <- function(
 #'
 #' library(AirSensor2)
 #'
-#'   pa_getSensorsData(
-#'     api_key = PURPLE_AIR_API_READ_KEY,
-#'     fields = SENSOR_DATA_PM25_FIELDS
+#'   PurpleAir_getSensorsData(
+#'     api_key = PurpleAir_API_READ_KEY,
+#'     fields = PurpleAir_DATA_PM25_FIELDS
 #'   )
 #'
 #' }, silent = FALSE)
 #' }
 
-pa_getSensorsData <- function(
+PurpleAir_getSensorsData <- function(
     api_key = NULL,
-    fields = SENSOR_DATA_PM25_FIELDS,
+    fields = PurpleAir_DATA_PM25_FIELDS,
     location_type = NULL,
     read_keys = NULL,
     show_only = NULL,
@@ -457,7 +457,7 @@ pa_getSensorsData <- function(
       stop("'location_type' must be one of 0 (outside) or 1 (inside).")
     }
   }
-  
+
   if ( !is.null(show_only) ) {
     nwlng <- NULL
     nwlat <- NULL
@@ -550,15 +550,15 @@ pa_getSensorsData <- function(
 #'
 #' library(AirSensor2)
 #'
-#'   pa_createGroup(
-#'     api_key = PURPLE_AIR_API_WRITE_KEY,
+#'   PurpleAir_createGroup(
+#'     api_key = PurpleAir_API_WRITE_KEY,
 #'     name = "My new group"
 #'   )
 #'
 #' }, silent = FALSE)
 #' }
 
-pa_createGroup <- function(
+PurpleAir_createGroup <- function(
     api_key = NULL,
     name = NULL,
     baseUrl = "https://api.purpleair.com/v1/groups"
@@ -601,7 +601,7 @@ pa_createGroup <- function(
 #' @param api_key PurpleAir API WRITE key.
 #' @param group_id The \code{group_id} of the requested group. This group must
 #' be owned by the \code{api_key}.
-#' @param sensor_index Sensor index as returned by \code{pa_getSensorsData()}.
+#' @param sensor_index Sensor index as returned by \code{PurpleAir_getSensorsData()}.
 #' @param baseUrl URL endpoint for the "Create Member" API.
 #'
 #' @return List containing data associated with this this sensor.
@@ -616,8 +616,8 @@ pa_createGroup <- function(
 #'
 #' library(AirSensor2)
 #'
-#'   pa_getGroupDetail(
-#'     api_key = PURPLE_AIR_API_READ_KEY,
+#'   PurpleAir_getGroupDetail(
+#'     api_key = PurpleAir_API_READ_KEY,
 #'     group_id = MY_GROUP_ID,
 #'     sensor_index = MY_SENSOR_INDEX
 #'   )
@@ -625,7 +625,7 @@ pa_createGroup <- function(
 #' }, silent = FALSE)
 #' }
 
-pa_createMember <- function(
+PurpleAir_createMember <- function(
     api_key = NULL,
     group_id = NULL,
     sensor_index = NULL,
@@ -684,15 +684,15 @@ pa_createMember <- function(
 #'
 #' library(AirSensor2)
 #'
-#'   pa_deleteGroup(
-#'     api_key = PURPLE_AIR_API_READ_KEY,
+#'   PurpleAir_deleteGroup(
+#'     api_key = PurpleAir_API_READ_KEY,
 #'     group_id = MY_GROUP_ID
 #'   )
 #'
 #' }, silent = FALSE)
 #' }
 
-pa_deleteGroup <- function(
+PurpleAir_deleteGroup <- function(
     api_key = NULL,
     group_id = NULL,
     baseUrl = "https://api.purpleair.com/v1/groups"
@@ -748,15 +748,15 @@ pa_deleteGroup <- function(
 #'
 #' library(AirSensor2)
 #'
-#'   pa_getGroupDetail(
-#'     api_key = PURPLE_AIR_API_READ_KEY,
+#'   PurpleAir_getGroupDetail(
+#'     api_key = PurpleAir_API_READ_KEY,
 #'     group_id = MY_GROUP_ID
 #'   )
 #'
 #' }, silent = FALSE)
 #' }
 
-pa_deleteMember <- function(
+PurpleAir_deleteMember <- function(
     api_key = NULL,
     group_id = NULL,
     member_id = NULL,
@@ -814,15 +814,15 @@ pa_deleteMember <- function(
 #'
 #' library(AirSensor2)
 #'
-#'   pa_getGroupDetail(
-#'     api_key = PURPLE_AIR_API_READ_KEY,
+#'   PurpleAir_getGroupDetail(
+#'     api_key = PurpleAir_API_READ_KEY,
 #'     group_id = MY_GROUP_ID
 #'   )
 #'
 #' }, silent = FALSE)
 #' }
 
-pa_getGroupDetail <- function(
+PurpleAir_getGroupDetail <- function(
     api_key = NULL,
     group_id = NULL,
     baseUrl = "https://api.purpleair.com/v1/groups"
@@ -883,14 +883,14 @@ pa_getGroupDetail <- function(
 #'
 #' library(AirSensor2)
 #'
-#'   pa_getGroupsList(
-#'     api_key = PURPLE_AIR_API_READ_KEY
+#'   PurpleAir_getGroupsList(
+#'     api_key = PurpleAir_API_READ_KEY
 #'   )
 #'
 #' }, silent = FALSE)
 #' }
 
-pa_getGroupsList <- function(
+PurpleAir_getGroupsList <- function(
     api_key = NULL,
     baseUrl = "https://api.purpleair.com/v1/groups"
 ) {
@@ -953,8 +953,8 @@ pa_getGroupsList <- function(
 #'
 #' library(AirSensor2)
 #'
-#'   pa_getMemberData(
-#'     api_key = PURPLE_AIR_API_READ_KEY,
+#'   PurpleAir_getMemberData(
+#'     api_key = PurpleAir_API_READ_KEY,
 #'     group_id = MY_GROUP_ID,
 #'     member_id = MY_MEMBER_ID
 #'   )
@@ -962,7 +962,7 @@ pa_getGroupsList <- function(
 #' }, silent = FALSE)
 #' }
 
-pa_getMemberData <- function(
+PurpleAir_getMemberData <- function(
     api_key = NULL,
     group_id = NULL,
     member_id = NULL,
@@ -1049,8 +1049,8 @@ pa_getMemberData <- function(
 #'
 #' library(AirSensor2)
 #'
-#'   pa_getMemberData(
-#'     api_key = PURPLE_AIR_API_READ_KEY,
+#'   PurpleAir_getMemberData(
+#'     api_key = PurpleAir_API_READ_KEY,
 #'     group_id = MY_GROUP_ID,
 #'     member_id = MY_MEMBER_ID
 #'   )
@@ -1058,14 +1058,14 @@ pa_getMemberData <- function(
 #' }, silent = FALSE)
 #' }
 
-pa_getMemberHistory <- function(
+PurpleAir_getMemberHistory <- function(
     api_key = NULL,
     group_id = NULL,
     member_id = NULL,
     start_timestamp = NULL,
     end_timestamp = NULL,
     average = 10,
-    fields = SENSOR_HISTORY_PM25_FIELDS,
+    fields = PurpleAir_HISTORY_PM25_FIELDS,
     baseUrl = "https://api.purpleair.com/v1/groups"
 ) {
 
@@ -1145,18 +1145,18 @@ pa_getMemberHistory <- function(
 #'
 #' library(AirSensor2)
 #'
-#'   pa_getMembersData(
-#'     api_key = PURPLE_AIR_API_READ_KEY,
+#'   PurpleAir_getMembersData(
+#'     api_key = PurpleAir_API_READ_KEY,
 #'     group_id = MY_GROUP_ID
 #'   )
 #'
 #' }, silent = FALSE)
 #' }
 
-pa_getMembersData <- function(
+PurpleAir_getMembersData <- function(
     api_key = NULL,
     group_id = NULL,
-    fields = SENSOR_DATA_PM25_FIELDS,
+    fields = PurpleAir_DATA_PM25_FIELDS,
     location_type = NULL,
     max_age = 604800,
     baseUrl = "https://api.purpleair.com/v1/groups"
@@ -1226,7 +1226,7 @@ pa_getMembersData <- function(
 
 #' @export
 #' @docType data
-#' @name SENSOR_DATA_AVG_PM25_FIELDS
+#' @name PurpleAir_DATA_AVG_PM25_FIELDS
 #' @title Comma-separated list of fields needed to create a \emph{pas} object.
 #' @format String with comma-separated field names
 #' @description Character string with PurpleAir field names used in
@@ -1236,7 +1236,7 @@ pa_getMembersData <- function(
 #'
 #' @references \href{https://api.purpleair.com/#api-sensors-get-sensor-data}{Get Sensor Data API}
 
-SENSOR_DATA_AVG_PM25_FIELDS <-
+PurpleAir_DATA_AVG_PM25_FIELDS <-
   paste(
     # Station information and status fields:
     "name, icon, model, hardware, location_type, private, latitude, longitude, altitude, position_rating, led_brightness, firmware_version, firmware_upgrade, rssi, uptime, pa_latency, memory, last_seen, last_modified, date_created, channel_state, channel_flags, channel_flags_manual, channel_flags_auto, confidence, confidence_manual, confidence_auto",
@@ -1275,7 +1275,7 @@ SENSOR_DATA_AVG_PM25_FIELDS <-
 
 #' @export
 #' @docType data
-#' @name SENSOR_DATA_PM25_FIELDS
+#' @name PurpleAir_DATA_PM25_FIELDS
 #' @title Comma-separated list of fields needed for PM2.5 data analysis.
 #' @format String with comma-separated field names
 #' @description Character string with default PurpleAir field names used in
@@ -1285,7 +1285,7 @@ SENSOR_DATA_AVG_PM25_FIELDS <-
 #'
 #' @references \href{https://api.purpleair.com/#api-sensors-get-sensor-data}{Get Sensor Data API}
 
-SENSOR_DATA_PM25_FIELDS <-
+PurpleAir_DATA_PM25_FIELDS <-
   paste(
     # Station information and status fields:
     "name, icon, model, hardware, location_type, private, latitude, longitude, altitude, position_rating, led_brightness, firmware_version, firmware_upgrade, rssi, uptime, pa_latency, memory, last_seen, last_modified, date_created, channel_state, channel_flags, channel_flags_manual, channel_flags_auto, confidence, confidence_manual, confidence_auto",
@@ -1323,7 +1323,7 @@ SENSOR_DATA_PM25_FIELDS <-
 
 #' @export
 #' @docType data
-#' @name SENSOR_HISTORY_PM25_FIELDS
+#' @name PurpleAir_HISTORY_PM25_FIELDS
 #' @title Comma-separated list of fields needed for PM2.5 data analysis.
 #' @format String with comma-separated field names
 #' @description Character string with default PurpleAir field names used in
@@ -1342,7 +1342,7 @@ SENSOR_DATA_PM25_FIELDS <-
 #
 
 
-SENSOR_HISTORY_PM25_FIELDS <-
+PurpleAir_HISTORY_PM25_FIELDS <-
   paste(
     # Station information and status fields:
     #"hardware, latitude, longitude, altitude, firmware_version",
@@ -1511,14 +1511,17 @@ PurpleAir_API_csvGET <- function(
     show_col_types = FALSE
   )
 
-  # Convert to proper class
-  for ( name in names(tbl) ) {
-    if ( name %in% PurpleAir_Numeric_Fields ) {
-      tbl[[name]] <- as.numeric(tbl[[name]])
-    } else if ( name %in% PurpleAir_POSIXct_Fields ) {
-      tbl[[name]] <- lubridate::as_datetime(as.numeric(tbl[[name]]))
+  # Ignore "NAs introduced by coercion message" (when processing pm2.5_cf_1b)
+  suppressWarnings({
+    # Convert to proper class
+    for ( name in names(tbl) ) {
+      if ( name %in% PurpleAir_Numeric_Fields ) {
+        tbl[[name]] <- as.numeric(tbl[[name]])
+      } else if ( name %in% PurpleAir_POSIXct_Fields ) {
+        tbl[[name]] <- lubridate::as_datetime(as.numeric(tbl[[name]]))
+      }
     }
-  }
+  })
 
   return(tbl)
 
