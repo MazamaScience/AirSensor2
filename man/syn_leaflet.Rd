@@ -6,11 +6,12 @@
 \usage{
 syn_leaflet(
   syn = NULL,
-  parameter = "pm25",
+  parameter = "pm2.5",
   paletteName = NULL,
   radius = 10,
   opacity = 0.8,
-  maptype = "terrain"
+  maptype = "terrain",
+  extraVars = NULL
 )
 }
 \arguments{
@@ -21,7 +22,7 @@ syn_leaflet(
 \item{paletteName}{\pkg{RColorBrewer} palette name to use when \code{parameter}
 is something other than:
 \itemize{
-\item{"pm2.5_~"}
+\item{"pm2.5"}
 \item{"humidity}
 \item{"temperature}
 }}
@@ -31,6 +32,9 @@ is something other than:
 \item{opacity}{Opacity of monitor circles.}
 
 \item{maptype}{Optional name of leaflet ProviderTiles to use, e.g. \code{terrain}.}
+
+\item{extraVars}{Character vector of additional column names to be shown in
+leaflet popups.}
 }
 \value{
 A leaflet "plot" object which, if not assigned, is rendered in
@@ -41,14 +45,9 @@ This function creates interactive maps that will be displayed in
 RStudio's 'Viewer' tab.
 
 Typical usage would be to use the \code{parameter} argument to display pm25
-values from one of:
+values:
 \itemize{
-\item{"pm2.5_10minute"}
-\item{"pm2.5_30minute"}
-\item{"pm2.5_60minute"}
-\item{"pm2.5_6hour"}
-\item{"pm2.5_24hour"}
-\item{"pm2.5_1week"}
+\item{"pm2.5"}
 }
 }
 \details{
@@ -74,7 +73,7 @@ paeltte, \emph{e.g.} \code{"BuPu"} or \code{"Greens"}.
 library(AirSensor2)
 
 if ( interactive() ) {
-  syn_leaflet(example_syn, parameter = "pm2.5_60minute")
+  syn_leaflet(example_syn, parameter = "pm2.5")
 
   syn_leaflet(example_syn, parameter = "temperature")
 

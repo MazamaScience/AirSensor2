@@ -7,7 +7,7 @@
 #' @param paletteName \pkg{RColorBrewer} palette name to use when \code{parameter}
 #' is something other than:
 #' \itemize{
-#' \item{"pm2.5_~"}
+#' \item{"pm2.5"}
 #' \item{"humidity}
 #' \item{"temperature}
 #' }
@@ -50,7 +50,7 @@
 #' library(AirSensor2)
 #'
 #' if ( interactive() ) {
-#'   syn_leaflet(example_syn, parameter = "pm2.5_60minute")
+#'   syn_leaflet(example_syn, parameter = "pm2.5")
 #'
 #'   syn_leaflet(example_syn, parameter = "temperature")
 #'

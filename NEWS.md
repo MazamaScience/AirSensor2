@@ -3,18 +3,19 @@
 
 This version introduces data ingest functions for Clarity. In preparation for 
 additional data providers, many of the PurpleAir functions using `"pa"` as 
-shorthand will be renamed with a more explicit `"PurpleAir"`.
+shorthand have been renamed with a more explicit `"PurpleAir"`.
 
-- Renamed all `PurpleAir_~()` functions to `PurpleAir_~()`.
-- Renamed `PURPLE_AIR_API_~` keys to `PurpleAir_API_~`.
+- Renamed all `pa_~()` functions to `PurpleAir_~()`.
+- Renamed `PURPLE_AIR_API_~` API keys to `PurpleAir_API_~`.
 - Renamed `purple_air_synoptic` class to `PurpleAir_synoptic`.
 - Added Clarity API functions:
   - `Clarity_getAllOpenHourly()`
   - `Clarity_getAllOpenIndividual()`
   - `Clarity_getOpenHourly()`
   - `Clarity_getOpenIndividual()`
-  - `Clarity_createSynoptic()`
+  - `Clarity_createOpenSynoptic()`
   - `Clarity_enhanceRawSynopticData()`
+  - `Clarity_createOpenMonitor()`
 - Added functions for non-PurpleAir synoptic data
   - `syn_leaflet()`
 

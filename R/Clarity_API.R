@@ -331,15 +331,15 @@ Clarity_getAllOpenIndvidual <- function(
     latitude <- responseDF$lat[i]
 
     matrix <- responseDF$data[i][[1]]
-    colnames(matrix) <- c("timestamp", "QCFlag", "pm25")
+    colnames(matrix) <- c("timestamp", "QCFlag", "pm2.5")
 
-    # NOTE: Each dataframe will an hours worth of raw records with QCFlag, pm25 and datasourceId
+    # NOTE: Each dataframe will an hours worth of raw records with QCFlag, pm2.5 and datasourceId
     returnList[[datasourceId]] <-
       dplyr::as_tibble(matrix) %>%
       dplyr::mutate(
         datetime = MazamaCoreUtils::parseDatetime(.data$timestamp, timezone = "UTC"),
         QCFlag = as.numeric(.data$QCFlag),
-        pm25 = as.numeric(.data$pm25),
+        pm2.5 = as.numeric(.data$pm2.5),
         datasourceId = !!datasourceId,
         longitude = !!longitude,
         latitude = !!latitude
@@ -368,7 +368,7 @@ Clarity_getAllOpenIndvidual <- function(
 #' @param baseUrl URL endpoint.
 #'
 #' @return List containing four data frames: \code{meta}, \code{QCFlag},
-#' \code{pm25} and \code{nowcast}.
+#' \code{pm2.5} and \code{nowcast}.
 #'
 #' @description Sends a request to the Clarity API endpoint for Open Data.
 #'
@@ -465,19 +465,21 @@ Clarity_getOpenHourly <- function(
     datasourceId <- responseDF$datasourceId[i]
     longitude <- responseDF$lon[i]
     latitude <- responseDF$lat[i]
+    locationName <- responseDF$name[i]
 
     matrix <- responseDF$data[i][[1]]
-    colnames(matrix) <- c("timestamp", "QCFlag", "pm25", "nowcast")
+    colnames(matrix) <- c("timestamp", "QCFlag", "pm2.5", "nowcast")
 
-    # NOTE: Each dataframe will an hours worth of raw records with QCFlag, pm25 and datasourceId
+    # NOTE: Each dataframe will an hours worth of raw records with QCFlag, pm2.5 and datasourceId
     DFList[[datasourceId]] <-
       dplyr::as_tibble(matrix) %>%
       dplyr::mutate(
         datetime = MazamaCoreUtils::parseDatetime(.data$timestamp, timezone = "UTC"),
         QCFlag = as.numeric(.data$QCFlag),
-        pm25 = as.numeric(.data$pm25),
+        pm2.5 = as.numeric(.data$pm2.5),
         nowcast = as.numeric(.data$nowcast),
         datasourceId = !!datasourceId,
+        locationName = !!locationName,
         longitude = !!longitude,
         latitude = !!latitude
       ) %>%
@@ -503,7 +505,7 @@ Clarity_getOpenHourly <- function(
 #' @param baseUrl URL endpoint.
 #'
 #' @return List containing four data frames: \code{meta}, \code{QCFlag},
-#' \code{pm25} and \code{nowcast}.
+#' \code{pm2.5} and \code{nowcast}.
 #'
 #' @description Sends a request to the Clarity API endpoint for Open Data.
 #'
@@ -600,19 +602,21 @@ Clarity_getOpenIndividual <- function(
     datasourceId <- responseDF$datasourceId[i]
     longitude <- responseDF$lon[i]
     latitude <- responseDF$lat[i]
+    locationName <- responseDF$name[i]
 
     matrix <- responseDF$data[i][[1]]
-    colnames(matrix) <- c("timestamp", "QCFlag", "pm25", "nowcast")
+    colnames(matrix) <- c("timestamp", "QCFlag", "pm2.5", "nowcast")
 
-    # NOTE: Each dataframe will an hours worth of raw records with QCFlag, pm25 and datasourceId
+    # NOTE: Each dataframe will an hours worth of raw records with QCFlag, pm2.5 and datasourceId
     DFList[[datasourceId]] <-
       dplyr::as_tibble(matrix) %>%
       dplyr::mutate(
         datetime = MazamaCoreUtils::parseDatetime(.data$timestamp, timezone = "UTC"),
         QCFlag = as.numeric(.data$QCFlag),
-        pm25 = as.numeric(.data$pm25),
+        pm2.5 = as.numeric(.data$pm2.5),
         nowcast = as.numeric(.data$nowcast),
         datasourceId = !!datasourceId,
+        locationName = !!locationName,
         longitude = !!longitude,
         latitude = !!latitude
       ) %>%

@@ -22,7 +22,7 @@ Clarity_getOpenHourly(
 }
 \value{
 List containing four data frames: \code{meta}, \code{QCFlag},
-\code{pm25} and \code{nowcast}.
+\code{pm2.5} and \code{nowcast}.
 }
 \description{
 Sends a request to the Clarity API endpoint for Open Data.
