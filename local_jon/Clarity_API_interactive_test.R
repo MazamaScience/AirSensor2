@@ -37,7 +37,7 @@ pas <- pas_createNew(
   counties = "Los Angeles"
 )
 
-map <- MazamaLocationUtils::table_leaflet(pas, extraVars = "pm2.5_60minute")
+map <- MazamaLocationUtils::table_leaflet(pas, extraVars = "pm2.5_60minute", radius = 4)
 
-MazamaLocationUtils::table_leafletAdd(map, syn, extraVars="pm2.5", color = 'red')
+MazamaLocationUtils::table_leafletAdd(map, syn, extraVars="pm2.5", radius = 4, color = 'red')
 
