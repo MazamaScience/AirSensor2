@@ -21,4 +21,23 @@ syn <- Clarity_createSynoptic(
   format = "USFS"
 )
 
+syn %>%
+  dplyr::filter(countryCode == "US") %>%
+  syn_leaflet(
+    parameter = "pm2.5",
+    extraVars = c("QCFlag", "nowcast")
+  )
+
+# ===== PurpleAir & Clarity on one map =========================================
+
+pas <- pas_createNew(
+  api_key = PurpleAir_API_READ_KEY,
+  countryCodes = "US",
+  stateCodes = "CA",
+  counties = "Los Angeles"
+)
+
+map <- MazamaLocationUtils::table_leaflet(pas, extraVars = "pm2.5_60minute")
+
+MazamaLocationUtils::table_leafletAdd(map, syn, extraVars="pm2.5", color = 'red')
 

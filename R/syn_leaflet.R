@@ -14,19 +14,16 @@
 #' @param radius Radius (pixels) of monitor circles.
 #' @param opacity Opacity of monitor circles.
 #' @param maptype Optional name of leaflet ProviderTiles to use, e.g. \code{terrain}.
+#' @param extraVars Character vector of additional column names to be shown in
+#' leaflet popups.
 #'
 #' @description This function creates interactive maps that will be displayed in
 #' RStudio's 'Viewer' tab.
 #'
 #' Typical usage would be to use the \code{parameter} argument to display pm25
-#' values from one of:
+#' values:
 #' \itemize{
-#' \item{"pm2.5_10minute"}
-#' \item{"pm2.5_30minute"}
-#' \item{"pm2.5_60minute"}
-#' \item{"pm2.5_6hour"}
-#' \item{"pm2.5_24hour"}
-#' \item{"pm2.5_1week"}
+#' \item{"pm2.5"}
 #' }
 #'
 #' @details The \code{maptype} argument is mapped onto leaflet "ProviderTile"
@@ -66,7 +63,8 @@ syn_leaflet <- function(
   paletteName = NULL,
   radius = 10,
   opacity = 0.8,
-  maptype = "terrain"
+  maptype = "terrain",
+  extraVars = NULL
 ) {
 
   # ----- Validate parameters --------------------------------------------------
@@ -84,6 +82,13 @@ syn_leaflet <- function(
 
   if ( !is.numeric(radius) )
     stop("parameter 'radius' must be numeric")
+
+  if ( !is.null(extraVars) ) {
+    unrecognizedVars <- setdiff(extraVars, names(syn))
+    if ( length(unrecognizedVars) > 0 ) {
+      stop("variables in 'extraVars' not found in 'syn'")
+    }
+  }
 
   # ----- Choose colors and title ----------------------------------------------
 
@@ -153,12 +158,27 @@ syn_leaflet <- function(
 
   # * Create popupText -----
 
-  syn$popupText <- paste0(
+  popupText <- paste0(
     "<b>", syn$locationName, "</b><br/>",
     syn$deviceDeploymentID, "<br/>",
     "<br/>",
     "<b>", parameter, " = ", value, " ", unit, "</b>"
   )
+
+  # Add extra vars
+  for ( i in seq_along(popupText) ) {
+
+    extraText <- vector("character", length(extraVars))
+    for ( j in seq_along(extraVars) ) {
+      var <- extraVars[j]
+      extraText[j] <- paste0(var, " = ", syn[i, var], "<br>")
+    }
+    extraText <- paste0(extraText, collapse = "")
+
+    popupText[i] <- paste0(popupText[i], "<hr>", extraText)
+  }
+
+  syn$popupText <- popupText
 
   # * Extract view information -----
 
