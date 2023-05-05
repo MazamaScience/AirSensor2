@@ -8,7 +8,7 @@ Clarity_createOpenMonitor(
   api_key = NULL,
   syn = NULL,
   datasourceId = NULL,
-  format = c("USFS"),
+  format = "USFS",
   parameter = c("pm2.5", "nowcast"),
   applyQC = TRUE
 )

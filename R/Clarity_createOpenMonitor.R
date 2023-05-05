@@ -46,7 +46,7 @@ Clarity_createOpenMonitor <- function(
     api_key = NULL,
     syn = NULL,
     datasourceId = NULL,
-    format = c("USFS"),
+    format = "USFS",
     parameter = c("pm2.5", "nowcast"),
     applyQC = TRUE
 ) {
@@ -56,8 +56,8 @@ Clarity_createOpenMonitor <- function(
   MazamaCoreUtils::stopIfNull(api_key)
   MazamaCoreUtils::stopIfNull(syn)
   MazamaCoreUtils::stopIfNull(datasourceId)
+  MazamaCoreUtils::stopIfNull(format)
 
-  format <- match.arg(format)
   parameter <- match.arg(parameter)
 
   # Check if MazamaSpatialUtils package has been initialized
@@ -120,6 +120,7 @@ Clarity_createOpenMonitor <- function(
       "sensorManufacturer"
     )
 
+  # TODO: use setdiff() to add extra monitor core metadata
   meta <-
     syn %>%
     dplyr::filter(datasourceId == !!datasourceId) %>%
@@ -133,7 +134,15 @@ Clarity_createOpenMonitor <- function(
       dataIngestUrl = as.character(NA),
       AQSID = as.character(NA),
       fullAQSID = as.character(NA),
-      deploymentType = as.character(NA)
+      deploymentType = as.character(NA),
+      # Others required by monitor_leaflet
+      deviceType = as.character(NA),
+      deviceDescription = as.character(NA),
+      deviceExtra = as.character(NA),
+      dataIngestURL = as.character(NA),
+      dataIngestUnitID = !!datasourceId,
+      dataIngestExtra = as.character(NA),
+      dataIngestDescription = as.character(NA)
     )
 
   if ( nrow(meta) != 1 )

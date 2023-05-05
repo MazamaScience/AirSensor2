@@ -6,7 +6,7 @@
 \usage{
 Clarity_getAllOpenHourly(
   api_key = NULL,
-  format = c("USFS"),
+  format = "USFS",
   baseUrl =
     "https://clarity-data-api.clarity.io/v1/open/all-recent-measurement/pm25/hourly"
 )

@@ -7,7 +7,7 @@
 Clarity_getOpenHourly(
   api_key = NULL,
   datasourceId = NULL,
-  format = c("USFS"),
+  format = "USFS",
   baseUrl = "https://clarity-data-api.clarity.io/v1/open/datasource-measurement"
 )
 }

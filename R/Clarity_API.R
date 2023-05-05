@@ -41,16 +41,15 @@
 
 Clarity_getAllOpenHourly <- function(
     api_key = NULL,
-    format = c("USFS"),
+    format = "USFS",
     baseUrl = "https://clarity-data-api.clarity.io/v1/open/all-recent-measurement/pm25/hourly"
 ) {
 
   # ----- Validate parameters --------------------------------------------------
 
   MazamaCoreUtils::stopIfNull(api_key)
+  MazamaCoreUtils::stopIfNull(format)
   MazamaCoreUtils::stopIfNull(baseUrl)
-
-  format <- match.arg(format)
 
   # ----- Request data ---------------------------------------------------------
 
@@ -253,16 +252,15 @@ Clarity_getAllOpenHourly <- function(
 
 Clarity_getAllOpenIndvidual <- function(
     api_key = NULL,
-    format = c("USFS"),
+    format = "USFS",
     baseUrl = "https://clarity-data-api.clarity.io/v1/open/all-recent-measurement/pm25/individual"
 ) {
 
   # ----- Validate parameters --------------------------------------------------
 
   MazamaCoreUtils::stopIfNull(api_key)
+  MazamaCoreUtils::stopIfNull(format)
   MazamaCoreUtils::stopIfNull(baseUrl)
-
-  format <- match.arg(format)
 
   # ----- Request data ---------------------------------------------------------
 
@@ -397,7 +395,7 @@ Clarity_getAllOpenIndvidual <- function(
 Clarity_getOpenHourly <- function(
     api_key = NULL,
     datasourceId = NULL,
-    format = c("USFS"),
+    format = "USFS",
     baseUrl = "https://clarity-data-api.clarity.io/v1/open/datasource-measurement"
 ) {
 
@@ -405,9 +403,8 @@ Clarity_getOpenHourly <- function(
 
   MazamaCoreUtils::stopIfNull(api_key)
   MazamaCoreUtils::stopIfNull(datasourceId)
+  MazamaCoreUtils::stopIfNull(format)
   MazamaCoreUtils::stopIfNull(baseUrl)
-
-  format <- match.arg(format)
 
   # ----- Request data ---------------------------------------------------------
 
@@ -534,7 +531,7 @@ Clarity_getOpenHourly <- function(
 Clarity_getOpenIndividual <- function(
     api_key = NULL,
     datasourceId = NULL,
-    format = c("USFS"),
+    format = "USFS",
     baseUrl = "https://clarity-data-api.clarity.io/v1/open/datasource-measurement"
 ) {
 
@@ -542,9 +539,8 @@ Clarity_getOpenIndividual <- function(
 
   MazamaCoreUtils::stopIfNull(api_key)
   MazamaCoreUtils::stopIfNull(datasourceId)
+  MazamaCoreUtils::stopIfNull(format)
   MazamaCoreUtils::stopIfNull(baseUrl)
-
-  format <- match.arg(format)
 
   # ----- Request data ---------------------------------------------------------
 
