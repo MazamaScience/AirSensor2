@@ -15,7 +15,7 @@
 #' key to see if that key has been set globally. Setting keys globally is a
 #' convenience that simplifies the scripts written by end users.
 #'
-#' Currently supported API keys and associated functions include:
+#' Currently supported API keys include:
 #'
 #' \itemize{
 #'   \item{\code{"PurpleAir-read"} -- PurpleAir \code{API_READ_KEY}}

@@ -12,7 +12,8 @@ Clarity_createOpenSynoptic(
 )
 }
 \arguments{
-\item{api_key}{PurpleAir API Read Key.}
+\item{api_key}{Clarity API READ Key. If \code{api_key = NULL}, it
+will be obtained using \code{getAPIKey("Clarity-read")}.}
 
 \item{format}{Customized output format (currently only "USFS").}
 

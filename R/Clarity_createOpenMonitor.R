@@ -1,6 +1,7 @@
 #' @export
 #' @importFrom rlang .data
 #' @importFrom MazamaCoreUtils logger.isInitialized logger.debug
+#' @importFrom MazamaCoreUtils getAPIKey
 #'
 #' @title Create a new Clarity 'mts_monitor' object
 #'
@@ -8,7 +9,8 @@
 #' and create an object of class \code{mts_monitor} for use with the AirMonitor
 #' package.
 #'
-#' @param api_key Clarity API READ key.
+#' @param api_key Clarity API READ Key. If \code{api_key = NULL}, it
+#' will be obtained using \code{getAPIKey("Clarity-read")}.
 #' @param syn Previously generated \emph{synoptic} object containing \code{datasosurceId}.
 #' @param datasourceId Clarity sensor identifier.
 #' @param format Customized output format (currently only "USFS").
@@ -43,15 +45,18 @@
 #' }
 
 Clarity_createOpenMonitor <- function(
-    api_key = NULL,
-    syn = NULL,
-    datasourceId = NULL,
-    format = "USFS",
-    parameter = c("pm2.5", "nowcast"),
-    applyQC = TRUE
+  api_key = NULL,
+  syn = NULL,
+  datasourceId = NULL,
+  format = "USFS",
+  parameter = c("pm2.5", "nowcast"),
+  applyQC = TRUE
 ) {
 
   # ----- Validate parameters --------------------------------------------------
+
+  if ( is.null(api_key) )
+    api_key <- MazamaCoreUtils::getAPIKey("Clarity-read")
 
   MazamaCoreUtils::stopIfNull(api_key)
   MazamaCoreUtils::stopIfNull(syn)

@@ -12,7 +12,8 @@ Clarity_getAllOpenIndvidual(
 )
 }
 \arguments{
-\item{api_key}{Clarity API READ key.}
+\item{api_key}{Clarity API READ Key. If \code{api_key = NULL}, it
+will be obtained using \code{getAPIKey("Clarity-read")}.}
 
 \item{format}{Customized output format (currently only "USFS").}
 

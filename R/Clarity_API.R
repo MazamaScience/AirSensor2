@@ -6,10 +6,12 @@
 # ===== All Open Data ==========================================================
 
 #' @export
+#' @importFrom MazamaCoreUtils getAPIKey
 #'
 #' @title Retrieve current hourly data for all Open Data sensors.
 #'
-#' @param api_key Clarity API READ key.
+#' @param api_key Clarity API READ Key. If \code{api_key = NULL}, it
+#' will be obtained using \code{getAPIKey("Clarity-read")}.
 #' @param format Customized output format (currently only "USFS").
 #' @param baseUrl URL endpoint.
 #'
@@ -40,12 +42,15 @@
 #' }
 
 Clarity_getAllOpenHourly <- function(
-    api_key = NULL,
-    format = "USFS",
-    baseUrl = "https://clarity-data-api.clarity.io/v1/open/all-recent-measurement/pm25/hourly"
+  api_key = NULL,
+  format = "USFS",
+  baseUrl = "https://clarity-data-api.clarity.io/v1/open/all-recent-measurement/pm25/hourly"
 ) {
 
   # ----- Validate parameters --------------------------------------------------
+
+  if ( is.null(api_key) )
+    api_key <- MazamaCoreUtils::getAPIKey("Clarity-read")
 
   MazamaCoreUtils::stopIfNull(api_key)
   MazamaCoreUtils::stopIfNull(format)
@@ -216,10 +221,12 @@ Clarity_getAllOpenHourly <- function(
 }
 
 #' @export
+#' @importFrom MazamaCoreUtils getAPIKey
 #'
 #' @title Retrieve current individual records for all Open Data sensors.
 #'
-#' @param api_key Clarity API READ key.
+#' @param api_key Clarity API READ Key. If \code{api_key = NULL}, it
+#' will be obtained using \code{getAPIKey("Clarity-read")}.
 #' @param format Customized output format (currently only "USFS").
 #' @param baseUrl URL endpoint.
 #'
@@ -251,12 +258,15 @@ Clarity_getAllOpenHourly <- function(
 #' }
 
 Clarity_getAllOpenIndvidual <- function(
-    api_key = NULL,
-    format = "USFS",
-    baseUrl = "https://clarity-data-api.clarity.io/v1/open/all-recent-measurement/pm25/individual"
+  api_key = NULL,
+  format = "USFS",
+  baseUrl = "https://clarity-data-api.clarity.io/v1/open/all-recent-measurement/pm25/individual"
 ) {
 
   # ----- Validate parameters --------------------------------------------------
+
+  if ( is.null(api_key) )
+    api_key <- MazamaCoreUtils::getAPIKey("Clarity-read")
 
   MazamaCoreUtils::stopIfNull(api_key)
   MazamaCoreUtils::stopIfNull(format)
@@ -357,10 +367,12 @@ Clarity_getAllOpenIndvidual <- function(
 # ===== Single Source Open Data ================================================
 
 #' @export
+#' @importFrom MazamaCoreUtils getAPIKey
 #'
 #' @title Retrieve current hourly data from a single source.
 #'
-#' @param api_key Clarity API READ key.
+#' @param api_key Clarity API READ Key. If \code{api_key = NULL}, it
+#' will be obtained using \code{getAPIKey("Clarity-read")}.
 #' @param datasourceId Clarity sensor identifier.
 #' @param format Customized output format (currently only "USFS").
 #' @param baseUrl URL endpoint.
@@ -393,13 +405,16 @@ Clarity_getAllOpenIndvidual <- function(
 #' }
 
 Clarity_getOpenHourly <- function(
-    api_key = NULL,
-    datasourceId = NULL,
-    format = "USFS",
-    baseUrl = "https://clarity-data-api.clarity.io/v1/open/datasource-measurement"
+  api_key = NULL,
+  datasourceId = NULL,
+  format = "USFS",
+  baseUrl = "https://clarity-data-api.clarity.io/v1/open/datasource-measurement"
 ) {
 
   # ----- Validate parameters --------------------------------------------------
+
+  if ( is.null(api_key) )
+    api_key <- MazamaCoreUtils::getAPIKey("Clarity-read")
 
   MazamaCoreUtils::stopIfNull(api_key)
   MazamaCoreUtils::stopIfNull(datasourceId)
@@ -493,10 +508,12 @@ Clarity_getOpenHourly <- function(
 }
 
 #' @export
+#' @importFrom MazamaCoreUtils getAPIKey
 #'
 #' @title Retrieve current individual records from a single source.
 #'
-#' @param api_key Clarity API READ key.
+#' @param api_key Clarity API READ Key. If \code{api_key = NULL}, it
+#' will be obtained using \code{getAPIKey("Clarity-read")}.
 #' @param datasourceId Clarity sensor identifier.
 #' @param format Customized output format (currently only "USFS").
 #' @param baseUrl URL endpoint.
@@ -529,13 +546,16 @@ Clarity_getOpenHourly <- function(
 #' }
 
 Clarity_getOpenIndividual <- function(
-    api_key = NULL,
-    datasourceId = NULL,
-    format = "USFS",
-    baseUrl = "https://clarity-data-api.clarity.io/v1/open/datasource-measurement"
+  api_key = NULL,
+  datasourceId = NULL,
+  format = "USFS",
+  baseUrl = "https://clarity-data-api.clarity.io/v1/open/datasource-measurement"
 ) {
 
   # ----- Validate parameters --------------------------------------------------
+
+  if ( is.null(api_key) )
+    api_key <- MazamaCoreUtils::getAPIKey("Clarity-read")
 
   MazamaCoreUtils::stopIfNull(api_key)
   MazamaCoreUtils::stopIfNull(datasourceId)
@@ -633,10 +653,10 @@ Clarity_getOpenIndividual <- function(
 
 # GET and parse a JSON return
 
- Clarity_API_GET <- function(
-    webserviceUrl = NULL,
-    api_key = NULL,
-    queryList = NULL
+Clarity_API_GET <- function(
+  webserviceUrl = NULL,
+  api_key = NULL,
+  queryList = NULL
 ) {
 
   # ----- Validate parameters --------------------------------------------------

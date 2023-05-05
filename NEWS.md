@@ -1,23 +1,29 @@
 
 # AirSensor2 0.3.0
 
-This version introduces data ingest functions for Clarity. In preparation for 
-additional data providers, many of the PurpleAir functions using `"pa"` as 
-shorthand have been renamed with a more explicit `"PurpleAir"`.
+This version introduces data ingest functions for Clarity "Open" sensor data. 
+In preparation for additional data providers, many of the PurpleAir functions 
+using `"pa"` as shorthand have been renamed with a more explicit `"PurpleAir"`:
 
 - Renamed all `pa_~()` functions to `PurpleAir_~()`.
 - Renamed `PURPLE_AIR_API_~` API keys to `PurpleAir_API_~`.
 - Renamed `purple_air_synoptic` class to `PurpleAir_synoptic`.
-- Added Clarity API functions:
-  - `Clarity_getAllOpenHourly()`
-  - `Clarity_getAllOpenIndividual()`
-  - `Clarity_getOpenHourly()`
-  - `Clarity_getOpenIndividual()`
-  - `Clarity_createOpenSynoptic()`
-  - `Clarity_enhanceRawSynopticData()`
-  - `Clarity_createOpenMonitor()`
-- Added functions for non-PurpleAir synoptic data
-  - `syn_leaflet()`
+
+Clarity "Open" datasets are available to those with an API key allowing access
+to this data. The following functions provide access to Clarity "Open" data:
+
+- `Clarity_getAllOpenHourly()`
+- `Clarity_getAllOpenIndividual()`
+- `Clarity_getOpenHourly()`
+- `Clarity_getOpenIndividual()`
+- `Clarity_createOpenSynoptic()`
+- `Clarity_enhanceRawSynopticData()`
+- `Clarity_createOpenMonitor()`
+  
+Generic _syn_-optic data from non-PurpleAir providers (similar to PurpleAir 
+_'pas'_ objects) is supported with:
+
+- `syn_leaflet()`
 
 # AirSensor2 0.2.1
 

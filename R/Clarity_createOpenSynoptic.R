@@ -1,6 +1,7 @@
 #' @export
 #' @importFrom rlang .data
 #' @importFrom MazamaCoreUtils logger.isInitialized logger.debug
+#' @importFrom MazamaCoreUtils getAPIKey
 #'
 #' @title Create a new Clarity synoptic dataset
 #'
@@ -22,7 +23,8 @@
 #'
 #' 4) Convert data types from character to \code{POSIXct} and \code{numeric}.
 #'
-#' @param api_key PurpleAir API Read Key.
+#' @param api_key Clarity API READ Key. If \code{api_key = NULL}, it
+#' will be obtained using \code{getAPIKey("Clarity-read")}.
 #' @param format Customized output format (currently only "USFS").
 #' @param baseUrl Base URL for the PurpleAir API.
 #'
@@ -49,12 +51,15 @@
 #' }
 
 Clarity_createOpenSynoptic <- function(
-    api_key = NULL,
-    format = c("USFS"),
-    baseUrl = "https://clarity-data-api.clarity.io/v1/open/all-recent-measurement/pm25/hourly"
+  api_key = NULL,
+  format = c("USFS"),
+  baseUrl = "https://clarity-data-api.clarity.io/v1/open/all-recent-measurement/pm25/hourly"
 ) {
 
   # ----- Validate parameters --------------------------------------------------
+
+  if ( is.null(api_key) )
+    api_key <- MazamaCoreUtils::getAPIKey("Clarity-read")
 
   MazamaCoreUtils::stopIfNull(api_key)
   MazamaCoreUtils::stopIfNull(baseUrl)
