@@ -39,7 +39,7 @@
 #'
 #' initializeMazamaSpatialUtils()
 #'
-#' syn <-
+#' synoptic <-
 #'   Clarity_createOpenSynoptic(
 #'     api_key = Clarity_API_READ_KEY,
 #'     format = "USFS"
@@ -107,9 +107,9 @@ Clarity_createOpenSynoptic <- function(
   # ----- Return ---------------------------------------------------------------
 
   # Add a class name
-  class(syn) <- union("synoptic", class(syn))
+  class(synoptic) <- union("synoptic", class(synoptic))
 
-  return(syn)
+  return(synoptic)
 
 }
 

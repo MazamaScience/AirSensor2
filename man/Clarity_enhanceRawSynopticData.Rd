@@ -4,10 +4,10 @@
 \alias{Clarity_enhanceRawSynopticData}
 \title{Enhance synoptic data from Clarity}
 \usage{
-Clarity_enhanceRawSynopticData(syn_raw = NULL)
+Clarity_enhanceRawSynopticData(rawSynoptic = NULL)
 }
 \arguments{
-\item{syn_raw}{'meta' dataframe returned by \code{Clarity_getAllOpenHourly()}.}
+\item{rawSynoptic}{'synoptic' dataframe returned by \code{Clarity_getAllOpenHourly()}.}
 }
 \value{
 Enhanced dataframe of synoptic Clarity data.

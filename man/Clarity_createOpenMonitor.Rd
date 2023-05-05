@@ -6,7 +6,7 @@
 \usage{
 Clarity_createOpenMonitor(
   api_key = NULL,
-  syn = NULL,
+  synoptic = NULL,
   datasourceId = NULL,
   format = "USFS",
   parameter = c("pm2.5", "nowcast"),
@@ -17,7 +17,7 @@ Clarity_createOpenMonitor(
 \item{api_key}{Clarity API READ Key. If \code{api_key = NULL}, it
 will be obtained using \code{getAPIKey("Clarity-read")}.}
 
-\item{syn}{Previously generated \emph{synoptic} object containing \code{datasosurceId}.}
+\item{synoptic}{Previously generated \emph{synoptic} object containing \code{datasosurceId}.}
 
 \item{datasourceId}{Clarity sensor identifier.}
 
@@ -45,7 +45,7 @@ library(AirSensor2)
 
 initializeMazamaSpatialUtils()
 
-syn <-
+synoptic <-
   Clarity_createOpenSynoptic(
     api_key = Clarity_API_READ_KEY
   )
@@ -53,7 +53,7 @@ syn <-
 mon <-
   Clarity_createOpenMonitor(
     api_key = Clarity_API_READ_KEY,
-    syn = syn,
+    synoptic = synoptic,
     parameter = "pm2.5"
   )
 

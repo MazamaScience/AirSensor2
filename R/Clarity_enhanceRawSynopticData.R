@@ -24,7 +24,7 @@
 #' \item{sensorManufacturer = "Clarity"}
 #' }
 #'
-#' @param syn_raw 'meta' dataframe returned by \code{Clarity_getAllOpenHourly()}.
+#' @param rawSynoptic 'synoptic' dataframe returned by \code{Clarity_getAllOpenHourly()}.
 #'
 #' @return Enhanced dataframe of synoptic Clarity data.
 #'
@@ -32,19 +32,19 @@
 #'
 
 Clarity_enhanceRawSynopticData <- function(
-  syn_raw = NULL
+  rawSynoptic = NULL
 ) {
 
   # ----- Validate Parameters --------------------------------------------------
 
-  MazamaCoreUtils::stopIfNull(syn_raw)
+  MazamaCoreUtils::stopIfNull(rawSynoptic)
 
-  if ( !is.data.frame(syn_raw) )
-    stop("parameter 'syn_raw' parameter is not a dataframe")
+  if ( !is.data.frame(rawSynoptic) )
+    stop("parameter 'rawSynoptic' parameter is not a dataframe")
 
   # ----- Harmonize table ------------------------------------------------------
 
-  # > dplyr::glimpse(syn_raw, width = 75)
+  # > dplyr::glimpse(rawSynoptic, width = 75)
   # Rows: 604
   # Columns: 8
   # $ timestamp    <chr> "2023-05-03T18Z", "2023-05-03T18Z", "2023-05-03T18Z"…
@@ -56,8 +56,8 @@ Clarity_enhanceRawSynopticData <- function(
   # $ latitude     <dbl> 34.07283, 37.06706, 42.82760, 34.03556, 43.17658, 37…
   # $ datetime     <dttm> 2023-05-03 18:00:00, 2023-05-03 18:00:00, 2023-05-0…
 
-  syn <-
-    syn_raw %>%
+  synoptic <-
+    rawSynoptic %>%
 
     # * New columns -----
     dplyr::mutate(
@@ -84,36 +84,36 @@ Clarity_enhanceRawSynopticData <- function(
 
   # Put 'deviceDeploymentID' and 'deviceID' in front
   startingIDs <- c("deviceDeploymentID", "deviceID", "locationID")
-  otherColumns <- setdiff(names(syn), startingIDs)
+  otherColumns <- setdiff(names(synoptic), startingIDs)
   orderedColumns <- c(startingIDs, otherColumns)
-  syn <- syn %>% dplyr::select(dplyr::all_of(orderedColumns))
+  synoptic <- synoptic %>% dplyr::select(dplyr::all_of(orderedColumns))
 
   # ----- Add spatial metadata -------------------------------------------------
 
   # * countryCode -----
 
-  syn$countryCode <-
+  synoptic$countryCode <-
     MazamaSpatialUtils::getCountryCode(
-      longitude = syn$longitude,
-      latitude = syn$latitude,
+      longitude = synoptic$longitude,
+      latitude = synoptic$latitude,
       allData = FALSE,
       useBuffering = FALSE            # No buffering needed with the EEZ dataset
     )
 
   # Limit to valid countryCodes
-  syn <-
-    syn %>%
+  synoptic <-
+    synoptic %>%
     dplyr::filter(!is.na(.data$countryCode))
 
   # * stateCode -----
 
   # Suppress annoying 'Discarded datum Unknown' messages
   suppressWarnings({
-    syn$stateCode <-
+    synoptic$stateCode <-
       MazamaSpatialUtils::getStateCode(
-        longitude = syn$longitude,
-        latitude = syn$latitude,
-        countryCodes = unique(syn$countryCode),
+        longitude = synoptic$longitude,
+        latitude = synoptic$latitude,
+        countryCodes = unique(synoptic$countryCode),
         allData = FALSE,
         useBuffering = TRUE
       )
@@ -121,32 +121,32 @@ Clarity_enhanceRawSynopticData <- function(
 
   # * countyName -----
 
-  syn_us <- syn %>% dplyr::filter(.data$countryCode == "US")
-  syn_other <- syn %>% dplyr::filter(.data$countryCode != "US")
+  synoptic_us <- synoptic %>% dplyr::filter(.data$countryCode == "US")
+  synoptic_other <- synoptic %>% dplyr::filter(.data$countryCode != "US")
 
   # Suppress annoying 'Discarded datum Unknown' messages
   suppressWarnings({
-    syn_us$countyName <-
+    synoptic_us$countyName <-
       MazamaSpatialUtils::getUSCounty(
-        longitude = syn_us$longitude,
-        latitude = syn_us$latitude,
-        stateCodes = unique(syn$stateCode),
+        longitude = synoptic_us$longitude,
+        latitude = synoptic_us$latitude,
+        stateCodes = unique(synoptic$stateCode),
         allData = FALSE,
         useBuffering = TRUE
       )
   })
 
-  syn <- dplyr::bind_rows(syn_us, syn_other)
+  synoptic <- dplyr::bind_rows(synoptic_us, synoptic_other)
 
   # * timezone -----
 
   # Suppress annoying 'Discarded datum Unknown' messages
   suppressWarnings({
-    syn$timezone <-
+    synoptic$timezone <-
       MazamaSpatialUtils::getTimezone(
-        longitude = syn$longitude,
-        latitude = syn$latitude,
-        countryCodes = unique(syn$countryCode),
+        longitude = synoptic$longitude,
+        latitude = synoptic$latitude,
+        countryCodes = unique(synoptic$countryCode),
         allData = FALSE,
         useBuffering = TRUE
       )
@@ -155,8 +155,8 @@ Clarity_enhanceRawSynopticData <- function(
   # ----- Return ---------------------------------------------------------------
 
   # Add the "Clarity_synoptic" class name
-  class(syn) <- union("Clarity_synoptic", class(syn))
+  class(synoptic) <- union("Clarity_synoptic", class(synoptic))
 
-  return(syn)
+  return(synoptic)
 
 }

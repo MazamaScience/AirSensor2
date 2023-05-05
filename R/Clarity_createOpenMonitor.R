@@ -11,7 +11,7 @@
 #'
 #' @param api_key Clarity API READ Key. If \code{api_key = NULL}, it
 #' will be obtained using \code{getAPIKey("Clarity-read")}.
-#' @param syn Previously generated \emph{synoptic} object containing \code{datasosurceId}.
+#' @param synoptic Previously generated \emph{synoptic} object containing \code{datasosurceId}.
 #' @param datasourceId Clarity sensor identifier.
 #' @param format Customized output format (currently only "USFS").
 #' @param parameter Parameter to use for data ("pm2.5" or "nowcast")
@@ -29,7 +29,7 @@
 #'
 #' initializeMazamaSpatialUtils()
 #'
-#' syn <-
+#' synoptic <-
 #'   Clarity_createOpenSynoptic(
 #'     api_key = Clarity_API_READ_KEY
 #'   )
@@ -37,7 +37,7 @@
 #' mon <-
 #'   Clarity_createOpenMonitor(
 #'     api_key = Clarity_API_READ_KEY,
-#'     syn = syn,
+#'     synoptic = synoptic,
 #'     parameter = "pm2.5"
 #'   )
 #'
@@ -46,7 +46,7 @@
 
 Clarity_createOpenMonitor <- function(
   api_key = NULL,
-  syn = NULL,
+  synoptic = NULL,
   datasourceId = NULL,
   format = "USFS",
   parameter = c("pm2.5", "nowcast"),
@@ -59,7 +59,7 @@ Clarity_createOpenMonitor <- function(
     api_key <- MazamaCoreUtils::getAPIKey("Clarity-read")
 
   MazamaCoreUtils::stopIfNull(api_key)
-  MazamaCoreUtils::stopIfNull(syn)
+  MazamaCoreUtils::stopIfNull(synoptic)
   MazamaCoreUtils::stopIfNull(datasourceId)
   MazamaCoreUtils::stopIfNull(format)
 
@@ -127,7 +127,7 @@ Clarity_createOpenMonitor <- function(
 
   # TODO: use setdiff() to add extra monitor core metadata
   meta <-
-    syn %>%
+    synoptic %>%
     dplyr::filter(datasourceId == !!datasourceId) %>%
     dplyr::select(dplyr::all_of(monitor_metaNames)) %>%
     # Add more metadata used by the AirMonitor package
@@ -151,13 +151,13 @@ Clarity_createOpenMonitor <- function(
     )
 
   if ( nrow(meta) != 1 )
-    stop(sprintf("Multiple records in 'syn' match '%s'", datasourceId));
+    stop(sprintf("Multiple records in 'synoptic' match '%s'", datasourceId));
 
   locationName <- unique(tidyDF$locationName)
   if ( length(locationName) > 1 )
     stop(sprintf("Multiple location names found: '%s'", paste0(locationName, collapse = ", ")))
 
-  # NOTE:  locationName is missing from syn but available now
+  # NOTE:  locationName is missing from synoptic but available now
   meta$locationName <- unique(tidyDF$locationName)
 
   # Remove "Clarity_synoptic" class
@@ -204,13 +204,13 @@ if ( FALSE ) {
   applyQC <- TRUE
 
 
-  syn <- Clarity_createOpenSynoptic(api_key)
+  synoptic <- Clarity_createOpenSynoptic(api_key)
 
 
   monitor <-
     Clarity_createOpenMonitor(
       api_key,
-      syn,
+      synoptic,
       datasourceId,
       format = "USFS",
       parameter

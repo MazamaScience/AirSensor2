@@ -50,7 +50,7 @@ library(AirSensor2)
 
 initializeMazamaSpatialUtils()
 
-syn <-
+synoptic <-
   Clarity_createOpenSynoptic(
     api_key = Clarity_API_READ_KEY,
     format = "USFS"
