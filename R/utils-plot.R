@@ -181,7 +181,7 @@ pas_palette <- function(
 #'
 #' @title Color palettes for Synoptic data
 #'
-#' @param syn PurpleAir Synoptic \emph{syn} object.
+#' @param synoptic PurpleAir Synoptic \emph{synoptic} object.
 #' @param parameter Value to generate colors for, e.g. \code{pm2.5}.
 #' @param paletteName Optional name of an RColorBrewer paeltte, \emph{e.g.}
 #' \code{"BuPu"} or \code{"Greens"} to use when a default paleltte is unavailable.
@@ -199,8 +199,8 @@ pas_palette <- function(
 #' @return An object that consists of a label and color dataframe, and
 #' calculated color values.
 
-syn_palette <- function(
-    syn = NULL,
+synoptic_palette <- function(
+    synoptic = NULL,
     parameter = "pm2.5",
     paletteName = NULL,
     ...
@@ -208,7 +208,7 @@ syn_palette <- function(
 
   # ----- Validate parameters --------------------------------------------------
 
-  MazamaCoreUtils::stopIfNull(syn)
+  MazamaCoreUtils::stopIfNull(synoptic)
 
   # Ignore incoming paletteName for default parameters
   if ( stringr::str_detect(parameter, "^pm2\\.5" ) ) {
@@ -259,7 +259,7 @@ syn_palette <- function(
         '>90%'
       )
 
-    sensorColor <- colorFunc(syn$humidity)
+    sensorColor <- colorFunc(synoptic$humidity)
 
   } else if ( paletteName == "temperature" ) { # TEMPERATURE
 
@@ -299,7 +299,7 @@ syn_palette <- function(
         '>110'
       )
 
-    sensorColor <- colorFunc(round(syn$temperature))
+    sensorColor <- colorFunc(round(synoptic$temperature))
 
   } else if ( paletteName == "AQI" ) { # AQI COLORS
 
@@ -314,7 +314,7 @@ syn_palette <- function(
 
     labels <- US_AQI$names_eng
 
-    sensorColor <- colorFunc(syn[[parameter]])
+    sensorColor <- colorFunc(synoptic[[parameter]])
 
   } else { # GENERIC COLOR FUNC
 
@@ -340,7 +340,7 @@ syn_palette <- function(
 
     labels <- rep("", 6)
 
-    sensorColor <- colorFunc(syn[[parameter]])
+    sensorColor <- colorFunc(synoptic[[parameter]])
 
   }
 

@@ -20,10 +20,10 @@ to this data. The following functions provide access to Clarity "Open" data:
 - `Clarity_enhanceRawSynopticData()`
 - `Clarity_createOpenMonitor()`
   
-Generic _syn_-optic data from non-PurpleAir providers (similar to PurpleAir 
+Generic synoptic data from non-PurpleAir providers (similar to PurpleAir 
 _'pas'_ objects) is supported with:
 
-- `syn_leaflet()`
+- `synoptic_leaflet()`
 
 # AirSensor2 0.2.1
 

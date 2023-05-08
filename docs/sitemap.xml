@@ -37,6 +37,27 @@
     <loc>/reference/AirSensor2.html</loc>
   </url>
   <url>
+    <loc>/reference/Clarity_createOpenMonitor.html</loc>
+  </url>
+  <url>
+    <loc>/reference/Clarity_createOpenSynoptic.html</loc>
+  </url>
+  <url>
+    <loc>/reference/Clarity_enhanceRawSynopticData.html</loc>
+  </url>
+  <url>
+    <loc>/reference/Clarity_getAllOpenHourly.html</loc>
+  </url>
+  <url>
+    <loc>/reference/Clarity_getAllOpenIndvidual.html</loc>
+  </url>
+  <url>
+    <loc>/reference/Clarity_getOpenHourly.html</loc>
+  </url>
+  <url>
+    <loc>/reference/Clarity_getOpenIndividual.html</loc>
+  </url>
+  <url>
     <loc>/reference/PurpleAir_DATA_AVG_PM25_FIELDS.html</loc>
   </url>
   <url>
@@ -44,24 +65,6 @@
   </url>
   <url>
     <loc>/reference/PurpleAir_HISTORY_PM25_FIELDS.html</loc>
-  </url>
-  <url>
-    <loc>/reference/US_AQI.html</loc>
-  </url>
-  <url>
-    <loc>/reference/example_pas.html</loc>
-  </url>
-  <url>
-    <loc>/reference/example_pas_raw.html</loc>
-  </url>
-  <url>
-    <loc>/reference/example_pat.html</loc>
-  </url>
-  <url>
-    <loc>/reference/index.html</loc>
-  </url>
-  <url>
-    <loc>/reference/initializeMazamaSpatialUtils.html</loc>
   </url>
   <url>
     <loc>/reference/PurpleAir_checkAPIKey.html</loc>
@@ -104,6 +107,75 @@
   </url>
   <url>
     <loc>/reference/PurpleAir_getSensorsData.html</loc>
+  </url>
+  <url>
+    <loc>/reference/SENSOR_DATA_AVG_PM25_FIELDS.html</loc>
+  </url>
+  <url>
+    <loc>/reference/SENSOR_DATA_PM25_FIELDS.html</loc>
+  </url>
+  <url>
+    <loc>/reference/SENSOR_HISTORY_PM25_FIELDS.html</loc>
+  </url>
+  <url>
+    <loc>/reference/US_AQI.html</loc>
+  </url>
+  <url>
+    <loc>/reference/example_pas.html</loc>
+  </url>
+  <url>
+    <loc>/reference/example_pas_raw.html</loc>
+  </url>
+  <url>
+    <loc>/reference/example_pat.html</loc>
+  </url>
+  <url>
+    <loc>/reference/index.html</loc>
+  </url>
+  <url>
+    <loc>/reference/initializeMazamaSpatialUtils.html</loc>
+  </url>
+  <url>
+    <loc>/reference/pa_checkAPIKey.html</loc>
+  </url>
+  <url>
+    <loc>/reference/pa_createGroup.html</loc>
+  </url>
+  <url>
+    <loc>/reference/pa_createMember.html</loc>
+  </url>
+  <url>
+    <loc>/reference/pa_deleteGroup.html</loc>
+  </url>
+  <url>
+    <loc>/reference/pa_deleteMember.html</loc>
+  </url>
+  <url>
+    <loc>/reference/pa_getGroupDetail.html</loc>
+  </url>
+  <url>
+    <loc>/reference/pa_getGroupsList.html</loc>
+  </url>
+  <url>
+    <loc>/reference/pa_getMemberData.html</loc>
+  </url>
+  <url>
+    <loc>/reference/pa_getMemberHistory.html</loc>
+  </url>
+  <url>
+    <loc>/reference/pa_getMembersData.html</loc>
+  </url>
+  <url>
+    <loc>/reference/pa_getSensorData.html</loc>
+  </url>
+  <url>
+    <loc>/reference/pa_getSensorHistory.html</loc>
+  </url>
+  <url>
+    <loc>/reference/pa_getSensorHistoryCSV.html</loc>
+  </url>
+  <url>
+    <loc>/reference/pa_getSensorsData.html</loc>
   </url>
   <url>
     <loc>/reference/pas_createNew.html</loc>
@@ -176,5 +248,11 @@
   </url>
   <url>
     <loc>/reference/spatialIsInitialized.html</loc>
+  </url>
+  <url>
+    <loc>/reference/synoptic_leaflet.html</loc>
+  </url>
+  <url>
+    <loc>/reference/synoptic_palette.html</loc>
   </url>
 </urlset>

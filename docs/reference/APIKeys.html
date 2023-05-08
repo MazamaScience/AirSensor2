@@ -5,10 +5,11 @@ the duration of an R session. In functions that accept an API key argument,
 if the passed in API key is NULL, code will look up a specific named API
 key to see if that key has been set globally. Setting keys globally is a
 convenience that simplifies the scripts written by end users.
-Currently supported API keys and associated functions include:
+Currently supported API keys include:
 
-"PurpleAir-read" -- Purple Air api_key used in
-  pas_downloadParseRawData.
+"PurpleAir-read" -- PurpleAir API_READ_KEY
+"PurpleAir-write" -- PurpleAir API_WRITE_KEY
+"Clarity-read" -- Clarity API_READ_KEY
 
 '><!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
@@ -28,7 +29,7 @@ Currently supported API keys and associated functions include:
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AirSensor2</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.2.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.3.0</span>
       </span>
     </div>
 
@@ -85,9 +86,10 @@ the duration of an R session. In functions that accept an API key argument,
 if the passed in API key is <code>NULL</code>, code will look up a specific named API
 key to see if that key has been set globally. Setting keys globally is a
 convenience that simplifies the scripts written by end users.</p>
-<p>Currently supported API keys and associated functions include:</p>
-<ul><li><p><code>"PurpleAir-read"</code> -- Purple Air <code>api_key</code> used in
-  <a href="pas_downloadParseRawData.html">pas_downloadParseRawData</a>.</p></li>
+<p>Currently supported API keys include:</p>
+<ul><li><p><code>"PurpleAir-read"</code> -- PurpleAir <code>API_READ_KEY</code></p></li>
+<li><p><code>"PurpleAir-write"</code> -- PurpleAir <code>API_WRITE_KEY</code></p></li>
+<li><p><code>"Clarity-read"</code> -- Clarity <code>API_READ_KEY</code></p></li>
 </ul></div>
 
 
@@ -122,6 +124,7 @@ package where they are described in more detail:</p><ul><li><p><code>MazamaCoreU
 <p><a href="https://www2.purpleair.com/policies/terms-of-service" class="external-link">PurpleAir Terms of service</a></p>
 <p><a href="https://www2.purpleair.com/pages/license" class="external-link">PurpleAir Data license</a></p>
 <p><a href="https://www2.purpleair.com/pages/attribution" class="external-link">PurpleAir Data Attribution</a></p>
+<p><a href="https://api-guide.clarity.io/getting-started/" class="external-link">Clarity API Guide</a></p>
     </div>
 
     <div id="ref-examples">

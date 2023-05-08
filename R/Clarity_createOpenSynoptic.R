@@ -96,7 +96,7 @@ Clarity_createOpenSynoptic <- function(
   if ( logger.isInitialized() )
     logger.debug("----- Clarity_enhance() -----")
 
-  syn <-
+  synoptic <-
     Clarity_enhanceRawSynopticData(
       DFList$synoptic
     )
