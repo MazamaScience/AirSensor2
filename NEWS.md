@@ -1,4 +1,10 @@
 
+# AirSensor2 0.3.1
+
+- Updated Clarity API functions to handle the addition of a `nowcast_QCFlag` in
+the returned data.
+- Removed **geohashTools** dependency.
+
 # AirSensor2 0.3.0
 
 This version introduces data ingest functions for Clarity "Open" sensor data. 

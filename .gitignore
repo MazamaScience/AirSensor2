@@ -42,3 +42,4 @@ vignettes/*.pdf
 
 global_vars.R
 
+.DS_Store

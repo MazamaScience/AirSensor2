@@ -98,13 +98,13 @@ Clarity_getAllOpenHourly <- function(
   # > class(responseDF$data[1][[1]])
   # [1] "matrix" "array"
   # > dim(responseDF$data[1][[1]])
-  # [1] 3 4
+  # [1] 3 5
   # > responseDF$data[1][[1]]
-  #      [,1]             [,2] [,3]   [,4]
-  # [1,] "2023-05-03T02Z" "1"  "3.21" "3.51"
-  # [2,] "2023-05-03T01Z" "1"  "3.44" "3.71"
-  # [3,] "2023-05-03T00Z" "1"  "3.45" "3.83"
-
+  # [,1]             [,2] [,3]    [,4] [,5]
+  # [1,] "2023-06-08T17Z" "1"  "11.19" "1"  "11.52"
+  # [2,] "2023-06-08T16Z" "1"  "11.22" "1"  "11.84"
+  # [3,] "2023-06-08T15Z" "1"  "12.37" "1"  "12.46"
+  #
   # All open datasources, hourly values
   # GET /v1/open/all-recent-measurement/pm25/hourly ? format=USFS
   # returns a list of the following example object
@@ -113,14 +113,14 @@ Clarity_getAllOpenHourly <- function(
   #   "lat": 42.194576
   #   "lon": -122.709480
   #   "data": [
-  #     ["2023-03-07T14Z", 1, 14.02, 14.43],
-  #     ["2023-03-07T13Z", 1, 13.97, 12.78],
-  #     ["2023-03-07T12Z", 1, 11.02, 12.09]
+  #     ["2023-03-07T14Z", 1, 14.02, 1, 14.43],
+  #     ["2023-03-07T13Z", 1, 13.97, 1, 12.78],
+  #     ["2023-03-07T12Z", 1, 11.02, 1, 12.09]
   #   ]
   # }
   #
   # Notes
-  # Each row of data has the format  [ start of hour (UTC),  QC flag,  1-Hour-Mean,  Nowcast ]
+  # Each row of data has the format  [ start of hour (UTC),  1-Hour QC flag,  1-Hour-Mean,  Nowcast QC flag, Nowcast ]
   # Time portion omits minute:second
   # Sorted descending in time
 
@@ -133,7 +133,7 @@ Clarity_getAllOpenHourly <- function(
     latitude <- responseDF$lat[i]
 
     matrix <- responseDF$data[i][[1]]
-    colnames(matrix) <- c("timestamp", "QCFlag", "pm2.5", "nowcast")
+    colnames(matrix) <- c("timestamp", "pm2.5_QCFlag", "pm2.5", "nowcast_QCFlag", "nowcast")
 
     # NOTE: Each dataframe will have three hourly records with QCFlag, pm2.5, nowcast and datasourceId
     DFList[[datasourceId]] <-
@@ -150,8 +150,9 @@ Clarity_getAllOpenHourly <- function(
     dplyr::bind_rows(DFList) %>%
     dplyr::mutate(
       datetime = MazamaCoreUtils::parseDatetime(.data$timestamp, timezone = "UTC"),
-      QCFlag = as.numeric(.data$QCFlag),
+      pm2.5_QCFlag = as.numeric(.data$pm2.5_QCFlag),
       pm2.5 = as.numeric(.data$pm2.5),
+      nowcast_QCFlag = as.numeric(.data$nowcast_QCFlag),
       nowcast = as.numeric(.data$nowcast)
     )
 
@@ -177,12 +178,12 @@ Clarity_getAllOpenHourly <- function(
 
   # ----- * various 'data' dataframes -----
 
-  QC <-
+  pm2.5_QC <-
     tidyDF %>%
-    dplyr::select(dplyr::all_of(c("datetime", "QCFlag", "datasourceId"))) %>%
+    dplyr::select(dplyr::all_of(c("datetime", "pm2.5_QCFlag", "datasourceId"))) %>%
     tidyr::pivot_wider(
       names_from = "datasourceId",
-      values_from = "QCFlag"
+      values_from = "pm2.5_QCFlag"
     ) %>%
     dplyr::arrange(.data$datetime)
 
@@ -192,6 +193,15 @@ Clarity_getAllOpenHourly <- function(
     tidyr::pivot_wider(
       names_from = "datasourceId",
       values_from = "pm2.5"
+    ) %>%
+    dplyr::arrange(.data$datetime)
+
+  nowcast_QC <-
+    tidyDF %>%
+    dplyr::select(dplyr::all_of(c("datetime", "nowcast_QCFlag", "datasourceId"))) %>%
+    tidyr::pivot_wider(
+      names_from = "datasourceId",
+      values_from = "nowcast_QCFlag"
     ) %>%
     dplyr::arrange(.data$datetime)
 
@@ -211,8 +221,9 @@ Clarity_getAllOpenHourly <- function(
 
   returnList <- list(
     synoptic = synoptic,
-    QC = QC,
+    pm2.5_QC = pm2.5_QC,
     pm2.5 = pm2.5,
+    nowcast_QC = nowcast_QC,
     nowcast = nowcast
   )
 
@@ -480,7 +491,7 @@ Clarity_getOpenHourly <- function(
     locationName <- responseDF$name[i]
 
     matrix <- responseDF$data[i][[1]]
-    colnames(matrix) <- c("timestamp", "QCFlag", "pm2.5", "nowcast")
+    colnames(matrix) <- c("timestamp", "pm2.5_QCFlag", "pm2.5", "nowcast_QCFlag", "nowcast")
 
     # NOTE: Each dataframe will an hours worth of raw records with QCFlag, pm2.5 and datasourceId
     DFList[[datasourceId]] <-
@@ -628,8 +639,9 @@ Clarity_getOpenIndividual <- function(
       dplyr::as_tibble(matrix) %>%
       dplyr::mutate(
         datetime = MazamaCoreUtils::parseDatetime(.data$timestamp, timezone = "UTC"),
-        QCFlag = as.numeric(.data$QCFlag),
+        pm2.5_QCFlag = as.numeric(.data$pm2.5_QCFlag),
         pm2.5 = as.numeric(.data$pm2.5),
+        nowcast_QCFlag = as.numeric(.data$nowcast_QCFlag),
         nowcast = as.numeric(.data$nowcast),
         datasourceId = !!datasourceId,
         locationName = !!locationName,

@@ -73,7 +73,7 @@ Clarity_enhanceRawSynopticData <- function(
     # TODO:  use geohashTools to create a locationID.
     # * Replace MLU version 0.3.8 locationID with geohash
     dplyr::mutate(
-      locationID = geohashTools::gh_encode(.data$latitude, .data$longitude, precision = 10)
+      locationID = MazamaCoreUtils::createLocationID(.data$latitude, .data$longitude, algorithm = "geohash")
     ) %>%
 
     # Fill in new columns where possible

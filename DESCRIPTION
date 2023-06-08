@@ -1,6 +1,6 @@
 Type: Package
 Package: AirSensor2
-Version: 0.3.0
+Version: 0.3.1
 Title: Process and Display Data from Air Quality Sensors
 Authors@R: c(
     person("Jonathan", "Callahan", email="jonathan.s.callahan@gmail.com", role=c("aut","cre"))
@@ -14,13 +14,12 @@ URL: https://github.com/MazamaScience/AirSensor2
 BugReports: https://github.com/MazamaScience/AirSensor2/issues
 Depends:
     R (>= 4.0.0),
-    MazamaCoreUtils (>= 0.4.13)
+    MazamaCoreUtils (>= 0.4.14)
 Imports:
     AirMonitor (>= 0.3.9),
     countrycode,
     dplyr (>= 1.0.0),
     geodist,
-    geohashTools,
     httr,
     jsonlite,
     leaflet,
