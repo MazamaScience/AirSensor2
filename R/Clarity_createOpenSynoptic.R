@@ -91,7 +91,7 @@ Clarity_createOpenSynoptic <- function(
     )
 
   # > names(DFList)
-  # [1] "synoptic" "QC"       "pm2.5"     "nowcast"
+  # [1] "synoptic"   "pm2.5_QC"   "pm2.5"      "nowcast_QC" "nowcast"
 
   if ( logger.isInitialized() )
     logger.debug("----- Clarity_enhance() -----")

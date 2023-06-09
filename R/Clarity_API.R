@@ -15,8 +15,8 @@
 #' @param format Customized output format (currently only "USFS").
 #' @param baseUrl URL endpoint.
 #'
-#' @return List containing four data frames: \code{synoptic}, \code{QCFlag},
-#' \code{pm2.5} and \code{nowcast}.
+#' @return List containing five data frames: \code{synoptic}, \code{pm2.5_QCFlag},
+#' \code{pm2.5}, \code{nowcast_QCFlag} and \code{nowcast}.
 #'
 #' @description Sends a request to the Clarity API endpoint for Open Data.
 #'
@@ -135,7 +135,7 @@ Clarity_getAllOpenHourly <- function(
     matrix <- responseDF$data[i][[1]]
     colnames(matrix) <- c("timestamp", "pm2.5_QCFlag", "pm2.5", "nowcast_QCFlag", "nowcast")
 
-    # NOTE: Each dataframe will have three hourly records with QCFlag, pm2.5, nowcast and datasourceId
+    # NOTE: Each dataframe will have three hourly records with pm2.5_QCFlag, pm2.5, nowcast_QCFlag, nowcast and datasourceId
     DFList[[datasourceId]] <-
       dplyr::as_tibble(matrix) %>%
       dplyr::mutate(
@@ -157,16 +157,17 @@ Clarity_getAllOpenHourly <- function(
     )
 
   # > dplyr::glimpse(tidyDF, width = 75)
-  # Rows: 1,808
-  # Columns: 8
-  # $ timestamp    <chr> "2023-05-03T18Z", "2023-05-03T17Z", "2023-05-03T16Z"…
-  # $ QCFlag       <dbl> 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1…
-  # $ pm2.5         <dbl> 5.00, 5.00, 4.20, 3.28, 3.05, 2.31, 22.05, 22.32, 15…
-  # $ nowcast      <dbl> 4.58, 4.39, 4.10, 3.01, 2.86, 2.69, 19.63, 17.96, 14…
-  # $ datasourceId <chr> "DAABL1560", "DAABL1560", "DAABL1560", "DAAZI7074", …
-  # $ longitude    <dbl> -118.20581, -118.20581, -118.20581, -122.05722, -122…
-  # $ latitude     <dbl> 34.07283, 34.07283, 34.07283, 37.06706, 37.06706, 37…
-  # $ datetime     <dttm> 2023-05-03 18:00:00, 2023-05-03 17:00:00, 2023-05-0…
+  # Rows: 1,805
+  # Columns: 9
+  # $ timestamp      <chr> "2023-06-09T00Z", "2023-06-08T23Z", "2023-06-08T22…
+  # $ pm2.5_QCFlag   <dbl> 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,…
+  # $ pm2.5          <dbl> 4.92, 5.45, 5.88, 31.37, 32.62, 45.45, 4.96, 5.03,…
+  # $ nowcast_QCFlag <dbl> 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,…
+  # $ nowcast        <dbl> 5.59, 6.26, 7.07, 44.73, 58.09, 83.56, 4.67, 4.54,…
+  # $ datasourceId   <chr> "DAABL1560", "DAABL1560", "DAABL1560", "DAAUZ8818"…
+  # $ longitude      <dbl> -118.20581, -118.20581, -118.20581, 120.75026, 120…
+  # $ latitude       <dbl> 34.07283, 34.07283, 34.07283, 15.00259, 15.00259, …
+  # $ datetime       <dttm> 2023-06-09 00:00:00, 2023-06-08 23:00:00, 2023-06…
 
   # ----- * synoptic dataframe-----
 
@@ -241,8 +242,8 @@ Clarity_getAllOpenHourly <- function(
 #' @param format Customized output format (currently only "USFS").
 #' @param baseUrl URL endpoint.
 #'
-#' @return List containing four data frames: \code{meta}, \code{QCFlag},
-#' \code{pm2.5} and \code{nowcast}.
+#' @return List containing five data frames: \code{meta}, \code{pm2.5_QCFlag},
+#' \code{pm2.5}, \code{nowcast_QCFlag} and \code{nowcast}.
 #'
 #' @description Sends a request to the Clarity API endpoint for Open Data.
 #'
@@ -338,7 +339,7 @@ Clarity_getAllOpenIndvidual <- function(
   # }
   #
   # Notes
-  # Each row of data has the format  [ measurement time (UTC),  QC flag,  Mass Concentration ]
+  # Each row of data has the format  [ measurement time (UTC),  PM2.5 QC flag,  Mass Concentration ]
   # Sorted descending in time
 
   returnList <- list()
@@ -350,14 +351,14 @@ Clarity_getAllOpenIndvidual <- function(
     latitude <- responseDF$lat[i]
 
     matrix <- responseDF$data[i][[1]]
-    colnames(matrix) <- c("timestamp", "QCFlag", "pm2.5")
+    colnames(matrix) <- c("timestamp", "pm2.5_QCFlag", "pm2.5")
 
-    # NOTE: Each dataframe will an hours worth of raw records with QCFlag, pm2.5 and datasourceId
+    # NOTE: Each dataframe will an hours worth of raw records with pm2.5_QCFlag, pm2.5 and datasourceId
     returnList[[datasourceId]] <-
       dplyr::as_tibble(matrix) %>%
       dplyr::mutate(
         datetime = MazamaCoreUtils::parseDatetime(.data$timestamp, timezone = "UTC"),
-        QCFlag = as.numeric(.data$QCFlag),
+        pm2.5_QCFlag = as.numeric(.data$pm2.5_QCFlag),
         pm2.5 = as.numeric(.data$pm2.5),
         datasourceId = !!datasourceId,
         longitude = !!longitude,
@@ -388,8 +389,8 @@ Clarity_getAllOpenIndvidual <- function(
 #' @param format Customized output format (currently only "USFS").
 #' @param baseUrl URL endpoint.
 #'
-#' @return List containing four data frames: \code{meta}, \code{QCFlag},
-#' \code{pm2.5} and \code{nowcast}.
+#' @return List containing five data frames: \code{meta}, \code{pm2.5_QCFlag},
+#' \code{pm2.5}, \code{nowcast_QCFlag} and \code{nowcast}.
 #'
 #' @description Sends a request to the Clarity API endpoint for Open Data.
 #'
@@ -466,16 +467,16 @@ Clarity_getOpenHourly <- function(
   #   "lat": 42.194576
   #   "lon": -122.709480
   #   "data": [
-  #     ["2023-03-07T14Z", 1, 14.02, 14.43],
-  #     ["2023-03-07T13Z", 1, 13.97, 12.78],
-  #     ["2023-03-07T12Z", 1, 11.02, 12.09],
+  #     ["2023-03-07T14Z", 1, 14.02, 1, 14.43],
+  #     ["2023-03-07T13Z", 1, 13.97, 1, 12.78],
+  #     ["2023-03-07T12Z", 1, 11.02, 1, 12.09],
   #     ...
   #     going back 10 days
   #   ]
   # }
   #
   # Notes
-  # Each row of data has the format  [ start of hour (UTC),  QC flag,  1-Hour-Mean,  Nowcast ]
+  # Each row of data has the format  [ start of hour (UTC),  1-Hour QC flag,  1-Hour-Mean,  Nowcast QC flag, Nowcast ]
   # Time portion omits minute:second
   # Sorted descending in time
 
@@ -493,13 +494,14 @@ Clarity_getOpenHourly <- function(
     matrix <- responseDF$data[i][[1]]
     colnames(matrix) <- c("timestamp", "pm2.5_QCFlag", "pm2.5", "nowcast_QCFlag", "nowcast")
 
-    # NOTE: Each dataframe will an hours worth of raw records with QCFlag, pm2.5 and datasourceId
+    # NOTE: Each dataframe will an hours worth of raw records with pm2.5_QCFlag, pm2.5, nowcast_QCFlag, nowcast and datasourceId
     DFList[[datasourceId]] <-
       dplyr::as_tibble(matrix) %>%
       dplyr::mutate(
         datetime = MazamaCoreUtils::parseDatetime(.data$timestamp, timezone = "UTC"),
-        QCFlag = as.numeric(.data$QCFlag),
+        pm2.5_QCFlag = as.numeric(.data$pm2.5_QCFlag),
         pm2.5 = as.numeric(.data$pm2.5),
+        nowcast_QCFlag = as.numeric(.data$nowcast_QCFlag),
         nowcast = as.numeric(.data$nowcast),
         datasourceId = !!datasourceId,
         locationName = !!locationName,
@@ -529,8 +531,8 @@ Clarity_getOpenHourly <- function(
 #' @param format Customized output format (currently only "USFS").
 #' @param baseUrl URL endpoint.
 #'
-#' @return List containing four data frames: \code{meta}, \code{QCFlag},
-#' \code{pm2.5} and \code{nowcast}.
+#' @return List containing five data frames: \code{meta}, \code{pm2.5_QCFlag},
+#' \code{pm2.5}, \code{nowcast_QCFlag} and \code{nowcast}.
 #'
 #' @description Sends a request to the Clarity API endpoint for Open Data.
 #'
@@ -607,16 +609,16 @@ Clarity_getOpenIndividual <- function(
   #   "lat": 42.194576
   #   "lon": -122.709480
   #   "data": [
-  #     ["2023-03-07T14Z", 1, 14.02, 14.43],
-  #     ["2023-03-07T13Z", 1, 13.97, 12.78],
-  #     ["2023-03-07T12Z", 1, 11.02, 12.09],
+  #     ["2023-03-07T14Z", 1, 14.02, 1, 14.43],
+  #     ["2023-03-07T13Z", 1, 13.97, 1, 12.78],
+  #     ["2023-03-07T12Z", 1, 11.02, 1, 12.09],
   #     ...
   #     going back 10 days
   #   ]
   # }
   #
   # Notes
-  # Each row of data has the format  [ start of hour (UTC),  QC flag,  1-Hour-Mean,  Nowcast ]
+  # Each row of data has the format  [ start of hour (UTC),  1-Hour QC flag,  1-Hour-Mean,  Nowcast QC flag, Nowcast ]
   # Time portion omits minute:second
   # Sorted descending in time
 
@@ -632,9 +634,9 @@ Clarity_getOpenIndividual <- function(
     locationName <- responseDF$name[i]
 
     matrix <- responseDF$data[i][[1]]
-    colnames(matrix) <- c("timestamp", "QCFlag", "pm2.5", "nowcast")
+    colnames(matrix) <- c("timestamp", "pm2.5_QCFlag", "pm2.5", "nowcast_QCFlag", "nowcast")
 
-    # NOTE: Each dataframe will an hours worth of raw records with QCFlag, pm2.5 and datasourceId
+    # NOTE: Each dataframe will contain an hours worth of raw records with pm2.5_QCFlag, pm2.5, nowcast_QCFlag, nowcast and datasourceId
     DFList[[datasourceId]] <-
       dplyr::as_tibble(matrix) %>%
       dplyr::mutate(

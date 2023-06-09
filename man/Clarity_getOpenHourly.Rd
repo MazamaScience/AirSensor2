@@ -22,8 +22,8 @@ will be obtained using \code{getAPIKey("Clarity-read")}.}
 \item{baseUrl}{URL endpoint.}
 }
 \value{
-List containing four data frames: \code{meta}, \code{QCFlag},
-\code{pm2.5} and \code{nowcast}.
+List containing five data frames: \code{meta}, \code{pm2.5_QCFlag},
+\code{pm2.5}, \code{nowcast_QCFlag} and \code{nowcast}.
 }
 \description{
 Sends a request to the Clarity API endpoint for Open Data.
