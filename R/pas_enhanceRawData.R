@@ -156,7 +156,7 @@ pas_enhanceRawData <- function(
     # TODO:  use geohashTools to create a locationID.
     # * Replace MLU version 0.3.8 locationID with geohash
     dplyr::mutate(
-      locationID = MazamaCoreUtils::createLocationID(.data$latitude, .data$longitude, algorithm = "geohash")
+      locationID = MazamaCoreUtils::createLocationID(.data$longitude, .data$latitude, algorithm = "geohash")
     ) %>%
 
     # Fill in new columns where possible

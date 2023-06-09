@@ -57,6 +57,7 @@ Clarity_enhanceRawSynopticData <- function(
   # $ datetime     <dttm> 2023-05-03 18:00:00, 2023-05-03 18:00:00, 2023-05-0…
 
   synoptic <-
+
     rawSynoptic %>%
 
     # * New columns -----
@@ -73,7 +74,7 @@ Clarity_enhanceRawSynopticData <- function(
     # TODO:  use geohashTools to create a locationID.
     # * Replace MLU version 0.3.8 locationID with geohash
     dplyr::mutate(
-      locationID = MazamaCoreUtils::createLocationID(.data$latitude, .data$longitude, algorithm = "geohash")
+      locationID = MazamaCoreUtils::createLocationID(.data$longitude, .data$latitude, algorithm = "geohash")
     ) %>%
 
     # Fill in new columns where possible
