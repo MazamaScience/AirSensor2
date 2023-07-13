@@ -11,7 +11,7 @@
 #'
 #' @param api_key Clarity API READ Key. If \code{api_key = NULL}, it
 #' will be obtained using \code{getAPIKey("Clarity-read")}.
-#' @param synoptic Previously generated \emph{synoptic} object containing \code{datasosurceId}.
+#' @param synoptic Previously generated \emph{synoptic} object containing \code{datasourceId}.
 #' @param datasourceId Clarity sensor identifier.
 #' @param format Customized output format (currently only "USFS").
 #' @param parameter Parameter to use for data ("pm2.5" or "nowcast")

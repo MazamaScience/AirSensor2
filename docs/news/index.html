@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AirSensor2</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.3.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.3.2</span>
       </span>
     </div>
 
@@ -66,6 +66,11 @@
       <small>Source: <a href="https://github.com/MazamaScience/AirSensor2/blob/HEAD/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
     </div>
 
+    <div class="section level2">
+<h2 class="page-header" data-toc-text="0.3.2" id="airsensor2-032">AirSensor2 0.3.2<a class="anchor" aria-label="anchor" href="#airsensor2-032"></a></h2>
+<ul><li>Added <code><a href="../reference/pat_createHourly.html">pat_createHourly()</a></code> as a convenience function for the common case of obtaining hourly aggergated for the following parameters: <code>datetime, temperature, humidity, pm2.5_atm, pm2.5_atm_a, pm2.5_atm_b</code>. Using this function greatly reduces data download volumes and allows for the most common forms of QC and correction.</li>
+<li>Added <code><a href="../reference/PurpleAir_createMonitor.html">PurpleAir_createMonitor()</a></code> to directly create monitor objects suitable for use with the <strong>AirMonitor</strong> package. This is a preliminary version of this function that includes neither QC nor correction.</li>
+</ul></div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="0.3.1" id="airsensor2-031">AirSensor2 0.3.1<a class="anchor" aria-label="anchor" href="#airsensor2-031"></a></h2>
 <ul><li>Updated Clarity API functions to handle the addition of a <code>nowcast_QCFlag</code> in the returned data.</li>

@@ -1,4 +1,15 @@
 
+# AirSensor2 0.3.2
+
+- Added `pat_createHourly()` as a convenience function for the common case of
+obtaining hourly aggergated for the following parameters: 
+`datetime, temperature, humidity, pm2.5_atm, pm2.5_atm_a, pm2.5_atm_b`. Using
+this function greatly reduces data download volumes and allows for the most
+common forms of QC and correction.
+- Added `PurpleAir_createMonitor()` to directly create monitor objects suitable
+for use with the **AirMonitor** package. This is a preliminary version of this
+function that includes neither QC nor correction.
+
 # AirSensor2 0.3.1
 
 - Updated Clarity API functions to handle the addition of a `nowcast_QCFlag` in

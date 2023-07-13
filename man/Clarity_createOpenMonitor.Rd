@@ -17,7 +17,7 @@ Clarity_createOpenMonitor(
 \item{api_key}{Clarity API READ Key. If \code{api_key = NULL}, it
 will be obtained using \code{getAPIKey("Clarity-read")}.}
 
-\item{synoptic}{Previously generated \emph{synoptic} object containing \code{datasosurceId}.}
+\item{synoptic}{Previously generated \emph{synoptic} object containing \code{datasourceId}.}
 
 \item{datasourceId}{Clarity sensor identifier.}
 

@@ -64,6 +64,9 @@
     <loc>/reference/PurpleAir_DATA_PM25_FIELDS.html</loc>
   </url>
   <url>
+    <loc>/reference/PurpleAir_HISTORY_HOURLY_PM25_FIELDS.html</loc>
+  </url>
+  <url>
     <loc>/reference/PurpleAir_HISTORY_PM25_FIELDS.html</loc>
   </url>
   <url>
@@ -74,6 +77,9 @@
   </url>
   <url>
     <loc>/reference/PurpleAir_createMember.html</loc>
+  </url>
+  <url>
+    <loc>/reference/PurpleAir_createMonitor.html</loc>
   </url>
   <url>
     <loc>/reference/PurpleAir_deleteGroup.html</loc>
@@ -212,6 +218,9 @@
   </url>
   <url>
     <loc>/reference/pat_check.html</loc>
+  </url>
+  <url>
+    <loc>/reference/pat_createHourly.html</loc>
   </url>
   <url>
     <loc>/reference/pat_createNew.html</loc>

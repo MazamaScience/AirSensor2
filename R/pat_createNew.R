@@ -21,7 +21,7 @@
 #'
 #' @return A PurpleAir Timeseries \emph{pat} object.
 #'
-#' @description Cerate a \code{pat} object for a specific \code{sensor_index}.
+#' @description Create a \code{pat} object for a specific \code{sensor_index}.
 #'
 #' @references \href{https://www2.purpleair.com}{PurpleAir}
 #' @references \href{https://api.purpleair.com}{PurpleAir API}
@@ -186,7 +186,8 @@ pat_createNew <- function(
   data <-
     dplyr::bind_rows(dataList) %>%
     dplyr::rename(datetime = .data$time_stamp) %>%
-    dplyr::arrange(.data$datetime)
+    dplyr::arrange(.data$datetime) %>%
+    dplyr::select(-c(sensor_index))
 
   # ----- Create meta ----------------------------------------------------------
 

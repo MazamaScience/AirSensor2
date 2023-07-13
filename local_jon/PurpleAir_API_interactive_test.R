@@ -31,6 +31,15 @@ a <- PurpleAir_getSensorHistoryCSV(
   average = 0
 )
 
+# Hourly averages
+a <- PurpleAir_getSensorHistoryCSV(
+  api_key = PurpleAir_API_READ_KEY,
+  sensor_index = 896,
+  start_timestamp = start,
+  end_timestamp = end,
+  average = 60
+)
+
 a <- PurpleAir_getSensorHistory(
   api_key = PurpleAir_API_READ_KEY,
   sensor_index = 896,
