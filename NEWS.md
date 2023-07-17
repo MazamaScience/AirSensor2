@@ -3,6 +3,10 @@
 
 - Added `pm2.5_cf_1, pm2.5_cf_1_a, pm2.5_ f_1_b` to `PurpleAir_HISTORY_HOURLY_PM25_FIELDS`
 so that the original EPA correction factor can be used with `pm2.5_cf_1`.
+- Added `PurpleAir_correction()` to apply a correction equation to "hourly pat"
+data. Default correction uses the \code{"EPA_FASM"} correction as described in
+the documentation.
+- Exchanged the `parameter` argument for `correction_FUN` in `PurpleAir_createMonitor().
 
 # AirSensor2 0.3.2
 
