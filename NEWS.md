@@ -1,4 +1,9 @@
 
+# AirSensor2 0.3.3
+
+- Added `pm2.5_cf_1, pm2.5_cf_1_a, pm2.5_ f_1_b` to `PurpleAir_HISTORY_HOURLY_PM25_FIELDS`
+so that the original EPA correction factor can be used with `pm2.5_cf_1`.
+
 # AirSensor2 0.3.2
 
 - Added `pat_createHourly()` as a convenience function for the common case of

@@ -1,0 +1,99 @@
+#' @export
+#' @importFrom rlang .data
+#' @importFrom MazamaCoreUtils logger.error logger.debug logger.isInitialized
+#'
+#' @title Apply correction to PurpleAir PM2.5 data.
+#'
+#' @param pat Previously generated \emph{houly pat} object.
+#' @param name Name of correction to apply. One of \code{"EPA_FASM"}
+#'
+#' @return A PurpleAir Timeseries \emph{pat} object with an additional
+#' \code{"pm2.5_corrected"} variable.
+#'
+#' @description A correction equation is applied to fields of the incoming
+#' \emph{pat} object to generate a \code{"pm2.5_corrected"} timeseries which is
+#' added to the returned \emph{pat} object.
+#'
+#' The default, \code{"EPA_FASM"} correction is described on slide 37 of a
+#' presentation on the correction of PurpleAir data for the
+#' \href{https://www.epa.gov/sites/default/files/2021-05/documents/toolsresourceswebinar_purpleairsmoke_210519b.pdf}{EPA Fire and Smoke Map}.
+#'
+#' This correction has two parts:
+#'
+#'   Low Concentration (\eqn{pm2.5\_cf\_1 <= 343 \mu g/m^3}):
+#'
+#'   \eqn{pm2.5\_corrected = 0.52 * pm\_2.5\_cf\_1 - 0.086 * humidity + 5.75}
+#'
+#' High Concentration (\eqn{pm2.5\_cf\_1 > 343 \mu g/m^3}):
+#'
+#'   \eqn{pm2.5\_corrected = 0.46 * pm2.5\_cf\_1 + 3.93 * 10^{-4} * pm2.5\_cf\_1^2 + 2.97}
+#'
+# @examples
+# \donttest{
+# # Fail gracefully if any resources are not available
+# try({
+#
+# library(AirSensor2)
+#
+#
+#
+# }, silent = FALSE)
+# }
+
+PurpleAir_correction <- function(
+    pat = NULL,
+    name = "EPA_FASM"
+) {
+
+  # ----- Validate parameters --------------------------------------------------
+
+  MazamaCoreUtils::stopIfNull(pat)
+
+  if ( !is.null(name) ) {
+    validNames <- c("EPA_FASM")
+    if ( !name %in% validNames ) {
+      stop("'%s' is not a valid correction equation name")
+    }
+  }
+
+  data <- pat$data
+
+  # ----- Apply correction -----------------------------------------------------
+
+  if ( name == "EPA_FASM" ) {
+
+    data$pm2.5_corrected <- as.numeric(NA)
+
+    mask_low <- data$pm2.5_cf_1 <= 343
+
+    data$pm2.5_corrected[mask_low] <-
+      0.52 * data$pm2.5_cf_1 - 0.086 * data$humidity + 5.75
+
+    data$pm2.5_corrected[!mask_low] <-
+      0.46 * data$pm2.5_cf_1 + 3.93 * .0001 * data$pm2.5_cf_1^2 + 2.97
+
+  }
+
+  # ----- Return ---------------------------------------------------------------
+
+  pat$data <- data
+
+  return(pat)
+
+}
+
+# ===== DEBUGGING ==============================================================
+
+if ( FALSE ) {
+
+  api_key = PurpleAir_API_READ_KEY
+  pas = example_pas
+  sensor_index = "76545"
+  startdate = "2023-01-01"
+  enddate = "2023-01-08"
+  timezone = "America/Los_Angeles"
+  fields = PurpleAir_HISTORY_HOURLY_PM25_FIELDS
+  baseUrl = "https://api.purpleair.com/v1/sensors"
+  verbose = TRUE
+
+}

@@ -1420,7 +1420,7 @@ PurpleAir_HISTORY_HOURLY_PM25_FIELDS <-
     #
     # PM2.5 fields:
     ###"pm2.5_alt, pm2.5_alt_a, pm2.5_alt_b, pm2.5_atm, pm2.5_atm_a, pm2.5_atm_b, pm2.5_cf_1, pm2.5_cf_1_a, pm2.5_cf_1_b",
-    "pm2.5_atm, pm2.5_atm_a, pm2.5_atm_b",
+    "pm2.5_atm, pm2.5_atm_a, pm2.5_atm_b, pm2.5_cf_1, pm2.5_cf_1_a, pm2.5_cf_1_b",
     #
     # PM10.0 fields:
     #   "pm10.0_atm, pm10.0_atm_a, pm10.0_atm_b, pm10.0_cf_1, pm10.0_cf_1_a, pm10.0_cf_1_b",

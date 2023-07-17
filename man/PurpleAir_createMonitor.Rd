@@ -8,10 +8,10 @@ PurpleAir_createMonitor(
   api_key = NULL,
   pas = NULL,
   sensor_index = NULL,
-  parameter = c("pm2.5_atm"),
   startdate = NULL,
   enddate = NULL,
   timezone = "UTC",
+  correction_FUN = PurpleAir_correction,
   verbose = FALSE
 )
 }
@@ -23,13 +23,13 @@ will be obtained using \code{getAPIKey("PurpleAir-read")}.}
 
 \item{sensor_index}{PurpleAir sensor identifier.}
 
-\item{parameter}{Parameter to use for data ("pm2.5_atm")}
-
 \item{startdate}{Desired start time (ISO 8601) or \code{POSIXct}.}
 
 \item{enddate}{Desired end time (ISO 8601) or \code{POSIXct}.}
 
 \item{timezone}{Olson timezone used to interpret dates.}
+
+\item{correction_FUN}{Correction function applied to \code{pat} data.}
 
 \item{verbose}{Logical controlling the generation of warning and error messages.}
 }
@@ -42,9 +42,33 @@ and create an object of class \code{mts_monitor} for use with the AirMonitor
 package.
 }
 \note{
-This is a very earily implementation that does not include any QC or
-correction equations.
+This is an early implementation that does not include any data QC.
 }
+\section{Correction}{
+
+
+Data from PurpleAir is typically corrected to more closely correlate with
+EPA regulatory monitors.
+
+By default, \code{correction_FUN} uses the EPA correction equation described
+in (see \link{PurpleAir_correction}). Users may supply their own
+correction function as long as it meets the following two criteria:
+\enumerate{
+\item{It must accept an "hourly pat" object as the first argument.}
+\item{It must return an augmented "hourly pat" object with an additional
+\code{"pm2.5_corrected"} column in \code{pat$data}.}
+}
+
+A trivial example to just use \code{pm2.5_atm} would be:
+
+\preformatted{
+my_correction <- function(pat) {
+  pat$data$pm2.5_corrected <- pat$data$pm2.5_atm
+  return(pat)
+}
+}
+}
+
 \examples{
 \donttest{
 # Fail gracefully if any resources are not available

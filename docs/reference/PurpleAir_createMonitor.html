@@ -19,7 +19,7 @@ package."><!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/ma
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AirSensor2</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.3.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.3.3</span>
       </span>
     </div>
 
@@ -80,10 +80,10 @@ package.</p>
 <span>  api_key <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  pas <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  sensor_index <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  parameter <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"pm2.5_atm"</span><span class="op">)</span>,</span>
 <span>  startdate <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  enddate <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  timezone <span class="op">=</span> <span class="st">"UTC"</span>,</span>
+<span>  correction_FUN <span class="op">=</span> <span class="va">PurpleAir_correction</span>,</span>
 <span>  verbose <span class="op">=</span> <span class="cn">FALSE</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -103,10 +103,6 @@ will be obtained using <code>getAPIKey("PurpleAir-read")</code>.</p></dd>
 <dd><p>PurpleAir sensor identifier.</p></dd>
 
 
-<dt>parameter</dt>
-<dd><p>Parameter to use for data ("pm2.5_atm")</p></dd>
-
-
 <dt>startdate</dt>
 <dd><p>Desired start time (ISO 8601) or <code>POSIXct</code>.</p></dd>
 
@@ -117,6 +113,10 @@ will be obtained using <code>getAPIKey("PurpleAir-read")</code>.</p></dd>
 
 <dt>timezone</dt>
 <dd><p>Olson timezone used to interpret dates.</p></dd>
+
+
+<dt>correction_FUN</dt>
+<dd><p>Correction function applied to <code>pat</code> data.</p></dd>
 
 
 <dt>verbose</dt>
@@ -131,8 +131,27 @@ will be obtained using <code>getAPIKey("PurpleAir-read")</code>.</p></dd>
     </div>
     <div id="note">
     <h2>Note</h2>
-    <p>This is a very earily implementation that does not include any QC or
-correction equations.</p>
+    <p>This is an early implementation that does not include any data QC.</p>
+    </div>
+    <div id="correction">
+    <h2>Correction</h2>
+    
+
+
+<p>Data from PurpleAir is typically corrected to more closely correlate with
+EPA regulatory monitors.</p>
+<p>By default, <code>correction_FUN</code> uses the EPA correction equation described
+in (see <a href="PurpleAir_correction.html">PurpleAir_correction</a>). Users may supply their own
+correction function as long as it meets the following two criteria:</p><ol><li><p>It must accept an "hourly pat" object as the first argument.</p></li>
+<li><p>It must return an augmented "hourly pat" object with an additional
+<code>"pm2.5_corrected"</code> column in <code>pat$data</code>.</p></li>
+</ol><p>A trivial example to just use <code>pm2.5_atm</code> would be:</p>
+<div class="sourceCode"><pre><code><span></span>
+<span><span class="va">my_correction</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">pat</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="va">pat</span><span class="op">$</span><span class="va">data</span><span class="op">$</span><span class="va">pm2.5_corrected</span> <span class="op">&lt;-</span> <span class="va">pat</span><span class="op">$</span><span class="va">data</span><span class="op">$</span><span class="va">pm2.5_atm</span></span>
+<span>  <span class="kw"><a href="https://rdrr.io/r/base/function.html" class="external-link">return</a></span><span class="op">(</span><span class="va">pat</span><span class="op">)</span></span>
+<span><span class="op">}</span></span></code></pre></div>
+
     </div>
     <div id="references">
     <h2>References</h2>

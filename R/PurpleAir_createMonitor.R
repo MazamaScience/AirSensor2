@@ -9,17 +9,39 @@
 #' and create an object of class \code{mts_monitor} for use with the AirMonitor
 #' package.
 #'
-#' @note This is a very earily implementation that does not include any QC or
-#' correction equations.
+#' @section Correction:
+#'
+#' Data from PurpleAir is typically corrected to more closely correlate with
+#' EPA regulatory monitors.
+#'
+#' By default, \code{correction_FUN} uses the EPA correction equation described
+#' in (see \link{PurpleAir_correction}). Users may supply their own
+#' correction function as long as it meets the following two criteria:
+#' \enumerate{
+#' \item{It must accept an "hourly pat" object as the first argument.}
+#' \item{It must return an augmented "hourly pat" object with an additional
+#' \code{"pm2.5_corrected"} column in \code{pat$data}.}
+#' }
+#'
+#' A trivial example to just use \code{pm2.5_atm} would be:
+#'
+#' \preformatted{
+#' my_correction <- function(pat) {
+#'   pat$data$pm2.5_corrected <- pat$data$pm2.5_atm
+#'   return(pat)
+#' }
+#' }
+#'
+#' @note This is an early implementation that does not include any data QC.
 #'
 #' @param api_key PurpleAir API READ Key. If \code{api_key = NULL}, it
 #' will be obtained using \code{getAPIKey("PurpleAir-read")}.
 #' @param pas Previously generated \emph{pas} object containing \code{sensor_index}.
 #' @param sensor_index PurpleAir sensor identifier.
-#' @param parameter Parameter to use for data ("pm2.5_atm")
 #' @param startdate Desired start time (ISO 8601) or \code{POSIXct}.
 #' @param enddate Desired end time (ISO 8601) or \code{POSIXct}.
 #' @param timezone Olson timezone used to interpret dates.
+#' @param correction_FUN Correction function applied to \code{pat} data.
 #' @param verbose Logical controlling the generation of warning and error messages.
 #'
 #' @return An AirMonitor package \emph{mts_monitor} object.
@@ -54,14 +76,14 @@
 #' }
 
 PurpleAir_createMonitor <- function(
-  api_key = NULL,
-  pas = NULL,
-  sensor_index = NULL,
-  parameter = c("pm2.5_atm"),
-  startdate = NULL,
-  enddate = NULL,
-  timezone = "UTC",
-  verbose = FALSE
+    api_key = NULL,
+    pas = NULL,
+    sensor_index = NULL,
+    startdate = NULL,
+    enddate = NULL,
+    timezone = "UTC",
+    correction_FUN = PurpleAir_correction,
+    verbose = FALSE
 ) {
 
   # ----- Validate parameters --------------------------------------------------
@@ -74,8 +96,6 @@ PurpleAir_createMonitor <- function(
   MazamaCoreUtils::stopIfNull(sensor_index)
   MazamaCoreUtils::stopIfNull(timezone)
   verbose <- MazamaCoreUtils::setIfNull(verbose, FALSE)
-
-  parameter <- match.arg(parameter)
 
   # Check if MazamaSpatialUtils package has been initialized
   # via initializeMazamaSpatialUtils()
@@ -90,15 +110,16 @@ PurpleAir_createMonitor <- function(
 
   # ----- Load data ------------------------------------------------------------
 
-  pat <- pat_createHourly(
-    api_key = api_key,
-    pas = pas,
-    sensor_index = sensor_index,
-    startdate = startdate,
-    enddate = enddate,
-    timezone = timezone,
-    verbose = verbose
-  )
+  pat <-
+    pat_createHourly(
+      api_key = api_key,
+      pas = pas,
+      sensor_index = sensor_index,
+      startdate = startdate,
+      enddate = enddate,
+      timezone = timezone,
+      verbose = verbose
+    )
 
   # > dplyr::glimpse(pat$data, width = 75)
   # Rows: 164
@@ -195,9 +216,11 @@ PurpleAir_createMonitor <- function(
 
   # ----- Create data ----------------------------------------------------------
 
-  columns <- c("datetime", parameter)
+  pat_corrected <- PurpleAir_correction(pat)
 
-  data <- pat$data %>% dplyr::select(dplyr::all_of(columns))
+  columns <- c("datetime", "pm2.5_corrected")
+
+  data <- pat_corrected$data %>% dplyr::select(dplyr::all_of(columns))
 
   names(data) <- c("datetime", meta$deviceDeploymentID)
 
