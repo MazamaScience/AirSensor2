@@ -6,7 +6,7 @@
 #' @title Create a new PurpleAir 'mts_monitor' object
 #'
 #' @description Download, parse and enhance hourly timeseries data from PurpleAir
-#' and create an object of class \code{mts_monitor} for use with the AirMonitor
+#' and create an object of class \code{mts_monitor} for use with the \pkg{AirMonitor}
 #' package.
 #'
 #' @section Correction:
@@ -62,7 +62,7 @@
 #' initializeMazamaSpatialUtils()
 #'
 #' mon <-
-#'   PurpleAir_createMonitor(
+#'   PurpleAir_createNewMonitor(
 #'     api_key = PurpleAir_API_READ_KEY,
 #'     pas = MY_PAS,
 #'     sensor_index = "76545",
@@ -75,7 +75,7 @@
 #' }, silent = FALSE)
 #' }
 
-PurpleAir_createMonitor <- function(
+PurpleAir_createNewMonitor <- function(
     api_key = NULL,
     pas = NULL,
     sensor_index = NULL,

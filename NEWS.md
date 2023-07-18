@@ -1,4 +1,10 @@
 
+# AirSensor2 0.3.4
+
+- Renamed `PurpleAir_createMonitor()` to `PurpleAir_createNewMonitor()` and added
+a new `PurpleAir_createMonitor()` that works with a previously created _pat_ 
+object.
+
 # AirSensor2 0.3.3
 
 - Added `pm2.5_cf_1, pm2.5_cf_1_a, pm2.5_ f_1_b` to `PurpleAir_HISTORY_HOURLY_PM25_FIELDS`

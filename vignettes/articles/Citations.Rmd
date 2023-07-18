@@ -10,8 +10,8 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 The **AirSensor2** package's predecessor, the 
-[AirSensor](https://github.com/MazamaScience/AirSensor)**Airsensor** package
-is widely used in air quality analysis throughout North America and the world.
+[AirSensor](https://github.com/MazamaScience/AirSensor) package
+has been widely used in air quality analysis throughout North America and the world.
 This document provides links to projects and publications that mention the
 **AirSensor** and **AirSensor2** packages.
 

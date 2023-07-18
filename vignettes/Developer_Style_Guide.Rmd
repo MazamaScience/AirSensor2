@@ -47,6 +47,7 @@ what type of object it is so they will know how to work with it. We often use
 variable names like:
 
 * `monitor`  — a _mts_monitor_ object
+* `dataList` -- a _list_ of dataframes
 
 We occasionally use ‘_’ to create classes of similar variables that are 
 otherwise hard to name, e.g.:
@@ -126,8 +127,8 @@ to a function:
 ```
 
 Coding this way makes it easy to see which function arguments are being passed.
-It also eases future refactoring of the code when additional arguments need to
-be added or the order of arguments need to be changed.
+It also eases future refactoring of the code when arguments need to be added
+or commented out or when the order of arguments need to be changed.
 
 -----
 
