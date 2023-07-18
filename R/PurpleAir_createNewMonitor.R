@@ -246,9 +246,9 @@ if ( FALSE ) {
 
   api_key = PurpleAir_API_READ_KEY
   pas = example_pas
-  sensor_index = "76545"
-  startdate = "2023-01-01"
-  enddate = "2023-01-08"
+  sensor_index = "13681"
+  startdate = "2022-09-07"
+  enddate = "2022-09-14"
   timezone = "America/Los_Angeles"
   fields = PurpleAir_HISTORY_HOURLY_PM25_FIELDS
   baseUrl = "https://api.purpleair.com/v1/sensors"

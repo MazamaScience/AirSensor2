@@ -1,0 +1,260 @@
+---
+title: "MVCAA Tutorial 1: Exploring PurpleAir Data"
+author: "Mazama Science"
+date: "2023-07-18"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{MVCAA Tutorial 1: Exploring PurpleAir Data}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(fig.width = 7, fig.height = 5)
+```
+
+## Introduction
+
+This tutorial demonstrates how to create  _pas_, _pat_ and
+_monitor_ objects for PurpleAir sensors in a particular community. 
+Target audiences include grad students, researchers, air 
+quality professionals and any member of the public concerned about air quality 
+and comfortable working with **R** and RStudio.
+
+## Goal
+
+Our goal in this tutorial is to create _pas_, _pat_ and _monitor_ objects
+(data structures) for the Methow Valley -- a community in north-central 
+Washington state.
+[Clean Air Methow](https://www.cleanairmethow.org) 
+operates as a project of the
+[Methow Valley Citizens Council](http://mvcitizens.org)
+and began deploying Purple Air Sensors in 2018:
+
+> In the summer of 2018, Clean Air Methow launched the Clean Air Ambassador 
+> Program, an exciting citizen science project, and one of the largest, rural 
+> networks of low-cost sensors in the world!
+
+This tutorial will demonstrate how to access and work with data from this 
+collection of sensors.
+
+## Data Structures
+
+_pas_ objects in the **AirSensor** package contain per-instrument 
+metadata for a collection of PurpleAir sensors. This will include both "spatial 
+metadata" like longitude, latitude, timezone, _etc._ as well as each instrument's 
+`sensor_index`, allowing us to request timeseries data from the PurpleAir API.
+
+_pat_ objects in the **AirSensor** package contain time-invariant 
+spatial metadata for a single sensor as well as the time-dependent 
+measurements made by that sensor.
+
+_monitor_ objects in the **AirMonitor** package contain time-invariant 
+spatial metadata for multiple sensors as well as the time-dependent PM2.5
+measurements made by those sensors.
+
+## Create a PurpleAirSynoptic (pas) object
+
+To find the sensors we wish to investigate, we must first create a _pas_ object 
+with metadata for all PurpleAir senors in our target area. The Methow Valley 
+valley is located entirely within Okanogan County, WA, so we can create an
+Okanogan-only _pas_ object as our starting point.
+
+```{r okanogan_pas, warning = FALSE, message = FALSE}
+# AirSensor2 package
+library(AirSensor2)
+
+# Set user's PurpleAir_API_READ_KEY
+source('global_vars.R')
+
+# Initialize spatial datasets
+initializeMazamaSpatialUtils()
+
+# Create a new 'pas' object for Okanogan county
+okanogan_pas <-
+  pas_createNew(
+    api_key = PurpleAir_API_READ_KEY,
+    countryCodes = "US",
+    stateCodes = "WA",
+    counties = c("Okanogan"),
+    lookbackDays = 365,         # all sensors from the past year
+    location_type = 0           # outdoor sensors only
+  )
+
+# Interactive map
+okanogan_pas %>% pas_leaflet()
+```
+
+### Explore available sensors
+
+Clicking on some of the sensors in the Methow Valley, it quickly becomes 
+apparent that many of those sensors have a label that associates them with the
+"Clean Air Ambassador" program. Unfortunately, the naming is not consistent.
+
+A quick review of `sort(pas$locationName)` reveals:
+
+* "Clean Air Ambassador @..."
+* "MV Ambassador @..."
+* "MV Ambassadors@..."
+* "MV Clean Air Abassador @..."
+* "MV Clean Air Ambassador @..."
+* "MV Clean Air Ambassador-..."
+* "MVCC Ambassador @..."
+* "MVCC Ambassador@..."
+
+Clearly, some effort was made to systematize the naming even if it wasn't 
+entirely successful. Nevertheless, we can filter for all location names that
+begin with "MV" or "Clean Air" to create a MVCAA-only _pas_ object
+
+```{r mvcaa_pas, warning = FALSE, message = FALSE}
+mvcaa_pas <-
+  okanogan_pas %>%
+  pas_filter(stringr::str_detect(locationName, "^MV|^Clean Air"))
+
+# Interactive map
+mvcaa_pas %>% pas_leaflet()
+```
+
+## Create a PurpleAirTimeseries (pat) object
+
+A _pat_ object contains time series data for a specific sensor. The
+`pat_createNew()` function downloads all data records for a sensor -- "raw data"
+typically measured every 2 minutes. A similar function, `pat_createHourly()`,
+downloads _hourly aggregated_ data as provided by the PurpleAir API.
+
+### Raw Data
+
+The `pat_createNew()` function has a `fields` argument that lets you specify
+which data fields should be included in the result. But default, it uses all
+those defined in `PurpleAir_HISTORY_PM25_FIELDS`:
+
+```{r PurpleAir_HISTORY_PM25_FIELDS, echo = FALSE}
+PurpleAir_HISTORY_PM25_FIELDS %>%
+  stringr::str_split_1(',')
+```
+
+Clicking on the leaflet map above, we identify the `sensor_index` for the
+"Winthrop Library" sensor as `"13681"`. The following chunk of code creates
+a raw _pat_ object for this sensor:
+
+```{r create_pat_raw, warning = FALSE, message = FALSE}
+# Create raw pat object
+pat <-
+  pat_createNew(
+    api_key = PurpleAir_API_READ_KEY,
+    pas = mvcaa_pas,
+    sensor_index = "13681",
+    startdate = "2023-07-16",
+    enddate = "2023-07-18",
+    timezone = "UTC",
+    verbose = TRUE
+  )
+
+# Pull out data
+tbl <- pat$data
+
+# Rewview parameters
+names(tbl)
+```
+
+We can now use the standard behavior of the base `plot()` function to review
+all parameters and look for any interesting correlations among them. 
+
+In the plots below, we see that `temperature` and `humidity` (aka "relative humidity")
+are inversely correlated, that `pm2.5_atm_a` and `pm2.5_atm_b` are strongly correlated
+and that variables `pm2.5_atm` and `pm2.5_cf` are 
+essentially identical.
+
+```{r explore_pat_raw, warning = FALSE, message = FALSE}
+# NOTE:  Using "pch = 15" greatly improves the speed of drawing
+
+# Sensor Electronics
+plot(tbl[,c(1,2:5)], pch = 15, cex = 0.5, main = "Sensor Electronics")
+
+# Atmospheric Variables
+plot(tbl[,c(1,6:8)], pch = 15, cex = 0.5, main = "Atmospheric Variables")
+
+# PM2.5 "atm"
+plot(tbl[,c(1,12:14)], pch = 15, cex = 0.5, main = "PM2.5 'atm'")
+
+# PM2.5 comparison
+plot(tbl[,c(1,9,12,15)], pch = 15, cex = 0.5, main = "PM2.5 'alt' vs 'atm' vs 'cf1'")
+```
+
+## Create a 'monitor' object
+
+For use cases involving comparison with regulatory monitors, calculating daily
+averages or informing the public, it is imperative to use hourly aggregated
+data that has had a correction equation applied. _(PurpleAir sensors tend to
+report pm2.5 values that are higher than those reported by EPA regulatory monitors.)_
+
+The `PurpleAir_createMonitor()` function works similarly to `pat_createHourly()`
+but only downloads those parameters typically used in QC and correction functions.
+A `correction_FUN` is applied to the hourly _pat_ object and returns corrected
+PM2.5 values. By default, an EPA vetted correction function is applied that 
+brings PurpleAir values in line with EPA data even in the smoky conditions seen
+with wildfire smoke. (See the documentation for `PurpleAir_correction()` for
+details.)
+
+`PurpleAir_createMonitor()` returns a _monitor_ object ready to use with the
+[AirMonitor](https://github.com/MazamaScience/AirMonitor) and
+[AirMonitorPlots](https://github.com/MazamaScience/AirMonitorPlots) packages.
+
+Below, we create a _monitor_ object for a period in August, 2021 when wildfire 
+smoke severely impacted the Methow Valley.
+
+_NOTE:  Many sensors will not have data going back multiple years._
+
+```{r create_monitor, warning = FALSE, message = FALSE}
+# "Mazama Trailhead" during the Cedar Creek and Cub Creek fires of 2021
+monitor <-
+  PurpleAir_createNewMonitor(
+    api_key = PurpleAir_API_READ_KEY,
+    pas = mvcaa_pas,
+    sensor_index = "95227",           # Mazama Trailhead
+    startdate = "2021-07-15",
+    enddate = "2021-08-01",
+    timezone = "America/Los_Angeles", # timestamps interpreted in this time zone
+    verbose = TRUE
+  )
+
+# Check to see that we have data
+dim(monitor$data)
+```
+We can now use functions from the **AirMonitor** and **AirMonitorPlots**
+packages to manipulate and visualize this data.
+
+_NOTE: Values are in units of &micro;g/m&sup3; not AQI._
+
+```{r monitor_analysis, warning = FALSE, message = FALSE}
+# Create a basic timeseries plot
+AirMonitor::monitor_timeseriesPlot(
+  monitor,
+  shadedNight = TRUE, 
+  addAQI = TRUE
+)
+AirMonitor::addAQILegend(cex = 0.8)
+
+# Create a daily barplot
+AirMonitor::monitor_dailyBarplot(
+  monitor,
+)
+AirMonitor::addAQILegend("topleft", cex = 0.8)
+
+# Extract regulatory daily averages using "Local Standard Time"
+monitor %>%
+  AirMonitor::monitor_dailyStatistic(
+    FUN = mean,
+    minHours = 18,
+    dayBoundary = "LST"
+  ) %>%
+  AirMonitor::monitor_getData()
+
+# Use AirMonitorPlots to create a "diurnal" plot
+monitor %>%
+  AirMonitorPlots::monitor_ggDailyByHour_archival()
+```
+
+-----
+
+_Best of luck assessing air quality in your community!_

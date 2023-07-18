@@ -1,9 +1,10 @@
 
 # AirSensor2 0.3.4
 
-- Renamed `PurpleAir_createMonitor()` to `PurpleAir_createNewMonitor()` and added
-a new `PurpleAir_createMonitor()` that works with a previously created _pat_ 
-object.
+- Renamed `PurpleAir_createMonitor()` to `PurpleAir_createNewMonitor()`. This
+leaves room for a modified `PurpleAir_createMonitor()` that will accept a previously 
+saved "hourly pat" object.
+- Added "MVCAA Tutorial 1: Exploring PurpleAir Data" article.
 
 # AirSensor2 0.3.3
 
