@@ -233,13 +233,13 @@ AirMonitor::monitor_timeseriesPlot(
   shadedNight = TRUE, 
   addAQI = TRUE
 )
-AirMonitor::addAQILegend(cex = 0.8)
+AirMonitor::addAQILegend("topleft", cex = 0.8, bg = "white")
 
 # Create a daily barplot
 AirMonitor::monitor_dailyBarplot(
   monitor,
 )
-AirMonitor::addAQILegend("topleft", cex = 0.8)
+AirMonitor::addAQILegend("topleft", cex = 0.8, bg = "white")
 
 # Extract regulatory daily averages using "Local Standard Time"
 monitor %>%

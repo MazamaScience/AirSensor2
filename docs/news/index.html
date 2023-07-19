@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AirSensor2</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.3.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.3.4</span>
       </span>
     </div>
 
@@ -39,6 +39,9 @@
     </li>
     <li>
       <a href="../articles/Citations.html">Citations</a>
+    </li>
+    <li>
+      <a href="../articles/MVCAA_Tutorial_1.html">MVCAA Tutorial 1: Exploring PurpleAir Data</a>
     </li>
     <li>
       <a href="../articles/Working_with_PurpleAir_API_Keys.html">Working with PurpleAir API Keys</a>
@@ -67,6 +70,11 @@
     </div>
 
     <div class="section level2">
+<h2 class="page-header" data-toc-text="0.3.4" id="airsensor2-034">AirSensor2 0.3.4<a class="anchor" aria-label="anchor" href="#airsensor2-034"></a></h2>
+<ul><li>Renamed <code>PurpleAir_createMonitor()</code> to <code><a href="../reference/PurpleAir_createNewMonitor.html">PurpleAir_createNewMonitor()</a></code>. This leaves room for a modified <code>PurpleAir_createMonitor()</code> that will accept a previously saved “hourly pat” object.</li>
+<li>Added “MVCAA Tutorial 1: Exploring PurpleAir Data” article.</li>
+</ul></div>
+    <div class="section level2">
 <h2 class="page-header" data-toc-text="0.3.3" id="airsensor2-033">AirSensor2 0.3.3<a class="anchor" aria-label="anchor" href="#airsensor2-033"></a></h2>
 <ul><li>Added <code>pm2.5_cf_1, pm2.5_cf_1_a, pm2.5_ f_1_b</code> to <code>PurpleAir_HISTORY_HOURLY_PM25_FIELDS</code> so that the original EPA correction factor can be used with <code>pm2.5_cf_1</code>.</li>
 <li>Added <code><a href="../reference/PurpleAir_correction.html">PurpleAir_correction()</a></code> to apply a correction equation to “hourly pat” data. Default correction uses the  correction as described in the documentation.</li>
@@ -75,7 +83,7 @@
     <div class="section level2">
 <h2 class="page-header" data-toc-text="0.3.2" id="airsensor2-032">AirSensor2 0.3.2<a class="anchor" aria-label="anchor" href="#airsensor2-032"></a></h2>
 <ul><li>Added <code><a href="../reference/pat_createHourly.html">pat_createHourly()</a></code> as a convenience function for the common case of obtaining hourly aggergated for the following parameters: <code>datetime, temperature, humidity, pm2.5_atm, pm2.5_atm_a, pm2.5_atm_b</code>. Using this function greatly reduces data download volumes and allows for the most common forms of QC and correction.</li>
-<li>Added <code><a href="../reference/PurpleAir_createMonitor.html">PurpleAir_createMonitor()</a></code> to directly create monitor objects suitable for use with the <strong>AirMonitor</strong> package. This is a preliminary version of this function that includes neither QC nor correction.</li>
+<li>Added <code>PurpleAir_createMonitor()</code> to directly create monitor objects suitable for use with the <strong>AirMonitor</strong> package. This is a preliminary version of this function that includes neither QC nor correction.</li>
 </ul></div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="0.3.1" id="airsensor2-031">AirSensor2 0.3.1<a class="anchor" aria-label="anchor" href="#airsensor2-031"></a></h2>

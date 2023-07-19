@@ -16,6 +16,9 @@
     <loc>/articles/Developer_Style_Guide.html</loc>
   </url>
   <url>
+    <loc>/articles/MVCAA_Tutorial_1.html</loc>
+  </url>
+  <url>
     <loc>/articles/Working_with_PurpleAir_API_Keys.html</loc>
   </url>
   <url>
@@ -83,6 +86,9 @@
   </url>
   <url>
     <loc>/reference/PurpleAir_createMonitor.html</loc>
+  </url>
+  <url>
+    <loc>/reference/PurpleAir_createNewMonitor.html</loc>
   </url>
   <url>
     <loc>/reference/PurpleAir_deleteGroup.html</loc>

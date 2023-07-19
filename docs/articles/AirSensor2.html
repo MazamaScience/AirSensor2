@@ -33,7 +33,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AirSensor2</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.3.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.3.4</span>
       </span>
     </div>
 
@@ -57,6 +57,9 @@
     </li>
     <li>
       <a href="../articles/Citations.html">Citations</a>
+    </li>
+    <li>
+      <a href="../articles/MVCAA_Tutorial_1.html">MVCAA Tutorial 1: Exploring PurpleAir Data</a>
     </li>
     <li>
       <a href="../articles/Working_with_PurpleAir_API_Keys.html">Working with PurpleAir API Keys</a>
@@ -112,16 +115,17 @@ Callahan</h4>
 <p><strong>Synoptic data</strong> (many measurements at a single point
 in time) are stored as a tibble (modern dataframe) for easy use with
 <strong>dplyr</strong>.</p>
-<p><strong>Time series data</strong> are stored using the <a href="https://mazamascience.github.io/MazamaTimeSeries/" class="external-link">MazamaTimeSeries</a>
+<p><strong>Time series data</strong> for stationary time series are
+stored using the <a href="https://mazamascience.github.io/MazamaTimeSeries/" class="external-link">MazamaTimeSeries</a>
 <strong>S</strong>ingle<strong>T</strong>ime<strong>S</strong>eries
 (<em>sts</em>) data model:</p>
 <p>Time series data from a single environmental sensor typically
 consists of multiple parameters measured at successive times. This data
-is stored in an R list containing two dataframes.</p>
+is stored in an <strong>R</strong> list containing two dataframes.</p>
 <p><code>sts$meta</code> – 1 row = unique device-deployment; cols =
 device/location metadata</p>
 <p><code>sts$data</code> – rows = UTC times; cols = measured parameters
-(plus an additional datetime column)</p>
+(plus an additional <code>datetime</code> column)</p>
 </div>
 <div class="section level2">
 <h2 id="api-keys">API Keys<a class="anchor" aria-label="anchor" href="#api-keys"></a>
@@ -129,10 +133,10 @@ device/location metadata</p>
 <p>Many data providers require an API key before you can access their
 data. When this is the case, <strong>AirSensor2</strong> data access
 functions will have an API key argument.</p>
-<p>The package also allows users to specify API keys once per R session
-using the <code><a href="https://rdrr.io/pkg/MazamaCoreUtils/man/setAPIKey.html" class="external-link">setAPIKey()</a></code> function. Each data access function
-will require it’s own named API key. Specific names for each key are
-described in the function documentation.</p>
+<p>The package also allows users to specify API keys once per
+<strong>R</strong> session using the <code><a href="https://rdrr.io/pkg/MazamaCoreUtils/man/setAPIKey.html" class="external-link">setAPIKey()</a></code> function.
+Each data access function will require it’s own named API key. Specific
+names for each key are described in the function documentation.</p>
 <p>Example usage:</p>
 <pre><code><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/MazamaScience/AirSensor2" class="external-link">AirSensor2</a></span><span class="op">)</span></span>
 <span></span>
@@ -149,17 +153,27 @@ described in the function documentation.</p>
 <div class="section level2">
 <h2 id="function-classes">Function classes<a class="anchor" aria-label="anchor" href="#function-classes"></a>
 </h2>
-<p>The <strong>AirSensor2</strong> packages handles variety of data
-sources within the world of low-cost sensors with classes of functions
-tailored to the specifics of each data source. Functions with names of
-the form <code>&lt;class&gt;_&lt;action&gt;()</code> are designed to
-perform a particular <em>&lt;action&gt;</em> on a particular
-<em>&lt;class&gt;</em> of data.</p>
-<p>Currently supported classes of data inclucde:</p>
+<p>The <strong>AirSensor2</strong> package handles a variety of data
+sources within the world of low-cost sensors with various functions
+tailored to the specifics of each data source.</p>
+<p>Functions with names of the form
+<code>&lt;source&gt;_&lt;action&gt;()</code> are designed to perform a
+particular <em>&lt;action&gt;</em> on data provided by a specific
+<em>&lt;source&gt;</em>.</p>
+<p>Currently supported sources of data include:</p>
+<ul>
+<li><code>Clarity</code></li>
+<li><code>PurpleAir</code></li>
+</ul>
+<p>In addition, functions with names of the form
+<code>&lt;structure&gt;_&lt;action&gt;()</code> are designed to perform
+a particular <em>&lt;action&gt;</em> on data that has been converted
+into a particular <em>&lt;structure&gt;</em> (aka “class”).</p>
+<p>Currently supported data structures include:</p>
 <ul>
 <li>
 <code>pas</code> –
-<strong>P</strong>uruple<strong>A</strong>ir<strong>S</strong>ynoptic.
+<strong>P</strong>urple<strong>A</strong>ir<strong>S</strong>ynoptic.
 Data for many PurpleAir sensors at a specific point in time. Each
 <em>pas</em> object is a simple tibble.</li>
 <li>
@@ -168,6 +182,10 @@ Data for many PurpleAir sensors at a specific point in time. Each
 Time series data for a specific PurpleAir sensor. Each <em>pat</em>
 object is a list with two tibbles: <code>meta</code> and
 <code>data</code>.</li>
+<li>
+<code>synoptic</code> – Generic synoptic data for many sensors at a
+specific point in time. Each <em>synoptic</em> object is a simple
+tibble.</li>
 </ul>
 </div>
 <div class="section level2">
@@ -177,15 +195,16 @@ object is a list with two tibbles: <code>meta</code> and
 encouraged by <strong>dplyr</strong> and related packages. The special
 <code>%&gt;%</code> operator uses the output of one function as the
 first argument of the next function, thus allowing for easy “chaining”
-of results. Many of the functions supporting a particular class take an
-object of that class as their first argument and return an object of
-that class. As a result, they can be chained together as in:</p>
+of results. Many of the functions supporting a particular data class
+take an object of that class as their first argument and return an
+object of that class. As a result, they can be chained together as
+in:</p>
 <pre><code><span><span class="va">Colville_Tribes_pas</span> <span class="op">&lt;-</span></span>
 <span>  <span class="va">example_pas</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="../reference/pas_filter.html">pas_filter</a></span><span class="op">(</span><span class="va">stateCode</span> <span class="op">==</span> <span class="st">"WA"</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="../reference/pas_filter.html">pas_filter</a></span><span class="op">(</span><span class="va">countyName</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Okanogan"</span>, <span class="st">"Ferry"</span><span class="op">)</span><span class="op">)</span></span></code></pre>
 <hr>
-<p>Best of luck analyzing your local air quality data!</p>
+<p><em>Best of luck analyzing your local air quality data!</em></p>
 </div>
   </div>
 

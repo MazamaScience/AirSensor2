@@ -33,7 +33,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AirSensor2</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.3.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.3.4</span>
       </span>
     </div>
 
@@ -57,6 +57,9 @@
     </li>
     <li>
       <a href="../articles/Citations.html">Citations</a>
+    </li>
+    <li>
+      <a href="../articles/MVCAA_Tutorial_1.html">MVCAA Tutorial 1: Exploring PurpleAir Data</a>
     </li>
     <li>
       <a href="../articles/Working_with_PurpleAir_API_Keys.html">Working with PurpleAir API Keys</a>
@@ -144,6 +147,8 @@ it. We often use variable names like:</p>
 <ul>
 <li>
 <code>monitor</code> — a <em>mts_monitor</em> object</li>
+<li>
+<code>dataList</code> – a <em>list</em> of dataframes</li>
 </ul>
 <p>We occasionally use ’_’ to create classes of similar variables that
 are otherwise hard to name, e.g.:</p>
@@ -213,8 +218,8 @@ regular lists and for named argument lists passed to a function:</p>
 <span>  <span class="op">)</span></span></code></pre>
 <p>Coding this way makes it easy to see which function arguments are
 being passed. It also eases future refactoring of the code when
-additional arguments need to be added or the order of arguments need to
-be changed.</p>
+arguments need to be added or commented out or when the order of
+arguments need to be changed.</p>
 <hr>
 <p>It is our belief that good code should be both readable and
 understandable and should inspire others to copy and innovate on their

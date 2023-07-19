@@ -33,7 +33,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AirSensor2</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.3.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.3.4</span>
       </span>
     </div>
 
@@ -57,6 +57,9 @@
     </li>
     <li>
       <a href="../articles/Citations.html">Citations</a>
+    </li>
+    <li>
+      <a href="../articles/MVCAA_Tutorial_1.html">MVCAA Tutorial 1: Exploring PurpleAir Data</a>
     </li>
     <li>
       <a href="../articles/Working_with_PurpleAir_API_Keys.html">Working with PurpleAir API Keys</a>
@@ -201,10 +204,14 @@ that simplifies the scripts written by end users.</p>
 <p>Currently supported API keys and associated functions include:</p>
 <ul>
 <li>
-<code>"PurpleAir-read"</code> – Purple Air api_key used in
+<code>"PurpleAir-read"</code> – PurpleAir api_key used in
 <code><a href="../reference/pas_downloadParseRawData.html">pas_downloadParseRawData()</a></code>
 <code><a href="../reference/pat_downloadParseRawData.html">pat_downloadParseRawData()</a></code>,
 <code><a href="../reference/pat_createNew.html">pat_createNew()</a></code>.</li>
+<li>
+<code>"Clarity-read"</code> – Clarity api_key used in
+<code><a href="../reference/Clarity_createOpenMonitor.html">Clarity_createOpenMonitor()</a></code>,
+<code><a href="../reference/Clarity_createOpenSynoptic.html">Clarity_createOpenSynoptic()</a></code>.</li>
 </ul>
 <p>Scripts can take advantage of this as seen below:</p>
 <pre><code><span><span class="co"># Script to create new pas or pat objectss</span></span>
