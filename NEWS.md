@@ -3,7 +3,7 @@
 
 - Updated Mazama package dependencies.
 - Updated example datasets.
-- Improved documentation for `pas~()` functions.
+- Improved documentation and examples for `pas~()` functions.
 
 # AirSensor2 0.3.4
 

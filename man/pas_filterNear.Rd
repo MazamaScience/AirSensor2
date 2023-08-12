@@ -16,15 +16,15 @@ pas_filterNear(pas = NULL, longitude = NULL, latitude = NULL, radius = "1 km")
 \item{radius}{Distance from target with unit (i.e "15 km").}
 }
 \value{
-A subset of the given \emph{pas} object.
+A subset of the incoming \emph{pas} object.
 }
 \description{
 Filter for PurpleAir sensors within a specified distance from
-specified target coordinates.
+a target location.
 }
 \details{
-\code{radius} Should be a numeric string with a metric unit
-separated by a space, such as \code{"250 m"}.
+The \code{radius} parameter should be a numeric string with a metric unit
+separated by a space, such as \code{"250 m"} or \code{"10 km"}.
 }
 \examples{
 library(AirSensor2)
