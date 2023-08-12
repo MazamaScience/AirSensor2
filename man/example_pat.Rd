@@ -4,9 +4,9 @@
 \encoding{UTF-8}
 \name{example_pat}
 \alias{example_pat}
-\title{Example enhanced Purple Air Synoptic dataset}
+\title{Example Purple Air Timeseries dataset}
 \format{
-A tibble with 1948 rows and 50 columns of data.
+A list containing two tibbles named 'meta' and 'data'.
 }
 \source{
 https://www2.purpleair.com
@@ -15,13 +15,15 @@ https://www2.purpleair.com
 example_pat
 }
 \description{
-The \code{example_pas} dataset provides a quickly loadable
-version of a \emph{pas} object for practicing and code examples.
-This dataset contains data for sensors in Washington and Oregon
-and was generated on 2023-05-03 by running:
+The \code{example_pat} dataset provides a quickly loadable
+version of a \emph{pat} object for practicing and code examples.
+This dataset contains 24 hours worth of data for a single PurpleAir sensor
+and was generated on 2023-08-12 by running:
 
 \preformatted{
 library(AirSensor2)
+
+source("global_vars.R") # contains PurpleAir_API_READ_KEY
 
 example_pat <-
   pat_createNew(

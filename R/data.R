@@ -1,15 +1,17 @@
 #' @encoding UTF-8
 #' @title Example raw Purple Air Synoptic dataset
-#' @format A tibble with 1996 rows and 37 columns of data.
+#' @format A tibble with 2260 rows and 37 columns of data.
 #' @description The \code{example_pas_raw} dataset provides a quickly loadable
-#' version of raw Purple Air synoptic data for practicing and code
-#' examples. This dataset contains data for sensors in Washington and Oregon
-#' and was generated on 2023-05-03 by running:
+#' version of raw Purple Air synoptic data for practicing and code examples
+#' This dataset contains data for sensors in Washington and Oregon and was
+#' generated on 2023-08-12 by running:
 #'
 #' \preformatted{
 #' library(AirSensor2)
 #'
 #' initializeMazamaSpatialUtils()
+#'
+#' source("global_vars.R") # contains PurpleAir_API_READ_KEY
 #'
 #' example_pas_raw <-
 #'   pas_downloadParseRawData(
@@ -40,16 +42,18 @@
 
 #' @encoding UTF-8
 #' @title Example enhanced Purple Air Synoptic dataset
-#' @format A tibble with 1948 rows and 50 columns of data.
+#' @format A tibble with 2209 rows and 50 columns of data.
 #' @description The \code{example_pas} dataset provides a quickly loadable
 #' version of a \emph{pas} object for practicing and code examples.
 #' This dataset contains data for sensors in Washington and Oregon
-#' and was generated on 2023-05-03 by running:
+#' and was generated on 2023-08-12 by running:
 #'
 #' \preformatted{
 #' library(AirSensor2)
 #'
 #' initializeMazamaSpatialUtils()
+#'
+#' source("global_vars.R") # contains PurpleAir_API_READ_KEY
 #'
 #' example_pas <-
 #'   pas_createNew(
@@ -70,15 +74,17 @@
 
 
 #' @encoding UTF-8
-#' @title Example enhanced Purple Air Synoptic dataset
-#' @format A tibble with 1948 rows and 50 columns of data.
-#' @description The \code{example_pas} dataset provides a quickly loadable
-#' version of a \emph{pas} object for practicing and code examples.
-#' This dataset contains data for sensors in Washington and Oregon
-#' and was generated on 2023-05-03 by running:
+#' @title Example Purple Air Timeseries dataset
+#' @format A list containing two tibbles named 'meta' and 'data'.
+#' @description The \code{example_pat} dataset provides a quickly loadable
+#' version of a \emph{pat} object for practicing and code examples.
+#' This dataset contains 24 hours worth of data for a single PurpleAir sensor
+#' and was generated on 2023-08-12 by running:
 #'
 #' \preformatted{
 #' library(AirSensor2)
+#'
+#' source("global_vars.R") # contains PurpleAir_API_READ_KEY
 #'
 #' example_pat <-
 #'   pat_createNew(

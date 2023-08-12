@@ -6,7 +6,7 @@
 \alias{example_pas_raw}
 \title{Example raw Purple Air Synoptic dataset}
 \format{
-A tibble with 1996 rows and 37 columns of data.
+A tibble with 2260 rows and 37 columns of data.
 }
 \source{
 https://www2.purpleair.com
@@ -16,14 +16,16 @@ example_pas_raw
 }
 \description{
 The \code{example_pas_raw} dataset provides a quickly loadable
-version of raw Purple Air synoptic data for practicing and code
-examples. This dataset contains data for sensors in Washington and Oregon
-and was generated on 2023-05-03 by running:
+version of raw Purple Air synoptic data for practicing and code examples
+This dataset contains data for sensors in Washington and Oregon and was
+generated on 2023-08-12 by running:
 
 \preformatted{
 library(AirSensor2)
 
 initializeMazamaSpatialUtils()
+
+source("global_vars.R") # contains PurpleAir_API_READ_KEY
 
 example_pas_raw <-
   pas_downloadParseRawData(
