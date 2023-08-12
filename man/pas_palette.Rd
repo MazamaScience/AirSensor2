@@ -39,6 +39,7 @@ Oregon <-
   pas_filter(stateCode == "OR")
 
 colorInfo <- pas_palette(Oregon, "pm2.5_60minute")
+
 plot(
   x = Oregon$longitude,
   y = Oregon$latitude,

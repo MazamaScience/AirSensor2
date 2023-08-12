@@ -12,7 +12,7 @@ pas_enhanceRawData(
 )
 }
 \arguments{
-\item{pas_raw}{Dataframe returned by \code{pas_downloadParseRawData()}.}
+\item{pas_raw}{Dataframe returned by \link{pas_downloadParseRawData}.}
 
 \item{countryCodes}{ISO 3166-1 alpha-2 country codes used to subset the data.}
 
@@ -45,15 +45,16 @@ Steps include:
 \item{sensorManufacturer = "Purple Air"}
 }
 
-Filtering by country can speed up the process of enhancement and may be
+Limiting spacial searches by country can greatly speed up the process of
+enhancement. This is
 performed by providing a vector of ISO country codes to the \code{countryCodes}
 argument. By default, no subsetting is performed.
 
-Users may also limit results by specifying \code{stateCodes} when
-\code{countryCodes} is limited to a single country.
+Users may further improve performance by also specifying \code{stateCodes}
+when \code{countryCodes} is limited to a single country.
 
 When a single US state is specified, named \code{counties} may be specified
-to further limit the results.
+to further speed up performance.
 }
 \references{
 \href{https://www2.purpleair.com}{PurpleAir}

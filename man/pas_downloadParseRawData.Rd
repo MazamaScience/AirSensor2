@@ -34,17 +34,17 @@ for private devices. It is separate to the api_key and each sensor has its own
 read_key. Submit multiple keys by separating them with a comma (,) character
 for example: key-one,key-two,key-three.}
 
-\item{show_only}{Optional comma separated list of sensor_index values. When
+\item{show_only}{Optional, comma separated list of sensor_index values. When
 provided, the results are limited only to the sensors included in this list.}
 
-\item{modified_since}{The modified_since parameter causes only sensors modified
-after the provided time stamp to be included in the results. Using the
-time_stamp value from a previous call (recommended) will limit results to
+\item{modified_since}{The \code{modified_since} parameter generates reults that
+include only sensors modified after the provided time stamp. Using the
+time stamp value associated with a previous call (recommended) will limit results to
 those with new values since the last request. Using a value of 0 will match
 sensors modified at any time.}
 
 \item{max_age}{Number of seconds used to filter results to only include sensors
-modified or updated within the \code{max_age} seconds. Using a value of 0 will match all sensors.}
+modified or updated within the the last \code{max_age} seconds. Using a value of 0 will match all sensors.}
 
 \item{west}{Longitude of the western edge of the bounding box in which to find sensors.}
 
@@ -60,15 +60,20 @@ modified or updated within the \code{max_age} seconds. Using a value of 0 will m
 Dataframe of synoptic PurpleAir data.
 }
 \description{
-Download and parse synoptic data for PurpleAir within the
+Download and parse raw synoptic data from PurpleAir within the
 specified region.
 
-The synoptic data provides access to data from many PurpleAir sensors at
-a moment in time and includes both metadata and recent PM2.5 averages for
-each sensor.
+\emph{Synoptic} data provides access to data from many PurpleAir sensors
+at a moment in time and includes both metadata and recent PM2.5 averages for
+each sensor. Data returned by this function is typically used to create
+static or interactive maps.
 
 If \code{show_only} is used to request specific sensors, the bounding box
 information is ignored.
+
+\strong{NOTE:} Most users will want to use the \code{\link{pas_createNew}} function
+which enhances raw synoptic data with additional spatial metadata so that it
+meets the criteria for use as a \emph{pas} object.
 }
 \examples{
 \donttest{
@@ -78,6 +83,8 @@ try({
 library(AirSensor2)
 
 initializeMazamaSpatialUtils()
+
+source("global_vars.R") # contains PurpleAir_API_READ_KEY
 
 pas_raw <-
   pas_downloadParseRawData(
