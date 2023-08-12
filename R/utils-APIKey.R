@@ -11,9 +11,9 @@
 #' @description This package maintains an internal set of API keys which
 #' users can set using \code{setAPIKey()}. These keys will be remembered for
 #' the duration of an R session. In functions that accept an API key argument,
-#' if the passed in API key is \code{NULL}, code will look up a specific named API
-#' key to see if that key has been set globally. Setting keys globally is a
-#' convenience that simplifies the scripts written by end users.
+#' if the passed in API key is \code{NULL}, code will look up an appropriate
+#' named API key to see if that key has been set globally. Setting keys globally
+#' is a convenience that simplifies scripts written by end users.
 #'
 #' Currently supported API keys include:
 #'
@@ -47,8 +47,8 @@
 #' getAPIKey("PurpleAir-read")
 #'
 #' # Set specific keys
-#' setAPIKey("PurpleAir-read", "PurpleAir_API_READ_KEY")
-#' setAPIKey("PurpleAir-write", "PurpleAir_API_WRITE_KEY")
+#' setAPIKey("PurpleAir-read", "********-2A00-11EB-A8CD-42010A800126")
+#' setAPIKey("PurpleAir-write", "********-2A00-11EB-A8CD-42010A800126")
 #' showAPIKeys()
 #' getAPIKey("PurpleAir-read")
 #'

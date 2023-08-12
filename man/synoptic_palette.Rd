@@ -12,13 +12,13 @@ synoptic_palette(synoptic = NULL, parameter = "pm2.5", paletteName = NULL, ...)
 \item{parameter}{Value to generate colors for, e.g. \code{pm2.5}.}
 
 \item{paletteName}{Optional name of an RColorBrewer paeltte, \emph{e.g.}
-\code{"BuPu"} or \code{"Greens"} to use when a default paleltte is unavailable.}
+\code{"BuPu"} or \code{"Greens"} to use when a default palette is unavailable.}
 
 \item{...}{Additional arguments passed on to \code{leaflet::color~} functions.}
 }
 \value{
-An object that consists of a label and color dataframe, and
-calculated color values.
+A list containing: 1) a label and color dataframe; and 2)
+a vector of color values calculated from the data found in \code{synoptic}.
 }
 \description{
 Generates color palettes for PurpleAir synoptic data with the

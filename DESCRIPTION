@@ -1,6 +1,6 @@
 Type: Package
 Package: AirSensor2
-Version: 0.3.4
+Version: 0.3.5
 Title: Process and Display Data from Air Quality Sensors
 Authors@R: c(
     person("Jonathan", "Callahan", email="jonathan.s.callahan@gmail.com", role=c("aut","cre"))
