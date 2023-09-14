@@ -34,13 +34,13 @@ filtered to only include sensors with data more recent than \code{lookbackDays} 
 \item{location_type}{The \code{location_type} of the sensors. Possible values
 are: 0 = Outside, 1 = Inside or \code{NULL} = both.}
 
-\item{read_keys}{Optional comma separated list of sensor read_keys is required
-for private devices. It is separate to the api_key and each sensor has its own
+\item{read_keys}{Optional, comma separated list of sensor read_keys is required
+for private devices. It is separate from the api_key and each sensor has its own
 read_key. Submit multiple keys by separating them with a comma (,) character
-for example: key-one,key-two,key-three.}
+for example: \code{"key-one,key-two,key-three"}.}
 
-\item{show_only}{Optional comma separated list of sensor_index values. When
-provided, the results are limited only to the sensors included in this list.}
+\item{show_only}{Optional, comma separated list of sensor_index values. When
+provided, results are requested only for the specified sensors.}
 
 \item{baseUrl}{Base URL for the PurpleAir API.}
 }
@@ -70,10 +70,10 @@ Data requests are made with a bounding box determined from the required
 \code{countryCodes} parameter. If a single country is specified and additional
 \code{stateCodes} are specified, the bounding box will be limited to those
 states. Withing a single state, \code{counties} may be used to further limit
-the data.
+the sensors requested.
 
 If \code{show_only} is used to request specific sensors, the \code{countryCodes}
-and \code{stateCodes} information is ignored when requesting data. But these 
+and \code{stateCodes} information is ignored when requesting data. But these
 are still used to help speed up the assignment of enhanced metadata..
 }
 \examples{
@@ -84,6 +84,8 @@ try({
 library(AirSensor2)
 
 initializeMazamaSpatialUtils()
+
+source("global_vars.R") # contains PurpleAir_API_READ_KEY
 
 pas <-
   pas_createNew(

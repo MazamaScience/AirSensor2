@@ -12,6 +12,9 @@
 #'   choose rows/cases where conditions are true. Rows where the condition
 #'   evaluates to NA are dropped.
 #'
+#'   This function is essentially \code{dplyr::\link[dplyr:filter]{filter}}
+#'   with an extra check on the validity of the \emph{pas} object.
+#'
 #' @return A subset of the incoming \emph{pas} object.
 #'
 #' @seealso \link{pas_filterArea}, \link{pas_filterNear}

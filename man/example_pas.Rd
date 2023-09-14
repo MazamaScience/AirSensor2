@@ -6,7 +6,7 @@
 \alias{example_pas}
 \title{Example enhanced Purple Air Synoptic dataset}
 \format{
-A tibble with 1948 rows and 50 columns of data.
+A tibble with 2209 rows and 50 columns of data.
 }
 \source{
 https://www2.purpleair.com
@@ -18,12 +18,14 @@ example_pas
 The \code{example_pas} dataset provides a quickly loadable
 version of a \emph{pas} object for practicing and code examples.
 This dataset contains data for sensors in Washington and Oregon
-and was generated on 2023-05-03 by running:
+and was generated on 2023-08-12 by running:
 
 \preformatted{
 library(AirSensor2)
 
 initializeMazamaSpatialUtils()
+
+source("global_vars.R") # contains PurpleAir_API_READ_KEY
 
 example_pas <-
   pas_createNew(

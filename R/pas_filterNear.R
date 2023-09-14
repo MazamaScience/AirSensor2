@@ -8,12 +8,12 @@
 #' @param radius Distance from target with unit (i.e "15 km").
 #'
 #' @description Filter for PurpleAir sensors within a specified distance from
-#' specified target coordinates.
+#' a target location.
 #'
-#' @details \code{radius} Should be a numeric string with a metric unit
-#' separated by a space, such as \code{"250 m"}.
+#' @details The \code{radius} parameter should be a numeric string with a metric unit
+#' separated by a space, such as \code{"250 m"} or \code{"10 km"}.
 #'
-#' @return A subset of the given \emph{pas} object.
+#' @return A subset of the incoming \emph{pas} object.
 #'
 #' @seealso \link{pas_filter}
 #' @seealso \link{pas_filterArea}

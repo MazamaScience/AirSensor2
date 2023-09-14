@@ -4,21 +4,21 @@
 \alias{pas_palette}
 \title{Color palettes for PurpleAir}
 \usage{
-pas_palette(pas = NULL, parameter = "pm2.5_60minutes", paletteName = NULL, ...)
+pas_palette(pas = NULL, parameter = "pm2.5_60minute", paletteName = NULL, ...)
 }
 \arguments{
 \item{pas}{PurpleAir Synoptic \emph{pas} object.}
 
-\item{parameter}{Value to generate colors for, e.g. \code{pm2.5_1hour}.}
+\item{parameter}{Value to generate colors for, e.g. \code{pm2.5_60minute}.}
 
-\item{paletteName}{Optional name of an RColorBrewer paeltte, \emph{e.g.}
-\code{"BuPu"} or \code{"Greens"} to use when a default paleltte is unavailable.}
+\item{paletteName}{Optional name of an RColorBrewer palette, \emph{e.g.}
+\code{"BuPu"} or \code{"Greens"} to use when a default palette is unavailable.}
 
 \item{...}{Additional arguments passed on to \code{leaflet::color~} functions.}
 }
 \value{
-An object that consists of a label and color dataframe, and
-calculated color values from PurpleAir sensors
+A list containing: 1) a label and color dataframe; and 2)
+a vector of color values calculated from the data found in \code{pas}.
 }
 \description{
 Generates color palettes for PurpleAir synoptic data with the
@@ -29,4 +29,21 @@ are available for the following parameters:
 \item{"humidity}
 \item{"temperature}
 }
+}
+\examples{
+library(AirSensor2)
+
+# Smoke in Oregon
+Oregon <-
+  example_pas \%>\%
+  pas_filter(stateCode == "OR")
+
+colorInfo <- pas_palette(Oregon, "pm2.5_60minute")
+
+plot(
+  x = Oregon$longitude,
+  y = Oregon$latitude,
+  pch = 0,
+  col = colorInfo$colors
+)
 }

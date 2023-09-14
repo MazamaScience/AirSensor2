@@ -3,9 +3,9 @@
 #' @title Color palettes for PurpleAir
 #'
 #' @param pas PurpleAir Synoptic \emph{pas} object.
-#' @param parameter Value to generate colors for, e.g. \code{pm2.5_1hour}.
-#' @param paletteName Optional name of an RColorBrewer paeltte, \emph{e.g.}
-#' \code{"BuPu"} or \code{"Greens"} to use when a default paleltte is unavailable.
+#' @param parameter Value to generate colors for, e.g. \code{pm2.5_60minute}.
+#' @param paletteName Optional name of an RColorBrewer palette, \emph{e.g.}
+#' \code{"BuPu"} or \code{"Greens"} to use when a default palette is unavailable.
 #' @param ... Additional arguments passed on to \code{leaflet::color~} functions.
 #'
 #' @description Generates color palettes for PurpleAir synoptic data with the
@@ -17,12 +17,30 @@
 #' \item{"temperature}
 #' }
 #'
-#' @return An object that consists of a label and color dataframe, and
-#' calculated color values from PurpleAir sensors
+#'
+#' @return A list containing: 1) a label and color dataframe; and 2)
+#' a vector of color values calculated from the data found in \code{pas}.
+#'
+#' @examples
+#' library(AirSensor2)
+#'
+#' # Smoke in Oregon
+#' Oregon <-
+#'   example_pas %>%
+#'   pas_filter(stateCode == "OR")
+#'
+#' colorInfo <- pas_palette(Oregon, "pm2.5_60minute")
+#'
+#' plot(
+#'   x = Oregon$longitude,
+#'   y = Oregon$latitude,
+#'   pch = 0,
+#'   col = colorInfo$colors
+#' )
 
 pas_palette <- function(
   pas = NULL,
-  parameter = "pm2.5_60minutes",
+  parameter = "pm2.5_60minute",
   paletteName = NULL,
   ...
 ) {
@@ -184,7 +202,7 @@ pas_palette <- function(
 #' @param synoptic PurpleAir Synoptic \emph{synoptic} object.
 #' @param parameter Value to generate colors for, e.g. \code{pm2.5}.
 #' @param paletteName Optional name of an RColorBrewer paeltte, \emph{e.g.}
-#' \code{"BuPu"} or \code{"Greens"} to use when a default paleltte is unavailable.
+#' \code{"BuPu"} or \code{"Greens"} to use when a default palette is unavailable.
 #' @param ... Additional arguments passed on to \code{leaflet::color~} functions.
 #'
 #' @description Generates color palettes for PurpleAir synoptic data with the
@@ -196,8 +214,8 @@ pas_palette <- function(
 #' \item{"temperature}
 #' }
 #'
-#' @return An object that consists of a label and color dataframe, and
-#' calculated color values.
+#' @return A list containing: 1) a label and color dataframe; and 2)
+#' a vector of color values calculated from the data found in \code{synoptic}.
 
 synoptic_palette <- function(
     synoptic = NULL,

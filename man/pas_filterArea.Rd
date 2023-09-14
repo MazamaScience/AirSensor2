@@ -18,7 +18,8 @@ pas_filterArea(pas = NULL, w = NULL, e = NULL, s = NULL, n = NULL)
 \item{n}{North edge of area bounding box (deg N).}
 }
 \value{
-A subset of the given \emph{pas} object.
+A subset of the given \emph{pas} object containing only records
+within the bounding box. This includes sensors located precisely on a boundary.
 }
 \description{
 Filters \emph{pas} object sensors based on a bounding box.
@@ -38,6 +39,7 @@ Lane_County_pas <-
     s = 43.43,
     n = 44.30
   )
+
 range(Lane_County_pas$longitude)
 range(Lane_County_pas$latitude)
 

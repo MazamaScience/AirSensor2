@@ -1,4 +1,10 @@
 
+# AirSensor2 0.3.5
+
+- Updated Mazama package dependencies.
+- Updated example datasets.
+- Improved documentation and examples for `pas~()` functions.
+
 # AirSensor2 0.3.4
 
 - Renamed `PurpleAir_createMonitor()` to `PurpleAir_createNewMonitor()`. This

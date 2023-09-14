@@ -11,7 +11,8 @@
 #'
 #' @description Filters \emph{pas} object sensors based on a bounding box.
 #'
-#' @return A subset of the given \emph{pas} object.
+#' @return A subset of the given \emph{pas} object containing only records
+#' within the bounding box. This includes sensors located precisely on a boundary.
 #'
 #' @seealso \link{pas_filter}, \link{pas_filterNear}
 #'
@@ -30,6 +31,7 @@
 #'     s = 43.43,
 #'     n = 44.30
 #'   )
+#'
 #' range(Lane_County_pas$longitude)
 #' range(Lane_County_pas$latitude)
 #'
