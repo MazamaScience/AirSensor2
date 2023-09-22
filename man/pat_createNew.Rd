@@ -13,6 +13,7 @@ pat_createNew(
   timezone = "UTC",
   average = 0,
   fields = PurpleAir_HISTORY_PM25_FIELDS,
+  parallel = FALSE,
   baseUrl = "https://api.purpleair.com/v1/sensors",
   verbose = FALSE
 )
@@ -37,6 +38,10 @@ See \code{MazamaCoreUtils::\link[MazamaCoreUtils:setAPIKey]{setAPIKey}}.}
 
 \item{fields}{Character string with PurpleAir field names for the Get Sensor Data API.}
 
+\item{parallel}{Logical specifying whether to attempt simultaneous downloads
+using \code{parallel::\link[parallel:mcparallel]{mcparallel}}. (Not available
+on Windows.)}
+
 \item{baseUrl}{Base URL for the PurpleAir API.}
 
 \item{verbose}{Logical controlling the generation of warning and error messages.}
@@ -47,17 +52,29 @@ A PurpleAir Timeseries \emph{pat} object.
 \description{
 Create a \code{pat} object for a specific \code{sensor_index}.
 }
+\note{
+Parallel processing using \code{parallel = TRUE} is not available on
+Windows machines.
+}
 \examples{
 \donttest{
 # Fail gracefully if any resources are not available
 try({
 
+# AirSensor2 package
 library(AirSensor2)
 
+# Set user's PurpleAir_API_READ_KEY
+source('global_vars.R')
+setAPIKey("PurpleAir-read", PurpleAir_API_READ_KEY)
+
+# Initialize spatial datasets
+initializeMazamaSpatialUtils()
+
+# Create a pat object
 pat <-
   pat_createNew(
-    api_key = PurpleAir_API_READ_KEY,
-    pas = MY_PAS,
+    pas = example_pas,
     sensor_index = "76545",
     startdate = "2023-01-01",
     enddate = "2023-01-08",
@@ -65,7 +82,19 @@ pat <-
     verbose = TRUE
   )
 
-View(pat$meta[1:100,])
+str(pat$meta)
+
+# Run data download in parallel (faster)
+pat <-
+  pat_createNew(
+    pas = example_pas,
+    sensor_index = "76545",
+    startdate = "2023-01-01",
+    enddate = "2023-01-08",
+    timezone = "UTC",
+    parallel = TRUE,
+    verbose = TRUE
+  )
 
 }, silent = FALSE)
 }

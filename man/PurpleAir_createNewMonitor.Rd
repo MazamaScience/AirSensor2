@@ -12,6 +12,7 @@ PurpleAir_createNewMonitor(
   enddate = NULL,
   timezone = "UTC",
   correction_FUN = PurpleAir_correction,
+  parallel = FALSE,
   verbose = FALSE
 )
 }
@@ -31,6 +32,10 @@ will be obtained using \code{getAPIKey("PurpleAir-read")}.}
 
 \item{correction_FUN}{Correction function applied to \code{pat} data.}
 
+\item{parallel}{Logical specifying whether to attempt simultaneous downloads
+using \code{parallel::\link[parallel:mcparallel]{mcparallel}}. (Not available
+on Windows.)}
+
 \item{verbose}{Logical controlling the generation of warning and error messages.}
 }
 \value{
@@ -42,7 +47,8 @@ and create an object of class \code{mts_monitor} for use with the \pkg{AirMonito
 package.
 }
 \note{
-This is an early implementation that does not include any data QC.
+Parallel processing using \code{parallel = TRUE} is not available on
+Windows machines.
 }
 \section{Correction}{
 
@@ -74,20 +80,40 @@ my_correction <- function(pat) {
 # Fail gracefully if any resources are not available
 try({
 
+# AirSensor2 package
 library(AirSensor2)
 
+# Set user's PurpleAir_API_READ_KEY
+source('global_vars.R')
+setAPIKey("PurpleAir-read", PurpleAir_API_READ_KEY)
+
+# Initialize spatial datasets
 initializeMazamaSpatialUtils()
 
 mon <-
   PurpleAir_createNewMonitor(
-    api_key = PurpleAir_API_READ_KEY,
-    pas = MY_PAS,
+    pas = example_pas,
     sensor_index = "76545",
     startdate = "2023-01-01",
     enddate = "2023-01-08",
     timezone = "UTC",
     verbose = TRUE
   )
+
+AirMonitor::monitor_timeseriesPlot(mon, shadedNight = TRUE)
+
+# Run data download in parallel (faster)
+mon <-
+  PurpleAir_createNewMonitor(
+    pas = example_pas,
+    sensor_index = "76545",
+    startdate = "2023-01-01",
+    enddate = "2023-01-08",
+    timezone = "UTC",
+    parallel = TRUE
+  )
+
+AirMonitor::monitor_timeseriesPlot(mon, shadedNight = TRUE)
 
 }, silent = FALSE)
 }

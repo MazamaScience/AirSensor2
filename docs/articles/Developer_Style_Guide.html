@@ -33,7 +33,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AirSensor2</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.3.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.3.6</span>
       </span>
     </div>
 
@@ -94,7 +94,7 @@
                         <h4 data-toc-skip class="author">Jonathan
 Callahan</h4>
             
-            <h4 data-toc-skip class="date">2022-05-05</h4>
+            <h4 data-toc-skip class="date">2023-09-22</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/MazamaScience/AirSensor2/blob/HEAD/vignettes/Developer_Style_Guide.Rmd" class="external-link"><code>vignettes/Developer_Style_Guide.Rmd</code></a></small>
       <div class="hidden name"><code>Developer_Style_Guide.Rmd</code></div>
@@ -108,7 +108,7 @@ Callahan</h4>
 </h2>
 <p>This document describes the coding style used within the package.
 Having a consistent style enhances the readability and
-“understandability” of the code and makes it easier for users and
+“understand-ability” of the code and makes it easier for users and
 developers to work with this package and with other, related <a href="https://github.com/MazamaScience" class="external-link">Mazama Science packages</a>.</p>
 <div class="section level3">
 <h3 id="naming-objects">Naming Objects<a class="anchor" aria-label="anchor" href="#naming-objects"></a>
@@ -172,10 +172,10 @@ for creating or working with <em>pas</em> objects. Many of these
 functions accept a <em>pas</em> object as their first argument and
 return a modified <em>pas</em>. This means that they can be used with
 the <code>%&gt;%</code> “pipe” operator and chained together as in:</p>
-<pre><code><span><span class="va">Colville_Tribes_pas</span> <span class="op">&lt;-</span></span>
+<pre><code><span><span class="va">Okanogan_pas</span> <span class="op">&lt;-</span></span>
 <span>  <span class="va">example_pas</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="../reference/pas_filter.html">pas_filter</a></span><span class="op">(</span><span class="va">stateCode</span> <span class="op">==</span> <span class="st">"WA"</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="../reference/pas_filter.html">pas_filter</a></span><span class="op">(</span><span class="va">countyName</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Okanogan"</span>, <span class="st">"Ferry"</span><span class="op">)</span><span class="op">)</span></span></code></pre>
+<span>  <span class="fu"><a href="../reference/pas_filter.html">pas_filter</a></span><span class="op">(</span><span class="va">countyName</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Okanogan"</span><span class="op">)</span><span class="op">)</span></span></code></pre>
 </div>
 <div class="section level3">
 <h3 id="naming-files">Naming Files<a class="anchor" aria-label="anchor" href="#naming-files"></a>
@@ -214,7 +214,7 @@ regular lists and for named argument lists passed to a function:</p>
 <span>    countryCodes <span class="op">=</span> <span class="st">"US"</span>,</span>
 <span>    stateCodes <span class="op">=</span> <span class="st">"WA"</span>,</span>
 <span>    lookbackDays <span class="op">=</span> <span class="fl">1</span>,</span>
-<span>    outsideOnly <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span>    location_type <span class="op">=</span> <span class="fl">0</span></span>
 <span>  <span class="op">)</span></span></code></pre>
 <p>Coding this way makes it easy to see which function arguments are
 being passed. It also eases future refactoring of the code when

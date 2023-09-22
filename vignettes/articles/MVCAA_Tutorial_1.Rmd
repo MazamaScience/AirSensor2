@@ -60,12 +60,15 @@ with metadata for all PurpleAir senors in our target area. The Methow Valley
 valley is located entirely within Okanogan County, WA, so we can create an
 Okanogan-only _pas_ object as our starting point.
 
-```{r okanogan_pas, warning = FALSE, message = FALSE}
+```{r okanogan_pas, warning = TRUE, message = TRUE}
 # AirSensor2 package
 library(AirSensor2)
 
+cat(getwd())
+
 # Set user's PurpleAir_API_READ_KEY
 source('global_vars.R')
+setAPIKey("PurpleAir-read", PurpleAir_API_READ_KEY)
 
 # Initialize spatial datasets
 initializeMazamaSpatialUtils()
@@ -73,7 +76,6 @@ initializeMazamaSpatialUtils()
 # Create a new 'pas' object for Okanogan county
 okanogan_pas <-
   pas_createNew(
-    api_key = PurpleAir_API_READ_KEY,
     countryCodes = "US",
     stateCodes = "WA",
     counties = c("Okanogan"),
@@ -153,7 +155,7 @@ pat <-
 # Pull out data
 tbl <- pat$data
 
-# Rewview parameters
+# Review parameters
 names(tbl)
 ```
 

@@ -14,13 +14,14 @@ stateCode -- ISO 3166-2 alpha-2
 sensorManufacturer = "Purple Air"
 
 
-Filtering by country can speed up the process of enhancement and may be
+Limiting spacial searches by country can greatly speed up the process of
+enhancement. This is
 performed by providing a vector of ISO country codes to the countryCodes
 argument. By default, no subsetting is performed.
-Users may also limit results by specifying stateCodes when
-countryCodes is limited to a single country.
+Users may further improve performance by also specifying stateCodes
+when countryCodes is limited to a single country.
 When a single US state is specified, named counties may be specified
-to further limit the results.'><!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
+to further speed up performance.'><!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]--></head><body data-spy="scroll" data-target="#toc">
@@ -38,7 +39,7 @@ to further limit the results.'><!-- mathjax --><script src="https://cdnjs.cloudf
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AirSensor2</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.3.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.3.6</span>
       </span>
     </div>
 
@@ -101,13 +102,14 @@ dataframe compatible with the <span class="pkg">MazamaLocationUtils</span> packa
 <li><p>stateCode -- ISO 3166-2 alpha-2</p></li>
 </ul><p>3) Convert data types from character to <code>POSIXct</code> and <code>numeric</code>.</p>
 <p>4) Add additional metadata items:</p><ul><li><p>sensorManufacturer = "Purple Air"</p></li>
-</ul><p>Filtering by country can speed up the process of enhancement and may be
+</ul><p>Limiting spacial searches by country can greatly speed up the process of
+enhancement. This is
 performed by providing a vector of ISO country codes to the <code>countryCodes</code>
 argument. By default, no subsetting is performed.</p>
-<p>Users may also limit results by specifying <code>stateCodes</code> when
-<code>countryCodes</code> is limited to a single country.</p>
+<p>Users may further improve performance by also specifying <code>stateCodes</code>
+when <code>countryCodes</code> is limited to a single country.</p>
 <p>When a single US state is specified, named <code>counties</code> may be specified
-to further limit the results.</p>
+to further speed up performance.</p>
     </div>
 
     <div id="ref-usage">
@@ -122,7 +124,7 @@ to further limit the results.</p>
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>pas_raw</dt>
-<dd><p>Dataframe returned by <code><a href="pas_downloadParseRawData.html">pas_downloadParseRawData()</a></code>.</p></dd>
+<dd><p>Dataframe returned by <a href="pas_downloadParseRawData.html">pas_downloadParseRawData</a>.</p></dd>
 
 
 <dt>countryCodes</dt>

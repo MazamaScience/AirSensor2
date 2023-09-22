@@ -1,7 +1,7 @@
 ---
 title: "Introduction to AirSensor2"
 author: "Jonathan Callahan"
-date: "2022-05-05"
+date: "2023-09-22"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Introduction to AirSensor2}
@@ -18,6 +18,40 @@ knitr::opts_chunk$set(echo = TRUE, fig.width = 7, fig.height = 5)
 Install the latest version from GitHub with:
 
 `devtools::install_github('mazamascience/AirSensor2')`
+
+## Install Spatial Data
+
+The **AirSensor2** package uses the 
+[MazamaSpatialUtils](https://mazamascience.github.io/MazamaSpatialUtils/)
+package to enhance data downloaded from PurpleAir with additional spatial 
+metadata. In order to work properly, you must specify a spatial directory and
+install additional datasets.
+
+If you don't already have a spatial data directory specified, the following 
+setup is recommended:
+
+```
+if ( !file.exists("~/Data/Spatial") ) {
+  dir.create("~/Data/Spatial")
+}
+
+MazamaSpatialUtils::setSpatialDataDir("~/Data/Spatial")
+
+# Install datasets
+MazamaSpatialUtils::installSpatialData("NaturalEarthAdm1")
+MazamaSpatialUtils::installSpatialData("USCensusCounties")
+
+# Check installed datasets
+MazamaSpatialUtils::installedSpatialData()
+```
+
+## Manage PurpleAir API Key
+
+Please see the article on 
+[Working with PurpleAir API Keys](https://mazamascience.github.io/AirSensor2/articles/Working_with_PurpleAir_API_Keys.html).
+
+The following code chunks assume that you have set up a `global_vars.R` file 
+which sets your `PurpleAir_API_READ_KEY`.
 
 ## Data Models
 
@@ -37,30 +71,32 @@ containing two dataframes.
 `sts$data` – rows = UTC times; cols = measured parameters (plus an additional `datetime` column)
 
 
-## API Keys
+## Synoptic Data Example
 
-Many data providers require an API key before you can access their data. When
-this is the case, **AirSensor2** data access functions will have an API key
-argument.
-
-The package also allows users to specify API keys once per **R** session using the
-`setAPIKey()` function. Each data access function will require it's own named
-API key. Specific names for each key are described in the function documentation.
-
-Example usage:
+The following example creates a _PurpleAir_synoptic_ (or "pas") object with
+recent measurements for all PurpleAir sensors in Washington state.
 
 ```
+# AirSensor2 package
 library(AirSensor2)
 
-setAPIKey("PurpleAir-read", "<MY_PurpleAir_READ_KEY>")
+# Set user's PurpleAir_API_READ_KEY
+source('global_vars.R')
+setAPIKey("PurpleAir-read", PurpleAir_API_READ_KEY)
 
+# Initialize spatial datasets
+initializeMazamaSpatialUtils()
+
+# All sensors in Washington state
 WA_pas <-
   pas_createNew(
     countryCodes = "US",
     stateCodes = "WA",
     lookbackDays = 1,
-    outsideOnly = TRUE
+    location_type = 0
   )
+  
+pas_leaflet(WA_pas)
 ```
 
 ## Function classes
@@ -101,10 +137,21 @@ data class take an object of that class as their first argument  and return an
 object of that class. As a result, they can be chained together as in:
 
 ```
-Colville_Tribes_pas <-
-  example_pas %>%
-  pas_filter(stateCode == "WA") %>%
-  pas_filter(countyName %in% c("Okanogan", "Ferry"))
+# Okanogan county high elevation sites
+okanogan_high_pas <-
+  WA_pas %>%
+  pas_filter(countyName %in% c("Okanogan")) %>%
+  pas_filter(elevation >= 800)
+  
+pas_leaflet(okanogan_high_pas)
+
+# Okanogan county low elevation sites
+okanogan_low_pas <-
+  WA_pas %>%
+  pas_filter(countyName %in% c("Okanogan")) %>%
+  pas_filter(elevation < 800)
+  
+pas_leaflet(okanogan_low_pas)
 ```
 
 ----

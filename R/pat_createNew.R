@@ -16,12 +16,18 @@
 #' @param average Temporal averaging in minutes performed by PurpleAir. One of:
 #' 0 (raw), 10, 30, 60 (hour), 360, 1440 (day).
 #' @param fields Character string with PurpleAir field names for the Get Sensor Data API.
+#' @param parallel Logical specifying whether to attempt simultaneous downloads
+#' using \code{parallel::\link[parallel:mcparallel]{mcparallel}}. (Not available
+#' on Windows.)
 #' @param baseUrl Base URL for the PurpleAir API.
 #' @param verbose Logical controlling the generation of warning and error messages.
 #'
 #' @return A PurpleAir Timeseries \emph{pat} object.
 #'
 #' @description Create a \code{pat} object for a specific \code{sensor_index}.
+#'
+#' @note Parallel processing using \code{parallel = TRUE} is not available on
+#' Windows machines.
 #'
 #' @references \href{https://www2.purpleair.com}{PurpleAir}
 #' @references \href{https://api.purpleair.com}{PurpleAir API}
@@ -34,12 +40,20 @@
 #' # Fail gracefully if any resources are not available
 #' try({
 #'
+#' # AirSensor2 package
 #' library(AirSensor2)
 #'
+#' # Set user's PurpleAir_API_READ_KEY
+#' source('global_vars.R')
+#' setAPIKey("PurpleAir-read", PurpleAir_API_READ_KEY)
+#'
+#' # Initialize spatial datasets
+#' initializeMazamaSpatialUtils()
+#'
+#' # Create a pat object
 #' pat <-
 #'   pat_createNew(
-#'     api_key = PurpleAir_API_READ_KEY,
-#'     pas = MY_PAS,
+#'     pas = example_pas,
 #'     sensor_index = "76545",
 #'     startdate = "2023-01-01",
 #'     enddate = "2023-01-08",
@@ -47,7 +61,19 @@
 #'     verbose = TRUE
 #'   )
 #'
-#' View(pat$meta[1:100,])
+#' str(pat$meta)
+#'
+#' # Run data download in parallel (faster)
+#' pat <-
+#'   pat_createNew(
+#'     pas = example_pas,
+#'     sensor_index = "76545",
+#'     startdate = "2023-01-01",
+#'     enddate = "2023-01-08",
+#'     timezone = "UTC",
+#'     parallel = TRUE,
+#'     verbose = TRUE
+#'   )
 #'
 #' }, silent = FALSE)
 #' }
@@ -61,6 +87,7 @@ pat_createNew <- function(
     timezone = "UTC",
     average = 0,
     fields = PurpleAir_HISTORY_PM25_FIELDS,
+    parallel = FALSE,
     baseUrl = "https://api.purpleair.com/v1/sensors",
     verbose = FALSE
 ) {
@@ -77,6 +104,7 @@ pat_createNew <- function(
   MazamaCoreUtils::stopIfNull(average)
   MazamaCoreUtils::stopIfNull(fields)
   MazamaCoreUtils::stopIfNull(baseUrl)
+  parallel <- MazamaCoreUtils::setIfNull(parallel, FALSE)
   verbose <- MazamaCoreUtils::setIfNull(verbose, FALSE)
 
   if ( !average %in% c(0, 10, 30, 60, 360, 1440, 10080, 44640, 53560) ) {
@@ -138,36 +166,20 @@ pat_createNew <- function(
 
   # ----- Create data ----------------------------------------------------------
 
-  if ( verbose ) {
-    message(sprintf("Requesting data for sensor_index %s from %s to %s",
-                    sensor_index, dateSequence[1], dateSequence[2]))
-  }
+  if ( parallel ) {
 
-  dataList <- list()
+    # * Parallel downloads -----
 
-  # Use more specific ID rather than the label
-  dataList[[1]] <-
-    pat_downloadParseRawData(
-      api_key = api_key,
-      sensor_index = sensor_index,
-      startdate = dateSequence[1],
-      enddate = dateSequence[2],
-      timezone = timezone,
-      average = average,
-      fields = fields,
-      baseUrl = baseUrl
-    )
+    jobList <- list()
 
-  if ( length(dateSequence) > 2 ) {
-
-    for ( i in 2:(length(dateSequence) - 1) ) {
+    for ( i in 1:(length(dateSequence) - 1) ) {
 
       if ( verbose ) {
         message(sprintf("Requesting data for sensor_index %s from %s to %s",
                         sensor_index, dateSequence[i], dateSequence[i+1]))
       }
 
-      dataList[[i]] <-
+      jobList[[i]] <- parallel::mcparallel({
         pat_downloadParseRawData(
           api_key = api_key,
           sensor_index = sensor_index,
@@ -178,10 +190,62 @@ pat_createNew <- function(
           fields = fields,
           baseUrl = baseUrl
         )
+      })
 
     }
 
-  }
+    dataList <- parallel::mccollect(jobList)
+
+  } else {
+
+    # * Sequential downloads -----
+
+    if ( verbose ) {
+      message(sprintf("Requesting data for sensor_index %s from %s to %s",
+                      sensor_index, dateSequence[1], dateSequence[2]))
+    }
+
+    dataList <- list()
+
+    # Use more specific ID rather than the label
+    dataList[[1]] <-
+      pat_downloadParseRawData(
+        api_key = api_key,
+        sensor_index = sensor_index,
+        startdate = dateSequence[1],
+        enddate = dateSequence[2],
+        timezone = timezone,
+        average = average,
+        fields = fields,
+        baseUrl = baseUrl
+      )
+
+    if ( length(dateSequence) > 2 ) {
+
+      for ( i in 2:(length(dateSequence) - 1) ) {
+
+        if ( verbose ) {
+          message(sprintf("Requesting data for sensor_index %s from %s to %s",
+                          sensor_index, dateSequence[i], dateSequence[i+1]))
+        }
+
+        dataList[[i]] <-
+          pat_downloadParseRawData(
+            api_key = api_key,
+            sensor_index = sensor_index,
+            startdate = dateSequence[i],
+            enddate = dateSequence[i + 1],
+            timezone = timezone,
+            average = average,
+            fields = fields,
+            baseUrl = baseUrl
+          )
+
+      }
+
+    }
+
+  } # END of sequential downloads
 
   data <-
     dplyr::bind_rows(dataList) %>%
@@ -248,9 +312,10 @@ if ( FALSE ) {
   startdate = "2023-01-01"
   enddate = "2023-01-08"
   timezone = "America/Los_Angeles"
-  average = 0
+  average = 60
   fields = PurpleAir_HISTORY_PM25_FIELDS
   baseUrl = "https://api.purpleair.com/v1/sensors"
+  parallel = TRUE
   verbose = TRUE
 
 }

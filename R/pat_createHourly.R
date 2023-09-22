@@ -14,6 +14,9 @@
 #' @param enddate Desired end time (ISO 8601) or \code{POSIXct}.
 #' @param timezone Olson timezone used to interpret dates.
 #' @param fields Character string with PurpleAir field names for the Get Sensor Data API.
+#' @param parallel Logical specifying whether to attempt simultaneous downloads
+#' using \code{parallel::\link[parallel:mcparallel]{mcparallel}}. (Not available
+#' on Windows.)
 #' @param baseUrl Base URL for the PurpleAir API.
 #' @param verbose Logical controlling the generation of warning and error messages.
 #'
@@ -27,6 +30,9 @@
 #' simple correction using linear fit models based on
 #' \code{pm2.5_atm, temperature, humidity}.
 #'
+#' @note Parallel processing using \code{parallel = TRUE} is not available on
+#' Windows machines.
+#'
 #' @references \href{https://www2.purpleair.com}{PurpleAir}
 #' @references \href{https://api.purpleair.com}{PurpleAir API}
 #' @references \href{https://www2.purpleair.com/policies/terms-of-service}{PurpleAir Terms of service}
@@ -38,12 +44,19 @@
 #' # Fail gracefully if any resources are not available
 #' try({
 #'
+#' # AirSensor2 package
 #' library(AirSensor2)
+#'
+#' # Set user's PurpleAir_API_READ_KEY
+#' source('global_vars.R')
+#' setAPIKey("PurpleAir-read", PurpleAir_API_READ_KEY)
+#'
+#' # Initialize spatial datasets
+#' initializeMazamaSpatialUtils()
 #'
 #' pat <-
 #'   pat_createHourly(
-#'     api_key = PurpleAir_API_READ_KEY,
-#'     pas = MY_PAS,
+#'     pas = example_pas,
 #'     sensor_index = "76545",
 #'     startdate = "2023-01-01",
 #'     enddate = "2023-01-08",
@@ -64,6 +77,7 @@ pat_createHourly <- function(
     enddate = NULL,
     timezone = "UTC",
     fields = PurpleAir_HISTORY_HOURLY_PM25_FIELDS,
+    parallel = FALSE,
     baseUrl = "https://api.purpleair.com/v1/sensors",
     verbose = FALSE
 ) {
@@ -79,6 +93,7 @@ pat_createHourly <- function(
   MazamaCoreUtils::stopIfNull(timezone)
   MazamaCoreUtils::stopIfNull(fields)
   MazamaCoreUtils::stopIfNull(baseUrl)
+  parallel <- MazamaCoreUtils::setIfNull(parallel, FALSE)
   verbose <- MazamaCoreUtils::setIfNull(verbose, FALSE)
 
   # ----- Create hourly pat ----------------------------------------------------
@@ -92,6 +107,7 @@ pat_createHourly <- function(
     timezone = timezone,
     average = 60,
     fields = fields,
+    parallel = parallel,
     baseUrl = baseUrl,
     verbose = verbose
   )
@@ -113,6 +129,7 @@ if ( FALSE ) {
   enddate = "2023-01-08"
   timezone = "America/Los_Angeles"
   fields = PurpleAir_HISTORY_HOURLY_PM25_FIELDS
+  parallel = TRUE
   baseUrl = "https://api.purpleair.com/v1/sensors"
   verbose = TRUE
 

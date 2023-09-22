@@ -33,7 +33,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AirSensor2</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.3.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.3.6</span>
       </span>
     </div>
 
@@ -94,7 +94,7 @@
                         <h4 data-toc-skip class="author">Jonathan
 Callahan</h4>
             
-            <h4 data-toc-skip class="date">2022-05-05</h4>
+            <h4 data-toc-skip class="date">2023-09-22</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/MazamaScience/AirSensor2/blob/HEAD/vignettes/AirSensor2.Rmd" class="external-link"><code>vignettes/AirSensor2.Rmd</code></a></small>
       <div class="hidden name"><code>AirSensor2.Rmd</code></div>
@@ -108,6 +108,37 @@ Callahan</h4>
 </h2>
 <p>Install the latest version from GitHub with:</p>
 <p><code>devtools::install_github('mazamascience/AirSensor2')</code></p>
+</div>
+<div class="section level2">
+<h2 id="install-spatial-data">Install Spatial Data<a class="anchor" aria-label="anchor" href="#install-spatial-data"></a>
+</h2>
+<p>The <strong>AirSensor2</strong> package uses the <a href="https://mazamascience.github.io/MazamaSpatialUtils/" class="external-link">MazamaSpatialUtils</a>
+package to enhance data downloaded from PurpleAir with additional
+spatial metadata. In order to work properly, you must specify a spatial
+directory and install additional datasets.</p>
+<p>If you don’t already have a spatial data directory specified, the
+following setup is recommended:</p>
+<pre><code><span><span class="kw">if</span> <span class="op">(</span> <span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/files.html" class="external-link">file.exists</a></span><span class="op">(</span><span class="st">"~/Data/Spatial"</span><span class="op">)</span> <span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/files2.html" class="external-link">dir.create</a></span><span class="op">(</span><span class="st">"~/Data/Spatial"</span><span class="op">)</span></span>
+<span><span class="op">}</span></span>
+<span></span>
+<span><span class="fu">MazamaSpatialUtils</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/MazamaSpatialUtils/man/setSpatialDataDir.html" class="external-link">setSpatialDataDir</a></span><span class="op">(</span><span class="st">"~/Data/Spatial"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Install datasets</span></span>
+<span><span class="fu">MazamaSpatialUtils</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/MazamaSpatialUtils/man/installSpatialData.html" class="external-link">installSpatialData</a></span><span class="op">(</span><span class="st">"NaturalEarthAdm1"</span><span class="op">)</span></span>
+<span><span class="fu">MazamaSpatialUtils</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/MazamaSpatialUtils/man/installSpatialData.html" class="external-link">installSpatialData</a></span><span class="op">(</span><span class="st">"USCensusCounties"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Check installed datasets</span></span>
+<span><span class="fu">MazamaSpatialUtils</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/MazamaSpatialUtils/man/installedSpatialData.html" class="external-link">installedSpatialData</a></span><span class="op">(</span><span class="op">)</span></span></code></pre>
+</div>
+<div class="section level2">
+<h2 id="manage-purpleair-api-key">Manage PurpleAir API Key<a class="anchor" aria-label="anchor" href="#manage-purpleair-api-key"></a>
+</h2>
+<p>Please see the article on <a href="https://mazamascience.github.io/AirSensor2/articles/Working_with_PurpleAir_API_Keys.html" class="external-link">Working
+with PurpleAir API Keys</a>.</p>
+<p>The following code chunks assume that you have set up a
+<code>global_vars.R</code> file which sets your
+<code>PurpleAir_API_READ_KEY</code>.</p>
 </div>
 <div class="section level2">
 <h2 id="data-models">Data Models<a class="anchor" aria-label="anchor" href="#data-models"></a>
@@ -128,27 +159,31 @@ device/location metadata</p>
 (plus an additional <code>datetime</code> column)</p>
 </div>
 <div class="section level2">
-<h2 id="api-keys">API Keys<a class="anchor" aria-label="anchor" href="#api-keys"></a>
+<h2 id="synoptic-data-example">Synoptic Data Example<a class="anchor" aria-label="anchor" href="#synoptic-data-example"></a>
 </h2>
-<p>Many data providers require an API key before you can access their
-data. When this is the case, <strong>AirSensor2</strong> data access
-functions will have an API key argument.</p>
-<p>The package also allows users to specify API keys once per
-<strong>R</strong> session using the <code><a href="https://rdrr.io/pkg/MazamaCoreUtils/man/setAPIKey.html" class="external-link">setAPIKey()</a></code> function.
-Each data access function will require it’s own named API key. Specific
-names for each key are described in the function documentation.</p>
-<p>Example usage:</p>
-<pre><code><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/MazamaScience/AirSensor2" class="external-link">AirSensor2</a></span><span class="op">)</span></span>
+<p>The following example creates a <em>PurpleAir_synoptic</em> (or
+“pas”) object with recent measurements for all PurpleAir sensors in
+Washington state.</p>
+<pre><code><span><span class="co"># AirSensor2 package</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/MazamaScience/AirSensor2" class="external-link">AirSensor2</a></span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu"><a href="https://rdrr.io/pkg/MazamaCoreUtils/man/setAPIKey.html" class="external-link">setAPIKey</a></span><span class="op">(</span><span class="st">"PurpleAir-read"</span>, <span class="st">"&lt;MY_PurpleAir_READ_KEY&gt;"</span><span class="op">)</span></span>
+<span><span class="co"># Set user's PurpleAir_API_READ_KEY</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/source.html" class="external-link">source</a></span><span class="op">(</span><span class="st">'global_vars.R'</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/MazamaCoreUtils/man/setAPIKey.html" class="external-link">setAPIKey</a></span><span class="op">(</span><span class="st">"PurpleAir-read"</span>, <span class="va">PurpleAir_API_READ_KEY</span><span class="op">)</span></span>
 <span></span>
+<span><span class="co"># Initialize spatial datasets</span></span>
+<span><span class="fu"><a href="../reference/initializeMazamaSpatialUtils.html">initializeMazamaSpatialUtils</a></span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># All sensors in Washington state</span></span>
 <span><span class="va">WA_pas</span> <span class="op">&lt;-</span></span>
 <span>  <span class="fu"><a href="../reference/pas_createNew.html">pas_createNew</a></span><span class="op">(</span></span>
 <span>    countryCodes <span class="op">=</span> <span class="st">"US"</span>,</span>
 <span>    stateCodes <span class="op">=</span> <span class="st">"WA"</span>,</span>
 <span>    lookbackDays <span class="op">=</span> <span class="fl">1</span>,</span>
-<span>    outsideOnly <span class="op">=</span> <span class="cn">TRUE</span></span>
-<span>  <span class="op">)</span></span></code></pre>
+<span>    location_type <span class="op">=</span> <span class="fl">0</span></span>
+<span>  <span class="op">)</span></span>
+<span>  </span>
+<span><span class="fu"><a href="../reference/pas_leaflet.html">pas_leaflet</a></span><span class="op">(</span><span class="va">WA_pas</span><span class="op">)</span></span></code></pre>
 </div>
 <div class="section level2">
 <h2 id="function-classes">Function classes<a class="anchor" aria-label="anchor" href="#function-classes"></a>
@@ -199,10 +234,21 @@ of results. Many of the functions supporting a particular data class
 take an object of that class as their first argument and return an
 object of that class. As a result, they can be chained together as
 in:</p>
-<pre><code><span><span class="va">Colville_Tribes_pas</span> <span class="op">&lt;-</span></span>
-<span>  <span class="va">example_pas</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="../reference/pas_filter.html">pas_filter</a></span><span class="op">(</span><span class="va">stateCode</span> <span class="op">==</span> <span class="st">"WA"</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="../reference/pas_filter.html">pas_filter</a></span><span class="op">(</span><span class="va">countyName</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Okanogan"</span>, <span class="st">"Ferry"</span><span class="op">)</span><span class="op">)</span></span></code></pre>
+<pre><code><span><span class="co"># Okanogan county high elevation sites</span></span>
+<span><span class="va">okanogan_high_pas</span> <span class="op">&lt;-</span></span>
+<span>  <span class="va">WA_pas</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/pas_filter.html">pas_filter</a></span><span class="op">(</span><span class="va">countyName</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Okanogan"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/pas_filter.html">pas_filter</a></span><span class="op">(</span><span class="va">elevation</span> <span class="op">&gt;=</span> <span class="fl">800</span><span class="op">)</span></span>
+<span>  </span>
+<span><span class="fu"><a href="../reference/pas_leaflet.html">pas_leaflet</a></span><span class="op">(</span><span class="va">okanogan_high_pas</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Okanogan county low elevation sites</span></span>
+<span><span class="va">okanogan_low_pas</span> <span class="op">&lt;-</span></span>
+<span>  <span class="va">WA_pas</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/pas_filter.html">pas_filter</a></span><span class="op">(</span><span class="va">countyName</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Okanogan"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/pas_filter.html">pas_filter</a></span><span class="op">(</span><span class="va">elevation</span> <span class="op">&lt;</span> <span class="fl">800</span><span class="op">)</span></span>
+<span>  </span>
+<span><span class="fu"><a href="../reference/pas_leaflet.html">pas_leaflet</a></span><span class="op">(</span><span class="va">okanogan_low_pas</span><span class="op">)</span></span></code></pre>
 <hr>
 <p><em>Best of luck analyzing your local air quality data!</em></p>
 </div>

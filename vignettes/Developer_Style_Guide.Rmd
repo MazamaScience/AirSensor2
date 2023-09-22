@@ -1,7 +1,7 @@
 ---
 title: "Developer Style Guide"
 author: "Jonathan Callahan"
-date: "2022-05-05"
+date: "2023-09-22"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Developer Style Guide}
@@ -12,7 +12,7 @@ vignette: >
 # R Style Guide
 
 This document describes the coding style used within the package.  Having a
-consistent style enhances the readability and "understandability" of the code 
+consistent style enhances the readability and "understand-ability" of the code 
 and makes it easier for users and developers to work with this package and
 with other, related [Mazama Science packages](https://github.com/MazamaScience).
 
@@ -76,10 +76,10 @@ argument and return a modified _pas_. This means that they can be used with the
 `%>%` "pipe" operator and chained together as in:
 
 ```
-Colville_Tribes_pas <-
+Okanogan_pas <-
   example_pas %>%
   pas_filter(stateCode == "WA") %>%
-  pas_filter(countyName %in% c("Okanogan", "Ferry"))
+  pas_filter(countyName %in% c("Okanogan"))
 ```  
 
 ## Naming Files
@@ -122,7 +122,7 @@ to a function:
     countryCodes = "US",
     stateCodes = "WA",
     lookbackDays = 1,
-    outsideOnly = TRUE
+    location_type = 0
   )
 ```
 

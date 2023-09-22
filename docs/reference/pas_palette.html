@@ -24,7 +24,7 @@ are available for the following parameters:
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AirSensor2</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.3.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.3.6</span>
       </span>
     </div>
 
@@ -86,7 +86,7 @@ are available for the following parameters:</p><ul><li><p>"pm2.5_~"</p></li>
 </ul></div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">pas_palette</span><span class="op">(</span>pas <span class="op">=</span> <span class="cn">NULL</span>, parameter <span class="op">=</span> <span class="st">"pm2.5_60minutes"</span>, paletteName <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">pas_palette</span><span class="op">(</span>pas <span class="op">=</span> <span class="cn">NULL</span>, parameter <span class="op">=</span> <span class="st">"pm2.5_60minute"</span>, paletteName <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -96,12 +96,12 @@ are available for the following parameters:</p><ul><li><p>"pm2.5_~"</p></li>
 
 
 <dt>parameter</dt>
-<dd><p>Value to generate colors for, e.g. <code>pm2.5_1hour</code>.</p></dd>
+<dd><p>Value to generate colors for, e.g. <code>pm2.5_60minute</code>.</p></dd>
 
 
 <dt>paletteName</dt>
-<dd><p>Optional name of an RColorBrewer paeltte, <em>e.g.</em>
-<code>"BuPu"</code> or <code>"Greens"</code> to use when a default paleltte is unavailable.</p></dd>
+<dd><p>Optional name of an RColorBrewer palette, <em>e.g.</em>
+<code>"BuPu"</code> or <code>"Greens"</code> to use when a default palette is unavailable.</p></dd>
 
 
 <dt>...</dt>
@@ -112,10 +112,30 @@ are available for the following parameters:</p><ul><li><p>"pm2.5_~"</p></li>
     <h2>Value</h2>
     
 
-<p>An object that consists of a label and color dataframe, and
-calculated color values from PurpleAir sensors</p>
+<p>A list containing: 1) a label and color dataframe; and 2)
+a vector of color values calculated from the data found in <code>pas</code>.</p>
     </div>
 
+    <div id="ref-examples">
+    <h2>Examples</h2>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/MazamaScience/AirSensor2" class="external-link">AirSensor2</a></span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Smoke in Oregon</span></span></span>
+<span class="r-in"><span><span class="va">Oregon</span> <span class="op">&lt;-</span></span></span>
+<span class="r-in"><span>  <span class="va">example_pas</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="pas_filter.html">pas_filter</a></span><span class="op">(</span><span class="va">stateCode</span> <span class="op">==</span> <span class="st">"OR"</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">colorInfo</span> <span class="op">&lt;-</span> <span class="fu">pas_palette</span><span class="op">(</span><span class="va">Oregon</span>, <span class="st">"pm2.5_60minute"</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>  x <span class="op">=</span> <span class="va">Oregon</span><span class="op">$</span><span class="va">longitude</span>,</span></span>
+<span class="r-in"><span>  y <span class="op">=</span> <span class="va">Oregon</span><span class="op">$</span><span class="va">latitude</span>,</span></span>
+<span class="r-in"><span>  pch <span class="op">=</span> <span class="fl">0</span>,</span></span>
+<span class="r-in"><span>  col <span class="op">=</span> <span class="va">colorInfo</span><span class="op">$</span><span class="va">colors</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-plt img"><img src="pas_palette-1.png" alt="" width="700" height="433"></span>
+</code></pre></div>
+    </div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top"><h2 data-toc-skip>Contents</h2>

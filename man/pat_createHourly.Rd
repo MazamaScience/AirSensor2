@@ -12,6 +12,7 @@ pat_createHourly(
   enddate = NULL,
   timezone = "UTC",
   fields = PurpleAir_HISTORY_HOURLY_PM25_FIELDS,
+  parallel = FALSE,
   baseUrl = "https://api.purpleair.com/v1/sensors",
   verbose = FALSE
 )
@@ -33,6 +34,10 @@ See \code{MazamaCoreUtils::\link[MazamaCoreUtils:setAPIKey]{setAPIKey}}.}
 
 \item{fields}{Character string with PurpleAir field names for the Get Sensor Data API.}
 
+\item{parallel}{Logical specifying whether to attempt simultaneous downloads
+using \code{parallel::\link[parallel:mcparallel]{mcparallel}}. (Not available
+on Windows.)}
+
 \item{baseUrl}{Base URL for the PurpleAir API.}
 
 \item{verbose}{Logical controlling the generation of warning and error messages.}
@@ -49,17 +54,28 @@ These are sufficient for simple QC using \code{pm2.5_atm_a, pm2.5_atm_b} and
 simple correction using linear fit models based on
 \code{pm2.5_atm, temperature, humidity}.
 }
+\note{
+Parallel processing using \code{parallel = TRUE} is not available on
+Windows machines.
+}
 \examples{
 \donttest{
 # Fail gracefully if any resources are not available
 try({
 
+# AirSensor2 package
 library(AirSensor2)
+
+# Set user's PurpleAir_API_READ_KEY
+source('global_vars.R')
+setAPIKey("PurpleAir-read", PurpleAir_API_READ_KEY)
+
+# Initialize spatial datasets
+initializeMazamaSpatialUtils()
 
 pat <-
   pat_createHourly(
-    api_key = PurpleAir_API_READ_KEY,
-    pas = MY_PAS,
+    pas = example_pas,
     sensor_index = "76545",
     startdate = "2023-01-01",
     enddate = "2023-01-08",

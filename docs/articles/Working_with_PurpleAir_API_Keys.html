@@ -33,7 +33,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AirSensor2</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.3.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.3.6</span>
       </span>
     </div>
 
@@ -94,7 +94,7 @@
                         <h4 data-toc-skip class="author">Jonathan
 Callahan</h4>
             
-            <h4 data-toc-skip class="date">2023-03-30</h4>
+            <h4 data-toc-skip class="date">2023-09-22</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/MazamaScience/AirSensor2/blob/HEAD/vignettes/articles/Working_with_PurpleAir_API_Keys.Rmd" class="external-link"><code>vignettes/articles/Working_with_PurpleAir_API_Keys.Rmd</code></a></small>
       <div class="hidden name"><code>Working_with_PurpleAir_API_Keys.Rmd</code></div>
@@ -106,7 +106,7 @@ Callahan</h4>
 <p>The <strong>AirSensor2</strong> package allows users to work with the
 PurpleAir API which requires API keys. This document describes how to
 automate work with private API keys without including them in a code
-reposotory where they might be seen by others.</p>
+repository where they might be seen by others.</p>
 <p>The PurpleAir API is described at: <a href="https://api.purpleair.com/" class="external-link uri">https://api.purpleair.com/</a></p>
 <p>When working with PurpleAir data, you should be aware of the
 following:</p>
@@ -214,12 +214,15 @@ that simplifies the scripts written by end users.</p>
 <code><a href="../reference/Clarity_createOpenSynoptic.html">Clarity_createOpenSynoptic()</a></code>.</li>
 </ul>
 <p>Scripts can take advantage of this as seen below:</p>
-<pre><code><span><span class="co"># Script to create new pas or pat objectss</span></span>
-<span></span>
+<pre><code><span><span class="co"># AirSensor2 package</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/MazamaScience/AirSensor2" class="external-link">AirSensor2</a></span><span class="op">)</span></span>
 <span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/source.html" class="external-link">source</a></span><span class="op">(</span><span class="st">"./global_vars.R"</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/pkg/MazamaCoreUtils/man/setAPIKey.html" class="external-link">setAPIKey</a></span><span class="op">(</span><span class="st">"PurpleAir-read"</span>, <span class="st">"PurpleAir_API_READ_KEY"</span><span class="op">)</span></span>
+<span><span class="co"># Set user's PurpleAir_API_READ_KEY</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/source.html" class="external-link">source</a></span><span class="op">(</span><span class="st">'global_vars.R'</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/MazamaCoreUtils/man/setAPIKey.html" class="external-link">setAPIKey</a></span><span class="op">(</span><span class="st">"PurpleAir-read"</span>, <span class="va">PurpleAir_API_READ_KEY</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Initialize spatial datasets</span></span>
+<span><span class="fu"><a href="../reference/initializeMazamaSpatialUtils.html">initializeMazamaSpatialUtils</a></span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">...</span></span></code></pre>
 <p>From this point on in the R session, all <strong>AirSensor2</strong>

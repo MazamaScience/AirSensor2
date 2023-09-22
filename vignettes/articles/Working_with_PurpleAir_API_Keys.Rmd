@@ -1,7 +1,7 @@
 ---
 title: "Working with PurpleAir API Keys"
 author: "Jonathan Callahan"
-date: "2023-03-30"
+date: "2023-09-22"
 output: html_document
 ---
 
@@ -11,7 +11,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 The **AirSensor2** package allows users to work with the PurpleAir
 API which requires API keys. This document describes how to automate work with
-private API keys without including them in a code reposotory where they might
+private API keys without including them in a code repository where they might
 be seen by others.
 
 The PurpleAir API is described at: https://api.purpleair.com/
@@ -117,12 +117,15 @@ Currently supported API keys and associated functions include:
 Scripts can take advantage of this as seen below:
 
 ```
-# Script to create new pas or pat objectss
-
+# AirSensor2 package
 library(AirSensor2)
 
-source("./global_vars.R")
-setAPIKey("PurpleAir-read", "PurpleAir_API_READ_KEY")
+# Set user's PurpleAir_API_READ_KEY
+source('global_vars.R')
+setAPIKey("PurpleAir-read", PurpleAir_API_READ_KEY)
+
+# Initialize spatial datasets
+initializeMazamaSpatialUtils()
 
 ...
 ```

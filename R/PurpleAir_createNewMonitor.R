@@ -5,6 +5,19 @@
 #'
 #' @title Create a new PurpleAir 'mts_monitor' object
 #'
+#' @param api_key PurpleAir API READ Key. If \code{api_key = NULL}, it
+#' will be obtained using \code{getAPIKey("PurpleAir-read")}.
+#' @param pas Previously generated \emph{pas} object containing \code{sensor_index}.
+#' @param sensor_index PurpleAir sensor identifier.
+#' @param startdate Desired start time (ISO 8601) or \code{POSIXct}.
+#' @param enddate Desired end time (ISO 8601) or \code{POSIXct}.
+#' @param timezone Olson timezone used to interpret dates.
+#' @param correction_FUN Correction function applied to \code{pat} data.
+#' @param parallel Logical specifying whether to attempt simultaneous downloads
+#' using \code{parallel::\link[parallel:mcparallel]{mcparallel}}. (Not available
+#' on Windows.)
+#' @param verbose Logical controlling the generation of warning and error messages.
+#'
 #' @description Download, parse and enhance hourly timeseries data from PurpleAir
 #' and create an object of class \code{mts_monitor} for use with the \pkg{AirMonitor}
 #' package.
@@ -32,17 +45,8 @@
 #' }
 #' }
 #'
-#' @note This is an early implementation that does not include any data QC.
-#'
-#' @param api_key PurpleAir API READ Key. If \code{api_key = NULL}, it
-#' will be obtained using \code{getAPIKey("PurpleAir-read")}.
-#' @param pas Previously generated \emph{pas} object containing \code{sensor_index}.
-#' @param sensor_index PurpleAir sensor identifier.
-#' @param startdate Desired start time (ISO 8601) or \code{POSIXct}.
-#' @param enddate Desired end time (ISO 8601) or \code{POSIXct}.
-#' @param timezone Olson timezone used to interpret dates.
-#' @param correction_FUN Correction function applied to \code{pat} data.
-#' @param verbose Logical controlling the generation of warning and error messages.
+#' @note Parallel processing using \code{parallel = TRUE} is not available on
+#' Windows machines.
 #'
 #' @return An AirMonitor package \emph{mts_monitor} object.
 #'
@@ -57,20 +61,40 @@
 #' # Fail gracefully if any resources are not available
 #' try({
 #'
+#' # AirSensor2 package
 #' library(AirSensor2)
 #'
+#' # Set user's PurpleAir_API_READ_KEY
+#' source('global_vars.R')
+#' setAPIKey("PurpleAir-read", PurpleAir_API_READ_KEY)
+#'
+#' # Initialize spatial datasets
 #' initializeMazamaSpatialUtils()
 #'
 #' mon <-
 #'   PurpleAir_createNewMonitor(
-#'     api_key = PurpleAir_API_READ_KEY,
-#'     pas = MY_PAS,
+#'     pas = example_pas,
 #'     sensor_index = "76545",
 #'     startdate = "2023-01-01",
 #'     enddate = "2023-01-08",
 #'     timezone = "UTC",
 #'     verbose = TRUE
 #'   )
+#'
+#' AirMonitor::monitor_timeseriesPlot(mon, shadedNight = TRUE)
+#'
+#' # Run data download in parallel (faster)
+#' mon <-
+#'   PurpleAir_createNewMonitor(
+#'     pas = example_pas,
+#'     sensor_index = "76545",
+#'     startdate = "2023-01-01",
+#'     enddate = "2023-01-08",
+#'     timezone = "UTC",
+#'     parallel = TRUE
+#'   )
+#'
+#' AirMonitor::monitor_timeseriesPlot(mon, shadedNight = TRUE)
 #'
 #' }, silent = FALSE)
 #' }
@@ -83,6 +107,7 @@ PurpleAir_createNewMonitor <- function(
     enddate = NULL,
     timezone = "UTC",
     correction_FUN = PurpleAir_correction,
+    parallel = FALSE,
     verbose = FALSE
 ) {
 
@@ -95,6 +120,7 @@ PurpleAir_createNewMonitor <- function(
   MazamaCoreUtils::stopIfNull(pas)
   MazamaCoreUtils::stopIfNull(sensor_index)
   MazamaCoreUtils::stopIfNull(timezone)
+  parallel <- MazamaCoreUtils::setIfNull(parallel, FALSE)
   verbose <- MazamaCoreUtils::setIfNull(verbose, FALSE)
 
   # Check if MazamaSpatialUtils package has been initialized
@@ -118,6 +144,7 @@ PurpleAir_createNewMonitor <- function(
       startdate = startdate,
       enddate = enddate,
       timezone = timezone,
+      parallel = parallel,
       verbose = verbose
     )
 
@@ -252,6 +279,7 @@ if ( FALSE ) {
   timezone = "America/Los_Angeles"
   fields = PurpleAir_HISTORY_HOURLY_PM25_FIELDS
   baseUrl = "https://api.purpleair.com/v1/sensors"
+  parallel = TRUE
   verbose = TRUE
 
 

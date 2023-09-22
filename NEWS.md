@@ -1,4 +1,10 @@
 
+# AirSensor2 0.3.6
+
+- Updated all documentation to match current functionality.
+- Enabled faster downloading of _pat_ data with `parallel = TRUE`.
+_(not available on Windows)_
+
 # AirSensor2 0.3.5
 
 - Updated Mazama package dependencies.

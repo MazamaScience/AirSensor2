@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AirSensor2</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.3.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.3.6</span>
       </span>
     </div>
 
@@ -104,7 +104,8 @@
     <h2>Value</h2>
     
 
-<p>A subset of the given <em>pas</em> object.</p>
+<p>A subset of the given <em>pas</em> object containing only records
+within the bounding box. This includes sensors located precisely on a boundary.</p>
     </div>
     <div id="see-also">
     <h2>See also</h2>
@@ -117,7 +118,7 @@
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">pas</span> <span class="op">&lt;-</span> <span class="va">example_pas</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/range.html" class="external-link">range</a></span><span class="op">(</span><span class="va">pas</span><span class="op">$</span><span class="va">longitude</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] -124.4315 -117.0044</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] -124.4982 -117.0044</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/range.html" class="external-link">range</a></span><span class="op">(</span><span class="va">pas</span><span class="op">$</span><span class="va">latitude</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 42.01015 48.99242</span>
 <span class="r-in"><span></span></span>
@@ -129,6 +130,7 @@
 <span class="r-in"><span>    s <span class="op">=</span> <span class="fl">43.43</span>,</span></span>
 <span class="r-in"><span>    n <span class="op">=</span> <span class="fl">44.30</span></span></span>
 <span class="r-in"><span>  <span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/range.html" class="external-link">range</a></span><span class="op">(</span><span class="va">Lane_County_pas</span><span class="op">$</span><span class="va">longitude</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] -124.1089 -121.9334</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/range.html" class="external-link">range</a></span><span class="op">(</span><span class="va">Lane_County_pas</span><span class="op">$</span><span class="va">latitude</span><span class="op">)</span></span></span>
