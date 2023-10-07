@@ -1,7 +1,9 @@
 # AirSensor2 0.3.7
 
-- Added `Clarity_updateOpenMonitor()` to append the most recent 3 hours of data
-to an existing monitor object (CA-US-MX only).
+- Added `Clarity_createAllOpenMonitors()` to create a monitor object using the
+most recent 3 hours of data. (This is useful in the next function.)
+- Added `Clarity_updateAllOpenMonitors()` to append the most recent 3 hours of data
+to an existing monitor object.
 
 # AirSensor2 0.3.6
 

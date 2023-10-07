@@ -5,31 +5,28 @@
 #'
 #' @title Update a Clarity 'mts_monitor' object
 #'
-#' @description Download, parse and enhance the last 3 hours of data from Clarity
-#' and append new data to the incoming Clarity \emph{mts_monitor} object
+#' @description Download, parse and enhance the last 3 hours of data from all Clarity
+#' "open" sensors and create a new Clarity \emph{mts_monitor} object for use with the AirMonitor
 #' package.
-#'
-#' @note Maintenance of unique device-deployments will be preserved. If any
-#' Clarity sensor is reported as having a new location, a new deployment will
-#' be created as a separate time series.
 #'
 #' @param api_key Clarity API READ Key. If \code{api_key = NULL}, it
 #' will be obtained using \code{getAPIKey("Clarity-read")}.
-#' @param monitor Previously generated \emph{mts_monitor} object.
 #' @param format Customized output format (currently only "USFS").
 #' @param parameter Parameter to use for data ("pm2.5" or "nowcast")
 #' @param applyQC Logical specifying whether to use the Clarity QCFlag to
 #' invalidate data values.
+#' @param countryCodes Vector of ISO 3166-1 alpha-2 country codes used to filter
+#' available data.
 #'
 #' @return An AirMonitor package \emph{mts_monitor} object.
 #'
 
-Clarity_updateOpenMonitor <- function(
+Clarity_createAllOpenMonitors <- function(
   api_key = NULL,
-  monitor = NULL,
   format = "USFS",
   parameter = c("pm2.5", "nowcast"),
-  applyQC = TRUE
+  applyQC = TRUE,
+  countryCodes = c("CA", "US", "MX")
 ) {
 
   # ----- Validate parameters --------------------------------------------------
@@ -38,10 +35,12 @@ Clarity_updateOpenMonitor <- function(
     api_key <- MazamaCoreUtils::getAPIKey("Clarity-read")
 
   MazamaCoreUtils::stopIfNull(api_key)
-  MazamaCoreUtils::stopIfNull(monitor)
   MazamaCoreUtils::stopIfNull(format)
 
   parameter <- match.arg(parameter)
+
+  if ( is.null(countryCodes) )
+    countryCodes <- c("CA", "US", "MX")
 
   # Check if MazamaSpatialUtils package has been initialized
   # via initializeMazamaSpatialUtils()
@@ -79,8 +78,7 @@ Clarity_updateOpenMonitor <- function(
     Clarity_enhanceRawSynopticData(
       DFList$synoptic
     ) %>%
-    # Limit to CA-US-MX
-    dplyr::filter(.data$countryCode %in% c("CA", "US", "MX"))
+    dplyr::filter(.data$countryCode %in% countryCodes)
 
   # NOTE:  Below was copied from Clarity_createOpenMonitor.R
 
@@ -161,20 +159,10 @@ Clarity_updateOpenMonitor <- function(
   # Create new column names for data
   names(data) <- c("datetime", meta$deviceDeploymentID)
 
-  current_monitor <- list(meta = meta, data = data)
-  current_monitor <- structure(current_monitor, class = c("mts_monitor", "mts", class(current_monitor)))
-
-  # ----- Merge with incoming montior ------------------------------------------
-
-  monitor <-
-    AirMonitor::monitor_combine(
-      monitor,
-      current_monitor,
-      replaceMeta = TRUE,
-      overlapStrategy = "replace all"
-    )
-
   # ----- Return ---------------------------------------------------------------
+
+  monitor <- list(meta = meta, data = data)
+  monitor <- structure(monitor, class = c("mts_monitor", "mts", class(monitor)))
 
   return(monitor)
 
@@ -189,11 +177,6 @@ if ( FALSE ) {
 
   source("global_vars.R")
 
-  meta <- get(load(url("https://airfire-data-exports.s3.us-west-2.amazonaws.com/sensors/v3/PM2.5/latest/data/clarity_PM2.5_latest_meta.rda")))
-  data <- get(load(url("https://airfire-data-exports.s3.us-west-2.amazonaws.com/sensors/v3/PM2.5/latest/data/clarity_PM2.5_latest_data.rda")))
-  monitor <- list(meta = meta, data = data)
-  monitor <- structure(monitor, class = c("mts_monitor", "mts", class(monitor)))
-
   api_key <- Clarity_API_READ_KEY
   format <- "USFS"
   parameter <- "pm2.5"
@@ -201,9 +184,8 @@ if ( FALSE ) {
 
 
   monitor <-
-    Clarity_updateOpenMonitor(
+    Clarity_createAllOpenMonitors(
       api_key,
-      monitor,
       format,
       parameter,
       applyQC

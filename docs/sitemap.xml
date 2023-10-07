@@ -40,6 +40,9 @@
     <loc>/reference/AirSensor2.html</loc>
   </url>
   <url>
+    <loc>/reference/Clarity_createAllOpenMonitors.html</loc>
+  </url>
+  <url>
     <loc>/reference/Clarity_createOpenMonitor.html</loc>
   </url>
   <url>
@@ -59,6 +62,9 @@
   </url>
   <url>
     <loc>/reference/Clarity_getOpenIndividual.html</loc>
+  </url>
+  <url>
+    <loc>/reference/Clarity_updateAllOpenMonitors.html</loc>
   </url>
   <url>
     <loc>/reference/Clarity_updateOpenMonitor.html</loc>
