@@ -1,3 +1,7 @@
+# AirSensor2 0.3.7
+
+- Added `Clarity_updateOpenMonitor()` to append the most recent 3 hours of data
+to an existing monitor object (CA-US-MX only).
 
 # AirSensor2 0.3.6
 
