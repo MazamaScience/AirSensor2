@@ -89,18 +89,18 @@
 #' }
 
 pas_createNew <- function(
-  api_key = NULL,
-  countryCodes = NULL,
-  stateCodes = NULL,
-  counties = NULL,
-  lookbackDays = 1,
-  location_type = 0,
-  read_keys = NULL,
-  show_only = NULL,
-  baseUrl = "https://api.purpleair.com/v1/sensors"
+    api_key = NULL,
+    countryCodes = NULL,
+    stateCodes = NULL,
+    counties = NULL,
+    lookbackDays = 1,
+    location_type = 0,
+    read_keys = NULL,
+    show_only = NULL,
+    baseUrl = "https://api.purpleair.com/v1/sensors"
 ) {
 
-   # ----- Validate parameters --------------------------------------------------
+  # ----- Validate parameters --------------------------------------------------
 
   lookbackDays <- MazamaCoreUtils::setIfNull(lookbackDays, 1)
   MazamaCoreUtils::stopIfNull(baseUrl)
@@ -271,5 +271,8 @@ if ( FALSE ) {
   counties <- NULL
   lookbackDays = 1
   baseUrl = "https://api.purpleair.com/v1/sensors"
+
+
+  pas_raw <- example_pas_raw
 
 }

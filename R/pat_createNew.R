@@ -121,6 +121,15 @@ pat_createNew <- function(
     pas %>%
     dplyr::filter(sensor_index == !!sensor_index)
 
+  # TODO:  This step can be removed when AirMonitor gets upgraded to replace
+  # TODO:  'zip' with 'postalCode'.
+  if ( !"zip" %in% names(pas_single) ) {
+    pas_single$zip <- pas_single$postalCode
+  }
+  if ( !"postalCode" %in% names(pas_single) ) {
+    pas_single$postalCode <- pas_single$zip
+  }
+
   if ( nrow(pas_single) == 0 ) {
     stop(sprintf("'pas' has zero records with sensor_index: %s", sensor_index))
   } else if ( nrow(pas_single) > 1 ) {
@@ -271,7 +280,7 @@ pat_createNew <- function(
       "houseNumber",
       "street",
       "city",
-      "zip",
+      "postalCode",
       "sensor_index",
       "last_modified",
       "date_created",
@@ -288,6 +297,12 @@ pat_createNew <- function(
   meta <-
     pas_single %>%
     dplyr::select(dplyr::all_of(pat_metaNames))
+
+  # TODO:  This step can be removed when AirMonitor gets upgraded to replace
+  # TODO:  'zip' with 'postalCode'.
+  if ( !"zip" %in% names(meta) ) {
+    meta$zip <- meta$postalCode
+  }
 
   # Remove "PurpleAir_synoptic" class
   attributes(meta)$class <- setdiff(attributes(meta)$class, "PurpleAir_synoptic")

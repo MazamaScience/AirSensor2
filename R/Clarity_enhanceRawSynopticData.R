@@ -69,20 +69,23 @@ Clarity_enhanceRawSynopticData <- function(
     ) %>%
 
     # * Add core metadata -----
-    MazamaLocationUtils::table_addCoreMetadata() %>%
-
-    # TODO:  This step can be removed when MazamaLocationUtils gets upgraded to
-    # TODO:  use geohashTools to create a locationID.
-    # * Replace MLU version 0.3.8 locationID with geohash
-    dplyr::mutate(
-      locationID = MazamaCoreUtils::createLocationID(.data$longitude, .data$latitude, algorithm = "geohash")
-    ) %>%
+    # NOTE:  precision = 9 results in a precision of ~2 meters
+    MazamaLocationUtils::table_addCoreMetadata(precision = 9) %>%
 
     # Fill in new columns where possible
     dplyr::mutate(
       deviceDeploymentID = paste0(.data$locationID, "_", .data$deviceID),
       locationName = .data$datasourceId
     )
+
+  # TODO:  This step can be removed when AirMonitor gets upgraded to replace
+  # TODO:  'zip' with 'postalCode'.
+  if ( !"zip" %in% names(synoptic) ) {
+    synoptic$zip <- synoptic$postalCode
+  }
+  if ( !"postalCode" %in% names(synoptic) ) {
+    synoptic$postalCode <- synoptic$zip
+  }
 
   # Put 'deviceDeploymentID' and 'deviceID' in front
   startingIDs <- c("deviceDeploymentID", "deviceID", "locationID")

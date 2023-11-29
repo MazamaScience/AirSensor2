@@ -1,10 +1,10 @@
 #' @encoding UTF-8
 #' @title Example raw Purple Air Synoptic dataset
-#' @format A tibble with 2260 rows and 37 columns of data.
+#' @format A tibble with 2416 rows and 37 columns of data.
 #' @description The \code{example_pas_raw} dataset provides a quickly loadable
 #' version of raw Purple Air synoptic data for practicing and code examples
 #' This dataset contains data for sensors in Washington and Oregon and was
-#' generated on 2023-08-12 by running:
+#' generated on 2023-11-29 by running:
 #'
 #' \preformatted{
 #' library(AirSensor2)
@@ -42,11 +42,11 @@
 
 #' @encoding UTF-8
 #' @title Example enhanced Purple Air Synoptic dataset
-#' @format A tibble with 2209 rows and 50 columns of data.
+#' @format A tibble with 2358 rows and 51 columns of data.
 #' @description The \code{example_pas} dataset provides a quickly loadable
 #' version of a \emph{pas} object for practicing and code examples.
 #' This dataset contains data for sensors in Washington and Oregon
-#' and was generated on 2023-08-12 by running:
+#' and was generated on 2023-11-29 by running:
 #'
 #' \preformatted{
 #' library(AirSensor2)
@@ -97,7 +97,7 @@
 #'   )
 #'
 #' save(example_pat, file = "data/example_pat.rda")
-#' }
+#' #' }
 #'
 #' @seealso example_pas
 #' @source https://www2.purpleair.com

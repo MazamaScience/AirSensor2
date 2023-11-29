@@ -133,7 +133,6 @@ PurpleAir_createNewMonitor <- function(
          Please see `?initializeMazamaSpatialUtils for more details.')
   }
 
-
   # ----- Load data ------------------------------------------------------------
 
   pat <-
@@ -175,7 +174,7 @@ PurpleAir_createNewMonitor <- function(
   # $ houseNumber        <chr> NA
   # $ street             <chr> NA
   # $ city               <chr> NA
-  # $ zip                <chr> NA
+  # $ postalCode         <chr> NA
   # $ sensor_index       <chr> "76545"
   # $ last_modified      <dttm> 2020-10-08 00:00:23
   # $ date_created       <dttm> 2020-10-02 19:42:37
@@ -206,7 +205,7 @@ PurpleAir_createNewMonitor <- function(
       "houseNumber",
       "street",
       "city",
-      "zip",
+      "postalCode",
       "sensor_index",
       "privacy",
       "sensorManufacturer"
@@ -233,6 +232,12 @@ PurpleAir_createNewMonitor <- function(
       dataIngestExtra = as.character(NA),
       dataIngestDescription = as.character(NA)
     )
+
+  # TODO:  This step can be removed when AirMonitor gets upgraded to replace
+  # TODO:  'zip' with 'postalCode'.
+  if ( !"zip" %in% names(meta) ) {
+    meta$zip <- meta$postalCode
+  }
 
   if ( nrow(meta) != 1 )
     stop(sprintf("Multiple records in 'pas' match '%s'", sensor_index));

@@ -54,6 +54,7 @@ mon <-
   Clarity_createOpenMonitor(
     api_key = Clarity_API_READ_KEY,
     synoptic = synoptic,
+    datasourceId = "DACHW7097",
     parameter = "pm2.5"
   )
 

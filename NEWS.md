@@ -1,3 +1,26 @@
+# AirSensor2 0.4.0
+
+Updated to handle changes in upstream packages:
+
+- **MazamaCoreUtils** 0.4.15 => 0.5.1
+- **MazamaSpatialUtils** 0.8.5 => 0.8.6
+- **MazamaLocationUtils** 0.3.8 => 0.4.1
+- **MazamaTimeSeries** 0.2.13 => 0.2.15
+- **AirMonitor** 0.3.11 => 0.3.12
+
+The breaking change that precipitated this was the change from `'zip'` to
+`'postalCode'` in the core metadata used by **MazamaLocationUtils**. For 
+backwards compatibility, all functions that work with metadata will guarantee 
+that both `'zip'` and `'postalCode'` exist. These include:
+
+- `Clarity_enhanceRawSynopticData()`
+- `Clarity_createAllOpenMonitors()`
+- `Clarity_createOpenMonitor()`
+- `PurpleAir_createNewMonitor()`
+- `pas_createNew()`
+- `pas_enhanceRawData()`
+- `pat_createNew()`
+
 # AirSensor2 0.3.7
 
 - Added `Clarity_createAllOpenMonitors()` to create a monitor object using the

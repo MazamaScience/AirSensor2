@@ -36,7 +36,7 @@ example_pat <-
   )
 
 save(example_pat, file = "data/example_pat.rda")
-}
+#' }
 }
 \seealso{
 example_pas

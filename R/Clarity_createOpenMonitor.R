@@ -38,6 +38,7 @@
 #'   Clarity_createOpenMonitor(
 #'     api_key = Clarity_API_READ_KEY,
 #'     synoptic = synoptic,
+#'     datasourceId = "DACHW7097",
 #'     parameter = "pm2.5"
 #'   )
 #'
@@ -124,7 +125,7 @@ Clarity_createOpenMonitor <- function(
       "houseNumber",
       "street",
       "city",
-      "zip",
+      "postalCode",
       "datasourceId",
       "privacy",
       "sensorManufacturer"
@@ -154,6 +155,12 @@ Clarity_createOpenMonitor <- function(
       dataIngestExtra = as.character(NA),
       dataIngestDescription = as.character(NA)
     )
+
+  # TODO:  This step can be removed when AirMonitor gets upgraded to replace
+  # TODO:  'zip' with 'postalCode'.
+  if ( !"zip" %in% names(meta) ) {
+    meta$zip <- meta$postalCode
+  }
 
   if ( nrow(meta) != 1 )
     stop(sprintf("Multiple records in 'synoptic' match '%s'", datasourceId));

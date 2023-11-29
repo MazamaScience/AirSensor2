@@ -98,7 +98,7 @@ Clarity_createAllOpenMonitors <- function(
       "houseNumber",
       "street",
       "city",
-      "zip",
+      "postalCode",
       "datasourceId",
       "privacy",
       "sensorManufacturer"
@@ -129,6 +129,12 @@ Clarity_createAllOpenMonitors <- function(
     ) %>%
     # Guarantee unique values of the primary key
     dplyr::distinct(.data$deviceDeploymentID, .keep_all = TRUE)
+
+  # TODO:  This step can be removed when AirMonitor gets upgraded to replace
+  # TODO:  'zip' with 'postalCode'.
+  if ( !"zip" %in% names(meta) ) {
+    meta$zip <- meta$postalCode
+  }
 
   # ----- Create data ----------------------------------------------------------
 

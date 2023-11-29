@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AirSensor2</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.3.7</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.4.0</span>
       </span>
     </div>
 
@@ -66,6 +66,28 @@
       <small>Source: <a href="https://github.com/MazamaScience/AirSensor2/blob/HEAD/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
     </div>
 
+    <div class="section level2">
+<h2 class="page-header" data-toc-text="0.4.0" id="airsensor2-040">AirSensor2 0.4.0<a class="anchor" aria-label="anchor" href="#airsensor2-040"></a></h2>
+<p>Updated to handle changes in upstream packages:</p>
+<ul><li>
+<strong>MazamaCoreUtils</strong> 0.4.15 =&gt; 0.5.1</li>
+<li>
+<strong>MazamaSpatialUtils</strong> 0.8.5 =&gt; 0.8.6</li>
+<li>
+<strong>MazamaLocationUtils</strong> 0.3.8 =&gt; 0.4.1</li>
+<li>
+<strong>MazamaTimeSeries</strong> 0.2.13 =&gt; 0.2.15</li>
+<li>
+<strong>AirMonitor</strong> 0.3.11 =&gt; 0.3.12</li>
+</ul><p>The breaking change that precipitated this was the change from <code>'zip'</code> to <code>'postalCode'</code> in the core metadata used by <strong>MazamaLocationUtils</strong>. For backwards compatibility, all functions that work with metadata will guarantee that both <code>'zip'</code> and <code>'postalCode'</code> exist. These include:</p>
+<ul><li><code><a href="../reference/Clarity_enhanceRawSynopticData.html">Clarity_enhanceRawSynopticData()</a></code></li>
+<li><code><a href="../reference/Clarity_createAllOpenMonitors.html">Clarity_createAllOpenMonitors()</a></code></li>
+<li><code><a href="../reference/Clarity_createOpenMonitor.html">Clarity_createOpenMonitor()</a></code></li>
+<li><code><a href="../reference/PurpleAir_createNewMonitor.html">PurpleAir_createNewMonitor()</a></code></li>
+<li><code><a href="../reference/pas_createNew.html">pas_createNew()</a></code></li>
+<li><code><a href="../reference/pas_enhanceRawData.html">pas_enhanceRawData()</a></code></li>
+<li><code><a href="../reference/pat_createNew.html">pat_createNew()</a></code></li>
+</ul></div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="0.3.7" id="airsensor2-037">AirSensor2 0.3.7<a class="anchor" aria-label="anchor" href="#airsensor2-037"></a></h2>
 <ul><li>Added <code><a href="../reference/Clarity_createAllOpenMonitors.html">Clarity_createAllOpenMonitors()</a></code> to create a monitor object using the most recent 3 hours of data. (This is useful in the next function.)</li>
