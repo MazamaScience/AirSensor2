@@ -1,0 +1,118 @@
+---
+title: "Test PurpleAir QC Report"
+author: "Jonathan Callahan"
+date: "2023-09-11"
+output: html_document
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(fig.width = 7, fig.height = 5)
+```
+
+# Test PurpleAir QC REport
+
+```{r champaign_pas, warning = FALSE, message = FALSE, echo = FALSE}
+# AirSensor2 package
+library(AirSensor2)
+
+# Set user's PurpleAir_API_READ_KEY
+source('/Users/jonathancallahan/Projects/MazamaScience/AirSensor2/global_vars.R')
+
+# Initialize spatial datasets
+initializeMazamaSpatialUtils()
+
+sensor_index <- "123841"
+
+enddate <- lubridate::now(tzone = "UTC")
+startdate <- enddate - lubridate::ddays(3)
+
+pas <-
+  pas_createNew(
+    api_key = PurpleAir_API_READ_KEY,
+    show_only = sensor_index,
+    countryCodes = "US"
+  )
+```
+
+# PurpleAir Sensor `r pas[1]$sensor_index`
+
+```{r leaflet_map}
+pas %>% pas_leaflet()
+```
+
+```{r create_pat, echo = FALSE}
+
+# Create raw pat object
+pat <-
+  pat_createNew(
+    api_key = PurpleAir_API_READ_KEY,
+    pas = pas,
+    sensor_index = sensor_index,
+    startdate = startdate,
+    enddate = enddate
+  )
+
+tbl <- pat$data
+```
+
+----
+
+## Sensor Electronics
+
+```{r sensor_electroncs, fig.height = 10, echo = FALSE}
+#plot(tbl[,c(1,2:5)], pch = 15, cex = 0.5, main = "Sensor Electronics")
+layout(matrix(seq(4)))
+plot(tbl[,c(1,3)], pch = 15, cex = 0.5, main = "uptime")
+plot(tbl[,c(1,5)], pch = 15, cex = 0.5, main = "memory")
+plot(tbl[,c(1,2)], pch = 15, cex = 0.5, main = "wifi strength")
+plot(tbl[,c(1,4)], pch = 15, cex = 0.5, main = "latency")
+layout(1)
+```
+
+## Atmospheric Variables
+
+```{r atmospheric variables, fig.height = 10, echo = FALSE}
+#plot(tbl[,c(1,6:8)], pch = 15, cex = 0.5, main = "Atmospheric Variables")
+layout(matrix(seq(3)))
+plot(tbl[,c(1,6)], pch = 15, cex = 0.5, main = "humidity")
+plot(tbl[,c(1,7)], pch = 15, cex = 0.5, main = "temperature")
+plot(tbl[,c(1,8)], pch = 15, cex = 0.5, main = "pressure")
+layout(1)
+```
+
+## PM2.5 "atm"
+
+```{r pm25_atm, echo = FALSE}
+#plot(tbl[,c(1,12:14)], pch = 15, cex = 0.5, main = "PM2.5 'atm'")
+plot(tbl[,c(1,12)], pch = 15, cex = 0.5, col = "transparent", main = "pm2.5_atm")
+points(tbl[,c(1,13)], pch = 15, cex = 0.5, col = adjustcolor("blue", 0.3))
+points(tbl[,c(1,14)], pch = 15, cex = 0.5, col = adjustcolor("red", 0.3))
+```
+
+## PM2.5 AB Correlation
+
+```{r pm25_correlation, echo = FALSE}
+correlation <- cor(tbl$pm2.5_atm_a, tbl$pm2.5_atm_b) %>% round(3)
+title <- sprintf("A/B Channel Correlation = %0.3f", correlation)
+plot(tbl[,c(13:14)], pch = 15, cex = 0.5, main = title)
+```
+
+## PM2.5 Temp Correlation
+
+```{r pm25_correlation, echo = FALSE}
+correlation_a <- cor(tbl$pm2.5_atm_a, tbl$temperature) %>% round(3)
+correlation_b <- cor(tbl$pm2.5_atm_b, tbl$temperature) %>% round(3)
+title <- sprintf("A/B Correlation with temperature = %0.3f/%0.3f", correlation_a, correlation_b)
+plot(tbl[,c(7,12)], pch = 15, cex = 0.5, col = "transparent", main = title)
+points(tbl[,c(7,13)], pch = 15, cex = 0.5, col = adjustcolor("blue", 0.3))
+points(tbl[,c(7,14)], pch = 15, cex = 0.5, col = adjustcolor("red", 0.3))
+```
+
+
+
+<!-- # PM2.5 comparison -->
+<!-- plot(tbl[,c(1,9,12,15)], pch = 15, cex = 0.5, main = "PM2.5 'alt' vs 'atm' vs 'cf1'") -->
+
+
+
+
