@@ -2,7 +2,7 @@
 % Please edit documentation in R/PurpleAir_API.R
 \name{PurpleAir_getGroupDetail}
 \alias{PurpleAir_getGroupDetail}
-\title{Retrieve all members of the specified group.}
+\title{Retrieve all members of the specified group}
 \usage{
 PurpleAir_getGroupDetail(
   api_key = NULL,

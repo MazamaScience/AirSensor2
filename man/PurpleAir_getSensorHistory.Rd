@@ -2,7 +2,7 @@
 % Please edit documentation in R/PurpleAir_API.R
 \name{PurpleAir_getSensorHistory}
 \alias{PurpleAir_getSensorHistory}
-\title{Retrieve historical data for a single sensor.}
+\title{Retrieve historical data for a single sensor}
 \usage{
 PurpleAir_getSensorHistory(
   api_key = NULL,

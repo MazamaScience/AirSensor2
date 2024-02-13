@@ -2,7 +2,7 @@
 % Please edit documentation in R/PurpleAir_API.R
 \name{PurpleAir_deleteMember}
 \alias{PurpleAir_deleteMember}
-\title{Delete a member from the specified group.}
+\title{Delete a member from the specified group}
 \usage{
 PurpleAir_deleteMember(
   api_key = NULL,

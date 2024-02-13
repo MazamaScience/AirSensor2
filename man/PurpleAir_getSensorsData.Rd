@@ -2,7 +2,7 @@
 % Please edit documentation in R/PurpleAir_API.R
 \name{PurpleAir_getSensorsData}
 \alias{PurpleAir_getSensorsData}
-\title{Retrieve the latest data of multiple sensors matching the provided parameters.}
+\title{Retrieve the latest data of multiple sensors matching the provided parameters}
 \usage{
 PurpleAir_getSensorsData(
   api_key = NULL,

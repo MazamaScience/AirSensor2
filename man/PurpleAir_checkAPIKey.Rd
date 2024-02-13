@@ -2,7 +2,7 @@
 % Please edit documentation in R/PurpleAir_API.R
 \name{PurpleAir_checkAPIKey}
 \alias{PurpleAir_checkAPIKey}
-\title{Check the validity and type for the provided \code{api_key}.}
+\title{Check the validity and type for the provided \code{api_key}}
 \usage{
 PurpleAir_checkAPIKey(
   api_key = NULL,

@@ -2,7 +2,7 @@
 % Please edit documentation in R/PurpleAir_API.R
 \name{PurpleAir_getMemberData}
 \alias{PurpleAir_getMemberData}
-\title{Retrieve recent data for a single sensor in the specified group.}
+\title{Retrieve recent data for a single sensor in the specified group}
 \usage{
 PurpleAir_getMemberData(
   api_key = NULL,

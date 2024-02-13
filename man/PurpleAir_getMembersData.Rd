@@ -2,7 +2,7 @@
 % Please edit documentation in R/PurpleAir_API.R
 \name{PurpleAir_getMembersData}
 \alias{PurpleAir_getMembersData}
-\title{Retrieve current data for all sensors in the specified group.}
+\title{Retrieve current data for all sensors in the specified group}
 \usage{
 PurpleAir_getMembersData(
   api_key = NULL,

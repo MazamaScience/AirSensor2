@@ -2,7 +2,7 @@
 % Please edit documentation in R/PurpleAir_API.R
 \name{PurpleAir_deleteGroup}
 \alias{PurpleAir_deleteGroup}
-\title{Delete the specified group.}
+\title{Delete the specified group}
 \usage{
 PurpleAir_deleteGroup(
   api_key = NULL,

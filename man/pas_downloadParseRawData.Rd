@@ -6,7 +6,7 @@
 \usage{
 pas_downloadParseRawData(
   api_key = NULL,
-  fields = PurpleAir_DATA_AVG_PM25_FIELDS,
+  fields = PurpleAir_SENSOR_METADATA_FIELDS,
   location_type = 0,
   read_keys = NULL,
   show_only = NULL,
@@ -71,7 +71,7 @@ static or interactive maps.
 If \code{show_only} is used to request specific sensors, the bounding box
 information is ignored.
 
-\strong{NOTE:} Most users will want to use the \code{\link{pas_createNew}} function
+\strong{NOTE:} Most users will want to use the \code{pas_createNew} function
 which enhances raw synoptic data with additional spatial metadata so that it
 meets the criteria for use as a \emph{pas} object.
 }
@@ -86,6 +86,21 @@ initializeMazamaSpatialUtils()
 
 source("global_vars.R") # contains PurpleAir_API_READ_KEY
 
+# Download metadata fields only to look for historical data
+pas_raw <-
+  pas_downloadParseRawData(
+    api_key = PurpleAir_API_READ_KEY,
+    max_age = 3600 * 24 * 365 * 10,
+    west = -120.5,
+    east = -120,
+    south = 48.2,
+    north = 48.7
+  )
+
+fields <- c("sensor_index", "name", "date_created", "last_seen")
+View(pas_raw[,fields])
+
+# Download metadata, PM2.5 and weather parameter fields
 pas_raw <-
   pas_downloadParseRawData(
     api_key = PurpleAir_API_READ_KEY,

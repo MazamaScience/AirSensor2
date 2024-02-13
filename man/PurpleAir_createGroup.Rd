@@ -2,7 +2,7 @@
 % Please edit documentation in R/PurpleAir_API.R
 \name{PurpleAir_createGroup}
 \alias{PurpleAir_createGroup}
-\title{Create a new group.}
+\title{Create a new group}
 \usage{
 PurpleAir_createGroup(
   api_key = NULL,

@@ -2,7 +2,7 @@
 % Please edit documentation in R/PurpleAir_API.R
 \name{PurpleAir_createMember}
 \alias{PurpleAir_createMember}
-\title{Create a new member within the specified group.}
+\title{Create a new member within the specified group}
 \usage{
 PurpleAir_createMember(
   api_key = NULL,

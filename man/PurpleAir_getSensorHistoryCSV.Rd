@@ -2,7 +2,7 @@
 % Please edit documentation in R/PurpleAir_API.R
 \name{PurpleAir_getSensorHistoryCSV}
 \alias{PurpleAir_getSensorHistoryCSV}
-\title{Retrieve historical data for a single sensor as CSV.}
+\title{Retrieve historical data for a single sensor as CSV}
 \usage{
 PurpleAir_getSensorHistoryCSV(
   api_key = NULL,

@@ -1,3 +1,24 @@
+# AirSensor2 0.5.0
+
+Version 0.5 introduces changes in the default parameters that are requuested
+when making data requests from the PurpleAir API. In the past, when data was 
+free, functions download _as many_ potentially relevant parameters
+as possible. Now that a payment system is in place, AirSensor2 will be focused 
+on downloading _as few_ parameters as required to accomplish a task. Many of
+the low level PurpleAir data access functions will thus behave differently. 
+
+Package dependency updates:
+
+```
+MazamaCoreUtils (>= 0.5.2)
+MazamaLocationUtils (>= 0.4.3),
+MazamaSpatialUtils (>= 0.8.6),
+MazamaTimeSeries (>= 0.2.16),
+AirMonitor (>= 0.4.0),
+```
+
+
+
 # AirSensor2 0.4.0
 
 Updated to handle changes in upstream packages:

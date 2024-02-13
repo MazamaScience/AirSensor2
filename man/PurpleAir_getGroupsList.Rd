@@ -2,7 +2,7 @@
 % Please edit documentation in R/PurpleAir_API.R
 \name{PurpleAir_getGroupsList}
 \alias{PurpleAir_getGroupsList}
-\title{Retrieve all groups owned by the provided \code{api_key}.}
+\title{Retrieve all groups owned by the provided \code{api_key}}
 \usage{
 PurpleAir_getGroupsList(
   api_key = NULL,

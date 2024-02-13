@@ -2,7 +2,7 @@
 % Please edit documentation in R/PurpleAir_API.R
 \name{PurpleAir_getSensorData}
 \alias{PurpleAir_getSensorData}
-\title{Retrieve the latest data of a single sensor.}
+\title{Retrieve the latest data of a single sensor}
 \usage{
 PurpleAir_getSensorData(
   api_key = NULL,

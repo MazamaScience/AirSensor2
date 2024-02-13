@@ -3,7 +3,7 @@
 \docType{data}
 \name{PurpleAir_DATA_AVG_PM25_FIELDS}
 \alias{PurpleAir_DATA_AVG_PM25_FIELDS}
-\title{Comma-separated list of fields needed to create a \emph{pas} object.}
+\title{Comma-separated list of fields used to create a \emph{pas} object}
 \format{
 String with comma-separated field names
 }
@@ -15,6 +15,9 @@ Character string with PurpleAir field names used in
 \code{pas_downloadParseRawData()}. These fields include most of the
 "information and status" fields, "humidity", "temperature", "pressure" and
 simple running average PM2.5 fields for different time periods.
+
+These fields are useful for creating maps of the latest quality and weather
+parameters.
 }
 \references{
 \href{https://api.purpleair.com/#api-sensors-get-sensor-data}{Get Sensor Data API}

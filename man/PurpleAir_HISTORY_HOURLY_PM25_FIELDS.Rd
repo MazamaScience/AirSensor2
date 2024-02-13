@@ -3,7 +3,7 @@
 \docType{data}
 \name{PurpleAir_HISTORY_HOURLY_PM25_FIELDS}
 \alias{PurpleAir_HISTORY_HOURLY_PM25_FIELDS}
-\title{Comma-separated list of fields needed for simple PM2.5 data analysis.}
+\title{Comma-separated list of fields needed for simple PM2.5 data analysis}
 \format{
 String with comma-separated field names
 }

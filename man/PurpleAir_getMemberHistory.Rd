@@ -2,7 +2,7 @@
 % Please edit documentation in R/PurpleAir_API.R
 \name{PurpleAir_getMemberHistory}
 \alias{PurpleAir_getMemberHistory}
-\title{Retrieve historical data for a single sensor of the specified group.}
+\title{Retrieve historical data for a single sensor of the specified group}
 \usage{
 PurpleAir_getMemberHistory(
   api_key = NULL,
