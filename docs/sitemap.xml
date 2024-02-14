@@ -82,6 +82,9 @@
     <loc>/reference/PurpleAir_HISTORY_PM25_FIELDS.html</loc>
   </url>
   <url>
+    <loc>/reference/PurpleAir_SENSOR_METADATA_FIELDS.html</loc>
+  </url>
+  <url>
     <loc>/reference/PurpleAir_checkAPIKey.html</loc>
   </url>
   <url>
@@ -217,7 +220,13 @@
     <loc>/reference/pas_filterArea.html</loc>
   </url>
   <url>
+    <loc>/reference/pas_filterDate.html</loc>
+  </url>
+  <url>
     <loc>/reference/pas_filterNear.html</loc>
+  </url>
+  <url>
+    <loc>/reference/pas_filterNearMonitor.html</loc>
   </url>
   <url>
     <loc>/reference/pas_get.html</loc>

@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AirSensor2</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.4.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.5.0</span>
       </span>
     </div>
 
@@ -66,6 +66,19 @@
       <small>Source: <a href="https://github.com/MazamaScience/AirSensor2/blob/HEAD/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
     </div>
 
+    <div class="section level2">
+<h2 class="page-header" data-toc-text="0.5.0" id="airsensor2-050">AirSensor2 0.5.0<a class="anchor" aria-label="anchor" href="#airsensor2-050"></a></h2>
+<p>Version 0.5 introduces changes in the default parameters that are requuested when making data requests from the PurpleAir API. In the past, when data was free, functions download <em>as many</em> potentially relevant parameters as possible. Now that a payment system is in place, AirSensor2 will be focused on downloading <em>as few</em> parameters as required to accomplish a task. Many of the low level PurpleAir data access functions will thus behave differently.</p>
+<p>Package dependency updates:</p>
+<pre><code>MazamaCoreUtils (&gt;= 0.5.2)
+MazamaLocationUtils (&gt;= 0.4.3),
+MazamaSpatialUtils (&gt;= 0.8.6),
+MazamaTimeSeries (&gt;= 0.2.16),
+AirMonitor (&gt;= 0.4.0),</code></pre>
+<ul><li>Modified <code><a href="../reference/pas_downloadParseRawData.html">pas_downloadParseRawData()</a></code> defaults to only query for non-measurement fields defined in <code>PurplAir_SENSOR_METADATA_FIELDS</code>.</li>
+<li>Added <code><a href="../reference/pas_filterDate.html">pas_filterDate()</a></code> to help find historical sensor data.</li>
+<li>Added <code><a href="../reference/pas_filterNearMonitor.html">pas_filterNearMonitor()</a></code> to associate sensors with the closest available monitor in a <em>mts_monitor</em> object from the <strong>AirMonitor</strong> package.</li>
+</ul></div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="0.4.0" id="airsensor2-040">AirSensor2 0.4.0<a class="anchor" aria-label="anchor" href="#airsensor2-040"></a></h2>
 <p>Updated to handle changes in upstream packages:</p>

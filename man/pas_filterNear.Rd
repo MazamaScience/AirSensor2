@@ -47,4 +47,6 @@ if ( interactive() ) {
 \link{pas_filter}
 
 \link{pas_filterArea}
+
+\link{pas_filterNearMonitor}
 }

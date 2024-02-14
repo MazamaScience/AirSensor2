@@ -86,7 +86,7 @@ initializeMazamaSpatialUtils()
 
 source("global_vars.R") # contains PurpleAir_API_READ_KEY
 
-# Download metadata fields only to look for historical data
+# Download metadata fields only to look for 10 years of historical data
 pas_raw <-
   pas_downloadParseRawData(
     api_key = PurpleAir_API_READ_KEY,

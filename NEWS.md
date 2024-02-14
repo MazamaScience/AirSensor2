@@ -17,9 +17,11 @@ MazamaTimeSeries (>= 0.2.16),
 AirMonitor (>= 0.4.0),
 ```
 
+* Modified `pas_downloadParseRawData()` defaults to only query for non-measurement
+fields defined in `PurplAir_SENSOR_METADATA_FIELDS`.
+* Added `pas_filterDate()` to help find historical sensor data.
 * Added `pas_filterNearMonitor()` to associate sensors with the closest available
 monitor in a _mts_monitor_ object from the **AirMonitor** package.
-
 
 # AirSensor2 0.4.0
 

@@ -45,5 +45,9 @@ Colville_Tribes_pas <-
 nrow(Colville_Tribes_pas)
 }
 \seealso{
-\link{pas_filterArea}, \link{pas_filterNear}
+\link{pas_filterArea}
+
+\link{pas_filterNear}
+
+\link{pas_filterNearMonitor}
 }

@@ -49,5 +49,9 @@ if ( interactive() ) {
 
 }
 \seealso{
-\link{pas_filter}, \link{pas_filterNear}
+\link{pas_filter}
+
+\link{pas_filterNear}
+
+\link{pas_filterNearMonitor}
 }

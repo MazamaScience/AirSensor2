@@ -1,4 +1,5 @@
 #' @export
+#' @importFrom rlang .data
 #'
 #' @title Find PurpleAir sensors near a monitor
 #'
@@ -99,7 +100,7 @@ pas_filterNearMonitor <- function(
 
   # ----- Calculate distances --------------------------------------------------
 
-  pas$monitor_ddID <- NA
+  pas$monitor_DDID <- NA
   pas$monitor_AQSID <- NA
   pas$monitor_distance <- NA
 
@@ -116,7 +117,7 @@ pas_filterNearMonitor <- function(
       )
 
     if ( nrow(mon$meta) == 1 ) {
-      pas$monitor_ddID[i] <- mon$meta$deviceDeploymentID
+      pas$monitor_DDID[i] <- mon$meta$deviceDeploymentID
       pas$monitor_AQSID[i] <- mon$meta$AQSID
       pas$monitor_distance[i] <- mon$meta$distanceFromTarget
     }
@@ -127,7 +128,7 @@ pas_filterNearMonitor <- function(
 
   return_pas <-
     pas %>%
-    pas_filter(!is.na(monitor_ddID))
+    pas_filter(!is.na(.data$monitor_DDID))
 
   # ----- Return ---------------------------------------------------------------
 
