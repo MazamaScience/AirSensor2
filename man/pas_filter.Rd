@@ -2,7 +2,7 @@
 % Please edit documentation in R/pas_filter.R
 \name{pas_filter}
 \alias{pas_filter}
-\title{General purpose filtering for PurpleAir synoptic objects}
+\title{General purpose filtering for PurpleAir Synoptic objects}
 \usage{
 pas_filter(pas, ...)
 }

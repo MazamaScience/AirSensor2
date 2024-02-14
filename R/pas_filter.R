@@ -1,7 +1,7 @@
 #' @export
 #' @importFrom rlang .data
 #'
-#' @title General purpose filtering for PurpleAir synoptic objects
+#' @title General purpose filtering for PurpleAir Synoptic objects
 #'
 #' @param pas PurpleAir Synoptic \emph{pas} object.
 #' @param ... Logical predicates defined in terms of the variables in the

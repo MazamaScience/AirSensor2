@@ -43,7 +43,7 @@
 #' If \code{show_only} is used to request specific sensors, the bounding box
 #' information is ignored.
 #'
-#' \strong{NOTE:} Most users will want to use the \code{pas_createNew} function
+#' \strong{NOTE:} Most users will want to use the \code{\link{pas_createNew}} function
 #' which enhances raw synoptic data with additional spatial metadata so that it
 #' meets the criteria for use as a \emph{pas} object.
 #'
@@ -64,7 +64,7 @@
 #'
 #' source("global_vars.R") # contains PurpleAir_API_READ_KEY
 #'
-#' # Download metadata fields only to look for historical data
+#' # Download metadata fields only to look for 10 years of historical data
 #' pas_raw <-
 #'   pas_downloadParseRawData(
 #'     api_key = PurpleAir_API_READ_KEY,
