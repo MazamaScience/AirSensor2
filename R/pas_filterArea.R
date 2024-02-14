@@ -14,7 +14,9 @@
 #' @return A subset of the given \emph{pas} object containing only records
 #' within the bounding box. This includes sensors located precisely on a boundary.
 #'
-#' @seealso \link{pas_filter}, \link{pas_filterNear}
+#' @seealso \link{pas_filter}
+#' @seealso \link{pas_filterNear}
+#' @seealso \link{pas_filterNearMonitor}
 #'
 #' @examples
 #' library(AirSensor2)

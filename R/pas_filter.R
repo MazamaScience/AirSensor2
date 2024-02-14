@@ -17,7 +17,9 @@
 #'
 #' @return A subset of the incoming \emph{pas} object.
 #'
-#' @seealso \link{pas_filterArea}, \link{pas_filterNear}
+#' @seealso \link{pas_filterArea}
+#' @seealso \link{pas_filterNear}
+#' @seealso \link{pas_filterNearMonitor}
 #'
 #' @examples
 #' library(AirSensor2)

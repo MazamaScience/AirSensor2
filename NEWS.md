@@ -17,6 +17,8 @@ MazamaTimeSeries (>= 0.2.16),
 AirMonitor (>= 0.4.0),
 ```
 
+* Added `pas_filterNearMonitor()` to associate sensors with the closest available
+monitor in a _mts_monitor_ object from the **AirMonitor** package.
 
 
 # AirSensor2 0.4.0

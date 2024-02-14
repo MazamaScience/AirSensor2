@@ -17,6 +17,7 @@
 #'
 #' @seealso \link{pas_filter}
 #' @seealso \link{pas_filterArea}
+#' @seealso \link{pas_filterNearMonitor}
 #'
 #' @examples
 #' library(AirSensor2)
@@ -95,7 +96,7 @@ pas_filterNear <- function(
         "x" = pas$longitude,
         "y" = pas$latitude
       ),
-      measure = "geode"
+      measure = "geodesic"
     )
 
   # ----- Return ---------------------------------------------------------------
