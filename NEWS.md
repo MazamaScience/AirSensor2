@@ -3,7 +3,7 @@
 Version 0.5 introduces changes in the default parameters that are requuested
 when making data requests from the PurpleAir API. In the past, when data was 
 free, functions download _as many_ potentially relevant parameters
-as possible. Now that a payment system is in place, AirSensor2 will be focused 
+as possible. Now that a payment system is in place, **AirSensor2** will be focused 
 on downloading _as few_ parameters as required to accomplish a task. Many of
 the low level PurpleAir data access functions will thus behave differently. 
 
@@ -13,7 +13,7 @@ Package dependency updates:
 MazamaCoreUtils (>= 0.5.2)
 MazamaLocationUtils (>= 0.4.3),
 MazamaSpatialUtils (>= 0.8.6),
-MazamaTimeSeries (>= 0.2.16),
+MazamaTimeSeries (>= 0.3.0),
 AirMonitor (>= 0.4.0),
 ```
 
@@ -22,14 +22,17 @@ fields defined in `PurplAir_SENSOR_METADATA_FIELDS`.
 * Added `pas_filterDate()` to help find historical sensor data.
 * Added `pas_filterNearMonitor()` to associate sensors with the closest available
 monitor in a _mts_monitor_ object from the **AirMonitor** package.
+* Renamed `pas_get()` to `pas_pull()`.
+* Updated `pas_createNew()` and `pas_leaflet()` to default to working with
+non-measurement fields defined in `PurplAir_SENSOR_METADATA_FIELDS`.
 
 # AirSensor2 0.4.0
 
 Updated to handle changes in upstream packages:
 
 - **MazamaCoreUtils** 0.4.15 => 0.5.1
-- **MazamaSpatialUtils** 0.8.5 => 0.8.6
 - **MazamaLocationUtils** 0.3.8 => 0.4.1
+- **MazamaSpatialUtils** 0.8.5 => 0.8.6
 - **MazamaTimeSeries** 0.2.13 => 0.2.15
 - **AirMonitor** 0.3.11 => 0.3.12
 

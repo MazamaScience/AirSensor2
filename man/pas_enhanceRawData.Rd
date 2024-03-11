@@ -45,10 +45,9 @@ Steps include:
 \item{sensorManufacturer = "Purple Air"}
 }
 
-Limiting spacial searches by country can greatly speed up the process of
-enhancement. This is
-performed by providing a vector of ISO country codes to the \code{countryCodes}
-argument. By default, no subsetting is performed.
+Limiting spatial searches by country can greatly speed up the process of
+enhancement. This is performed by providing a vector of ISO country codes to
+the \code{countryCodes} argument. By default, no subsetting is performed.
 
 Users may further improve performance by also specifying \code{stateCodes}
 when \code{countryCodes} is limited to a single country.

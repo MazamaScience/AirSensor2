@@ -33,6 +33,7 @@
 #' are still used to help speed up the assignment of enhanced metadata..
 #'
 #' @param api_key PurpleAir API Read Key.
+#' @param fields Character string with PurpleAir field names for the Get Sensor Data API.
 #' @param countryCodes ISO 3166-1 alpha-2 country codes used to subset the data.
 #' At least one countryCode must be specified.
 #' @param stateCodes ISO-3166-2 alpha-2 state codes used to subset the data.
@@ -52,6 +53,18 @@
 #' @param baseUrl Base URL for the PurpleAir API.
 #'
 #' @return A PurpleAir Synoptic \emph{pas} object.
+#'
+#' @note The \code{fields} parameter allows users to dial in which fields they
+#' are interested in depending on their needs. However, the following fields
+#' will be added if not specified in order to guarantee compatibility with
+#' \code{pas_enhanceRawData()}:
+#' \code{"longitude,latitude,name,location_type,date_created,last_seen"}.
+#'
+#' Pregenerated fields for use in this function include:
+#' \itemize{
+#'   \item{\code{/link{PurpleAir_SENSOR_METADATA_FIELDS}}} -- instrument-only fields
+#'   \item{\code{/link{PurpleAir_DATA_AVG_PM25_FIELDS}}} -- includes measurements
+#' }
 #'
 #' @seealso \link{pas_downloadParseRawData}
 #' @seealso \link{pas_enhanceRawData}
@@ -76,6 +89,7 @@
 #' pas <-
 #'   pas_createNew(
 #'     api_key = PurpleAir_API_READ_KEY,
+#'     fields = PurpleAir_DATA_AVG_PM25_FIELDS,
 #'     countryCodes = "US",
 #'     stateCodes = "WA",
 #'     counties = c("Okanogan", "Ferry"),
@@ -90,6 +104,7 @@
 
 pas_createNew <- function(
     api_key = NULL,
+    fields = PurpleAir_SENSOR_METADATA_FIELDS,
     countryCodes = NULL,
     stateCodes = NULL,
     counties = NULL,
@@ -149,6 +164,13 @@ pas_createNew <- function(
     }
 
   }
+
+  # Guarantee fields needed for enhancement
+  fields <-
+    fields %>%
+    stringr::str_split_1(",") %>%
+    union(c("longitude", "latitude", "name", "location_type", "date_created", "last_seen")) %>%
+    paste0(collapse = ",")
 
   # ----- Get country/state bounding box ---------------------------------------
 
@@ -226,7 +248,7 @@ pas_createNew <- function(
   pas_raw <-
     pas_downloadParseRawData(
       api_key = api_key,
-      fields = PurpleAir_DATA_AVG_PM25_FIELDS,
+      fields = fields,
       location_type = location_type,
       read_keys = read_keys,
       show_only = show_only,

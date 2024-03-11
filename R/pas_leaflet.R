@@ -3,7 +3,7 @@
 #' @title Leaflet interactive map of PurpleAir sensors
 #'
 #' @param pas PurpleAir Synoptic \emph{pas} object.
-#' @param parameter Value to plot, e.g. \code{pm25_1hr}.
+#' @param parameter Optional parameter used to color locations, e.g. \code{pm25_1hr}.
 #' @param paletteName \pkg{RColorBrewer} palette name to use when \code{parameter}
 #' is something other than:
 #' \itemize{
@@ -18,8 +18,14 @@
 #' @description This function creates interactive maps that will be displayed in
 #' RStudio's 'Viewer' tab.
 #'
-#' Typical usage would be to use the \code{parameter} argument to display pm25
-#' values from one of:
+#' When \code{parameter} is not specified, a simple map is displayed. When the
+#' user clicks on a location, site metadata is displayed.
+#'
+#' When \code{parameter} is specified, it is assumed that a \emph{pas} object
+#' has been created with measured parameters for a particular moment in time.
+#'
+#' For a \emph{pas} object that includes measurements, typical usage would be to
+#' use the \code{parameter} argument to display pm25 values from one of:
 #' \itemize{
 #' \item{"pm2.5_10minute"}
 #' \item{"pm2.5_30minute"}
@@ -61,12 +67,12 @@
 #' }
 
 pas_leaflet <- function(
-  pas = NULL,
-  parameter = "pm2.5_60minute",
-  paletteName = NULL,
-  radius = 10,
-  opacity = 0.8,
-  maptype = "terrain"
+    pas = NULL,
+    parameter = NULL,
+    paletteName = NULL,
+    radius = 10,
+    opacity = 0.8,
+    maptype = "terrain"
 ) {
 
   # ----- Validate parameters --------------------------------------------------
@@ -79,93 +85,13 @@ pas_leaflet <- function(
   if ( nrow(pas) == 0 )
     stop("parameter 'pas' has no data")
 
-  if ( !parameter %in% names(pas) )
+  if ( !is.null(parameter) && !parameter %in% names(pas) )
     stop(sprintf("parameter = '%s' is not found in the 'pas' object", parameter))
 
   if ( !is.numeric(radius) )
     stop(paste0("parameter 'radius' must be numeric"))
 
-  # ----- Choose colors and title ----------------------------------------------
-
-  # Ignore warnings from RColorBrewer as leaflet::colorBin() does the right thing
-  suppressWarnings({
-
-    if ( stringr::str_detect(tolower(parameter), "^pm2\\.5_") ) { # AQI
-
-      colorInfo <- pas_palette(pas, parameter)
-
-      cols <- colorInfo$colors
-      labels <- colorInfo$key[,1]
-      colors <- colorInfo$key[,2]
-
-      legendTitle <- 'AQI'
-      value <- round(pas[[parameter]], 1)
-      unit <- '\U00B5g/m3'
-
-    } else if ( parameter == "temperature" ) {       # Temperature
-
-      colorInfo <- pas_palette(pas, "temperature", reverse = TRUE)
-
-      cols <- colorInfo$colors
-      labels <- colorInfo$key[,1]
-      colors <- colorInfo$key[,2]
-
-      legendTitle <- 'Temp in \U2109'
-      value <- round(pas[[parameter]], 0)
-      unit <- '\U2109'
-
-    } else if ( parameter == "humidity" ) {          # Humidity
-
-      colorInfo <- pas_palette(pas, "humidity", reverse = FALSE)
-
-      cols <- colorInfo$colors
-      labels <- colorInfo$key[,1]
-      colors <- colorInfo$key[,2]
-
-      value <- round(pas[[parameter]], 0)
-      legendTitle <- 'Relative Humidity'
-      unit <- '%'
-
-    } else {
-
-      # All other parameters
-      domain <- range(pas[[parameter]], na.rm = TRUE)
-      colorFunc <-
-        leaflet::colorNumeric(
-          "Purples",
-          domain = domain,
-          na.color = "#bbbbbb",
-          reverse = FALSE
-        )
-      cols <- colorFunc(pas[[parameter]])
-      breaks <- seq(domain[1], domain[2], length.out = 6)
-      offset <- diff(breaks)[1] / 2
-      levels <- signif(seq(breaks[1] + offset, breaks[6] - offset, length.out = 5), digits = 4)
-      colors <- leaflet::colorBin("Purples", domain = range(breaks), bins = breaks, reverse = FALSE)(levels)
-      labels <- as.character(levels)
-      value <- signif(pas[[parameter]], 4)
-      legendTitle <- parameter
-      unit <- ''
-
-    }
-
-  })
-
-  # * Create popupText -----
-
-  pas$popupText <- paste0(
-    "<b>", pas$locationName, "</b><br/>",
-    pas$deviceDeploymentID, "<br/>",
-    "sensor_index = ", pas$sensor_index, " <br/>",
-    "location_type = ", pas$location_type, " <br/>",
-    "elevation = ", pas$elevation, " m <br/>",
-    "temperature = ", round(pas$temperature, 0), " \U2109<br/>",
-    "humidity = ", round(pas$humidity, 0), "%<br/>",
-    "pm2.5_60minute = ", round(pas$pm2.5_60minute, 1), " \U00B5g/m\U00B3<br/>",
-    "pm2.5_24hour = ", round(pas$pm2.5_24hour, 1), " \U00B5g/m\U00B3<br/>",
-    "<br/>",
-    "<b>", parameter, " = ", value, " ", unit, "</b>"
-  )
+  # ----- Map setup ------------------------------------------------------------
 
   # * Extract view information -----
 
@@ -206,26 +132,152 @@ pas_leaflet <- function(
     providerTiles <- maptype
   }
 
-  # ----- Create leaflet map ---------------------------------------------------
 
-  m <-
-    leaflet::leaflet(dplyr::select(pas, c("longitude", "latitude"))) %>%
-    leaflet::setView(lng = mean(lonRange), lat = mean(latRange), zoom = zoom) %>%
-    leaflet::addProviderTiles(providerTiles) %>%
-    leaflet::addCircleMarkers(
-      radius = radius,
-      fillColor = cols,
-      fillOpacity = opacity,
-      stroke = FALSE,
-      popup = pas$popupText,
-      layerId = pas$locationName
-    ) %>%
-    leaflet::addLegend(
-      position = 'bottomright',
-      colors = rev(colors), # show low levels at the bottom
-      labels = rev(labels),  # show low levels at the bottom
-      opacity = 1,
-      title = legendTitle)
+  if ( is.null(parameter) ) {
+
+    # ----- Metadata only map --------------------------------------------------
+
+    cols <- "blue"
+    opacity <- 0.2
+
+    # * Create popupText -----
+    pas$popupText <- paste0(
+      "<b>", pas$locationName, "</b><br/>",
+      pas$deviceDeploymentID, "<br/>",
+      "sensor_index = ", pas$sensor_index, " <br/>",
+      "location_type = ", pas$location_type, " <br/>",
+      "date_created = ", strftime(pas$date_created, "%Y-%m-%d"), " <br/>",
+      "last_seen = ", strftime(pas$last_seen, "%Y-%m-%d"), " <br/>"
+    )
+
+    # * Create leaflet map -----
+    m <-
+      leaflet::leaflet(dplyr::select(pas, c("longitude", "latitude"))) %>%
+      leaflet::setView(lng = mean(lonRange), lat = mean(latRange), zoom = zoom) %>%
+      leaflet::addProviderTiles(providerTiles) %>%
+      leaflet::addCircleMarkers(
+        radius = radius,
+        fillColor = cols,
+        fillOpacity = opacity,
+        stroke = TRUE,
+        weight = 1,
+        popup = pas$popupText,
+        layerId = pas$locationName
+      )
+
+
+  } else {
+
+    # ----- Parameter map ------------------------------------------------------
+
+    # * Choose colors and title -----
+
+    stroke <- FALSE
+
+    # Ignore warnings from RColorBrewer as leaflet::colorBin() does the right thing
+    suppressWarnings({
+
+      if ( stringr::str_detect(tolower(parameter), "^pm2\\.5_") ) { # AQI
+
+        colorInfo <- pas_palette(pas, parameter)
+
+        cols <- colorInfo$colors
+        labels <- colorInfo$key[,1]
+        colors <- colorInfo$key[,2]
+
+        legendTitle <- 'AQI'
+        value <- round(pas[[parameter]], 1)
+        unit <- '\U00B5g/m3'
+
+      } else if ( parameter == "temperature" ) {       # Temperature
+
+        colorInfo <- pas_palette(pas, "temperature", reverse = TRUE)
+
+        cols <- colorInfo$colors
+        labels <- colorInfo$key[,1]
+        colors <- colorInfo$key[,2]
+
+        legendTitle <- 'Temp in \U2109'
+        value <- round(pas[[parameter]], 0)
+        unit <- '\U2109'
+
+      } else if ( parameter == "humidity" ) {          # Humidity
+
+        colorInfo <- pas_palette(pas, "humidity", reverse = FALSE)
+
+        cols <- colorInfo$colors
+        labels <- colorInfo$key[,1]
+        colors <- colorInfo$key[,2]
+
+        value <- round(pas[[parameter]], 0)
+        legendTitle <- 'Relative Humidity'
+        unit <- '%'
+
+      } else {
+
+        # All other parameters
+        domain <- range(pas[[parameter]], na.rm = TRUE)
+        colorFunc <-
+          leaflet::colorNumeric(
+            "Purples",
+            domain = domain,
+            na.color = "#bbbbbb",
+            reverse = FALSE
+          )
+        cols <- colorFunc(pas[[parameter]])
+        breaks <- seq(domain[1], domain[2], length.out = 6)
+        offset <- diff(breaks)[1] / 2
+        levels <- signif(seq(breaks[1] + offset, breaks[6] - offset, length.out = 5), digits = 4)
+        colors <- leaflet::colorBin("Purples", domain = range(breaks), bins = breaks, reverse = FALSE)(levels)
+        labels <- as.character(levels)
+        value <- signif(pas[[parameter]], 4)
+        legendTitle <- parameter
+        unit <- ''
+
+      }
+
+    })
+
+    # * Create popupText -----
+    pas$popupText <- paste0(
+      "<b>", pas$locationName, "</b><br/>",
+      pas$deviceDeploymentID, "<br/>",
+      "sensor_index = ", pas$sensor_index, " <br/>",
+      "location_type = ", pas$location_type, " <br/>",
+      "elevation = ", pas$elevation, " m <br/>",
+      "temperature = ", round(pas$temperature, 0), " \U2109<br/>",
+      "humidity = ", round(pas$humidity, 0), "%<br/>",
+      "pm2.5_60minute = ", round(pas$pm2.5_60minute, 1), " \U00B5g/m\U00B3<br/>",
+      "pm2.5_24hour = ", round(pas$pm2.5_24hour, 1), " \U00B5g/m\U00B3<br/>",
+      "<br/>",
+      "<b>", parameter, " = ", value, " ", unit, "</b>"
+    )
+
+    # * Create leaflet map -----
+    m <-
+      leaflet::leaflet(dplyr::select(pas, c("longitude", "latitude"))) %>%
+      leaflet::setView(lng = mean(lonRange), lat = mean(latRange), zoom = zoom) %>%
+      leaflet::addProviderTiles(providerTiles) %>%
+      leaflet::addCircleMarkers(
+        radius = radius,
+        fillColor = cols,
+        fillOpacity = opacity,
+        stroke = FALSE,
+        popup = pas$popupText,
+        layerId = pas$locationName
+      )
+
+    # Add a legend when coloring by a parameter
+    m <-
+      m %>%
+      leaflet::addLegend(
+        position = 'bottomright',
+        colors = rev(colors), # show low levels at the bottom
+        labels = rev(labels),  # show low levels at the bottom
+        opacity = 1,
+        title = legendTitle)
+
+  } # END of parameter version
 
   # ----- Return ---------------------------------------------------------------
 

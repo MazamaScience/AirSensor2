@@ -2,8 +2,8 @@
 % Please edit documentation in R/data.R
 \docType{data}
 \encoding{UTF-8}
-\name{example_pas}
-\alias{example_pas}
+\name{example_pas_historical}
+\alias{example_pas_historical}
 \title{Example enhanced Purple Air Synoptic dataset}
 \format{
 A tibble with 2358 rows and 51 columns of data.
@@ -12,7 +12,7 @@ A tibble with 2358 rows and 51 columns of data.
 https://www2.purpleair.com
 }
 \usage{
-example_pas
+example_pas_historical
 }
 \description{
 The \code{example_pas} dataset provides a quickly loadable
@@ -27,18 +27,18 @@ initializeMazamaSpatialUtils()
 
 source("global_vars.R") # contains PurpleAir_API_READ_KEY
 
-example_pas <-
+example_pas_historical <-
   pas_createNew(
     api_key = PurpleAir_API_READ_KEY,
-    fields = PurpleAir_DATA_AVG_PM25_FIELDS,
+    fields = PurpleAir_SENSOR_METADATA_FIELDS,
     countryCodes = "US",
-    stateCodes = c("WA", "OR"),
-    counties = NULL,
-    lookbackDays = 1,
-    location_type = 0
+    stateCodes = "WA",
+    counties = "Okanogan",
+    lookbackDays = 365 * 10,     # 10 years
+    location_type = 0            # Outdoor only
   )
 
-save(example_pas, file = "data/example_pas.rda")
+save(example_pas_historical, file = "data/example_pas_historical.rda")
 }
 }
 \seealso{

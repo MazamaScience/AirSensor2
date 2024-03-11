@@ -58,6 +58,7 @@
 #' example_pas <-
 #'   pas_createNew(
 #'     api_key = PurpleAir_API_READ_KEY,
+#'     fields = PurpleAir_DATA_AVG_PM25_FIELDS,
 #'     countryCodes = "US",
 #'     stateCodes = c("WA", "OR"),
 #'     counties = NULL,
@@ -71,6 +72,40 @@
 #' @seealso example_pas_raw
 #' @source https://www2.purpleair.com
 "example_pas"
+
+
+#' @encoding UTF-8
+#' @title Example enhanced Purple Air Synoptic dataset
+#' @format A tibble with 2358 rows and 51 columns of data.
+#' @description The \code{example_pas} dataset provides a quickly loadable
+#' version of a \emph{pas} object for practicing and code examples.
+#' This dataset contains data for sensors in Washington and Oregon
+#' and was generated on 2023-11-29 by running:
+#'
+#' \preformatted{
+#' library(AirSensor2)
+#'
+#' initializeMazamaSpatialUtils()
+#'
+#' source("global_vars.R") # contains PurpleAir_API_READ_KEY
+#'
+#' example_pas_historical <-
+#'   pas_createNew(
+#'     api_key = PurpleAir_API_READ_KEY,
+#'     fields = PurpleAir_SENSOR_METADATA_FIELDS,
+#'     countryCodes = "US",
+#'     stateCodes = "WA",
+#'     counties = "Okanogan",
+#'     lookbackDays = 365 * 10,     # 10 years
+#'     location_type = 0            # Outdoor only
+#'   )
+#'
+#' save(example_pas_historical, file = "data/example_pas_historical.rda")
+#' }
+#'
+#' @seealso example_pas_raw
+#' @source https://www2.purpleair.com
+"example_pas_historical"
 
 
 #' @encoding UTF-8

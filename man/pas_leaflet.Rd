@@ -6,7 +6,7 @@
 \usage{
 pas_leaflet(
   pas = NULL,
-  parameter = "pm2.5_60minute",
+  parameter = NULL,
   paletteName = NULL,
   radius = 10,
   opacity = 0.8,
@@ -16,7 +16,7 @@ pas_leaflet(
 \arguments{
 \item{pas}{PurpleAir Synoptic \emph{pas} object.}
 
-\item{parameter}{Value to plot, e.g. \code{pm25_1hr}.}
+\item{parameter}{Optional parameter used to color locations, e.g. \code{pm25_1hr}.}
 
 \item{paletteName}{\pkg{RColorBrewer} palette name to use when \code{parameter}
 is something other than:
@@ -40,8 +40,14 @@ Rstudio's 'Viewer' tab.
 This function creates interactive maps that will be displayed in
 RStudio's 'Viewer' tab.
 
-Typical usage would be to use the \code{parameter} argument to display pm25
-values from one of:
+When \code{parameter} is not specified, a simple map is displayed. When the
+user clicks on a location, site metadata is displayed.
+
+When \code{parameter} is specified, it is assumed that a \emph{pas} object
+has been created with measured parameters for a particular moment in time.
+
+For a \emph{pas} object that includes measurements, typical usage would be to
+use the \code{parameter} argument to display pm25 values from one of:
 \itemize{
 \item{"pm2.5_10minute"}
 \item{"pm2.5_30minute"}

@@ -6,9 +6,8 @@
 #' @param pas PurpleAir Synoptic \emph{pas} object.
 #' @param name Name of the data column to return.
 #'
-#' @description A simmple wrapper around \code{dplyr::pull()} to help with
+#' @description A simple wrapper around \code{dplyr::pull()} to help with
 #' readability of user recipes.
-#'
 #' @return A single column of data from the incoming \emph{pas} object.
 #'
 #' @examples
@@ -18,11 +17,11 @@
 #' LRAPA_sensor_indices <-
 #'   example_pas %>%
 #'   pas_filter(stringr::str_detect(name, "^LRAPA")) %>%
-#'   pas_get("sensor_index")
+#'   pas_pull("sensor_index")
 #'
 #' print(LRAPA_sensor_indices)
 
-pas_get <- function(
+pas_pull <- function(
   pas,
   name = NULL
 ) {

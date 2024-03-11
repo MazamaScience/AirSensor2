@@ -24,10 +24,9 @@
 #' \item{sensorManufacturer = "Purple Air"}
 #' }
 #'
-#' Limiting spacial searches by country can greatly speed up the process of
-#' enhancement. This is
-#' performed by providing a vector of ISO country codes to the \code{countryCodes}
-#' argument. By default, no subsetting is performed.
+#' Limiting spatial searches by country can greatly speed up the process of
+#' enhancement. This is performed by providing a vector of ISO country codes to
+#' the \code{countryCodes} argument. By default, no subsetting is performed.
 #'
 #' Users may further improve performance by also specifying \code{stateCodes}
 #' when \code{countryCodes} is limited to a single country.
@@ -85,6 +84,18 @@ pas_enhanceRawData <- function(
     }
   }
 
+  if ( !"longitude" %in% names(pas_raw) ) {
+    stop("Parameter 'pas_raw' does not have a 'longitude' column as required by pas_enhanceRawData()")
+  }
+
+  if ( !"latitude" %in% names(pas_raw) ) {
+    stop("Parameter 'pas_raw' does not have a 'latitude' column as required by pas_enhanceRawData()")
+  }
+
+  if ( !"location_type" %in% names(pas_raw) ) {
+    stop("Parameter 'pas_raw' does not have a 'location_type' column as required by pas_enhanceRawData()")
+  }
+
   # ----- Harmonize table ------------------------------------------------------
 
   # > dplyr::glimpse(pas_raw, width = 75)
@@ -128,33 +139,46 @@ pas_enhanceRawData <- function(
   # $ pm2.5_24hour         <dbl> 0.0, 25.2, 6.1, 5.9, 10.6, 1.6, 11.8, 10.9, …
   # $ pm2.5_1week          <dbl> 0.0, 16.7, 5.4, 8.6, 10.6, 2.0, 14.9, 12.8, …
 
+  pas <- pas_raw
+
+  # Go through each step and only perform action if that parameter exists
+
+  # * Harmonize basic fields
+  # Privacy
+  if ( "private" %in% names(pas) ) {
+    pas$privacy <- dplyr::if_else(pas$private == "0", "public", "private", as.character(NA))
+    pas$private <- NULL
+  }
+
+  # sensorManufacturer
+  pas$sensorManufacturer <- "PurpleAir"
+
+  # deviceID
+  # sensor_index is guaranteed to exist
+  pas$deviceID = paste0("pa.", pas$sensor_index)
+
+  # location_type is guaranteed to exist
+  pas$location_type = dplyr::if_else(pas$location_type == "0", "outside", "inside", as.character(NA))
+
+  # elevation
+  if ( "elevation" %in% names(pas) ) {
+    pas$elevation = round(pas$altitude * 0.3048) # convert from feet to meters
+  } else {
+    pas$elevation = as.numeric(NA)
+  }
+
+  # Remove unwanted fields
+  if ( "icon" %in% names(pas) ) {
+    pas$icon <- NULL
+  }
+
+  # * Add core metadata -----
+  # NOTE:  precision = 9 results in a precision of ~2 meters
   pas <-
-    pas_raw %>%
-
-    # * Rename columns -----
-    dplyr::rename(
-      privacy = .data$private
-    ) %>%
-
-    # * Modify columns -----
-    dplyr::mutate(
-      sensorManufacturer = "Purple Air",
-      deviceID = paste0("pa.", .data$sensor_index),
-      privacy = dplyr::if_else(.data$privacy == "0", "public", "private", as.character(NA)),
-      location_type = dplyr::if_else(.data$location_type == "0", "outside", "inside", as.character(NA)),
-      elevation = round(.data$altitude * 0.3048) # convert from feet to meters
-    ) %>%
-
-    # * Remove unwanted columns -----
-    dplyr::select(-c(
-      "icon"
-    )) %>%
-
-    # * Add core metadata -----
-    # NOTE:  precision = 9 results in a precision of ~2 meters
+    pas %>%
     MazamaLocationUtils::table_addCoreMetadata(precision = 9) %>%
 
-    # Fill in new columns where possible
+    # Unique identifier
     dplyr::mutate(
       deviceDeploymentID = paste0(.data$locationID, "_", .data$deviceID),
       locationName = .data$name

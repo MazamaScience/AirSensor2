@@ -6,6 +6,7 @@
 \usage{
 pas_createNew(
   api_key = NULL,
+  fields = PurpleAir_SENSOR_METADATA_FIELDS,
   countryCodes = NULL,
   stateCodes = NULL,
   counties = NULL,
@@ -18,6 +19,8 @@ pas_createNew(
 }
 \arguments{
 \item{api_key}{PurpleAir API Read Key.}
+
+\item{fields}{Character string with PurpleAir field names for the Get Sensor Data API.}
 
 \item{countryCodes}{ISO 3166-1 alpha-2 country codes used to subset the data.
 At least one countryCode must be specified.}
@@ -76,6 +79,19 @@ If \code{show_only} is used to request specific sensors, the \code{countryCodes}
 and \code{stateCodes} information is ignored when requesting data. But these
 are still used to help speed up the assignment of enhanced metadata..
 }
+\note{
+The \code{fields} parameter allows users to dial in which fields they
+are interested in depending on their needs. However, the following fields
+will be added if not specified in order to guarantee compatibility with
+\code{pas_enhanceRawData()}:
+\code{"longitude,latitude,name,location_type,date_created,last_seen"}.
+
+Pregenerated fields for use in this function include:
+\itemize{
+  \item{\code{/link{PurpleAir_SENSOR_METADATA_FIELDS}}} -- instrument-only fields
+  \item{\code{/link{PurpleAir_DATA_AVG_PM25_FIELDS}}} -- includes measurements
+}
+}
 \examples{
 \donttest{
 # Fail gracefully if any resources are not available
@@ -90,6 +106,7 @@ source("global_vars.R") # contains PurpleAir_API_READ_KEY
 pas <-
   pas_createNew(
     api_key = PurpleAir_API_READ_KEY,
+    fields = PurpleAir_DATA_AVG_PM25_FIELDS,
     countryCodes = "US",
     stateCodes = "WA",
     counties = c("Okanogan", "Ferry"),

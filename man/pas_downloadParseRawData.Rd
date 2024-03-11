@@ -75,6 +75,19 @@ information is ignored.
 which enhances raw synoptic data with additional spatial metadata so that it
 meets the criteria for use as a \emph{pas} object.
 }
+\note{
+The \code{fields} parameter allows users to dial in which fields they
+are interested in depending on their needs. However, the following fields
+will be added if not specified in order to guarantee compatibility with
+\code{pas_enhanceRawData()}:
+\code{"longitude,latitude,name,location_type,date_created,last_seen"}.
+
+Pregenerated fields for use in this function include:
+\itemize{
+  \item{\code{/link{PurpleAir_SENSOR_METADATA_FIELDS}}} -- instrument-only fields
+  \item{\code{/link{PurpleAir_DATA_AVG_PM25_FIELDS}}} -- includes measurements
+}
+}
 \examples{
 \donttest{
 # Fail gracefully if any resources are not available

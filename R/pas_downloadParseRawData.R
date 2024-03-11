@@ -47,6 +47,18 @@
 #' which enhances raw synoptic data with additional spatial metadata so that it
 #' meets the criteria for use as a \emph{pas} object.
 #'
+#' @note The \code{fields} parameter allows users to dial in which fields they
+#' are interested in depending on their needs. However, the following fields
+#' will be added if not specified in order to guarantee compatibility with
+#' \code{pas_enhanceRawData()}:
+#' \code{"longitude,latitude,name,location_type,date_created,last_seen"}.
+#'
+#' Pregenerated fields for use in this function include:
+#' \itemize{
+#'   \item{\code{/link{PurpleAir_SENSOR_METADATA_FIELDS}}} -- instrument-only fields
+#'   \item{\code{/link{PurpleAir_DATA_AVG_PM25_FIELDS}}} -- includes measurements
+#' }
+#'
 #' @references \href{https://www2.purpleair.com}{PurpleAir}
 #' @references \href{https://api.purpleair.com}{PurpleAir API}
 #' @references \href{https://www2.purpleair.com/policies/terms-of-service}{PurpleAir Terms of service}
@@ -159,6 +171,13 @@ pas_downloadParseRawData <- function(
 
   }
 
+  # Guarantee fields needed for enhancement
+  fields <-
+    fields %>%
+    stringr::str_split_1(",") %>%
+    union(c("longitude", "latitude", "name", "location_type", "date_created", "last_seen")) %>%
+    paste0(collapse = ",")
+
   # ----- Request data ---------------------------------------------------------
 
   PAList <-
@@ -204,15 +223,18 @@ pas_downloadParseRawData <- function(
 if ( FALSE ) {
 
   api_key = PurpleAir_API_READ_KEY
-  fields = PurpleAir_DATA_AVG_PM25_FIELDS
+  #fields = PurpleAir_DATA_AVG_PM25_FIELDS
+  fields <- PurpleAir_SENSOR_METADATA_FIELDS
   location_type = 0
   modified_since = NULL
   max_age = 3600 * 24
-  west = -125
-  east = -117
-  south = 42
-  north = 49
+  west = -120.5
+  east = -120
+  south = 48.2
+  north = 48.7
   baseUrl = "https://api.purpleair.com/v1/sensors"
+
+  fields <- "sensor_index,name,date_created,last_seen,longitude,latitude"
 
   pas_raw <-
     pas_downloadParseRawData(
