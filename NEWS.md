@@ -25,6 +25,7 @@ monitor in a _mts_monitor_ object from the **AirMonitor** package.
 * Renamed `pas_get()` to `pas_pull()`.
 * Updated `pas_createNew()` and `pas_leaflet()` to default to working with
 non-measurement fields defined in `PurplAir_SENSOR_METADATA_FIELDS`.
+* Added `pas_lifespanPlot()`.
 
 # AirSensor2 0.4.0
 
