@@ -13,7 +13,7 @@ source("global_vars.R") # contains PurpleAir_API_READ_KEY
 example_pas_raw &amp;lt;-
   pas_downloadParseRawData(
     PurpleAir_API_READ_KEY,
-    fields = PurpleAir_DATA_AVG_PM25_FIELDS,
+    fields = PurpleAir_PAS_AVG_PM25_FIELDS,
     location_type = 0,
     modified_since = NULL,
     max_age = 3600 * 24,
@@ -113,7 +113,7 @@ generated on 2023-11-29 by running:</p>
 <span><span class="va">example_pas_raw</span> <span class="op">&lt;-</span></span>
 <span>  <span class="fu"><a href="../reference/pas_downloadParseRawData.html">pas_downloadParseRawData</a></span><span class="op">(</span></span>
 <span>    <span class="va">PurpleAir_API_READ_KEY</span>,</span>
-<span>    fields <span class="op">=</span> <span class="va">PurpleAir_DATA_AVG_PM25_FIELDS</span>,</span>
+<span>    fields <span class="op">=</span> <span class="va">PurpleAir_PAS_AVG_PM25_FIELDS</span>,</span>
 <span>    location_type <span class="op">=</span> <span class="fl">0</span>,</span>
 <span>    modified_since <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>    max_age <span class="op">=</span> <span class="fl">3600</span> <span class="op">*</span> <span class="fl">24</span>,</span>

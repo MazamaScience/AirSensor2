@@ -12,7 +12,7 @@
 #'
 #' @description Plots the lifespan of PurpleAir sensors -- the time range
 #' between \code{pas$date_created} and \code{pas$last_seen}.  You can use
-#' \link{pas_filter} and \link{pas_arrange} to pre-process the \code{pas}
+#' \code{dplyr::filter} and \code{dplyr::arrange()} to pre-process the \code{pas}
 #' dataframe to generate informative results
 #'
 #' When \code{showSensor = TRUE}, typical values for \code{sensorIdentifier} would
@@ -111,7 +111,7 @@ pas_lifespanPlot <- function(
   argsList$col  <- ifelse("col" %in% names(argsList), argsList$col, "gray50")
   argsList$xlab  <- ifelse("xlab" %in% names(argsList), argsList$xlab, "")
   argsList$ylab  <- ifelse("ylab" %in% names(argsList), argsList$ylab, "")
-  argsList$main  <- ifelse("main" %in% names(argsList), argsList$main, "Sensor Lifespan")
+  argsList$main  <- ifelse("main" %in% names(argsList), argsList$main, "Sensor Reporting Lifespan")
   argsList$las  <- ifelse("las" %in% names(argsList), argsList$las, 1)
 
   # X-axis

@@ -55,8 +55,8 @@
 #'
 #' Pregenerated fields for use in this function include:
 #' \itemize{
-#'   \item{\code{/link{PurpleAir_SENSOR_METADATA_FIELDS}}} -- instrument-only fields
-#'   \item{\code{/link{PurpleAir_DATA_AVG_PM25_FIELDS}}} -- includes measurements
+#'   \item{\code{/link{PurpleAir_PAS_METADATA_FIELDS}}} -- instrument-only fields
+#'   \item{\code{/link{PurpleAir_PAS_AVG_PM25_FIELDS}}} -- includes measurements
 #' }
 #'
 #' @references \href{https://www2.purpleair.com}{PurpleAir}
@@ -76,32 +76,31 @@
 #'
 #' source("global_vars.R") # contains PurpleAir_API_READ_KEY
 #'
-#' # Download metadata fields only to look for 10 years of historical data
+#' # Download minimal fields, set max_age = 0, to look for historical data
 #' pas_raw <-
 #'   pas_downloadParseRawData(
 #'     api_key = PurpleAir_API_READ_KEY,
-#'     max_age = 3600 * 24 * 365 * 10,
+#'     max_age = 0,
 #'     west = -120.5,
 #'     east = -120,
 #'     south = 48.2,
 #'     north = 48.7
 #'   )
 #'
-#' fields <- c("sensor_index", "name", "date_created", "last_seen")
-#' View(pas_raw[,fields])
+#' View(pas_raw)
 #'
 #' # Download metadata, PM2.5 and weather parameter fields
 #' pas_raw <-
 #'   pas_downloadParseRawData(
 #'     api_key = PurpleAir_API_READ_KEY,
-#'     fields = PurpleAir_DATA_AVG_PM25_FIELDS,
+#'     fields = PurpleAir_PAS_AVG_PM25_FIELDS,
 #'     location_type = 0,
 #'     modified_since = NULL,
 #'     max_age = 3600 * 24,
-#'     west = -125,
-#'     east = -117,
-#'     south = 42,
-#'     north = 49
+#'     west = -120.5,
+#'     east = -120,
+#'     south = 48.2,
+#'     north = 48.7
 #'   )
 #'
 #' View(pas_raw[1:100,])
@@ -111,12 +110,12 @@
 
 pas_downloadParseRawData <- function(
   api_key = NULL,
-  fields = PurpleAir_SENSOR_METADATA_FIELDS,
+  fields = PurpleAir_PAS_MINIMAL_FIELDS,
   location_type = 0,
   read_keys = NULL,
   show_only = NULL,
   modified_since = NULL,
-  max_age = 3600 * 24 * 7,
+  max_age = 3600 * 24 * 7,     # Most recent week
   west = NULL,
   east = NULL,
   south = NULL,
@@ -175,7 +174,7 @@ pas_downloadParseRawData <- function(
   fields <-
     fields %>%
     stringr::str_split_1(",") %>%
-    union(c("longitude", "latitude", "name", "location_type", "date_created", "last_seen")) %>%
+    union(PurpleAir_PAS_MINIMAL_FIELDS) %>%
     paste0(collapse = ",")
 
   # ----- Request data ---------------------------------------------------------
@@ -223,8 +222,8 @@ pas_downloadParseRawData <- function(
 if ( FALSE ) {
 
   api_key = PurpleAir_API_READ_KEY
-  #fields = PurpleAir_DATA_AVG_PM25_FIELDS
-  fields <- PurpleAir_SENSOR_METADATA_FIELDS
+  #fields = PurpleAir_PAS_AVG_PM25_FIELDS
+  fields <- PurpleAir_PAS_METADATA_FIELDS
   location_type = 0
   modified_since = NULL
   max_age = 3600 * 24

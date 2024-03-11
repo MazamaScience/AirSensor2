@@ -50,17 +50,19 @@ library(AirSensor2)
 
 initializeMazamaSpatialUtils()
 
+# Hourly (uncorrected) PM2.5
 pat_raw <-
   pat_downloadParseRawData(
     api_key = PurpleAir_API_READ_KEY,
     sensor_index = "2323",
     startdate = "2023-02-01",
-    enddate = "2023-02-02",
+    enddate = "2023-02-03",
     timezone = "UTC",
-    fields = PurpleAir_HISTORY_PM25_FIELDS,
+    average = 60,
+    fields = "pm2.5_atm"
   )
 
-View(pat_raw[1:100,])
+head(pat_raw)
 
 }, silent = FALSE)
 }

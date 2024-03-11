@@ -30,7 +30,7 @@ source("global_vars.R") # contains PurpleAir_API_READ_KEY
 example_pas <-
   pas_createNew(
     api_key = PurpleAir_API_READ_KEY,
-    fields = PurpleAir_DATA_AVG_PM25_FIELDS,
+    fields = PurpleAir_PAS_AVG_PM25_FIELDS,
     countryCodes = "US",
     stateCodes = c("WA", "OR"),
     counties = NULL,

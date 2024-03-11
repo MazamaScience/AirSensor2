@@ -62,8 +62,9 @@
 #'
 #' Pregenerated fields for use in this function include:
 #' \itemize{
-#'   \item{\code{/link{PurpleAir_SENSOR_METADATA_FIELDS}}} -- instrument-only fields
-#'   \item{\code{/link{PurpleAir_DATA_AVG_PM25_FIELDS}}} -- includes measurements
+#'   \item{\code{/link{PurpleAir_PAS_MINIMAL_FIELDS}}} -- minimal set of fields
+#'   \item{\code{/link{PurpleAir_PAS_METADATA_FIELDS}}} -- instrument-only fields
+#'   \item{\code{/link{PurpleAir_PAS_AVG_PM25_FIELDS}}} -- includes measurements
 #' }
 #'
 #' @seealso \link{pas_downloadParseRawData}
@@ -89,11 +90,10 @@
 #' pas <-
 #'   pas_createNew(
 #'     api_key = PurpleAir_API_READ_KEY,
-#'     fields = PurpleAir_DATA_AVG_PM25_FIELDS,
 #'     countryCodes = "US",
 #'     stateCodes = "WA",
 #'     counties = c("Okanogan", "Ferry"),
-#'     lookbackDays = 1,
+#'     lookbackDays = 365 * 10,
 #'     location_type = 0
 #'   )
 #'
@@ -104,7 +104,7 @@
 
 pas_createNew <- function(
     api_key = NULL,
-    fields = PurpleAir_SENSOR_METADATA_FIELDS,
+    fields = PurpleAir_PAS_MINIMAL_FIELDS,
     countryCodes = NULL,
     stateCodes = NULL,
     counties = NULL,
@@ -169,7 +169,7 @@ pas_createNew <- function(
   fields <-
     fields %>%
     stringr::str_split_1(",") %>%
-    union(c("longitude", "latitude", "name", "location_type", "date_created", "last_seen")) %>%
+    union(PurpleAir_PAS_MINIMAL_FIELDS) %>%
     paste0(collapse = ",")
 
   # ----- Get country/state bounding box ---------------------------------------
@@ -289,7 +289,7 @@ pas_createNew <- function(
 if ( FALSE ) {
 
   countryCodes = "US"
-  stateCodes = c("WA", "OR")
+  stateCodes = c("WA")
   counties <- NULL
   lookbackDays = 1
   baseUrl = "https://api.purpleair.com/v1/sensors"

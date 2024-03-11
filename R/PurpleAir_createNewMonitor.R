@@ -242,9 +242,9 @@ PurpleAir_createNewMonitor <- function(
   if ( nrow(meta) != 1 )
     stop(sprintf("Multiple records in 'pas' match '%s'", sensor_index));
 
-  # Remove "purple_air_timeseries" class
+  # Remove "PurpleAir_timeseries" and "synoptic" classes
   attributes(meta)$class <-
-    setdiff(attributes(meta)$class, c("purple_air_timeseries", "synoptic"))
+    setdiff(attributes(meta)$class, c("PurpleAir_timeseries", "synoptic"))
 
   # ----- Create data ----------------------------------------------------------
 

@@ -12,7 +12,7 @@ pat_createNew(
   enddate = NULL,
   timezone = "UTC",
   average = 0,
-  fields = PurpleAir_HISTORY_PM25_FIELDS,
+  fields = PurpleAir_PAS_MINIMAL_FIELDS,
   parallel = FALSE,
   baseUrl = "https://api.purpleair.com/v1/sensors",
   verbose = FALSE

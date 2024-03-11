@@ -31,7 +31,7 @@ active graphics device.
 \description{
 Plots the lifespan of PurpleAir sensors -- the time range
 between \code{pas$date_created} and \code{pas$last_seen}.  You can use
-\link{pas_filter} and \link{pas_arrange} to pre-process the \code{pas}
+\code{dplyr::filter} and \code{dplyr::arrange()} to pre-process the \code{pas}
 dataframe to generate informative results
 
 When \code{showSensor = TRUE}, typical values for \code{sensorIdentifier} would

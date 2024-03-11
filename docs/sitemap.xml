@@ -70,7 +70,7 @@
     <loc>/reference/Clarity_updateOpenMonitor.html</loc>
   </url>
   <url>
-    <loc>/reference/PurpleAir_DATA_AVG_PM25_FIELDS.html</loc>
+    <loc>/reference/PurpleAir_PAS_AVG_PM25_FIELDS.html</loc>
   </url>
   <url>
     <loc>/reference/PurpleAir_DATA_PM25_FIELDS.html</loc>
@@ -82,7 +82,7 @@
     <loc>/reference/PurpleAir_HISTORY_PM25_FIELDS.html</loc>
   </url>
   <url>
-    <loc>/reference/PurpleAir_SENSOR_METADATA_FIELDS.html</loc>
+    <loc>/reference/PurpleAir_PAS_METADATA_FIELDS.html</loc>
   </url>
   <url>
     <loc>/reference/PurpleAir_checkAPIKey.html</loc>

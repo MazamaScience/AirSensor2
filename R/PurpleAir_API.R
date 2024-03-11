@@ -1224,43 +1224,93 @@ PurpleAir_getMembersData <- function(
 
 # ===== Public Data ============================================================
 
-# ---- * SENSOR_METADATA_FIELDS ------------------------------------------------
+# ---- * PAS_MINIMAL_FIELDS ----------------------------------------------------
 
 #' @export
 #' @docType data
-#' @name PurpleAir_SENSOR_METADATA_FIELDS
+#' @name PurpleAir_PAS_MINIMAL_FIELDS
 #' @title Comma-separated list of metadata fields used to create a \emph{pas} object
 #' @format String with comma-separated field names
 #' @description Character string with PurpleAir field names used in
 #' \code{pas_downloadParseRawData()}. These fields exclude all measurements
-#' but retain a minimal set of metadata useful for filtering. This \emph{pas} object
-#' can then be passed on to \emph{pat} creation functions.
+#' but retains the minimal set of metadata required to create a \emph{pas} object.
+#' This \emph{pas} object can then be passed on to \emph{pat} creation functions.
 #'
 #' A metadata-only \emph{pas} object can be useful when searching for historical
 #' data using \code{\link{pas_filterDate}}.
 #'
 #' Included fields:
-#' \itemize{
-#' \item{\code{name}}
-#' \item{\code{model}}
-#' \item{\code{hardware}}
-#' \item{\code{location_type}}
-#' \item{\code{private}}
-#' \item{\code{latitude}}
-#' \item{\code{longitude}}
-#' \item{\code{altitude}}
-#' \item{\code{position_rating}}
-#' \item{\code{firmware_version}}
-#' \item{\code{firmware_upgrade}}
-#' \item{\code{uptime}}
-#' \item{\code{last_seen}}
-#' \item{\code{last_modified}}
-#' \item{\code{date_created}}
+#'
+#' \preformatted{
+#' [1] "name"          "location_type" "latitude"
+#' [5] "longitude"     "last_seen"     "date_created"
 #' }
 #'
-#' @references \href{https://api.purpleair.com/#api-sensors-get-sensor-data}{Get Sensor Data API}
+#' @references \href{https://api.purpleair.com/#api-sensors-get-sensors-data}{Get Sensors Data API}
 
-PurpleAir_SENSOR_METADATA_FIELDS <-
+PurpleAir_PAS_MINIMAL_FIELDS <-
+  paste(
+    # Station information and status fields:
+    ###"name, icon, model, hardware, location_type, private, latitude, longitude, altitude, position_rating, led_brightness, firmware_version, firmware_upgrade, rssi, uptime, pa_latency, memory, last_seen, last_modified, date_created, channel_state, channel_flags, channel_flags_manual, channel_flags_auto, confidence, confidence_manual, confidence_auto",
+    "name, location_type, latitude, longitude, last_seen, date_created",
+    #
+    # Environmental fields:
+    #"humidity, humidity_a, humidity_b, temperature, temperature_a, temperature_b, pressure, pressure_a, pressure_b",
+    #
+    # Miscellaneous fields:
+    #   "voc, voc_a, voc_b, ozone1, analog_input"
+    #
+    # PM1.0 fields:
+    #   "pm1.0, pm1.0_a, pm1.0_b, pm1.0_atm, pm1.0_atm_a, pm1.0_atm_b, pm1.0_cf_1, pm1.0_cf_1_a, pm1.0_cf_1_b"
+    #
+    # PM2.5 fields:
+    #   "pm2.5_alt, pm2.5_alt_a, pm2.5_alt_b, pm2.5, pm2.5_a, pm2.5_b, pm2.5_atm, pm2.5_atm_a, pm2.5_atm_b, pm2.5_cf_1, pm2.5_cf_1_a, pm2.5_cf_1_b"
+    #
+    # PM2.5 pseudo (simple running) average fields:
+    #"pm2.5_10minute, pm2.5_10minute_a, pm2.5_10minute_b, pm2.5_30minute, pm2.5_30minute_a, pm2.5_30minute_b, pm2.5_60minute, pm2.5_60minute_a, pm2.5_60minute_b, pm2.5_6hour, pm2.5_6hour_a, pm2.5_6hour_b, pm2.5_24hour, pm2.5_24hour_a, pm2.5_24hour_b, pm2.5_1week, pm2.5_1week_a, pm2.5_1week_b",
+    #
+    # PM10.0 fields:
+    #   "pm10.0, pm10.0_a, pm10.0_b, pm10.0_atm, pm10.0_atm_a, pm10.0_atm_b, pm10.0_cf_1, pm10.0_cf_1_a, pm10.0_cf_1_b"
+    #
+    # Particle count fields:
+    #   "0.3_um_count, 0.3_um_count_a, 0.3_um_count_b, 0.5_um_count, 0.5_um_count_a, 0.5_um_count_b, 1.0_um_count, 1.0_um_count_a, 1.0_um_count_b, 2.5_um_count, 2.5_um_count_a, 2.5_um_count_b, 5.0_um_count, 5.0_um_count_a, 5.0_um_count_b, 10.0_um_count 10.0_um_count_a, 10.0_um_count_b"
+    #
+    # ThingSpeak fields, used to retrieve data from api.thingspeak.com:
+    #   "primary_id_a, primary_key_a, secondary_id_a, secondary_key_a, primary_id_b, primary_key_b, secondary_id_b, secondary_key_b"
+    sep = ",",
+    collapse = ","
+  ) %>%
+  stringr::str_replace_all(" ", "") %>%
+  stringr::str_replace_all(",$", "")
+
+
+# ---- * PAS_METADATA_FIELDS ---------------------------------------------------
+
+#' @export
+#' @docType data
+#' @name PurpleAir_PAS_METADATA_FIELDS
+#' @title Comma-separated list of metadata fields used to create a \emph{pas} object
+#' @format String with comma-separated field names
+#' @description Character string with PurpleAir field names used in
+#' \code{pas_downloadParseRawData()}. These fields exclude all measurements
+#' but retain many fields thay may useful for filtering. This \emph{pas} object
+#' can then be passed on to \emph{pat} creation functions.
+#'
+#' A metadata-only \emph{pas} object can be useful when searching for historical
+#' data using \code{\link{pas_filter}}.
+#'
+#' Included fields:
+#' \preformatted{
+#'  [1] "name"             "model"            "hardware"
+#'  [4] "location_type"    "private"          "latitude"
+#'  [7] "longitude"        "altitude"         "position_rating"
+#' [10] "firmware_version" "firmware_upgrade" "uptime"
+#' [13] "last_seen"        "last_modified"    "date_created"
+#' }
+#'
+#' @references \href{https://api.purpleair.com/#api-sensors-get-sensors-data}{Get Sensors Data API}
+
+PurpleAir_PAS_METADATA_FIELDS <-
   paste(
     # Station information and status fields:
     ###"name, icon, model, hardware, location_type, private, latitude, longitude, altitude, position_rating, led_brightness, firmware_version, firmware_upgrade, rssi, uptime, pa_latency, memory, last_seen, last_modified, date_created, channel_state, channel_flags, channel_flags_manual, channel_flags_auto, confidence, confidence_manual, confidence_auto",
@@ -1296,11 +1346,11 @@ PurpleAir_SENSOR_METADATA_FIELDS <-
   stringr::str_replace_all(",$", "")
 
 
-# ---- * AVG_PM25_FIELDS -------------------------------------------------------
+# ---- * PAS_AVG_PM25_FIELDS ---------------------------------------------------
 
 #' @export
 #' @docType data
-#' @name PurpleAir_DATA_AVG_PM25_FIELDS
+#' @name PurpleAir_PAS_AVG_PM25_FIELDS
 #' @title Comma-separated list of fields used to create a \emph{pas} object
 #' @format String with comma-separated field names
 #' @description Character string with PurpleAir field names used in
@@ -1311,12 +1361,22 @@ PurpleAir_SENSOR_METADATA_FIELDS <-
 #' These fields are useful for creating maps of the latest quality and weather
 #' parameters.
 #'
-#' @references \href{https://api.purpleair.com/#api-sensors-get-sensor-data}{Get Sensor Data API}
+#' #' Included fields:
+#' \preformatted{
+#'  [1] "name"           "location_type"  "private"        "latitude"
+#'  [5] "longitude"      "last_seen"      "date_created"   "confidence"
+#'  [9] "humidity"       "temperature"    "pressure"       "pm2.5_10minute"
+#' [13] "pm2.5_30minute" "pm2.5_60minute" "pm2.5_6hour"    "pm2.5_24hour"
+#' [17] "pm2.5_1week"
+#' }
+#'
+#' @references \href{https://api.purpleair.com/#api-sensors-get-sensors-data}{Get Sensors Data API}
 
-PurpleAir_DATA_AVG_PM25_FIELDS <-
+PurpleAir_PAS_AVG_PM25_FIELDS <-
   paste(
     # Station information and status fields:
-    "name, icon, model, hardware, location_type, private, latitude, longitude, altitude, position_rating, led_brightness, firmware_version, firmware_upgrade, rssi, uptime, pa_latency, memory, last_seen, last_modified, date_created, channel_state, channel_flags, channel_flags_manual, channel_flags_auto, confidence, confidence_manual, confidence_auto",
+    ###"name, icon, model, hardware, location_type, private, latitude, longitude, altitude, position_rating, led_brightness, firmware_version, firmware_upgrade, rssi, uptime, pa_latency, memory, last_seen, last_modified, date_created, channel_state, channel_flags, channel_flags_manual, channel_flags_auto, confidence, confidence_manual, confidence_auto",
+    "name, location_type, private, latitude, longitude, last_seen, date_created, confidence",
     #
     # Environmental fields:
     ###"humidity, humidity_a, humidity_b, temperature, temperature_a, temperature_b, pressure, pressure_a, pressure_b",
@@ -1348,6 +1408,7 @@ PurpleAir_DATA_AVG_PM25_FIELDS <-
   ) %>%
   stringr::str_replace_all(" ", "") %>%
   stringr::str_replace_all(",$", "")
+
 
 
 # ---- * PM25_FIELDS -----------------------------------------------------------

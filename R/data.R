@@ -16,7 +16,7 @@
 #' example_pas_raw <-
 #'   pas_downloadParseRawData(
 #'     PurpleAir_API_READ_KEY,
-#'     fields = PurpleAir_DATA_AVG_PM25_FIELDS,
+#'     fields = PurpleAir_PAS_AVG_PM25_FIELDS,
 #'     location_type = 0,
 #'     modified_since = NULL,
 #'     max_age = 3600 * 24,
@@ -58,7 +58,7 @@
 #' example_pas <-
 #'   pas_createNew(
 #'     api_key = PurpleAir_API_READ_KEY,
-#'     fields = PurpleAir_DATA_AVG_PM25_FIELDS,
+#'     fields = PurpleAir_PAS_AVG_PM25_FIELDS,
 #'     countryCodes = "US",
 #'     stateCodes = c("WA", "OR"),
 #'     counties = NULL,
@@ -92,7 +92,7 @@
 #' example_pas_historical <-
 #'   pas_createNew(
 #'     api_key = PurpleAir_API_READ_KEY,
-#'     fields = PurpleAir_SENSOR_METADATA_FIELDS,
+#'     fields = PurpleAir_PAS_METADATA_FIELDS,
 #'     countryCodes = "US",
 #'     stateCodes = "WA",
 #'     counties = "Okanogan",

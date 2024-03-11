@@ -30,7 +30,7 @@ source("global_vars.R") # contains PurpleAir_API_READ_KEY
 example_pas_historical <-
   pas_createNew(
     api_key = PurpleAir_API_READ_KEY,
-    fields = PurpleAir_SENSOR_METADATA_FIELDS,
+    fields = PurpleAir_PAS_METADATA_FIELDS,
     countryCodes = "US",
     stateCodes = "WA",
     counties = "Okanogan",

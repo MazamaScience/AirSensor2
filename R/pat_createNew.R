@@ -86,7 +86,7 @@ pat_createNew <- function(
     enddate = NULL,
     timezone = "UTC",
     average = 0,
-    fields = PurpleAir_HISTORY_PM25_FIELDS,
+    fields = PurpleAir_PAS_MINIMAL_FIELDS,
     parallel = FALSE,
     baseUrl = "https://api.purpleair.com/v1/sensors",
     verbose = FALSE
@@ -311,7 +311,7 @@ pat_createNew <- function(
 
   # Combine meta and data dataframes into a list
   pat <- list(meta = meta, data = data)
-  class(pat) <- c("purple_air_timeseries", class(pat))
+  class(pat) <- c("PurpleAir_timeseries", class(pat))
 
   return(pat)
 
@@ -328,7 +328,7 @@ if ( FALSE ) {
   enddate = "2023-01-08"
   timezone = "America/Los_Angeles"
   average = 60
-  fields = PurpleAir_HISTORY_PM25_FIELDS
+  fields = PurpleAir_PAS_MINIMAL_FIELDS
   baseUrl = "https://api.purpleair.com/v1/sensors"
   parallel = TRUE
   verbose = TRUE

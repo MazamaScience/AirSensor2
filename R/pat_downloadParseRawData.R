@@ -36,30 +36,32 @@
 #'
 #' initializeMazamaSpatialUtils()
 #'
+#' # Hourly (uncorrected) PM2.5
 #' pat_raw <-
 #'   pat_downloadParseRawData(
 #'     api_key = PurpleAir_API_READ_KEY,
 #'     sensor_index = "2323",
 #'     startdate = "2023-02-01",
-#'     enddate = "2023-02-02",
+#'     enddate = "2023-02-03",
 #'     timezone = "UTC",
-#'     fields = PurpleAir_HISTORY_PM25_FIELDS,
+#'     average = 60,
+#'     fields = "pm2.5_atm"
 #'   )
 #'
-#' View(pat_raw[1:100,])
+#' head(pat_raw)
 #'
 #' }, silent = FALSE)
 #' }
 
 pat_downloadParseRawData <- function(
-  api_key = NULL,
-  sensor_index = NULL,
-  startdate = NULL,
-  enddate = NULL,
-  timezone = "UTC",
-  average = 0,
-  fields = PurpleAir_HISTORY_PM25_FIELDS,
-  baseUrl = "https://api.purpleair.com/v1/sensors"
+    api_key = NULL,
+    sensor_index = NULL,
+    startdate = NULL,
+    enddate = NULL,
+    timezone = "UTC",
+    average = 0,
+    fields = PurpleAir_HISTORY_PM25_FIELDS,
+    baseUrl = "https://api.purpleair.com/v1/sensors"
 ) {
 
   # ----- Validate parameters --------------------------------------------------
@@ -105,24 +107,26 @@ pat_downloadParseRawData <- function(
 
 if ( FALSE ) {
 
-  api_key = PurpleAir_API_READ_KEY
-
-  baseUrl = "https://api.purpleair.com/v1/sensors"
+  # Hourly pm2.5_atm (uncorrected)
+  api_key <- PurpleAir_API_READ_KEY
+  sensor_index <- "131611"
+  startdate <- "2023-01-01"
+  enddate <- "2023-01-03"
+  timezone <- "UTC"
+  average <- 60
+  fields <- "pm2.5_atm"
+  baseUrl <- "https://api.purpleair.com/v1/sensors"
 
   pat_raw <-
     pat_downloadParseRawData(
-      api_key,
-      sensor_index = "131611",
-      startdate = "2023-01-01",
-      enddate = "2023-01-01",
-      timezone = "UTC",
-      average = 0,
-      fields = PurpleAir_HISTORY_PM25_FIELDS,
-      baseUrl = "https://api.purpleair.com/v1/sensors/:sensor_index/history/csv"
+      api_key = api_key,
+      sensor_index = sensor_index,
+      startdate = startdate,
+      enddate = enddate,
+      timezone = timezone,
+      average = average,
+      fields = fields,
+      baseUrl = baseUrl
     )
-
-
-
-
 
 }

@@ -64,14 +64,14 @@ pas_filterDate <- function(
   if ( !"date_created" %in% names(pas) ) {
     stop(paste0(
       "Incoming pas has no 'date_created' column.\n",
-      "Please create a pas object using PurpleAir_SENSOR_METADATA_FIELDS"
+      "Please create a pas object using PurpleAir_PAS_METADATA_FIELDS"
     ))
   }
 
   if ( !"last_seen" %in% names(pas) ) {
     stop(paste0(
       "Incoming pas has no 'date_created' column.\n",
-      "Please create a pas object using PurpleAir_SENSOR_METADATA_FIELDS"
+      "Please create a pas object using PurpleAir_PAS_METADATA_FIELDS"
     ))
   }
 
