@@ -12,7 +12,6 @@
 #' @param startdate Desired start time (ISO 8601) or \code{POSIXct}.
 #' @param enddate Desired end time (ISO 8601) or \code{POSIXct}.
 #' @param timezone Olson timezone used to interpret dates.
-#' @param correction_FUN Correction function applied to \code{pat} data.
 #' @param sleep Seconds to sleep between API requests.
 #' @param parallel Logical specifying whether to attempt simultaneous downloads
 #' using \code{parallel::\link[parallel:mcparallel]{mcparallel}}. (Not available
@@ -28,23 +27,8 @@
 #' Data from PurpleAir is typically corrected to more closely correlate with
 #' EPA regulatory monitors.
 #'
-#' By default, \code{correction_FUN} uses the EPA correction equation described
-#' in (see \link{PurpleAir_correction}). Users may supply their own
-#' correction function as long as it meets the following two criteria:
-#' \enumerate{
-#' \item{It must accept an "hourly pat" object as the first argument.}
-#' \item{It must return an augmented "hourly pat" object with an additional
-#' \code{"pm2.5_corrected"} column in \code{pat$data}.}
-#' }
-#'
-#' A trivial example to just use \code{pm2.5_atm} would be:
-#'
-#' \preformatted{
-#' my_correction <- function(pat) {
-#'   pat$data$pm2.5_corrected <- pat$data$pm2.5_atm
-#'   return(pat)
-#' }
-#' }
+#' The EPA correction equation described in (see \link{PurpleAir_correction})
+#' is used to correct the data from PurpleAir.
 #'
 #' @note Parallel processing using \code{parallel = TRUE} is not available on
 #' Windows machines.
@@ -107,7 +91,6 @@ PurpleAir_createNewMonitor <- function(
     startdate = NULL,
     enddate = NULL,
     timezone = "UTC",
-    correction_FUN = PurpleAir_correction,
     sleep = 0.5,
     parallel = FALSE,
     verbose = TRUE
@@ -156,9 +139,6 @@ PurpleAir_createNewMonitor <- function(
   # $ datetime     <dttm> 2022-09-07 07:00:00, 2022-09-07 08:00:00, 2022-09-0…
   # $ humidity     <dbl> 30.000, 30.034, 31.066, 32.000, 32.000, 32.000, 32.0…
   # $ temperature  <dbl> 79.733, 79.000, 79.000, 79.000, 79.000, 78.267, 78.0…
-  # $ pm2.5_atm    <dbl> 10.3310, 5.6240, 3.1970, 1.3540, 0.9455, 0.8780, 0.7…
-  # $ pm2.5_atm_a  <dbl> 5.959, 5.301, 3.364, 1.446, 1.026, 0.980, 0.852, 1.8…
-  # $ pm2.5_atm_b  <dbl> 14.703, 5.947, 3.030, 1.262, 0.865, 0.776, 0.643, 1.…
   # $ pm2.5_cf_1   <dbl> 10.3310, 5.6240, 3.1970, 1.3540, 0.9455, 0.8780, 0.7…
   # $ pm2.5_cf_1_a <dbl> 5.959, 5.301, 3.364, 1.446, 1.026, 0.980, 0.852, 1.8…
   # $ pm2.5_cf_1_b <dbl> 14.703, 5.947, 3.030, 1.262, 0.865, 0.776, 0.643, 1.…
@@ -288,7 +268,7 @@ if ( FALSE ) {
   startdate = "2022-09-07"
   enddate = "2022-09-14"
   timezone = "America/Los_Angeles"
-  fields = PurpleAir_PAT_HOURLY_FIELDS
+  fields = PurpleAir_PAT_EPA_HOURLY_FIELDS
   baseUrl = "https://api.purpleair.com/v1/sensors"
   sleep = 0.5
   parallel = FALSE

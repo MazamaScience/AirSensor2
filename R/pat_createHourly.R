@@ -84,7 +84,7 @@ pat_createHourly <- function(
     startdate = NULL,
     enddate = NULL,
     timezone = "UTC",
-    fields = PurpleAir_PAT_HOURLY_FIELDS,
+    fields = PurpleAir_PAT_EPA_HOURLY_FIELDS,
     sleep = 0.5,
     parallel = FALSE,
     baseUrl = "https://api.purpleair.com/v1/sensors",
@@ -139,7 +139,7 @@ if ( FALSE ) {
   startdate = "2023-01-01"
   enddate = "2023-01-09"
   timezone = "America/Los_Angeles"
-  fields = PurpleAir_PAT_HOURLY_FIELDS
+  fields = PurpleAir_PAT_EPA_HOURLY_FIELDS
   sleep = 0.5
   parallel = FALSE
   baseUrl = "https://api.purpleair.com/v1/sensors"

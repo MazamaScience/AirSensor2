@@ -1498,8 +1498,7 @@ PurpleAir_PAList_PM25_FIELDS <-
 #' \preformatted{
 #'  [1] "rssi"         "uptime"       "pa_latency"   "memory"
 #'  [5] "humidity"     "temperature"  "pressure"     "pm2.5_atm"
-#'  [9] "pm2.5_atm_a"  "pm2.5_atm_b"  "pm2.5_atm_b"  "pm2.5_cf_1"
-#' [13] "pm2.5_cf_1_a" "pm2.5_cf_1_b"
+#'  [9] "pm2.5_atm_a"  "pm2.5_atm_b"  "pm2.5_atm_b"
 #' }
 #'
 #' @references \href{https://api.purpleair.com/#api-sensors-get-sensor-history-csv}{Get Sensor History API}
@@ -1530,7 +1529,7 @@ PurpleAir_PAT_QC_FIELDS <-
     #
     # PM2.5 fields:
     ###"pm2.5_alt, pm2.5_alt_a, pm2.5_alt_b, pm2.5_atm, pm2.5_atm_a, pm2.5_atm_b, pm2.5_cf_1, pm2.5_cf_1_a, pm2.5_cf_1_b",
-    "pm2.5_atm, pm2.5_atm_a, pm2.5_atm_b, pm2.5_atm_b, pm2.5_cf_1, pm2.5_cf_1_a, pm2.5_cf_1_b",
+    "pm2.5_atm, pm2.5_atm_a, pm2.5_atm_b, pm2.5_atm_b",
     #
     # PM10.0 fields:
     #   "pm10.0_atm, pm10.0_atm_a, pm10.0_atm_b, pm10.0_cf_1, pm10.0_cf_1_a, pm10.0_cf_1_b",
@@ -1546,23 +1545,27 @@ PurpleAir_PAT_QC_FIELDS <-
   stringr::str_replace_all(" ", "") %>%
   stringr::str_replace_all(",$", "")
 
-# ---- * PAT_HOURLY_FIELDS --------------------------------------------
+# ---- * PAT_EPA_HOURLY_FIELDS --------------------------------------------
 
 #' @export
 #' @docType data
-#' @name PurpleAir_PAT_HOURLY_FIELDS
-#' @title Comma-separated list of fields needed for simple PM2.5 data analysis
+#' @name PurpleAir_PAT_EPA_HOURLY_FIELDS
+#' @title Comma-separated list of fields needed for EPA QC AND correction
 #' @format String with comma-separated field names
-#' @description Character string with a minimal set of  PurpleAir field names
-#' used in \code{pat_downloadParaseRawData()}. These fields are sufficient for
-#' basic QC and correction algorithms.
+#' @description Character string with a minimal set of PurpleAir field names
+#' used in \code{PurpleAir_createNewMonitor()}. These fields are sufficient to
+#' apply the EPA correction algorithm used in the AirNow
+#' \href{https://fire.airnow.gov}{Fire & Smoke Map}.
 #'
 #' Included fields:
 #' \preformatted{
-#' [1] "humidity"     "temperature"  "pm2.5_atm"    "pm2.5_atm_a"
-#' [5] "pm2.5_atm_b"  "pm2.5_cf_1"   "pm2.5_cf_1_a" "pm2.5_cf_1_b"
+#' [1] "humidity"     "temperature"  "pm2.5_cf_1"   "pm2.5_cf_1_a"
+#' [5] "pm2.5_cf_1_b"
 #' }
-
+#'
+#' @seealso \link{PurpleAir_correction}
+#'
+#' @references \href{https://www.epa.gov/sites/default/files/2021-05/documents/toolsresourceswebinar_purpleairsmoke_210519b.pdf}{EPA PurpleAir Correction}.
 #' @references \href{https://api.purpleair.com/#api-sensors-get-sensor-history-csv}{Get Sensor History API}
 
 # From: https://api.purpleair.com/#api-sensors-get-sensor-history-csv
@@ -1573,7 +1576,7 @@ PurpleAir_PAT_QC_FIELDS <-
 # available when using averages. It is a comma separated list with one or more of the following:
 #
 
-PurpleAir_PAT_HOURLY_FIELDS <-
+PurpleAir_PAT_EPA_HOURLY_FIELDS <-
   paste(
     # Station information and status fields:
     #"hardware, latitude, longitude, altitude, firmware_version",
@@ -1591,7 +1594,7 @@ PurpleAir_PAT_HOURLY_FIELDS <-
     #
     # PM2.5 fields:
     ###"pm2.5_alt, pm2.5_alt_a, pm2.5_alt_b, pm2.5_atm, pm2.5_atm_a, pm2.5_atm_b, pm2.5_cf_1, pm2.5_cf_1_a, pm2.5_cf_1_b",
-    "pm2.5_atm, pm2.5_atm_a, pm2.5_atm_b, pm2.5_cf_1, pm2.5_cf_1_a, pm2.5_cf_1_b",
+    "pm2.5_cf_1, pm2.5_cf_1_a, pm2.5_cf_1_b",
     #
     # PM10.0 fields:
     #   "pm10.0_atm, pm10.0_atm_a, pm10.0_atm_b, pm10.0_cf_1, pm10.0_cf_1_a, pm10.0_cf_1_b",

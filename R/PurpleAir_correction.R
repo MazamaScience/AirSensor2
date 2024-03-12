@@ -56,6 +56,13 @@ PurpleAir_correction <- function(
     }
   }
 
+  if ( !all(PurpleAir_PAT_EPA_HOURLY_FIELDS %in% names(pat)) ) {
+    stop(
+      "Required fields missing from 'pat' which must include all of \"%s\"",
+      PurpleAir_PAT_EPA_HOURLY_FIELDS
+    )
+  }
+
   data <- pat$data
 
   # ----- Apply correction -----------------------------------------------------
@@ -92,7 +99,7 @@ if ( FALSE ) {
   startdate = "2023-01-01"
   enddate = "2023-01-08"
   timezone = "America/Los_Angeles"
-  fields = PurpleAir_PAT_HOURLY_FIELDS
+  fields = PurpleAir_PAT_EPA_HOURLY_FIELDS
   baseUrl = "https://api.purpleair.com/v1/sensors"
   verbose = TRUE
 
