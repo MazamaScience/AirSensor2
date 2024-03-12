@@ -67,10 +67,10 @@ PurpleAir_correction <- function(
     mask_low <- data$pm2.5_cf_1 <= 343
 
     data$pm2.5_corrected[mask_low] <-
-      0.52 * data$pm2.5_cf_1 - 0.086 * data$humidity + 5.75
+      0.52 * data$pm2.5_cf_1[mask_low] - 0.086 * data$humidity[mask_low] + 5.75
 
     data$pm2.5_corrected[!mask_low] <-
-      0.46 * data$pm2.5_cf_1 + 3.93 * .0001 * data$pm2.5_cf_1^2 + 2.97
+      0.46 * data$pm2.5_cf_1[!mask_low] + 3.93 * .0001 * data$pm2.5_cf_1[!mask_low]^2 + 2.97
 
   }
 
@@ -92,7 +92,7 @@ if ( FALSE ) {
   startdate = "2023-01-01"
   enddate = "2023-01-08"
   timezone = "America/Los_Angeles"
-  fields = PurpleAir_HISTORY_HOURLY_PM25_FIELDS
+  fields = PurpleAir_PAT_HOURLY_FIELDS
   baseUrl = "https://api.purpleair.com/v1/sensors"
   verbose = TRUE
 

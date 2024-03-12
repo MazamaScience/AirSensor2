@@ -16,6 +16,7 @@
 #' @param average Temporal averaging in minutes performed by PurpleAir. One of:
 #' 0 (raw), 10, 30, 60 (hour), 360, 1440 (day).
 #' @param fields Character string with PurpleAir field names for the Get Sensor Data API.
+#' @param sleep Seconds to sleep between API requests.
 #' @param parallel Logical specifying whether to attempt simultaneous downloads
 #' using \code{parallel::\link[parallel:mcparallel]{mcparallel}}. (Not available
 #' on Windows.)
@@ -25,6 +26,13 @@
 #' @return A PurpleAir Timeseries \emph{pat} object.
 #'
 #' @description Create a \code{pat} object for a specific \code{sensor_index}.
+#' This function splits up the requested time range into 2-day intervals (the
+#' maximum allowed by the PurpleAir API) and makes repeated calls to
+#' \code{pat_downloadParseRawData()}. The \code{sleep} parameter waits a small
+#' amount of time between API requests.
+#'
+#' The PurpleAir API will respond with "rate limiting" errors unless sleep is
+#' set appropriately. When \code{parallel = TRUE}, \code{sleep} is ignored.
 #'
 #' @note Parallel processing using \code{parallel = TRUE} is not available on
 #' Windows machines.
@@ -56,9 +64,8 @@
 #'     pas = example_pas,
 #'     sensor_index = "76545",
 #'     startdate = "2023-01-01",
-#'     enddate = "2023-01-08",
-#'     timezone = "UTC",
-#'     verbose = TRUE
+#'     enddate = "2023-01-03",
+#'     timezone = "UTC"
 #'   )
 #'
 #' str(pat$meta)
@@ -69,10 +76,9 @@
 #'     pas = example_pas,
 #'     sensor_index = "76545",
 #'     startdate = "2023-01-01",
-#'     enddate = "2023-01-08",
+#'     enddate = "2023-01-09",
 #'     timezone = "UTC",
-#'     parallel = TRUE,
-#'     verbose = TRUE
+#'     parallel = TRUE
 #'   )
 #'
 #' }, silent = FALSE)
@@ -86,10 +92,11 @@ pat_createNew <- function(
     enddate = NULL,
     timezone = "UTC",
     average = 0,
-    fields = PurpleAir_PAS_MINIMAL_FIELDS,
+    fields = PurpleAir_PAT_QC_FIELDS,
+    sleep = 0.5,
     parallel = FALSE,
     baseUrl = "https://api.purpleair.com/v1/sensors",
-    verbose = FALSE
+    verbose = TRUE
 ) {
 
   # ----- Validate parameters --------------------------------------------------
@@ -104,6 +111,7 @@ pat_createNew <- function(
   MazamaCoreUtils::stopIfNull(average)
   MazamaCoreUtils::stopIfNull(fields)
   MazamaCoreUtils::stopIfNull(baseUrl)
+  sleep <- MazamaCoreUtils::setIfNull(sleep, 0.5)
   parallel <- MazamaCoreUtils::setIfNull(parallel, FALSE)
   verbose <- MazamaCoreUtils::setIfNull(verbose, FALSE)
 
@@ -216,7 +224,6 @@ pat_createNew <- function(
 
     dataList <- list()
 
-    # Use more specific ID rather than the label
     dataList[[1]] <-
       pat_downloadParseRawData(
         api_key = api_key,
@@ -232,6 +239,9 @@ pat_createNew <- function(
     if ( length(dateSequence) > 2 ) {
 
       for ( i in 2:(length(dateSequence) - 1) ) {
+
+        # Pause for a moment
+        Sys.sleep(sleep)
 
         if ( verbose ) {
           message(sprintf("Requesting data for sensor_index %s from %s to %s",
@@ -325,12 +335,30 @@ if ( FALSE ) {
   pas = example_pas
   sensor_index = "76545"
   startdate = "2023-01-01"
-  enddate = "2023-01-08"
+  enddate = "2023-01-09"
   timezone = "America/Los_Angeles"
-  average = 60
-  fields = PurpleAir_PAS_MINIMAL_FIELDS
+  average = 0
+  fields = PurpleAir_PAT_QC_FIELDS
   baseUrl = "https://api.purpleair.com/v1/sensors"
-  parallel = TRUE
+  sleep = 0.5
+  parallel = FALSE
   verbose = TRUE
+
+
+  pat <-
+    pat_createNew(
+      api_key = api_key,
+      pas = pas,
+      sensor_index = sensor_index,
+      startdate = startdate,
+      enddate = enddate,
+      timezone = timezone,
+      average = average,
+      fields = PurpleAir_PAT_QC_FIELDS,
+      sleep = sleep,
+      parallel = parallel,
+      baseUrl = "https://api.purpleair.com/v1/sensors",
+      verbose = verbose
+    )
 
 }

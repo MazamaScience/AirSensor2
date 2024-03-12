@@ -34,8 +34,6 @@
 #'
 #' library(AirSensor2)
 #'
-#' initializeMazamaSpatialUtils()
-#'
 #' # Hourly (uncorrected) PM2.5
 #' pat_raw <-
 #'   pat_downloadParseRawData(
@@ -60,7 +58,7 @@ pat_downloadParseRawData <- function(
     enddate = NULL,
     timezone = "UTC",
     average = 0,
-    fields = PurpleAir_HISTORY_PM25_FIELDS,
+    fields = PurpleAir_PAT_QC_FIELDS,
     baseUrl = "https://api.purpleair.com/v1/sensors"
 ) {
 
@@ -113,8 +111,9 @@ if ( FALSE ) {
   startdate <- "2023-01-01"
   enddate <- "2023-01-03"
   timezone <- "UTC"
-  average <- 60
-  fields <- "pm2.5_atm"
+  average <- 0                   # Don't download too much data
+  #fields <- "pm2.5_atm"
+  fields <- PurpleAir_PAT_QC_FIELDS
   baseUrl <- "https://api.purpleair.com/v1/sensors"
 
   pat_raw <-

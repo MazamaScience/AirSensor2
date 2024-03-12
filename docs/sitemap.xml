@@ -76,10 +76,10 @@
     <loc>/reference/PurpleAir_DATA_PM25_FIELDS.html</loc>
   </url>
   <url>
-    <loc>/reference/PurpleAir_HISTORY_HOURLY_PM25_FIELDS.html</loc>
+    <loc>/reference/PurpleAir_PAT_HOURLY_FIELDS.html</loc>
   </url>
   <url>
-    <loc>/reference/PurpleAir_HISTORY_PM25_FIELDS.html</loc>
+    <loc>/reference/PurpleAir_PAT_QC_FIELDS.html</loc>
   </url>
   <url>
     <loc>/reference/PurpleAir_PAS_METADATA_FIELDS.html</loc>
@@ -142,7 +142,7 @@
     <loc>/reference/SENSOR_DATA_PM25_FIELDS.html</loc>
   </url>
   <url>
-    <loc>/reference/SENSOR_HISTORY_PM25_FIELDS.html</loc>
+    <loc>/reference/SENSOR_PAT_QC_FIELDS.html</loc>
   </url>
   <url>
     <loc>/reference/US_AQI.html</loc>

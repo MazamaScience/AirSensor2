@@ -7,7 +7,7 @@
 PurpleAir_getMembersData(
   api_key = NULL,
   group_id = NULL,
-  fields = PurpleAir_DATA_PM25_FIELDS,
+  fields = PurpleAir_PAList_PM25_FIELDS,
   location_type = NULL,
   max_age = 604800,
   baseUrl = "https://api.purpleair.com/v1/groups"

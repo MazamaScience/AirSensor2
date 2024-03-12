@@ -92,7 +92,7 @@ PurpleAir_checkAPIKey <- function(
 #'   PurpleAir_getSensorData(
 #'     api_key = PurpleAir_API_READ_KEY,
 #'     sensor_index = MY_SENSOR_INDEX,
-#'     fields = PurpleAir_DATA_PM25_FIELDS
+#'     fields = PurpleAir_PAList_PM25_FIELDS
 #'   )
 #'
 #' }, silent = FALSE)
@@ -101,7 +101,7 @@ PurpleAir_checkAPIKey <- function(
 PurpleAir_getSensorData <- function(
     api_key = NULL,
     sensor_index = NULL,
-    fields = PurpleAir_DATA_PM25_FIELDS,
+    fields = PurpleAir_PAList_PM25_FIELDS,
     baseUrl = "https://api.purpleair.com/v1/sensors"
 ) {
 
@@ -197,7 +197,7 @@ PurpleAir_getSensorData <- function(
 #'   start_timestamp = start,
 #'   end_timestamp = end,
 #'   average = 0,
-#'   fields = PurpleAir_HISTORY_PM25_FIELDS
+#'   fields = PurpleAir_PAT_QC_FIELDS
 #' )
 #'
 #' }, silent = FALSE)
@@ -209,7 +209,7 @@ PurpleAir_getSensorHistoryCSV <- function(
     start_timestamp = NULL,
     end_timestamp = NULL,
     average = 10,
-    fields = PurpleAir_HISTORY_PM25_FIELDS,
+    fields = PurpleAir_PAT_QC_FIELDS,
     baseUrl = "https://api.purpleair.com/v1/sensors"
 ) {
 
@@ -300,7 +300,7 @@ PurpleAir_getSensorHistoryCSV <- function(
 #'   start_timestamp = start,
 #'   end_timestamp = end,
 #'   average = 0,
-#'   fields = PurpleAir_HISTORY_PM25_FIELDS
+#'   fields = PurpleAir_PAT_QC_FIELDS
 #' )
 #'
 #' }, silent = FALSE)
@@ -312,7 +312,7 @@ PurpleAir_getSensorHistory <- function(
     start_timestamp = NULL,
     end_timestamp = NULL,
     average = 10,
-    fields = PurpleAir_HISTORY_PM25_FIELDS,
+    fields = PurpleAir_PAT_QC_FIELDS,
     baseUrl = "https://api.purpleair.com/v1/sensors"
 ) {
 
@@ -423,7 +423,7 @@ PurpleAir_getSensorHistory <- function(
 #'
 #'   PurpleAir_getSensorsData(
 #'     api_key = PurpleAir_API_READ_KEY,
-#'     fields = PurpleAir_DATA_PM25_FIELDS
+#'     fields = PurpleAir_PAS_MINIMAL_FIELDS
 #'   )
 #'
 #' }, silent = FALSE)
@@ -431,12 +431,12 @@ PurpleAir_getSensorHistory <- function(
 
 PurpleAir_getSensorsData <- function(
     api_key = NULL,
-    fields = PurpleAir_DATA_PM25_FIELDS,
+    fields = PurpleAir_PAS_MINIMAL_FIELDS,
     location_type = NULL,
     read_keys = NULL,
     show_only = NULL,
     modified_since = NULL,
-    max_age = 604800,
+    max_age = 0,
     nwlng = NULL,
     nwlat = NULL,
     selng = NULL,
@@ -1065,7 +1065,7 @@ PurpleAir_getMemberHistory <- function(
     start_timestamp = NULL,
     end_timestamp = NULL,
     average = 10,
-    fields = PurpleAir_HISTORY_PM25_FIELDS,
+    fields = PurpleAir_PAT_QC_FIELDS,
     baseUrl = "https://api.purpleair.com/v1/groups"
 ) {
 
@@ -1156,7 +1156,7 @@ PurpleAir_getMemberHistory <- function(
 PurpleAir_getMembersData <- function(
     api_key = NULL,
     group_id = NULL,
-    fields = PurpleAir_DATA_PM25_FIELDS,
+    fields = PurpleAir_PAList_PM25_FIELDS,
     location_type = NULL,
     max_age = 604800,
     baseUrl = "https://api.purpleair.com/v1/groups"
@@ -1240,7 +1240,6 @@ PurpleAir_getMembersData <- function(
 #' data using \code{\link{pas_filterDate}}.
 #'
 #' Included fields:
-#'
 #' \preformatted{
 #' [1] "name"          "location_type" "latitude"
 #' [5] "longitude"     "last_seen"     "date_created"
@@ -1361,7 +1360,7 @@ PurpleAir_PAS_METADATA_FIELDS <-
 #' These fields are useful for creating maps of the latest quality and weather
 #' parameters.
 #'
-#' #' Included fields:
+#' Included fields:
 #' \preformatted{
 #'  [1] "name"           "location_type"  "private"        "latitude"
 #'  [5] "longitude"      "last_seen"      "date_created"   "confidence"
@@ -1411,24 +1410,46 @@ PurpleAir_PAS_AVG_PM25_FIELDS <-
 
 
 
-# ---- * PM25_FIELDS -----------------------------------------------------------
+# ---- * PAList_PM25_FIELDS ----------------------------------------------------
 
 #' @export
 #' @docType data
-#' @name PurpleAir_DATA_PM25_FIELDS
+#' @name PurpleAir_PAList_PM25_FIELDS
 #' @title Comma-separated list of fields needed for PM2.5 data analysis
 #' @format String with comma-separated field names
 #' @description Character string with default PurpleAir field names used in
-#' \code{pas_downloadParaseRawData()}. These fields include most of the
-#' "information and status" fields, "humidity", "temperature", "pressure" and
-#' the PM2.5 fields for both A and B channels.
+#' \code{PurpleAir_getSensorData()} and \code{PurpleAir_getMemberData()}. These
+#' fields include most of the "information and status" fields, "humidity",
+#' "temperature", "pressure" and all the PM2.5 fields for both A and B channels.
+#'
+#' These fields are useful only for detailed, engineering-level analysis of
+#' the performance of an individual sensor.
+#'
+#' Included fields:
+#' \preformatted{
+#'  [1] "name"                 "model"                "hardware"
+#'  [4] "location_type"        "private"              "latitude"
+#'  [7] "longitude"            "led_brightness"       "firmware_version"
+#' [10] "firmware_upgrade"     "rssi"                 "uptime"
+#' [13] "pa_latency"           "memory"               "last_seen"
+#' [16] "last_modified"        "date_created"         "channel_state"
+#' [19] "channel_flags"        "channel_flags_manual" "channel_flags_auto"
+#' [22] "confidence"           "confidence_manual"    "confidence_auto"
+#' [25] "humidity"             "temperature"          "pressure"
+#' [28] "pm2.5_alt"            "pm2.5_alt_a"          "pm2.5_alt_b"
+#' [31] "pm2.5"                "pm2.5_a"              "pm2.5_b"
+#' [34] "pm2.5_atm"            "pm2.5_atm_a"          "pm2.5_atm_b"
+#' [37] "pm2.5_cf_1"           "pm2.5_cf_1_a"         "pm2.5_cf_1_b"
+#' }
+#'
 #'
 #' @references \href{https://api.purpleair.com/#api-sensors-get-sensor-data}{Get Sensor Data API}
 
-PurpleAir_DATA_PM25_FIELDS <-
+PurpleAir_PAList_PM25_FIELDS <-
   paste(
     # Station information and status fields:
-    "name, icon, model, hardware, location_type, private, latitude, longitude, altitude, position_rating, led_brightness, firmware_version, firmware_upgrade, rssi, uptime, pa_latency, memory, last_seen, last_modified, date_created, channel_state, channel_flags, channel_flags_manual, channel_flags_auto, confidence, confidence_manual, confidence_auto",
+    ###"name, icon, model, hardware, location_type, private, latitude, longitude, altitude, position_rating, led_brightness, firmware_version, firmware_upgrade, rssi, uptime, pa_latency, memory, last_seen, last_modified, date_created, channel_state, channel_flags, channel_flags_manual, channel_flags_auto, confidence, confidence_manual, confidence_auto",
+    "name, model, hardware, location_type, private, latitude, longitude, led_brightness, firmware_version, firmware_upgrade, rssi, uptime, pa_latency, memory, last_seen, last_modified, date_created, channel_state, channel_flags, channel_flags_manual, channel_flags_auto, confidence, confidence_manual, confidence_auto",
     #
     # Environmental fields:
     ###"humidity, humidity_a, humidity_b, temperature, temperature_a, temperature_b, pressure, pressure_a, pressure_b",
@@ -1461,17 +1482,25 @@ PurpleAir_DATA_PM25_FIELDS <-
   stringr::str_replace_all(",$", "")
 
 
-# ---- * HISTORY_PM25_FIELDS ---------------------------------------------------
+# ---- * PAT_QC_FIELDS ---------------------------------------------------
 
 #' @export
 #' @docType data
-#' @name PurpleAir_HISTORY_PM25_FIELDS
-#' @title Comma-separated list of fields needed for PM2.5 data analysis
+#' @name PurpleAir_PAT_QC_FIELDS
+#' @title Comma-separated list of fields needed for creating QC reports.
 #' @format String with comma-separated field names
 #' @description Character string with default PurpleAir field names used in
 #' \code{pat_downloadParaseRawData()}. These fields are sufficient for most
-#' QC algorithms and include most of the "information and status" fields,
-#' "humidity", "temperature", "pressure" and the PM2.5 "pseudo average" fields.
+#' QC algorithms and include most of the "information and status" and
+#' "environmental" fields.
+#'
+#' Included fields:
+#' \preformatted{
+#'  [1] "rssi"         "uptime"       "pa_latency"   "memory"
+#'  [5] "humidity"     "temperature"  "pressure"     "pm2.5_atm"
+#'  [9] "pm2.5_atm_a"  "pm2.5_atm_b"  "pm2.5_atm_b"  "pm2.5_cf_1"
+#' [13] "pm2.5_cf_1_a" "pm2.5_cf_1_b"
+#' }
 #'
 #' @references \href{https://api.purpleair.com/#api-sensors-get-sensor-history-csv}{Get Sensor History API}
 
@@ -1483,7 +1512,7 @@ PurpleAir_DATA_PM25_FIELDS <-
 # available when using averages. It is a comma separated list with one or more of the following:
 #
 
-PurpleAir_HISTORY_PM25_FIELDS <-
+PurpleAir_PAT_QC_FIELDS <-
   paste(
     # Station information and status fields:
     #"hardware, latitude, longitude, altitude, firmware_version",
@@ -1500,7 +1529,8 @@ PurpleAir_HISTORY_PM25_FIELDS <-
     #   "pm1.0_atm, pm1.0_atm_a, pm1.0_atm_b, pm1.0_cf_1, pm1.0_cf_1_a, pm1.0_cf_1_b",
     #
     # PM2.5 fields:
-    "pm2.5_alt, pm2.5_alt_a, pm2.5_alt_b, pm2.5_atm, pm2.5_atm_a, pm2.5_atm_b, pm2.5_cf_1, pm2.5_cf_1_a, pm2.5_cf_1_b",
+    ###"pm2.5_alt, pm2.5_alt_a, pm2.5_alt_b, pm2.5_atm, pm2.5_atm_a, pm2.5_atm_b, pm2.5_cf_1, pm2.5_cf_1_a, pm2.5_cf_1_b",
+    "pm2.5_atm, pm2.5_atm_a, pm2.5_atm_b, pm2.5_atm_b, pm2.5_cf_1, pm2.5_cf_1_a, pm2.5_cf_1_b",
     #
     # PM10.0 fields:
     #   "pm10.0_atm, pm10.0_atm_a, pm10.0_atm_b, pm10.0_cf_1, pm10.0_cf_1_a, pm10.0_cf_1_b",
@@ -1516,18 +1546,23 @@ PurpleAir_HISTORY_PM25_FIELDS <-
   stringr::str_replace_all(" ", "") %>%
   stringr::str_replace_all(",$", "")
 
-# ---- * HISTORY_HOURLY_PM25_FIELDS --------------------------------------------
+# ---- * PAT_HOURLY_FIELDS --------------------------------------------
 
 #' @export
 #' @docType data
-#' @name PurpleAir_HISTORY_HOURLY_PM25_FIELDS
+#' @name PurpleAir_PAT_HOURLY_FIELDS
 #' @title Comma-separated list of fields needed for simple PM2.5 data analysis
 #' @format String with comma-separated field names
-#' @description Character string with default PurpleAir field names used in
-#' \code{pat_downloadParaseRawData()}. These fields are sufficient for most
-#' QC algorithms and include most of the "information and status" fields,
-#' "humidity", "temperature", and the PM2.5 fields for outdoor sensors.
+#' @description Character string with a minimal set of  PurpleAir field names
+#' used in \code{pat_downloadParaseRawData()}. These fields are sufficient for
+#' basic QC and correction algorithms.
 #'
+#' Included fields:
+#' \preformatted{
+#' [1] "humidity"     "temperature"  "pm2.5_atm"    "pm2.5_atm_a"
+#' [5] "pm2.5_atm_b"  "pm2.5_cf_1"   "pm2.5_cf_1_a" "pm2.5_cf_1_b"
+#' }
+
 #' @references \href{https://api.purpleair.com/#api-sensors-get-sensor-history-csv}{Get Sensor History API}
 
 # From: https://api.purpleair.com/#api-sensors-get-sensor-history-csv
@@ -1538,7 +1573,7 @@ PurpleAir_HISTORY_PM25_FIELDS <-
 # available when using averages. It is a comma separated list with one or more of the following:
 #
 
-PurpleAir_HISTORY_HOURLY_PM25_FIELDS <-
+PurpleAir_PAT_HOURLY_FIELDS <-
   paste(
     # Station information and status fields:
     #"hardware, latitude, longitude, altitude, firmware_version",

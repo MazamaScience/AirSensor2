@@ -11,7 +11,7 @@ pat_downloadParseRawData(
   enddate = NULL,
   timezone = "UTC",
   average = 0,
-  fields = PurpleAir_HISTORY_PM25_FIELDS,
+  fields = PurpleAir_PAT_QC_FIELDS,
   baseUrl = "https://api.purpleair.com/v1/sensors"
 )
 }
@@ -47,8 +47,6 @@ Download and parse time series data for a specific \code{sensor_index}.
 try({
 
 library(AirSensor2)
-
-initializeMazamaSpatialUtils()
 
 # Hourly (uncorrected) PM2.5
 pat_raw <-

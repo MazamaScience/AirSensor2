@@ -12,10 +12,11 @@ pat_createNew(
   enddate = NULL,
   timezone = "UTC",
   average = 0,
-  fields = PurpleAir_PAS_MINIMAL_FIELDS,
+  fields = PurpleAir_PAT_QC_FIELDS,
+  sleep = 0.5,
   parallel = FALSE,
   baseUrl = "https://api.purpleair.com/v1/sensors",
-  verbose = FALSE
+  verbose = TRUE
 )
 }
 \arguments{
@@ -38,6 +39,8 @@ See \code{MazamaCoreUtils::\link[MazamaCoreUtils:setAPIKey]{setAPIKey}}.}
 
 \item{fields}{Character string with PurpleAir field names for the Get Sensor Data API.}
 
+\item{sleep}{Seconds to sleep between API requests.}
+
 \item{parallel}{Logical specifying whether to attempt simultaneous downloads
 using \code{parallel::\link[parallel:mcparallel]{mcparallel}}. (Not available
 on Windows.)}
@@ -51,6 +54,13 @@ A PurpleAir Timeseries \emph{pat} object.
 }
 \description{
 Create a \code{pat} object for a specific \code{sensor_index}.
+This function splits up the requested time range into 2-day intervals (the
+maximum allowed by the PurpleAir API) and makes repeated calls to
+\code{pat_downloadParseRawData()}. The \code{sleep} parameter waits a small
+amount of time between API requests.
+
+The PurpleAir API will respond with "rate limiting" errors unless sleep is
+set appropriately. When \code{parallel = TRUE}, \code{sleep} is ignored.
 }
 \note{
 Parallel processing using \code{parallel = TRUE} is not available on
@@ -77,9 +87,8 @@ pat <-
     pas = example_pas,
     sensor_index = "76545",
     startdate = "2023-01-01",
-    enddate = "2023-01-08",
-    timezone = "UTC",
-    verbose = TRUE
+    enddate = "2023-01-03",
+    timezone = "UTC"
   )
 
 str(pat$meta)
@@ -90,10 +99,9 @@ pat <-
     pas = example_pas,
     sensor_index = "76545",
     startdate = "2023-01-01",
-    enddate = "2023-01-08",
+    enddate = "2023-01-09",
     timezone = "UTC",
-    parallel = TRUE,
-    verbose = TRUE
+    parallel = TRUE
   )
 
 }, silent = FALSE)

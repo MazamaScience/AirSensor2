@@ -12,6 +12,7 @@ PurpleAir_createNewMonitor(
   enddate = NULL,
   timezone = "UTC",
   correction_FUN = PurpleAir_correction,
+  sleep = 0.5,
   parallel = FALSE,
   verbose = FALSE
 )
@@ -31,6 +32,8 @@ will be obtained using \code{getAPIKey("PurpleAir-read")}.}
 \item{timezone}{Olson timezone used to interpret dates.}
 
 \item{correction_FUN}{Correction function applied to \code{pat} data.}
+
+\item{sleep}{Seconds to sleep between API requests.}
 
 \item{parallel}{Logical specifying whether to attempt simultaneous downloads
 using \code{parallel::\link[parallel:mcparallel]{mcparallel}}. (Not available

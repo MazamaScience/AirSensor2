@@ -14,6 +14,7 @@
 #' @param enddate Desired end time (ISO 8601) or \code{POSIXct}.
 #' @param timezone Olson timezone used to interpret dates.
 #' @param fields Character string with PurpleAir field names for the Get Sensor Data API.
+#' @param sleep Seconds to sleep between API requests.
 #' @param parallel Logical specifying whether to attempt simultaneous downloads
 #' using \code{parallel::\link[parallel:mcparallel]{mcparallel}}. (Not available
 #' on Windows.)
@@ -23,6 +24,13 @@
 #' @return A PurpleAir Timeseries \emph{pat} object.
 #'
 #' @description Create a \code{pat} object for a specific \code{sensor_index}.
+#' This function splits up the requested time range into 2-day intervals (the
+#' maximum allowed by the PurpleAir API) and makes repeated calls to
+#' \code{pat_downloadParseRawData()}. The \code{sleep} parameter waits a small
+#' amount of time between API requests.
+#'
+#' The PurpleAir API will respond with "rate limiting" errors unless sleep is
+#' set appropriately. When \code{parallel = TRUE}, \code{sleep} is ignored.
 #'
 #' By default, the only variables included in an "hourly pat" are:
 #' \code{datetime, humidity, temperature, pm2.5_atm, pm2.5_atm_a, pm2.5_atm_b}.
@@ -76,10 +84,11 @@ pat_createHourly <- function(
     startdate = NULL,
     enddate = NULL,
     timezone = "UTC",
-    fields = PurpleAir_HISTORY_HOURLY_PM25_FIELDS,
+    fields = PurpleAir_PAT_HOURLY_FIELDS,
+    sleep = 0.5,
     parallel = FALSE,
     baseUrl = "https://api.purpleair.com/v1/sensors",
-    verbose = FALSE
+    verbose = TRUE
 ) {
 
   # ----- Validate parameters --------------------------------------------------
@@ -93,6 +102,7 @@ pat_createHourly <- function(
   MazamaCoreUtils::stopIfNull(timezone)
   MazamaCoreUtils::stopIfNull(fields)
   MazamaCoreUtils::stopIfNull(baseUrl)
+  sleep <- MazamaCoreUtils::setIfNull(sleep, 0.5)
   parallel <- MazamaCoreUtils::setIfNull(parallel, FALSE)
   verbose <- MazamaCoreUtils::setIfNull(verbose, FALSE)
 
@@ -107,6 +117,7 @@ pat_createHourly <- function(
     timezone = timezone,
     average = 60,
     fields = fields,
+    sleep = sleep,
     parallel = parallel,
     baseUrl = baseUrl,
     verbose = verbose
@@ -126,11 +137,27 @@ if ( FALSE ) {
   pas = example_pas
   sensor_index = "76545"
   startdate = "2023-01-01"
-  enddate = "2023-01-08"
+  enddate = "2023-01-09"
   timezone = "America/Los_Angeles"
-  fields = PurpleAir_HISTORY_HOURLY_PM25_FIELDS
-  parallel = TRUE
+  fields = PurpleAir_PAT_HOURLY_FIELDS
+  sleep = 0.5
+  parallel = FALSE
   baseUrl = "https://api.purpleair.com/v1/sensors"
   verbose = TRUE
+
+  pat <-
+    pat_createHourly(
+      api_key = api_key,
+      pas = pas,
+      sensor_index = sensor_index,
+      startdate = startdate,
+      enddate = enddate,
+      timezone = timezone,
+      fields = fields,
+      sleep = sleep,
+      parallel = parallel,
+      baseUrl = baseUrl,
+      verbose = verbose
+    )
 
 }

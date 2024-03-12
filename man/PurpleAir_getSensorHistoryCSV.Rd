@@ -10,7 +10,7 @@ PurpleAir_getSensorHistoryCSV(
   start_timestamp = NULL,
   end_timestamp = NULL,
   average = 10,
-  fields = PurpleAir_HISTORY_PM25_FIELDS,
+  fields = PurpleAir_PAT_QC_FIELDS,
   baseUrl = "https://api.purpleair.com/v1/sensors"
 )
 }
@@ -59,7 +59,7 @@ PurpleAir_getSensorHistoryCSV(
   start_timestamp = start,
   end_timestamp = end,
   average = 0,
-  fields = PurpleAir_HISTORY_PM25_FIELDS
+  fields = PurpleAir_PAT_QC_FIELDS
 )
 
 }, silent = FALSE)

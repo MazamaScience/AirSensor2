@@ -13,6 +13,7 @@
 #' @param enddate Desired end time (ISO 8601) or \code{POSIXct}.
 #' @param timezone Olson timezone used to interpret dates.
 #' @param correction_FUN Correction function applied to \code{pat} data.
+#' @param sleep Seconds to sleep between API requests.
 #' @param parallel Logical specifying whether to attempt simultaneous downloads
 #' using \code{parallel::\link[parallel:mcparallel]{mcparallel}}. (Not available
 #' on Windows.)
@@ -107,8 +108,9 @@ PurpleAir_createNewMonitor <- function(
     enddate = NULL,
     timezone = "UTC",
     correction_FUN = PurpleAir_correction,
+    sleep = 0.5,
     parallel = FALSE,
-    verbose = FALSE
+    verbose = TRUE
 ) {
 
   # ----- Validate parameters --------------------------------------------------
@@ -120,6 +122,7 @@ PurpleAir_createNewMonitor <- function(
   MazamaCoreUtils::stopIfNull(pas)
   MazamaCoreUtils::stopIfNull(sensor_index)
   MazamaCoreUtils::stopIfNull(timezone)
+  sleep <- MazamaCoreUtils::setIfNull(sleep, 0.5)
   parallel <- MazamaCoreUtils::setIfNull(parallel, FALSE)
   verbose <- MazamaCoreUtils::setIfNull(verbose, FALSE)
 
@@ -148,14 +151,17 @@ PurpleAir_createNewMonitor <- function(
     )
 
   # > dplyr::glimpse(pat$data, width = 75)
-  # Rows: 164
-  # Columns: 6
-  # $ datetime    <dttm> 2023-01-01 08:00:00, 2023-01-01 09:00:00, 2023-01-01…
-  # $ humidity    <dbl> 64.466, 64.800, 63.633, 63.567, 64.933, 65.633, 64.26…
-  # $ temperature <dbl> 51.733, 52.000, 52.000, 51.733, 51.000, 51.000, 51.00…
-  # $ pm2.5_atm   <dbl> 15.2325, 15.9940, 11.8430, 9.2465, 11.6315, 17.4770, …
-  # $ pm2.5_atm_a <dbl> 16.258, 17.190, 13.627, 10.943, 14.050, 22.965, 17.73…
-  # $ pm2.5_atm_b <dbl> 14.207, 14.798, 10.059, 7.550, 9.213, 11.989, 10.163,…
+  # Rows: 148
+  # Columns: 9
+  # $ datetime     <dttm> 2022-09-07 07:00:00, 2022-09-07 08:00:00, 2022-09-0…
+  # $ humidity     <dbl> 30.000, 30.034, 31.066, 32.000, 32.000, 32.000, 32.0…
+  # $ temperature  <dbl> 79.733, 79.000, 79.000, 79.000, 79.000, 78.267, 78.0…
+  # $ pm2.5_atm    <dbl> 10.3310, 5.6240, 3.1970, 1.3540, 0.9455, 0.8780, 0.7…
+  # $ pm2.5_atm_a  <dbl> 5.959, 5.301, 3.364, 1.446, 1.026, 0.980, 0.852, 1.8…
+  # $ pm2.5_atm_b  <dbl> 14.703, 5.947, 3.030, 1.262, 0.865, 0.776, 0.643, 1.…
+  # $ pm2.5_cf_1   <dbl> 10.3310, 5.6240, 3.1970, 1.3540, 0.9455, 0.8780, 0.7…
+  # $ pm2.5_cf_1_a <dbl> 5.959, 5.301, 3.364, 1.446, 1.026, 0.980, 0.852, 1.8…
+  # $ pm2.5_cf_1_b <dbl> 14.703, 5.947, 3.030, 1.262, 0.865, 0.776, 0.643, 1.…
 
   # > dplyr::glimpse(pat$meta)
   # Rows: 1
@@ -278,25 +284,25 @@ if ( FALSE ) {
 
   api_key = PurpleAir_API_READ_KEY
   pas = example_pas
-  sensor_index = "13681"
+  sensor_index = "44939"
   startdate = "2022-09-07"
   enddate = "2022-09-14"
   timezone = "America/Los_Angeles"
-  fields = PurpleAir_HISTORY_HOURLY_PM25_FIELDS
+  fields = PurpleAir_PAT_HOURLY_FIELDS
   baseUrl = "https://api.purpleair.com/v1/sensors"
-  parallel = TRUE
+  sleep = 0.5
+  parallel = FALSE
   verbose = TRUE
 
 
   monitor <-
-    PurpleAir_createMonitor(
+    PurpleAir_createNewMonitor(
       api_key = api_key,
       pas = pas,
       sensor_index = sensor_index,
       startdate = startdate,
       enddate = enddate,
-      timezone = timezone,
-      verbose = verbose
+      timezone = timezone
     )
 
 }

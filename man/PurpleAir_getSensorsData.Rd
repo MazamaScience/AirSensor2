@@ -6,12 +6,12 @@
 \usage{
 PurpleAir_getSensorsData(
   api_key = NULL,
-  fields = PurpleAir_DATA_PM25_FIELDS,
+  fields = PurpleAir_PAS_MINIMAL_FIELDS,
   location_type = NULL,
   read_keys = NULL,
   show_only = NULL,
   modified_since = NULL,
-  max_age = 604800,
+  max_age = 0,
   nwlng = NULL,
   nwlat = NULL,
   selng = NULL,
@@ -73,7 +73,7 @@ library(AirSensor2)
 
   PurpleAir_getSensorsData(
     api_key = PurpleAir_API_READ_KEY,
-    fields = PurpleAir_DATA_PM25_FIELDS
+    fields = PurpleAir_PAS_MINIMAL_FIELDS
   )
 
 }, silent = FALSE)

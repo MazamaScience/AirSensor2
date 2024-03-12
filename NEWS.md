@@ -30,6 +30,12 @@ non-measurement fields defined in `PurplAir_SENSOR_METADATA_FIELDS`.
   - `PurpleAir_PAS_MINIMAL_FIELDS`
   - `PurpleAir_PAS_METADATA_FIELDS`
   - `PurpleAir_PAS_AVG_PM25_FIELDS`
+  - `PurpleAir_PAList_PM25_FIELDS`
+  - `PurpleAir_PAT_QC_FIELDS`
+  - `PurpleAir_PAT_HOURLY_FIELDS`
+* Added a `sleep` parameter to `pat_createNew()` to avoid "rate limiting" errors
+from the PurpleAir API.
+
   
   
 
@@ -84,7 +90,7 @@ saved "hourly pat" object.
 
 # AirSensor2 0.3.3
 
-- Added `pm2.5_cf_1, pm2.5_cf_1_a, pm2.5_ f_1_b` to `PurpleAir_HISTORY_HOURLY_PM25_FIELDS`
+- Added `pm2.5_cf_1, pm2.5_cf_1_a, pm2.5_ f_1_b` to `PurpleAir_PAT_HOURLY_FIELDS`
 so that the original EPA correction factor can be used with `pm2.5_cf_1`.
 - Added `PurpleAir_correction()` to apply a correction equation to "hourly pat"
 data. Default correction uses the \code{"EPA_FASM"} correction as described in
@@ -162,7 +168,7 @@ Improvements include wrapper functions for PurpleAir API endpoints:
 Additional updates include:
 
 * Default `fields` strings for `PurpleAir_DATA_PM25_FIELDS` and 
-`PurpleAir_HISTORY_PM25_FIELDS`
+`PurpleAir_PAT_QC_FIELDS`
 * Added `fields` argument to `pas_downloadParseRawData()`.
 * Now using a 10-character geohash as the `locationID`. (See 
 [geohashTools](https://github.com/MichaelChirico/geohashTools) for reasons

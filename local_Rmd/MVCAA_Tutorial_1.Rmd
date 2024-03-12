@@ -128,10 +128,10 @@ downloads _hourly aggregated_ data as provided by the PurpleAir API.
 
 The `pat_createNew()` function has a `fields` argument that lets you specify
 which data fields should be included in the result. But default, it uses all
-those defined in `PurpleAir_HISTORY_PM25_FIELDS`:
+those defined in `PurpleAir_PAT_QC_FIELDS`:
 
-```{r PurpleAir_HISTORY_PM25_FIELDS, echo = FALSE}
-PurpleAir_HISTORY_PM25_FIELDS %>%
+```{r PurpleAir_PAT_QC_FIELDS, echo = FALSE}
+PurpleAir_PAT_QC_FIELDS %>%
   stringr::str_split_1(',')
 ```
 

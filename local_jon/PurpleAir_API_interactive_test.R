@@ -46,7 +46,7 @@ a <- PurpleAir_getSensorHistory(
   start_timestamp = start,
   end_timestamp = end,
   average = 0,
-  fields = PurpleAir_HISTORY_PM25_FIELDS
+  fields = PurpleAir_PAT_QC_FIELDS
 )
 
 a <- PurpleAir_getSensorsData(

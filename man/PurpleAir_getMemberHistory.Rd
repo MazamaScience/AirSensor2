@@ -11,7 +11,7 @@ PurpleAir_getMemberHistory(
   start_timestamp = NULL,
   end_timestamp = NULL,
   average = 10,
-  fields = PurpleAir_HISTORY_PM25_FIELDS,
+  fields = PurpleAir_PAT_QC_FIELDS,
   baseUrl = "https://api.purpleair.com/v1/groups"
 )
 }

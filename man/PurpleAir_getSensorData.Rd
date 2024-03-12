@@ -7,7 +7,7 @@
 PurpleAir_getSensorData(
   api_key = NULL,
   sensor_index = NULL,
-  fields = PurpleAir_DATA_PM25_FIELDS,
+  fields = PurpleAir_PAList_PM25_FIELDS,
   baseUrl = "https://api.purpleair.com/v1/sensors"
 )
 }
@@ -38,7 +38,7 @@ library(AirSensor2)
   PurpleAir_getSensorData(
     api_key = PurpleAir_API_READ_KEY,
     sensor_index = MY_SENSOR_INDEX,
-    fields = PurpleAir_DATA_PM25_FIELDS
+    fields = PurpleAir_PAList_PM25_FIELDS
   )
 
 }, silent = FALSE)

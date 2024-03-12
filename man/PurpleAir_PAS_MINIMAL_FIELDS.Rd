@@ -20,7 +20,6 @@ A metadata-only \emph{pas} object can be useful when searching for historical
 data using \code{\link{pas_filterDate}}.
 
 Included fields:
-
 \preformatted{
 [1] "name"          "location_type" "latitude"
 [5] "longitude"     "last_seen"     "date_created"

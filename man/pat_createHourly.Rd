@@ -11,10 +11,11 @@ pat_createHourly(
   startdate = NULL,
   enddate = NULL,
   timezone = "UTC",
-  fields = PurpleAir_HISTORY_HOURLY_PM25_FIELDS,
+  fields = PurpleAir_PAT_HOURLY_FIELDS,
+  sleep = 0.5,
   parallel = FALSE,
   baseUrl = "https://api.purpleair.com/v1/sensors",
-  verbose = FALSE
+  verbose = TRUE
 )
 }
 \arguments{
@@ -34,6 +35,8 @@ See \code{MazamaCoreUtils::\link[MazamaCoreUtils:setAPIKey]{setAPIKey}}.}
 
 \item{fields}{Character string with PurpleAir field names for the Get Sensor Data API.}
 
+\item{sleep}{Seconds to sleep between API requests.}
+
 \item{parallel}{Logical specifying whether to attempt simultaneous downloads
 using \code{parallel::\link[parallel:mcparallel]{mcparallel}}. (Not available
 on Windows.)}
@@ -47,6 +50,13 @@ A PurpleAir Timeseries \emph{pat} object.
 }
 \description{
 Create a \code{pat} object for a specific \code{sensor_index}.
+This function splits up the requested time range into 2-day intervals (the
+maximum allowed by the PurpleAir API) and makes repeated calls to
+\code{pat_downloadParseRawData()}. The \code{sleep} parameter waits a small
+amount of time between API requests.
+
+The PurpleAir API will respond with "rate limiting" errors unless sleep is
+set appropriately. When \code{parallel = TRUE}, \code{sleep} is ignored.
 
 By default, the only variables included in an "hourly pat" are:
 \code{datetime, humidity, temperature, pm2.5_atm, pm2.5_atm_a, pm2.5_atm_b}.

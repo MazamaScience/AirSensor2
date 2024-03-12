@@ -19,7 +19,7 @@ simple running average PM2.5 fields for different time periods.
 These fields are useful for creating maps of the latest quality and weather
 parameters.
 
-#' Included fields:
+Included fields:
 \preformatted{
  [1] "name"           "location_type"  "private"        "latitude"
  [5] "longitude"      "last_seen"      "date_created"   "confidence"
