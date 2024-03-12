@@ -11,13 +11,12 @@ stateCode -- ISO 3166-2 alpha-2
 
 3) Convert data types from character to POSIXct and numeric.
 4) Add additional metadata items:
-sensorManufacturer = "Purple Air"
+sensorManufacturer = "PurpleAir"
 
 
-Limiting spacial searches by country can greatly speed up the process of
-enhancement. This is
-performed by providing a vector of ISO country codes to the countryCodes
-argument. By default, no subsetting is performed.
+Limiting spatial searches by country can greatly speed up the process of
+enhancement. This is performed by providing a vector of ISO country codes to
+the countryCodes argument. By default, no subsetting is performed.
 Users may further improve performance by also specifying stateCodes
 when countryCodes is limited to a single country.
 When a single US state is specified, named counties may be specified
@@ -98,11 +97,10 @@ dataframe compatible with the <span class="pkg">MazamaLocationUtils</span> packa
 <li><p>countryCode -- ISO 3166-1 alpha-2</p></li>
 <li><p>stateCode -- ISO 3166-2 alpha-2</p></li>
 </ul><p>3) Convert data types from character to <code>POSIXct</code> and <code>numeric</code>.</p>
-<p>4) Add additional metadata items:</p><ul><li><p>sensorManufacturer = "Purple Air"</p></li>
-</ul><p>Limiting spacial searches by country can greatly speed up the process of
-enhancement. This is
-performed by providing a vector of ISO country codes to the <code>countryCodes</code>
-argument. By default, no subsetting is performed.</p>
+<p>4) Add additional metadata items:</p><ul><li><p>sensorManufacturer = "PurpleAir"</p></li>
+</ul><p>Limiting spatial searches by country can greatly speed up the process of
+enhancement. This is performed by providing a vector of ISO country codes to
+the <code>countryCodes</code> argument. By default, no subsetting is performed.</p>
 <p>Users may further improve performance by also specifying <code>stateCodes</code>
 when <code>countryCodes</code> is limited to a single country.</p>
 <p>When a single US state is specified, named <code>counties</code> may be specified
@@ -112,7 +110,7 @@ to further speed up performance.</p>
     <div id="ref-usage">
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">pas_enhanceRawData</span><span class="op">(</span></span>
 <span>  pas_raw <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  countryCodes <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  countryCodes <span class="op">=</span> <span class="st">"US"</span>,</span>
 <span>  stateCodes <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  counties <span class="op">=</span> <span class="cn">NULL</span></span>
 <span><span class="op">)</span></span></code></pre></div>

@@ -21,7 +21,7 @@
 #' @examples
 #' library(AirSensor2)
 #'
-#' pas <- example_pas
+#' pas <- example_pas_pm25
 #' range(pas$longitude)
 #' range(pas$latitude)
 #'

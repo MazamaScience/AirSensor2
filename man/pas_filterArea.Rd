@@ -27,7 +27,7 @@ Filters \emph{pas} object sensors based on a bounding box.
 \examples{
 library(AirSensor2)
 
-pas <- example_pas
+pas <- example_pas_pm25
 range(pas$longitude)
 range(pas$latitude)
 

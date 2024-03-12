@@ -13,11 +13,8 @@ PurpleAir_PAS_METADATA_FIELDS
 \description{
 Character string with PurpleAir field names used in
 \code{pas_downloadParseRawData()}. These fields exclude all measurements
-but retain many fields thay may useful for filtering. This \emph{pas} object
-can then be passed on to \emph{pat} creation functions.
-
-A metadata-only \emph{pas} object can be useful when searching for historical
-data using \code{\link{pas_filter}}.
+but retain many fields needed when creating a \emph{pat} object with
+\code{pat_createNew()}.
 
 Included fields:
 \preformatted{

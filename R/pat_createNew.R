@@ -76,7 +76,7 @@
 #'     pas = example_pas,
 #'     sensor_index = "76545",
 #'     startdate = "2023-01-01",
-#'     enddate = "2023-01-09",
+#'     enddate = "2023-01-03",
 #'     timezone = "UTC",
 #'     parallel = TRUE
 #'   )
@@ -332,10 +332,10 @@ pat_createNew <- function(
 if ( FALSE ) {
 
   api_key = PurpleAir_API_READ_KEY
-  pas = example_pas
-  sensor_index = "76545"
-  startdate = "2023-01-01"
-  enddate = "2023-01-09"
+  pas = example_pas_metadata
+  sensor_index = "95189"
+  startdate = "2024-01-01"
+  enddate = "2024-01-03"
   timezone = "America/Los_Angeles"
   average = 0
   fields = PurpleAir_PAT_QC_FIELDS

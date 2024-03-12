@@ -16,9 +16,6 @@
     <loc>/articles/Developer_Style_Guide.html</loc>
   </url>
   <url>
-    <loc>/articles/MVCAA_Tutorial_1.html</loc>
-  </url>
-  <url>
     <loc>/articles/Working_with_PurpleAir_API_Keys.html</loc>
   </url>
   <url>
@@ -67,13 +64,16 @@
     <loc>/reference/Clarity_updateAllOpenMonitors.html</loc>
   </url>
   <url>
-    <loc>/reference/Clarity_updateOpenMonitor.html</loc>
+    <loc>/reference/PurpleAir_PAList_PM25_FIELDS.html</loc>
   </url>
   <url>
     <loc>/reference/PurpleAir_PAS_AVG_PM25_FIELDS.html</loc>
   </url>
   <url>
-    <loc>/reference/PurpleAir_DATA_PM25_FIELDS.html</loc>
+    <loc>/reference/PurpleAir_PAS_METADATA_FIELDS.html</loc>
+  </url>
+  <url>
+    <loc>/reference/PurpleAir_PAS_MINIMAL_FIELDS.html</loc>
   </url>
   <url>
     <loc>/reference/PurpleAir_PAT_EPA_HOURLY_FIELDS.html</loc>
@@ -82,25 +82,13 @@
     <loc>/reference/PurpleAir_PAT_QC_FIELDS.html</loc>
   </url>
   <url>
-    <loc>/reference/PurpleAir_PAS_METADATA_FIELDS.html</loc>
-  </url>
-  <url>
     <loc>/reference/PurpleAir_checkAPIKey.html</loc>
-  </url>
-  <url>
-    <loc>/reference/PurpleAir_correction.html</loc>
   </url>
   <url>
     <loc>/reference/PurpleAir_createGroup.html</loc>
   </url>
   <url>
     <loc>/reference/PurpleAir_createMember.html</loc>
-  </url>
-  <url>
-    <loc>/reference/PurpleAir_createMonitor.html</loc>
-  </url>
-  <url>
-    <loc>/reference/PurpleAir_createNewMonitor.html</loc>
   </url>
   <url>
     <loc>/reference/PurpleAir_deleteGroup.html</loc>
@@ -136,22 +124,19 @@
     <loc>/reference/PurpleAir_getSensorsData.html</loc>
   </url>
   <url>
-    <loc>/reference/SENSOR_DATA_AVG_PM25_FIELDS.html</loc>
-  </url>
-  <url>
-    <loc>/reference/SENSOR_DATA_PM25_FIELDS.html</loc>
-  </url>
-  <url>
-    <loc>/reference/SENSOR_PAT_QC_FIELDS.html</loc>
-  </url>
-  <url>
     <loc>/reference/US_AQI.html</loc>
   </url>
   <url>
-    <loc>/reference/example_pas.html</loc>
+    <loc>/reference/example_pas_historical.html</loc>
   </url>
   <url>
-    <loc>/reference/example_pas_raw.html</loc>
+    <loc>/reference/example_pas_metadata.html</loc>
+  </url>
+  <url>
+    <loc>/reference/example_pas_pm25.html</loc>
+  </url>
+  <url>
+    <loc>/reference/example_pas_pm25_raw.html</loc>
   </url>
   <url>
     <loc>/reference/example_pat.html</loc>
@@ -161,48 +146,6 @@
   </url>
   <url>
     <loc>/reference/initializeMazamaSpatialUtils.html</loc>
-  </url>
-  <url>
-    <loc>/reference/pa_checkAPIKey.html</loc>
-  </url>
-  <url>
-    <loc>/reference/pa_createGroup.html</loc>
-  </url>
-  <url>
-    <loc>/reference/pa_createMember.html</loc>
-  </url>
-  <url>
-    <loc>/reference/pa_deleteGroup.html</loc>
-  </url>
-  <url>
-    <loc>/reference/pa_deleteMember.html</loc>
-  </url>
-  <url>
-    <loc>/reference/pa_getGroupDetail.html</loc>
-  </url>
-  <url>
-    <loc>/reference/pa_getGroupsList.html</loc>
-  </url>
-  <url>
-    <loc>/reference/pa_getMemberData.html</loc>
-  </url>
-  <url>
-    <loc>/reference/pa_getMemberHistory.html</loc>
-  </url>
-  <url>
-    <loc>/reference/pa_getMembersData.html</loc>
-  </url>
-  <url>
-    <loc>/reference/pa_getSensorData.html</loc>
-  </url>
-  <url>
-    <loc>/reference/pa_getSensorHistory.html</loc>
-  </url>
-  <url>
-    <loc>/reference/pa_getSensorHistoryCSV.html</loc>
-  </url>
-  <url>
-    <loc>/reference/pa_getSensorsData.html</loc>
   </url>
   <url>
     <loc>/reference/pas_createNew.html</loc>
@@ -229,9 +172,6 @@
     <loc>/reference/pas_filterNearMonitor.html</loc>
   </url>
   <url>
-    <loc>/reference/pas_get.html</loc>
-  </url>
-  <url>
     <loc>/reference/pas_hasSpatial.html</loc>
   </url>
   <url>
@@ -241,7 +181,16 @@
     <loc>/reference/pas_leaflet.html</loc>
   </url>
   <url>
+    <loc>/reference/pas_lifespanPlot.html</loc>
+  </url>
+  <url>
     <loc>/reference/pas_palette.html</loc>
+  </url>
+  <url>
+    <loc>/reference/pas_pull.html</loc>
+  </url>
+  <url>
+    <loc>/reference/pat_applyCorrection.html</loc>
   </url>
   <url>
     <loc>/reference/pat_check.html</loc>
@@ -275,6 +224,9 @@
   </url>
   <url>
     <loc>/reference/pat_isValid.html</loc>
+  </url>
+  <url>
+    <loc>/reference/pat_toMonitor.html</loc>
   </url>
   <url>
     <loc>/reference/pat_trimDate.html</loc>

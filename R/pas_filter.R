@@ -24,18 +24,18 @@
 #' @examples
 #' library(AirSensor2)
 #'
-#' nrow(example_pas)
+#' nrow(example_pas_pm25)
 #'
 #' # Washington
 #' WA_pas <-
-#'   example_pas %>%
+#'   example_pas_pm25 %>%
 #'   pas_filter(stateCode == "WA")
 #'
 #' nrow(WA_pas)
 #'
 #' # Okanogan and Ferry Counties
 #' Colville_Tribes_pas <-
-#'   example_pas %>%
+#'   example_pas_pm25 %>%
 #'   pas_filter(stateCode == "WA") %>%
 #'   pas_filter(countyName %in% c("Okanogan", "Ferry"))
 #'

@@ -43,7 +43,7 @@ where \code{startdate <= last_seen && enddate >=  pas$date_created}.
 library(AirSensor2)
 
 august_2018 <-
- example_pas \%>\%
+ example_pas_historical \%>\%
   pas_filterDate(
     startdate = 20180701,
     enddate = 20181101,

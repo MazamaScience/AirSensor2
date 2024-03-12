@@ -4,9 +4,9 @@
 \encoding{UTF-8}
 \name{example_pas_historical}
 \alias{example_pas_historical}
-\title{Example enhanced Purple Air Synoptic dataset}
+\title{Example enhanced PurpleAir Synoptic dataset}
 \format{
-A tibble with 2358 rows and 51 columns of data.
+A tibble with 122 rows and 22 columns of data.
 }
 \source{
 https://www2.purpleair.com
@@ -18,7 +18,7 @@ example_pas_historical
 The \code{example_pas} dataset provides a quickly loadable
 version of a \emph{pas} object for practicing and code examples.
 This dataset contains data for sensors in Washington and Oregon
-and was generated on 2023-11-29 by running:
+and was generated on 2024-03-12 by running:
 
 \preformatted{
 library(AirSensor2)
@@ -30,18 +30,20 @@ source("global_vars.R") # contains PurpleAir_API_READ_KEY
 example_pas_historical <-
   pas_createNew(
     api_key = PurpleAir_API_READ_KEY,
-    fields = PurpleAir_PAS_METADATA_FIELDS,
+    fields = PurpleAir_PAS_MINIMAL_FIELDS,
     countryCodes = "US",
     stateCodes = "WA",
     counties = "Okanogan",
-    lookbackDays = 365 * 10,     # 10 years
-    location_type = 0            # Outdoor only
+    lookbackDays = 0,            # all years
+    location_type = 0            # outdoor only
   )
 
 save(example_pas_historical, file = "data/example_pas_historical.rda")
 }
 }
 \seealso{
-example_pas_raw
+example_pas_pm25
+
+example_pas_metadata
 }
 \keyword{datasets}

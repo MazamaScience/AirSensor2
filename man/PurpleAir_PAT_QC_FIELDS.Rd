@@ -15,13 +15,25 @@ Character string with default PurpleAir field names used in
 \code{pat_downloadParaseRawData()}. These fields are sufficient for most
 QC algorithms and include most of the "information and status" and
 "environmental" fields.
+}
+\note{
+The PM2.5 fields included here are the "_atm_" fields recommended by
+PurpleAir for outdoor sensors while those
+used in \link{PurpleAir_PAT_EPA_HOURLY_FIELDS} include the "_cf_1_" versions as
+specified by the EPA correction algorithm.
+
+The \href{https://api.purpleair.com/#api-sensors-get-sensors-data}{PurpleAir reference docs}
+describe the two different variants as:
+"CF=1 variant for indoor, ATM variant for outdoor devices" which is why we
+include the "_atm_" versions in this set. For the purposes of identifying
+when the A and B channels are in agreement, either version is fine.
 
 Included fields:
 \preformatted{
- [1] "rssi"         "uptime"       "pa_latency"   "memory"
- [5] "humidity"     "temperature"  "pressure"     "pm2.5_atm"
- [9] "pm2.5_atm_a"  "pm2.5_atm_b"  "pm2.5_atm_b"  "pm2.5_cf_1"
-[13] "pm2.5_cf_1_a" "pm2.5_cf_1_b"
+[1] "hardware"         "firmware_version" "rssi"
+[4] "uptime"           "pa_latency"       "memory"
+[7] "humidity"         "temperature"      "pressure"
+[10] "pm2.5_atm"        "pm2.5_atm_a"      "pm2.5_atm_b"
 }
 }
 \references{

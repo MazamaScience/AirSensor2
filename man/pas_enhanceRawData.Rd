@@ -6,7 +6,7 @@
 \usage{
 pas_enhanceRawData(
   pas_raw = NULL,
-  countryCodes = NULL,
+  countryCodes = "US",
   stateCodes = NULL,
   counties = NULL
 )
@@ -42,7 +42,7 @@ Steps include:
 
 4) Add additional metadata items:
 \itemize{
-\item{sensorManufacturer = "Purple Air"}
+\item{sensorManufacturer = "PurpleAir"}
 }
 
 Limiting spatial searches by country can greatly speed up the process of

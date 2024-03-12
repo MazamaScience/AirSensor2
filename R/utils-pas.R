@@ -11,8 +11,8 @@
 #'
 #' @examples
 #' library(AirSensor2)
-#' example_pas %>% pas_isEmpty() %>% print()
-#' example_pas %>% pas_filter(latitude > 90) %>% pas_isEmpty() %>% print()
+#' example_pas_pm25 %>% pas_isEmpty() %>% print()
+#' example_pas_pm25 %>% pas_filter(latitude > 90) %>% pas_isEmpty() %>% print()
 
 pas_isEmpty <- function(pas = NULL) {
   return( nrow(pas) == 0 )
@@ -40,8 +40,8 @@ pas_isEmpty <- function(pas = NULL) {
 #'
 #' @examples
 #' library(AirSensor2)
-#' example_pas_raw %>% pas_hasSpatial() %>% print()
-#' example_pas %>% pas_hasSpatial() %>% print()
+#' example_pas_pm25_raw %>% pas_hasSpatial() %>% print()
+#' example_pas_pm25 %>% pas_hasSpatial() %>% print()
 
 pas_hasSpatial <- function(pas = NULL) {
 

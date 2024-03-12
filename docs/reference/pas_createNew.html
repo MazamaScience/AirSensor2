@@ -109,6 +109,7 @@ are still used to help speed up the assignment of enhanced metadata..</p>
     <div id="ref-usage">
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">pas_createNew</span><span class="op">(</span></span>
 <span>  api_key <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  fields <span class="op">=</span> <span class="va">PurpleAir_PAS_MINIMAL_FIELDS</span>,</span>
 <span>  countryCodes <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  stateCodes <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  counties <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -124,6 +125,10 @@ are still used to help speed up the assignment of enhanced metadata..</p>
     <h2>Arguments</h2>
     <dl><dt>api_key</dt>
 <dd><p>PurpleAir API Read Key.</p></dd>
+
+
+<dt>fields</dt>
+<dd><p>Character string with PurpleAir field names for the Get Sensor Data API.</p></dd>
 
 
 <dt>countryCodes</dt>
@@ -143,7 +148,8 @@ Specifying counties is optional.</p></dd>
 
 <dt>lookbackDays</dt>
 <dd><p>Number of days to "look back" for valid data. Data are
-filtered to only include sensors with data more recent than <code>lookbackDays</code> ago.</p></dd>
+filtered to only include sensors with data more recent than <code>lookbackDays</code> ago.
+Use <code>lookbackDays = 0</code> to get all historical sensors.</p></dd>
 
 
 <dt>location_type</dt>
@@ -173,6 +179,17 @@ provided, results are requested only for the specified sensors.</p></dd>
 
 <p>A PurpleAir Synoptic <em>pas</em> object.</p>
     </div>
+    <div id="note">
+    <h2>Note</h2>
+    <p>The <code>fields</code> parameter allows users to dial in which fields they
+are interested in depending on their needs. However, the following fields
+will be added if not specified in order to guarantee compatibility with
+<code><a href="pas_enhanceRawData.html">pas_enhanceRawData()</a></code>:
+<code>"longitude,latitude,name,location_type,date_created,last_seen"</code>.</p>
+<p>Pregenerated fields for use in this function include:</p><ul><li><p><code>/link{PurpleAir_PAS_MINIMAL_FIELDS}</code> -- minimal set of fields</p></li>
+<li><p><code>/link{PurpleAir_PAS_METADATA_FIELDS}</code> -- instrument-only fields</p></li>
+<li><p><code>/link{PurpleAir_PAS_AVG_PM25_FIELDS}</code> -- includes measurements</p></li>
+</ul></div>
     <div id="references">
     <h2>References</h2>
     <p><a href="https://www2.purpleair.com" class="external-link">PurpleAir</a></p>
@@ -204,8 +221,8 @@ provided, results are requested only for the specified sensors.</p></dd>
 <span class="r-in"><span>    api_key <span class="op">=</span> <span class="va">PurpleAir_API_READ_KEY</span>,</span></span>
 <span class="r-in"><span>    countryCodes <span class="op">=</span> <span class="st">"US"</span>,</span></span>
 <span class="r-in"><span>    stateCodes <span class="op">=</span> <span class="st">"WA"</span>,</span></span>
-<span class="r-in"><span>    counties <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Okanogan"</span>, <span class="st">"Ferry"</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>    lookbackDays <span class="op">=</span> <span class="fl">1</span>,</span></span>
+<span class="r-in"><span>    counties <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Okanogan"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>    lookbackDays <span class="op">=</span> <span class="fl">0</span>, <span class="co"># all historical sensors</span></span></span>
 <span class="r-in"><span>    location_type <span class="op">=</span> <span class="fl">0</span></span></span>
 <span class="r-in"><span>  <span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>

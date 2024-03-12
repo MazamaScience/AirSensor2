@@ -29,7 +29,7 @@ Washington state.
 [Clean Air Methow](https://www.cleanairmethow.org) 
 operates as a project of the
 [Methow Valley Citizens Council](http://mvcitizens.org)
-and began deploying Purple Air Sensors in 2018:
+and began deploying PurpleAir Sensors in 2018:
 
 > In the summer of 2018, Clean Air Methow launched the Clean Air Ambassador 
 > Program, an exciting citizen science project, and one of the largest, rural 
@@ -195,7 +195,7 @@ but only downloads those parameters typically used in QC and correction function
 A `correction_FUN` is applied to the hourly _pat_ object and returns corrected
 PM2.5 values. By default, an EPA vetted correction function is applied that 
 brings PurpleAir values in line with EPA data even in the smoky conditions seen
-with wildfire smoke. (See the documentation for `PurpleAir_correction()` for
+with wildfire smoke. (See the documentation for `pat_applyCorrection()` for
 details.)
 
 `PurpleAir_createMonitor()` returns a _monitor_ object ready to use with the

@@ -18,6 +18,6 @@ This makes for more readable code in functions that need to test for this.
 }
 \examples{
 library(AirSensor2)
-example_pas \%>\% pas_isEmpty() \%>\% print()
-example_pas \%>\% pas_filter(latitude > 90) \%>\% pas_isEmpty() \%>\% print()
+example_pas_pm25 \%>\% pas_isEmpty() \%>\% print()
+example_pas_pm25 \%>\% pas_filter(latitude > 90) \%>\% pas_isEmpty() \%>\% print()
 }

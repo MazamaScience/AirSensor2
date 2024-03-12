@@ -94,7 +94,7 @@ meets the criteria for use as a <em>pas</em> object.</p>
     <div id="ref-usage">
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">pas_downloadParseRawData</span><span class="op">(</span></span>
 <span>  api_key <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  fields <span class="op">=</span> <span class="va">PurpleAir_PAS_METADATA_FIELDS</span>,</span>
+<span>  fields <span class="op">=</span> <span class="va">PurpleAir_PAS_MINIMAL_FIELDS</span>,</span>
 <span>  location_type <span class="op">=</span> <span class="fl">0</span>,</span>
 <span>  read_keys <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  show_only <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -176,6 +176,16 @@ modified or updated within the the last <code>max_age</code> seconds. Using a va
 
 <p>Dataframe of synoptic PurpleAir data.</p>
     </div>
+    <div id="note">
+    <h2>Note</h2>
+    <p>The <code>fields</code> parameter allows users to dial in which fields they
+are interested in depending on their needs. However, the following fields
+will be added if not specified in order to guarantee compatibility with
+<code><a href="pas_enhanceRawData.html">pas_enhanceRawData()</a></code>:
+<code>"longitude,latitude,name,location_type,date_created,last_seen"</code>.</p>
+<p>Pregenerated fields for use in this function include:</p><ul><li><p><code>/link{PurpleAir_PAS_METADATA_FIELDS}</code> -- instrument-only fields</p></li>
+<li><p><code>/link{PurpleAir_PAS_AVG_PM25_FIELDS}</code> -- includes measurements</p></li>
+</ul></div>
     <div id="references">
     <h2>References</h2>
     <p><a href="https://www2.purpleair.com" class="external-link">PurpleAir</a></p>
@@ -197,19 +207,18 @@ modified or updated within the the last <code>max_age</code> seconds. Using a va
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/source.html" class="external-link">source</a></span><span class="op">(</span><span class="st">"global_vars.R"</span><span class="op">)</span> <span class="co"># contains PurpleAir_API_READ_KEY</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># Download metadata fields only to look for 10 years of historical data</span></span></span>
+<span class="r-in"><span><span class="co"># Download minimal fields, set max_age = 0, to look for historical data</span></span></span>
 <span class="r-in"><span><span class="va">pas_raw</span> <span class="op">&lt;-</span></span></span>
 <span class="r-in"><span>  <span class="fu">pas_downloadParseRawData</span><span class="op">(</span></span></span>
 <span class="r-in"><span>    api_key <span class="op">=</span> <span class="va">PurpleAir_API_READ_KEY</span>,</span></span>
-<span class="r-in"><span>    max_age <span class="op">=</span> <span class="fl">3600</span> <span class="op">*</span> <span class="fl">24</span> <span class="op">*</span> <span class="fl">365</span> <span class="op">*</span> <span class="fl">10</span>,</span></span>
+<span class="r-in"><span>    max_age <span class="op">=</span> <span class="fl">0</span>,</span></span>
 <span class="r-in"><span>    west <span class="op">=</span> <span class="op">-</span><span class="fl">120.5</span>,</span></span>
 <span class="r-in"><span>    east <span class="op">=</span> <span class="op">-</span><span class="fl">120</span>,</span></span>
 <span class="r-in"><span>    south <span class="op">=</span> <span class="fl">48.2</span>,</span></span>
 <span class="r-in"><span>    north <span class="op">=</span> <span class="fl">48.7</span></span></span>
 <span class="r-in"><span>  <span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="va">fields</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"sensor_index"</span>, <span class="st">"name"</span>, <span class="st">"date_created"</span>, <span class="st">"last_seen"</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/View.html" class="external-link">View</a></span><span class="op">(</span><span class="va">pas_raw</span><span class="op">[</span>,<span class="va">fields</span><span class="op">]</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/View.html" class="external-link">View</a></span><span class="op">(</span><span class="va">pas_raw</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Download metadata, PM2.5 and weather parameter fields</span></span></span>
 <span class="r-in"><span><span class="va">pas_raw</span> <span class="op">&lt;-</span></span></span>
@@ -219,10 +228,10 @@ modified or updated within the the last <code>max_age</code> seconds. Using a va
 <span class="r-in"><span>    location_type <span class="op">=</span> <span class="fl">0</span>,</span></span>
 <span class="r-in"><span>    modified_since <span class="op">=</span> <span class="cn">NULL</span>,</span></span>
 <span class="r-in"><span>    max_age <span class="op">=</span> <span class="fl">3600</span> <span class="op">*</span> <span class="fl">24</span>,</span></span>
-<span class="r-in"><span>    west <span class="op">=</span> <span class="op">-</span><span class="fl">125</span>,</span></span>
-<span class="r-in"><span>    east <span class="op">=</span> <span class="op">-</span><span class="fl">117</span>,</span></span>
-<span class="r-in"><span>    south <span class="op">=</span> <span class="fl">42</span>,</span></span>
-<span class="r-in"><span>    north <span class="op">=</span> <span class="fl">49</span></span></span>
+<span class="r-in"><span>    west <span class="op">=</span> <span class="op">-</span><span class="fl">120.5</span>,</span></span>
+<span class="r-in"><span>    east <span class="op">=</span> <span class="op">-</span><span class="fl">120</span>,</span></span>
+<span class="r-in"><span>    south <span class="op">=</span> <span class="fl">48.2</span>,</span></span>
+<span class="r-in"><span>    north <span class="op">=</span> <span class="fl">48.7</span></span></span>
 <span class="r-in"><span>  <span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/View.html" class="external-link">View</a></span><span class="op">(</span><span class="va">pas_raw</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">100</span>,<span class="op">]</span><span class="op">)</span></span></span>

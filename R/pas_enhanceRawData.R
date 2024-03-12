@@ -21,7 +21,7 @@
 #'
 #' 4) Add additional metadata items:
 #' \itemize{
-#' \item{sensorManufacturer = "Purple Air"}
+#' \item{sensorManufacturer = "PurpleAir"}
 #' }
 #'
 #' Limiting spatial searches by country can greatly speed up the process of
@@ -52,7 +52,7 @@
 
 pas_enhanceRawData <- function(
     pas_raw = NULL,
-    countryCodes = NULL,
+    countryCodes = "US",
     stateCodes = NULL,
     counties = NULL
 ) {
@@ -60,6 +60,7 @@ pas_enhanceRawData <- function(
   # ----- Validate Parameters --------------------------------------------------
 
   MazamaCoreUtils::stopIfNull(pas_raw)
+  MazamaCoreUtils::stopIfNull(countryCodes)
 
   if ( !is.data.frame(pas_raw) )
     stop("parameter 'pas_raw' parameter is not a dataframe")

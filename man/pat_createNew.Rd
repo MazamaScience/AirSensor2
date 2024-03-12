@@ -99,7 +99,7 @@ pat <-
     pas = example_pas,
     sensor_index = "76545",
     startdate = "2023-01-01",
-    enddate = "2023-01-09",
+    enddate = "2023-01-03",
     timezone = "UTC",
     parallel = TRUE
   )

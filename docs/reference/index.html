@@ -114,33 +114,33 @@
         </td>
         <td><p>Update a Clarity 'mts_monitor' object</p></td>
       </tr><tr><td>
+          <p><code><a href="PurpleAir_PAList_PM25_FIELDS.html">PurpleAir_PAList_PM25_FIELDS</a></code> </p>
+        </td>
+        <td><p>Comma-separated list of fields needed for PM2.5 data analysis</p></td>
+      </tr><tr><td>
           <p><code><a href="PurpleAir_PAS_AVG_PM25_FIELDS.html">PurpleAir_PAS_AVG_PM25_FIELDS</a></code> </p>
         </td>
         <td><p>Comma-separated list of fields used to create a <em>pas</em> object</p></td>
-      </tr><tr><td>
-          <p><code><a href="PurpleAir_DATA_PM25_FIELDS.html">PurpleAir_DATA_PM25_FIELDS</a></code> </p>
-        </td>
-        <td><p>Comma-separated list of fields needed for PM2.5 data analysis</p></td>
-      </tr><tr><td>
-          <p><code><a href="PurpleAir_PAT_EPA_HOURLY_FIELDS.html">PurpleAir_PAT_EPA_HOURLY_FIELDS</a></code> </p>
-        </td>
-        <td><p>Comma-separated list of fields needed for simple PM2.5 data analysis</p></td>
-      </tr><tr><td>
-          <p><code><a href="PurpleAir_PAT_QC_FIELDS.html">PurpleAir_PAT_QC_FIELDS</a></code> </p>
-        </td>
-        <td><p>Comma-separated list of fields needed for PM2.5 data analysis</p></td>
       </tr><tr><td>
           <p><code><a href="PurpleAir_PAS_METADATA_FIELDS.html">PurpleAir_PAS_METADATA_FIELDS</a></code> </p>
         </td>
         <td><p>Comma-separated list of metadata fields used to create a <em>pas</em> object</p></td>
       </tr><tr><td>
+          <p><code><a href="PurpleAir_PAS_MINIMAL_FIELDS.html">PurpleAir_PAS_MINIMAL_FIELDS</a></code> </p>
+        </td>
+        <td><p>Comma-separated list of metadata fields used to create a <em>pas</em> object</p></td>
+      </tr><tr><td>
+          <p><code><a href="PurpleAir_PAT_EPA_HOURLY_FIELDS.html">PurpleAir_PAT_EPA_HOURLY_FIELDS</a></code> </p>
+        </td>
+        <td><p>Comma-separated list of fields needed for EPA correction</p></td>
+      </tr><tr><td>
+          <p><code><a href="PurpleAir_PAT_QC_FIELDS.html">PurpleAir_PAT_QC_FIELDS</a></code> </p>
+        </td>
+        <td><p>Comma-separated list of fields needed for creating QC reports.</p></td>
+      </tr><tr><td>
           <p><code><a href="PurpleAir_checkAPIKey.html">PurpleAir_checkAPIKey()</a></code> </p>
         </td>
         <td><p>Check the validity and type for the provided <code>api_key</code></p></td>
-      </tr><tr><td>
-          <p><code><a href="PurpleAir_correction.html">PurpleAir_correction()</a></code> </p>
-        </td>
-        <td><p>Apply correction to PurpleAir PM2.5 data.</p></td>
       </tr><tr><td>
           <p><code><a href="PurpleAir_createGroup.html">PurpleAir_createGroup()</a></code> </p>
         </td>
@@ -149,10 +149,6 @@
           <p><code><a href="PurpleAir_createMember.html">PurpleAir_createMember()</a></code> </p>
         </td>
         <td><p>Create a new member within the specified group</p></td>
-      </tr><tr><td>
-          <p><code><a href="PurpleAir_createNewMonitor.html">PurpleAir_createNewMonitor()</a></code> </p>
-        </td>
-        <td><p>Create a new PurpleAir 'mts_monitor' object</p></td>
       </tr><tr><td>
           <p><code><a href="PurpleAir_deleteGroup.html">PurpleAir_deleteGroup()</a></code> </p>
         </td>
@@ -202,17 +198,25 @@
         </td>
         <td><p>US EPA AQI Index levels, names, colors and action text</p></td>
       </tr><tr><td>
-          <p><code><a href="example_pas.html">example_pas</a></code> </p>
+          <p><code><a href="example_pas_historical.html">example_pas_historical</a></code> </p>
         </td>
-        <td><p>Example enhanced Purple Air Synoptic dataset</p></td>
+        <td><p>Example enhanced PurpleAir Synoptic dataset</p></td>
       </tr><tr><td>
-          <p><code><a href="example_pas_raw.html">example_pas_raw</a></code> </p>
+          <p><code><a href="example_pas_metadata.html">example_pas_metadata</a></code> </p>
         </td>
-        <td><p>Example raw Purple Air Synoptic dataset</p></td>
+        <td><p>Example enhanced PurpleAir Synoptic dataset</p></td>
+      </tr><tr><td>
+          <p><code><a href="example_pas_pm25.html">example_pas_pm25</a></code> </p>
+        </td>
+        <td><p>Example enhanced PurpleAir Synoptic dataset</p></td>
+      </tr><tr><td>
+          <p><code><a href="example_pas_pm25_raw.html">example_pas_pm25_raw</a></code> </p>
+        </td>
+        <td><p>Example raw PurpleAir Synoptic dataset</p></td>
       </tr><tr><td>
           <p><code><a href="example_pat.html">example_pat</a></code> </p>
         </td>
-        <td><p>Example Purple Air Timeseries dataset</p></td>
+        <td><p>Example PurpleAir Timeseries dataset</p></td>
       </tr><tr><td>
           <p><code><a href="initializeMazamaSpatialUtils.html">initializeMazamaSpatialUtils()</a></code> </p>
         </td>
@@ -250,10 +254,6 @@
         </td>
         <td><p>Find PurpleAir sensors near a monitor</p></td>
       </tr><tr><td>
-          <p><code><a href="pas_get.html">pas_get()</a></code> </p>
-        </td>
-        <td><p>Returns a column of data from a PurpleAir synoptic object</p></td>
-      </tr><tr><td>
           <p><code><a href="pas_hasSpatial.html">pas_hasSpatial()</a></code> </p>
         </td>
         <td><p>Test for spatial metadata in <em>pas</em> object</p></td>
@@ -266,9 +266,21 @@
         </td>
         <td><p>Leaflet interactive map of PurpleAir sensors</p></td>
       </tr><tr><td>
+          <p><code><a href="pas_lifespanPlot.html">pas_lifespanPlot()</a></code> </p>
+        </td>
+        <td><p>Time range plot showing the lifespan of individual PurpleAir sensors</p></td>
+      </tr><tr><td>
           <p><code><a href="pas_palette.html">pas_palette()</a></code> </p>
         </td>
         <td><p>Color palettes for PurpleAir</p></td>
+      </tr><tr><td>
+          <p><code><a href="pas_pull.html">pas_pull()</a></code> </p>
+        </td>
+        <td><p>Returns a column of data from a PurpleAir synoptic object</p></td>
+      </tr><tr><td>
+          <p><code><a href="pat_applyCorrection.html">pat_applyCorrection()</a></code> </p>
+        </td>
+        <td><p>Apply correction to PurpleAir PM2.5 data.</p></td>
       </tr><tr><td>
           <p><code><a href="pat_check.html">pat_check()</a></code> </p>
         </td>
@@ -313,6 +325,10 @@
           <p><code><a href="pat_isValid.html">pat_isValid()</a></code> </p>
         </td>
         <td><p>Test <em>pat</em> object for correct structure</p></td>
+      </tr><tr><td>
+          <p><code><a href="pat_toMonitor.html">pat_toMonitor()</a></code> </p>
+        </td>
+        <td><p>Convert a PurpleAir Timeseries to a 'mts_monitor' object</p></td>
       </tr><tr><td>
           <p><code><a href="pat_trimDate.html">pat_trimDate()</a></code> </p>
         </td>

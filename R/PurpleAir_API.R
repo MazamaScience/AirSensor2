@@ -1292,11 +1292,8 @@ PurpleAir_PAS_MINIMAL_FIELDS <-
 #' @format String with comma-separated field names
 #' @description Character string with PurpleAir field names used in
 #' \code{pas_downloadParseRawData()}. These fields exclude all measurements
-#' but retain many fields thay may useful for filtering. This \emph{pas} object
-#' can then be passed on to \emph{pat} creation functions.
-#'
-#' A metadata-only \emph{pas} object can be useful when searching for historical
-#' data using \code{\link{pas_filter}}.
+#' but retain many fields needed when creating a \emph{pat} object with
+#' \code{pat_createNew()}.
 #'
 #' Included fields:
 #' \preformatted{
@@ -1494,11 +1491,23 @@ PurpleAir_PAList_PM25_FIELDS <-
 #' QC algorithms and include most of the "information and status" and
 #' "environmental" fields.
 #'
+#' @note The PM2.5 fields included here are the "_atm_" fields recommended by
+#' PurpleAir for outdoor sensors while those
+#' used in \link{PurpleAir_PAT_EPA_HOURLY_FIELDS} include the "_cf_1_" versions as
+#' specified by the EPA correction algorithm.
+#'
+#' The \href{https://api.purpleair.com/#api-sensors-get-sensors-data}{PurpleAir reference docs}
+#' describe the two different variants as:
+#' "CF=1 variant for indoor, ATM variant for outdoor devices" which is why we
+#' include the "_atm_" versions in this set. For the purposes of identifying
+#' when the A and B channels are in agreement, either version is fine.
+#'
 #' Included fields:
 #' \preformatted{
-#'  [1] "rssi"         "uptime"       "pa_latency"   "memory"
-#'  [5] "humidity"     "temperature"  "pressure"     "pm2.5_atm"
-#'  [9] "pm2.5_atm_a"  "pm2.5_atm_b"  "pm2.5_atm_b"
+#' [1] "hardware"         "firmware_version" "rssi"
+#' [4] "uptime"           "pa_latency"       "memory"
+#' [7] "humidity"         "temperature"      "pressure"
+#' [10] "pm2.5_atm"        "pm2.5_atm_a"      "pm2.5_atm_b"
 #' }
 #'
 #' @references \href{https://api.purpleair.com/#api-sensors-get-sensor-history-csv}{Get Sensor History API}
@@ -1514,8 +1523,8 @@ PurpleAir_PAList_PM25_FIELDS <-
 PurpleAir_PAT_QC_FIELDS <-
   paste(
     # Station information and status fields:
-    #"hardware, latitude, longitude, altitude, firmware_version",
-    "rssi, uptime, pa_latency, memory",
+    ###"hardware, latitude, longitude, altitude, firmware_version, rssi, uptime, pa_latency, memory",
+    "hardware, firmware_version, rssi, uptime, pa_latency, memory",
     #
     # Environmental fields:
     ###"humidity, humidity_a, humidity_b, temperature, temperature_a, temperature_b, pressure, pressure_a, pressure_b",
@@ -1529,7 +1538,7 @@ PurpleAir_PAT_QC_FIELDS <-
     #
     # PM2.5 fields:
     ###"pm2.5_alt, pm2.5_alt_a, pm2.5_alt_b, pm2.5_atm, pm2.5_atm_a, pm2.5_atm_b, pm2.5_cf_1, pm2.5_cf_1_a, pm2.5_cf_1_b",
-    "pm2.5_atm, pm2.5_atm_a, pm2.5_atm_b, pm2.5_atm_b",
+    "pm2.5_atm, pm2.5_atm_a, pm2.5_atm_b",
     #
     # PM10.0 fields:
     #   "pm10.0_atm, pm10.0_atm_a, pm10.0_atm_b, pm10.0_cf_1, pm10.0_cf_1_a, pm10.0_cf_1_b",
@@ -1550,7 +1559,7 @@ PurpleAir_PAT_QC_FIELDS <-
 #' @export
 #' @docType data
 #' @name PurpleAir_PAT_EPA_HOURLY_FIELDS
-#' @title Comma-separated list of fields needed for EPA QC AND correction
+#' @title Comma-separated list of fields needed for EPA correction
 #' @format String with comma-separated field names
 #' @description Character string with a minimal set of PurpleAir field names
 #' used in \code{PurpleAir_createNewMonitor()}. These fields are sufficient to
@@ -1563,7 +1572,7 @@ PurpleAir_PAT_QC_FIELDS <-
 #' [5] "pm2.5_cf_1_b"
 #' }
 #'
-#' @seealso \link{PurpleAir_correction}
+#' @seealso \link{pat_applyCorrection}
 #'
 #' @references \href{https://www.epa.gov/sites/default/files/2021-05/documents/toolsresourceswebinar_purpleairsmoke_210519b.pdf}{EPA PurpleAir Correction}.
 #' @references \href{https://api.purpleair.com/#api-sensors-get-sensor-history-csv}{Get Sensor History API}
@@ -1579,8 +1588,7 @@ PurpleAir_PAT_QC_FIELDS <-
 PurpleAir_PAT_EPA_HOURLY_FIELDS <-
   paste(
     # Station information and status fields:
-    #"hardware, latitude, longitude, altitude, firmware_version",
-    #"rssi, uptime, pa_latency, memory",
+    #"hardware, latitude, longitude, altitude, firmware_version, rssi, uptime, pa_latency, memory",
     #
     # Environmental fields:
     ###"humidity, humidity_a, humidity_b, temperature, temperature_a, temperature_b, pressure, pressure_a, pressure_b",

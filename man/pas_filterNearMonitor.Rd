@@ -42,7 +42,7 @@ monitor <-
   AirMonitor::NW_Megafires \%>\%
   AirMonitor::monitor_filter(countyName == "Okanogan")
 pas <-
-  example_pas \%>\%
+  example_pas_pm25 \%>\%
   pas_filter(countyName == "Okanogan")
 
 # Near Omak, WA

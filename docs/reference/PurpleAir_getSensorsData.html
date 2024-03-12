@@ -80,12 +80,12 @@ information is ignored.</p>
     <div id="ref-usage">
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">PurpleAir_getSensorsData</span><span class="op">(</span></span>
 <span>  api_key <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  fields <span class="op">=</span> <span class="va">PurpleAir_DATA_PM25_FIELDS</span>,</span>
+<span>  fields <span class="op">=</span> <span class="va">PurpleAir_PAS_MINIMAL_FIELDS</span>,</span>
 <span>  location_type <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  read_keys <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  show_only <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  modified_since <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  max_age <span class="op">=</span> <span class="fl">604800</span>,</span>
+<span>  max_age <span class="op">=</span> <span class="fl">0</span>,</span>
 <span>  nwlng <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  nwlat <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  selng <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -171,7 +171,7 @@ within the last <code>max_age</code> seconds. Using a value of 0 will match sens
 <span class="r-in"><span></span></span>
 <span class="r-in"><span>  <span class="fu">PurpleAir_getSensorsData</span><span class="op">(</span></span></span>
 <span class="r-in"><span>    api_key <span class="op">=</span> <span class="va">PurpleAir_API_READ_KEY</span>,</span></span>
-<span class="r-in"><span>    fields <span class="op">=</span> <span class="va">PurpleAir_DATA_PM25_FIELDS</span></span></span>
+<span class="r-in"><span>    fields <span class="op">=</span> <span class="va">PurpleAir_PAS_MINIMAL_FIELDS</span></span></span>
 <span class="r-in"><span>  <span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="op">}</span>, silent <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>

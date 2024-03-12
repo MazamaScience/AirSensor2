@@ -27,6 +27,6 @@ columns:
 }
 \examples{
 library(AirSensor2)
-example_pas_raw \%>\% pas_hasSpatial() \%>\% print()
-example_pas \%>\% pas_hasSpatial() \%>\% print()
+example_pas_pm25_raw \%>\% pas_hasSpatial() \%>\% print()
+example_pas_pm25 \%>\% pas_hasSpatial() \%>\% print()
 }

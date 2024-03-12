@@ -42,6 +42,7 @@
 #' Specifying counties is optional.
 #' @param lookbackDays Number of days to "look back" for valid data. Data are
 #' filtered to only include sensors with data more recent than \code{lookbackDays} ago.
+#' Use \code{lookbackDays = 0} to get all historical sensors.
 #' @param location_type The \code{location_type} of the sensors. Possible values
 #' are: 0 = Outside, 1 = Inside or \code{NULL} = both.
 #' @param read_keys Optional, comma separated list of sensor read_keys is required
@@ -92,8 +93,8 @@
 #'     api_key = PurpleAir_API_READ_KEY,
 #'     countryCodes = "US",
 #'     stateCodes = "WA",
-#'     counties = c("Okanogan", "Ferry"),
-#'     lookbackDays = 365 * 10,
+#'     counties = c("Okanogan"),
+#'     lookbackDays = 0, # all historical sensors
 #'     location_type = 0
 #'   )
 #'

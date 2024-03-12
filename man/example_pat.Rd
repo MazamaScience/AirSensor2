@@ -4,7 +4,7 @@
 \encoding{UTF-8}
 \name{example_pat}
 \alias{example_pat}
-\title{Example Purple Air Timeseries dataset}
+\title{Example PurpleAir Timeseries dataset}
 \format{
 A list containing two tibbles named 'meta' and 'data'.
 }
@@ -18,7 +18,7 @@ example_pat
 The \code{example_pat} dataset provides a quickly loadable
 version of a \emph{pat} object for practicing and code examples.
 This dataset contains 24 hours worth of data for a single PurpleAir sensor
-and was generated on 2023-08-12 by running:
+and was generated on 2024-03-12 by running:
 
 \preformatted{
 library(AirSensor2)
@@ -28,11 +28,13 @@ source("global_vars.R") # contains PurpleAir_API_READ_KEY
 example_pat <-
   pat_createNew(
     api_key = PurpleAir_API_READ_KEY,
-    pas = example_pas,
-    sensor_index = "76545",
-    startdate = "2023-01-01",
-    enddate = "2023-01-02",
-    timezone = "America/Los_Angeles"
+    pas = example_pas_metadata,
+    sensor_index = "95189",
+    startdate = "2024-03-01",
+    enddate = "2024-03-03",
+    timezone = "America/Los_Angeles",
+    average = 0,
+    fields = PurpleAir_PAT_QC_FIELDS
   )
 
 save(example_pat, file = "data/example_pat.rda")

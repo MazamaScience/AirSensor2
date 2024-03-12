@@ -92,7 +92,7 @@ saved "hourly pat" object.
 
 - Added `pm2.5_cf_1, pm2.5_cf_1_a, pm2.5_ f_1_b` to `PurpleAir_PAT_EPA_HOURLY_FIELDS`
 so that the original EPA correction factor can be used with `pm2.5_cf_1`.
-- Added `PurpleAir_correction()` to apply a correction equation to "hourly pat"
+- Added `pat_applyCorrection()` to apply a correction equation to "hourly pat"
 data. Default correction uses the \code{"EPA_FASM"} correction as described in
 the documentation.
 - Exchanged the `parameter` argument for `correction_FUN` in `PurpleAir_createMonitor().
@@ -210,7 +210,7 @@ manipulation functionality found in the **AirSensor** package. The goal in
 **AirSensor2** is to create a lean and generic package focused on data ingest
 and basic data manipulation.
 
-Initial functions to download and work with Purple Air synoptic data.
+Initial functions to download and work with PurpleAir synoptic data.
 
 * `initializeMazamaSpatialUtils()`
 * `pas_createNew()`

@@ -24,7 +24,7 @@
 #'
 #' # Near Omak, WA
 #' Omak_pas <-
-#'   example_pas %>%
+#'   example_pas_pm25 %>%
 #'   pas_filterNear(
 #'     longitude = -119.5375,
 #'     latitude = 48.4125,

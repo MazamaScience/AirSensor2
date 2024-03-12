@@ -68,16 +68,28 @@
 
     <div class="section level2">
 <h2 class="page-header" data-toc-text="0.5.0" id="airsensor2-050">AirSensor2 0.5.0<a class="anchor" aria-label="anchor" href="#airsensor2-050"></a></h2>
-<p>Version 0.5 introduces changes in the default parameters that are requuested when making data requests from the PurpleAir API. In the past, when data was free, functions download <em>as many</em> potentially relevant parameters as possible. Now that a payment system is in place, AirSensor2 will be focused on downloading <em>as few</em> parameters as required to accomplish a task. Many of the low level PurpleAir data access functions will thus behave differently.</p>
+<p>Version 0.5 introduces changes in the default parameters that are requuested when making data requests from the PurpleAir API. In the past, when data was free, functions download <em>as many</em> potentially relevant parameters as possible. Now that a payment system is in place, <strong>AirSensor2</strong> will be focused on downloading <em>as few</em> parameters as required to accomplish a task. Many of the low level PurpleAir data access functions will thus behave differently.</p>
 <p>Package dependency updates:</p>
 <pre><code>MazamaCoreUtils (&gt;= 0.5.2)
 MazamaLocationUtils (&gt;= 0.4.3),
 MazamaSpatialUtils (&gt;= 0.8.6),
-MazamaTimeSeries (&gt;= 0.2.16),
+MazamaTimeSeries (&gt;= 0.3.0),
 AirMonitor (&gt;= 0.4.0),</code></pre>
 <ul><li>Modified <code><a href="../reference/pas_downloadParseRawData.html">pas_downloadParseRawData()</a></code> defaults to only query for non-measurement fields defined in <code>PurplAir_SENSOR_METADATA_FIELDS</code>.</li>
 <li>Added <code><a href="../reference/pas_filterDate.html">pas_filterDate()</a></code> to help find historical sensor data.</li>
 <li>Added <code><a href="../reference/pas_filterNearMonitor.html">pas_filterNearMonitor()</a></code> to associate sensors with the closest available monitor in a <em>mts_monitor</em> object from the <strong>AirMonitor</strong> package.</li>
+<li>Renamed <code>pas_get()</code> to <code><a href="../reference/pas_pull.html">pas_pull()</a></code>.</li>
+<li>Updated <code><a href="../reference/pas_createNew.html">pas_createNew()</a></code> and <code><a href="../reference/pas_leaflet.html">pas_leaflet()</a></code> to default to working with non-measurement fields defined in <code>PurplAir_SENSOR_METADATA_FIELDS</code>.</li>
+<li>Added <code><a href="../reference/pas_lifespanPlot.html">pas_lifespanPlot()</a></code> to show when PurpleAir sensors were producing data.</li>
+<li>Updated collections of fields used in creation of <em>pas</em> and <em>pat</em> objects:
+<ul><li><code>PurpleAir_PAS_MINIMAL_FIELDS</code></li>
+<li><code>PurpleAir_PAS_METADATA_FIELDS</code></li>
+<li><code>PurpleAir_PAS_AVG_PM25_FIELDS</code></li>
+<li><code>PurpleAir_PAList_PM25_FIELDS</code></li>
+<li><code>PurpleAir_PAT_QC_FIELDS</code></li>
+<li><code>PurpleAir_PAT_EPA_HOURLY_FIELDS</code></li>
+</ul></li>
+<li>Added a <code>sleep</code> parameter to <code><a href="../reference/pat_createNew.html">pat_createNew()</a></code> to avoid “rate limiting” errors from the PurpleAir API.</li>
 </ul></div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="0.4.0" id="airsensor2-040">AirSensor2 0.4.0<a class="anchor" aria-label="anchor" href="#airsensor2-040"></a></h2>
@@ -85,9 +97,9 @@ AirMonitor (&gt;= 0.4.0),</code></pre>
 <ul><li>
 <strong>MazamaCoreUtils</strong> 0.4.15 =&gt; 0.5.1</li>
 <li>
-<strong>MazamaSpatialUtils</strong> 0.8.5 =&gt; 0.8.6</li>
-<li>
 <strong>MazamaLocationUtils</strong> 0.3.8 =&gt; 0.4.1</li>
+<li>
+<strong>MazamaSpatialUtils</strong> 0.8.5 =&gt; 0.8.6</li>
 <li>
 <strong>MazamaTimeSeries</strong> 0.2.13 =&gt; 0.2.15</li>
 <li>
@@ -96,7 +108,7 @@ AirMonitor (&gt;= 0.4.0),</code></pre>
 <ul><li><code><a href="../reference/Clarity_enhanceRawSynopticData.html">Clarity_enhanceRawSynopticData()</a></code></li>
 <li><code><a href="../reference/Clarity_createAllOpenMonitors.html">Clarity_createAllOpenMonitors()</a></code></li>
 <li><code><a href="../reference/Clarity_createOpenMonitor.html">Clarity_createOpenMonitor()</a></code></li>
-<li><code><a href="../reference/PurpleAir_createNewMonitor.html">PurpleAir_createNewMonitor()</a></code></li>
+<li><code>PurpleAir_createNewMonitor()</code></li>
 <li><code><a href="../reference/pas_createNew.html">pas_createNew()</a></code></li>
 <li><code><a href="../reference/pas_enhanceRawData.html">pas_enhanceRawData()</a></code></li>
 <li><code><a href="../reference/pat_createNew.html">pat_createNew()</a></code></li>
@@ -120,13 +132,13 @@ AirMonitor (&gt;= 0.4.0),</code></pre>
 </ul></div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="0.3.4" id="airsensor2-034">AirSensor2 0.3.4<a class="anchor" aria-label="anchor" href="#airsensor2-034"></a></h2>
-<ul><li>Renamed <code>PurpleAir_createMonitor()</code> to <code><a href="../reference/PurpleAir_createNewMonitor.html">PurpleAir_createNewMonitor()</a></code>. This leaves room for a modified <code>PurpleAir_createMonitor()</code> that will accept a previously saved “hourly pat” object.</li>
+<ul><li>Renamed <code>PurpleAir_createMonitor()</code> to <code>PurpleAir_createNewMonitor()</code>. This leaves room for a modified <code>PurpleAir_createMonitor()</code> that will accept a previously saved “hourly pat” object.</li>
 <li>Added “MVCAA Tutorial 1: Exploring PurpleAir Data” article.</li>
 </ul></div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="0.3.3" id="airsensor2-033">AirSensor2 0.3.3<a class="anchor" aria-label="anchor" href="#airsensor2-033"></a></h2>
 <ul><li>Added <code>pm2.5_cf_1, pm2.5_cf_1_a, pm2.5_ f_1_b</code> to <code>PurpleAir_PAT_EPA_HOURLY_FIELDS</code> so that the original EPA correction factor can be used with <code>pm2.5_cf_1</code>.</li>
-<li>Added <code><a href="../reference/PurpleAir_correction.html">PurpleAir_correction()</a></code> to apply a correction equation to “hourly pat” data. Default correction uses the  correction as described in the documentation.</li>
+<li>Added <code><a href="../reference/pat_applyCorrection.html">pat_applyCorrection()</a></code> to apply a correction equation to “hourly pat” data. Default correction uses the  correction as described in the documentation.</li>
 <li>Exchanged the <code>parameter</code> argument for <code>correction_FUN</code> in `PurpleAir_createMonitor().</li>
 </ul></div>
     <div class="section level2">
@@ -215,7 +227,7 @@ AirMonitor (&gt;= 0.4.0),</code></pre>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="0.1.0" id="airsensor2-010">AirSensor2 0.1.0<a class="anchor" aria-label="anchor" href="#airsensor2-010"></a></h2>
 <p>The <strong>AirSensor2</strong> package is a refactoring of the core, data access and manipulation functionality found in the <strong>AirSensor</strong> package. The goal in <strong>AirSensor2</strong> is to create a lean and generic package focused on data ingest and basic data manipulation.</p>
-<p>Initial functions to download and work with Purple Air synoptic data.</p>
+<p>Initial functions to download and work with PurpleAir synoptic data.</p>
 <ul><li><code><a href="../reference/initializeMazamaSpatialUtils.html">initializeMazamaSpatialUtils()</a></code></li>
 <li><code><a href="../reference/pas_createNew.html">pas_createNew()</a></code></li>
 <li><code><a href="../reference/pas_downloadParseRawData.html">pas_downloadParseRawData()</a></code></li>

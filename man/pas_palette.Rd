@@ -35,7 +35,7 @@ library(AirSensor2)
 
 # Smoke in Oregon
 Oregon <-
-  example_pas \%>\%
+  example_pas_pm25 \%>\%
   pas_filter(stateCode == "OR")
 
 colorInfo <- pas_palette(Oregon, "pm2.5_60minute")
