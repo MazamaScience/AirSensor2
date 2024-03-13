@@ -6,6 +6,8 @@
 #' @title Convert a PurpleAir Timeseries to a 'mts_monitor' object
 #'
 #' @param pat Previously generated \emph{pat} object.
+#' @param applyCorrection Logical specifying whether to apply the EPA
+#' correction algorithm. (See \link{pat_applyCorrection}.)
 #'
 #' @description Enhance an hourly PurpleAir Timeseries \emph{pat} object created
 #' with \code{pat_createHourly()} and create an object of class \code{mts_monitor}
@@ -37,18 +39,29 @@
 #' }
 
 pat_toMonitor <- function(
-    pat = NULL
+    pat = NULL,
+    applyCorrection = TRUE
 ) {
 
   # ----- Validate parameters --------------------------------------------------
 
   MazamaCoreUtils::stopIfNull(pat)
 
-  if ( !all(PurpleAir_PAT_EPA_HOURLY_FIELDS %in% names(pat)) ) {
-    stop(
+  requiredFields <-
+    PurpleAir_PAT_EPA_HOURLY_FIELDS %>%
+    stringr::str_split_1(",")
+
+  if ( !all(requiredFields %in% names(pat$data)) ) {
+    stop(sprintf(
       "Required fields missing from 'pat' which must include all of \"%s\"",
       PurpleAir_PAT_EPA_HOURLY_FIELDS
-    )
+    ))
+  }
+
+  # Check time axis
+  diffSecs <- as.numeric(pat$data$datetime) %>% diff()
+  if ( !all(diffSecs == 3600) ) {
+    stop("pat$data$datetime is not a regularly spaced hourly axis.")
   }
 
   # ----- Create meta ----------------------------------------------------------
@@ -109,11 +122,14 @@ pat_toMonitor <- function(
 
   # ----- Correct data ---------------------------------------------------------
 
-  pat_corrected <- pat_applyCorrection(pat)
-
-  columns <- c("datetime", "pm2.5_corrected")
-
-  data <- pat_corrected$data %>% dplyr::select(dplyr::all_of(columns))
+  if ( applyCorrection ) {
+    pat_corrected <- pat_applyCorrection(pat)
+    columns <- c("datetime", "pm2.5_corrected")
+    data <- pat_corrected$data %>% dplyr::select(dplyr::all_of(columns))
+  } else {
+    columns <- c("datetime", "pm2.5_cf_1")
+    data <- pat_corrected$data %>% dplyr::select(dplyr::all_of(columns))
+  }
 
   names(data) <- c("datetime", meta$deviceDeploymentID)
 

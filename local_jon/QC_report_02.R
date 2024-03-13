@@ -31,7 +31,7 @@ pas <-
 
 # Create raw pat object
 pat <-
-  pat_createNew(
+  pat_create(
     api_key = PurpleAir_API_READ_KEY,
     pas = pas,
     sensor_index = sensor_index,

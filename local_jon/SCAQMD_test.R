@@ -39,7 +39,7 @@ pat_raw <-
   )
 
 pat <-
-  pat_createNew(
+  pat_create(
     api_key = PurpleAir_API_READ_KEY,
     pas = pas_SCAQMD,
     sensor_index = "2323",

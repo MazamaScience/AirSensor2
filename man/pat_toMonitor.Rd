@@ -4,10 +4,13 @@
 \alias{pat_toMonitor}
 \title{Convert a PurpleAir Timeseries to a 'mts_monitor' object}
 \usage{
-pat_toMonitor(pat = NULL)
+pat_toMonitor(pat = NULL, applyCorrection = TRUE)
 }
 \arguments{
 \item{pat}{Previously generated \emph{pat} object.}
+
+\item{applyCorrection}{Logical specifying whether to apply the EPA
+correction algorithm. (See \link{pat_applyCorrection}.)}
 }
 \value{
 An AirMonitor package \emph{mts_monitor} object.

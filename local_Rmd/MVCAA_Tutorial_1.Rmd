@@ -120,13 +120,13 @@ mvcaa_pas %>% pas_leaflet()
 ## Create a PurpleAirTimeseries (pat) object
 
 A _pat_ object contains time series data for a specific sensor. The
-`pat_createNew()` function downloads all data records for a sensor -- "raw data"
+`pat_create()` function downloads all data records for a sensor -- "raw data"
 typically measured every 2 minutes. A similar function, `pat_createHourly()`,
 downloads _hourly aggregated_ data as provided by the PurpleAir API.
 
 ### Raw Data
 
-The `pat_createNew()` function has a `fields` argument that lets you specify
+The `pat_create()` function has a `fields` argument that lets you specify
 which data fields should be included in the result. But default, it uses all
 those defined in `PurpleAir_PAT_QC_FIELDS`:
 
@@ -142,7 +142,7 @@ a raw _pat_ object for this sensor:
 ```{r create_pat_raw, warning = FALSE, message = FALSE}
 # Create raw pat object
 pat <-
-  pat_createNew(
+  pat_create(
     api_key = PurpleAir_API_READ_KEY,
     pas = mvcaa_pas,
     sensor_index = "13681",

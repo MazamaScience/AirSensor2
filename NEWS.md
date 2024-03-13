@@ -1,6 +1,6 @@
 # AirSensor2 0.5.0
 
-Version 0.5 introduces changes in the default parameters that are requuested
+Version 0.5 introduces changes in the default parameters that are requested
 when making data requests from the PurpleAir API. In the past, when data was 
 free, functions download _as many_ potentially relevant parameters
 as possible. Now that a payment system is in place, **AirSensor2** will be focused 
@@ -33,11 +33,13 @@ non-measurement fields defined in `PurplAir_SENSOR_METADATA_FIELDS`.
   - `PurpleAir_PAList_PM25_FIELDS`
   - `PurpleAir_PAT_QC_FIELDS`
   - `PurpleAir_PAT_EPA_HOURLY_FIELDS`
-* Added a `sleep` parameter to `pat_createNew()` to avoid "rate limiting" errors
+* Added a `sleep` parameter to `pat_create()` to avoid "rate limiting" errors
 from the PurpleAir API.
+* Removed `PurpleAir_createNewMonitor()`.
+* Added `pat_toMonitor()`.
+* Renamed `pat_createNew()` to `pat_create()`.
+* Added `pat_createRaw()`.
 
-  
-  
 
 # AirSensor2 0.4.0
 
@@ -60,7 +62,7 @@ that both `'zip'` and `'postalCode'` exist. These include:
 - `PurpleAir_createNewMonitor()`
 - `pas_createNew()`
 - `pas_enhanceRawData()`
-- `pat_createNew()`
+- `pat_create()`
 
 # AirSensor2 0.3.7
 
@@ -177,7 +179,7 @@ to use a geohash as a unique location identifier.)
 * Updated `pas_enhanceRawData()` and `pas_createNew()` to harmonize argument
 names. 
 * Addded `pat_downloadParseRawData()` using the new wrapper functions.
-* Added `pat_createNew()` and `example_pat` dataset.
+* Added `pat_create()` and `example_pat` dataset.
 * Added utility functions: `pat_check()`, `pat_isValid()`, `pat_isEmpty()`,
 `pat_distinct()`, `pat_getData()`, `pat_getMeta()`.
 

@@ -41,7 +41,7 @@ AirMonitor::monitor_timeseriesPlot(mon)
 ptm_0 <- proc.time()
 
 pat <-
-  pat_createNew(
+  pat_create(
     pas = example_pas,
     sensor_index = "76545",
     startdate = "2023-01-01",

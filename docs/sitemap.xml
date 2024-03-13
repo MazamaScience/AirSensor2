@@ -196,10 +196,16 @@
     <loc>/reference/pat_check.html</loc>
   </url>
   <url>
+    <loc>/reference/pat_create.html</loc>
+  </url>
+  <url>
     <loc>/reference/pat_createHourly.html</loc>
   </url>
   <url>
     <loc>/reference/pat_createNew.html</loc>
+  </url>
+  <url>
+    <loc>/reference/pat_createRaw.html</loc>
   </url>
   <url>
     <loc>/reference/pat_distinct.html</loc>

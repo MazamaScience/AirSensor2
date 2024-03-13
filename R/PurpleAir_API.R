@@ -1293,7 +1293,7 @@ PurpleAir_PAS_MINIMAL_FIELDS <-
 #' @description Character string with PurpleAir field names used in
 #' \code{pas_downloadParseRawData()}. These fields exclude all measurements
 #' but retain many fields needed when creating a \emph{pat} object with
-#' \code{pat_createNew()}.
+#' \code{pat_create()}.
 #'
 #' Included fields:
 #' \preformatted{
@@ -1504,10 +1504,8 @@ PurpleAir_PAList_PM25_FIELDS <-
 #'
 #' Included fields:
 #' \preformatted{
-#' [1] "hardware"         "firmware_version" "rssi"
-#' [4] "uptime"           "pa_latency"       "memory"
-#' [7] "humidity"         "temperature"      "pressure"
-#' [10] "pm2.5_atm"        "pm2.5_atm_a"      "pm2.5_atm_b"
+#' [1] "rssi"        "uptime"      "pa_latency"  "memory"      "humidity"
+#' [6] "temperature" "pressure"    "pm2.5_atm"   "pm2.5_atm_a" "pm2.5_atm_b"
 #' }
 #'
 #' @references \href{https://api.purpleair.com/#api-sensors-get-sensor-history-csv}{Get Sensor History API}
@@ -1524,7 +1522,7 @@ PurpleAir_PAT_QC_FIELDS <-
   paste(
     # Station information and status fields:
     ###"hardware, latitude, longitude, altitude, firmware_version, rssi, uptime, pa_latency, memory",
-    "hardware, firmware_version, rssi, uptime, pa_latency, memory",
+    "rssi, uptime, pa_latency, memory",
     #
     # Environmental fields:
     ###"humidity, humidity_a, humidity_b, temperature, temperature_a, temperature_b, pressure, pressure_a, pressure_b",

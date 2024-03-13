@@ -14,7 +14,7 @@ PurpleAir_PAS_METADATA_FIELDS
 Character string with PurpleAir field names used in
 \code{pas_downloadParseRawData()}. These fields exclude all measurements
 but retain many fields needed when creating a \emph{pat} object with
-\code{pat_createNew()}.
+\code{pat_create()}.
 
 Included fields:
 \preformatted{

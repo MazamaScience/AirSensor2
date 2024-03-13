@@ -76,13 +76,18 @@ for use with the <a href="https://mazamascience.github.io/AirMonitor/" class="ex
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">pat_toMonitor</span><span class="op">(</span>pat <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">pat_toMonitor</span><span class="op">(</span>pat <span class="op">=</span> <span class="cn">NULL</span>, applyCorrection <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>pat</dt>
 <dd><p>Previously generated <em>pat</em> object.</p></dd>
+
+
+<dt>applyCorrection</dt>
+<dd><p>Logical specifying whether to apply the EPA
+correction algorithm. (See <a href="pat_applyCorrection.html">pat_applyCorrection</a>.)</p></dd>
 
 </dl></div>
     <div id="value">
@@ -117,7 +122,7 @@ for use with the <a href="https://mazamascience.github.io/AirMonitor/" class="ex
 <span class="r-in"><span><span class="fu">AirMonitor</span><span class="fu">::</span><span class="fu"><a href="https://mazamascience.github.io/AirMonitor/reference/monitor_timeseriesPlot.html" class="external-link">monitor_timeseriesPlot</a></span><span class="op">(</span><span class="va">monitor</span>, shadedNight <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span>, silent <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Error in pat_toMonitor(.) : </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Required fields missing from 'pat' which must include all of "%s"humidity,temperature,pm2.5_cf_1,pm2.5_cf_1_a,pm2.5_cf_1_b</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Required fields missing from 'pat' which must include all of "humidity,temperature,pm2.5_cf_1,pm2.5_cf_1_a,pm2.5_cf_1_b"</span>
 <span class="r-in"><span><span class="co"># }</span></span></span>
 </code></pre></div>
     </div>

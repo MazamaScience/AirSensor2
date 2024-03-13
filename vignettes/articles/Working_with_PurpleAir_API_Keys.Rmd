@@ -110,7 +110,7 @@ scripts written by end users.
 Currently supported API keys and associated functions include:
 
 * `"PurpleAir-read"` – PurpleAir api_key used in `pas_downloadParseRawData()`
-`pat_downloadParseRawData()`, `pat_createNew()`.
+`pat_downloadParseRawData()`, `pat_create()`.
 * `"Clarity-read"` -- Clarity api_key used in `Clarity_createOpenMonitor()`,
 `Clarity_createOpenSynoptic()`.
 

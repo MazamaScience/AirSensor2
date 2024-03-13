@@ -162,7 +162,7 @@ pas_enhanceRawData <- function(
   pas$location_type = dplyr::if_else(pas$location_type == "0", "outside", "inside", as.character(NA))
 
   # elevation
-  if ( "elevation" %in% names(pas) ) {
+  if ( "altitude" %in% names(pas) ) {
     pas$elevation = round(pas$altitude * 0.3048) # convert from feet to meters
   } else {
     pas$elevation = as.numeric(NA)

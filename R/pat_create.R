@@ -37,6 +37,9 @@
 #' @note Parallel processing using \code{parallel = TRUE} is not available on
 #' Windows machines.
 #'
+#' @seealso [pat_createHourly()]
+#' @seealso [pat_createRaw()]
+#'
 #' @references \href{https://www2.purpleair.com}{PurpleAir}
 #' @references \href{https://api.purpleair.com}{PurpleAir API}
 #' @references \href{https://www2.purpleair.com/policies/terms-of-service}{PurpleAir Terms of service}
@@ -60,7 +63,7 @@
 #'
 #' # Create a pat object
 #' pat <-
-#'   pat_createNew(
+#'   pat_create(
 #'     pas = example_pas,
 #'     sensor_index = "76545",
 #'     startdate = "2023-01-01",
@@ -72,7 +75,7 @@
 #'
 #' # Run data download in parallel (faster)
 #' pat <-
-#'   pat_createNew(
+#'   pat_create(
 #'     pas = example_pas,
 #'     sensor_index = "76545",
 #'     startdate = "2023-01-01",
@@ -84,7 +87,7 @@
 #' }, silent = FALSE)
 #' }
 
-pat_createNew <- function(
+pat_create <- function(
     api_key = NULL,
     pas = NULL,
     sensor_index = NULL,
@@ -124,7 +127,7 @@ pat_createNew <- function(
   # NOTE:  In 2023, the PurpleAir API limits each request to two days of data so
   # NOTE:  we break up the time range into separate requests.
 
-  # Find a single, parent record
+  # Find a single record
   pas_single <-
     pas %>%
     dplyr::filter(sensor_index == !!sensor_index)
@@ -346,7 +349,7 @@ if ( FALSE ) {
 
 
   pat <-
-    pat_createNew(
+    pat_create(
       api_key = api_key,
       pas = pas,
       sensor_index = sensor_index,

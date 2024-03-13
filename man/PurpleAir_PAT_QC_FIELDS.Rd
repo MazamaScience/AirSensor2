@@ -30,10 +30,8 @@ when the A and B channels are in agreement, either version is fine.
 
 Included fields:
 \preformatted{
-[1] "hardware"         "firmware_version" "rssi"
-[4] "uptime"           "pa_latency"       "memory"
-[7] "humidity"         "temperature"      "pressure"
-[10] "pm2.5_atm"        "pm2.5_atm_a"      "pm2.5_atm_b"
+[1] "rssi"        "uptime"      "pa_latency"  "memory"      "humidity"
+[6] "temperature" "pressure"    "pm2.5_atm"   "pm2.5_atm_a" "pm2.5_atm_b"
 }
 }
 \references{

@@ -68,7 +68,7 @@
 
     <div class="section level2">
 <h2 class="page-header" data-toc-text="0.5.0" id="airsensor2-050">AirSensor2 0.5.0<a class="anchor" aria-label="anchor" href="#airsensor2-050"></a></h2>
-<p>Version 0.5 introduces changes in the default parameters that are requuested when making data requests from the PurpleAir API. In the past, when data was free, functions download <em>as many</em> potentially relevant parameters as possible. Now that a payment system is in place, <strong>AirSensor2</strong> will be focused on downloading <em>as few</em> parameters as required to accomplish a task. Many of the low level PurpleAir data access functions will thus behave differently.</p>
+<p>Version 0.5 introduces changes in the default parameters that are requested when making data requests from the PurpleAir API. In the past, when data was free, functions download <em>as many</em> potentially relevant parameters as possible. Now that a payment system is in place, <strong>AirSensor2</strong> will be focused on downloading <em>as few</em> parameters as required to accomplish a task. Many of the low level PurpleAir data access functions will thus behave differently.</p>
 <p>Package dependency updates:</p>
 <pre><code>MazamaCoreUtils (&gt;= 0.5.2)
 MazamaLocationUtils (&gt;= 0.4.3),
@@ -89,7 +89,11 @@ AirMonitor (&gt;= 0.4.0),</code></pre>
 <li><code>PurpleAir_PAT_QC_FIELDS</code></li>
 <li><code>PurpleAir_PAT_EPA_HOURLY_FIELDS</code></li>
 </ul></li>
-<li>Added a <code>sleep</code> parameter to <code><a href="../reference/pat_createNew.html">pat_createNew()</a></code> to avoid “rate limiting” errors from the PurpleAir API.</li>
+<li>Added a <code>sleep</code> parameter to <code><a href="../reference/pat_create.html">pat_create()</a></code> to avoid “rate limiting” errors from the PurpleAir API.</li>
+<li>Removed <code>PurpleAir_createNewMonitor()</code>.</li>
+<li>Added <code><a href="../reference/pat_toMonitor.html">pat_toMonitor()</a></code>.</li>
+<li>Renamed <code>pat_createNew()</code> to <code><a href="../reference/pat_create.html">pat_create()</a></code>.</li>
+<li>Added <code><a href="../reference/pat_createRaw.html">pat_createRaw()</a></code>.</li>
 </ul></div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="0.4.0" id="airsensor2-040">AirSensor2 0.4.0<a class="anchor" aria-label="anchor" href="#airsensor2-040"></a></h2>
@@ -111,7 +115,7 @@ AirMonitor (&gt;= 0.4.0),</code></pre>
 <li><code>PurpleAir_createNewMonitor()</code></li>
 <li><code><a href="../reference/pas_createNew.html">pas_createNew()</a></code></li>
 <li><code><a href="../reference/pas_enhanceRawData.html">pas_enhanceRawData()</a></code></li>
-<li><code><a href="../reference/pat_createNew.html">pat_createNew()</a></code></li>
+<li><code><a href="../reference/pat_create.html">pat_create()</a></code></li>
 </ul></div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="0.3.7" id="airsensor2-037">AirSensor2 0.3.7<a class="anchor" aria-label="anchor" href="#airsensor2-037"></a></h2>
@@ -199,7 +203,7 @@ AirMonitor (&gt;= 0.4.0),</code></pre>
 <li>Updated <code><a href="../reference/pas_downloadParseRawData.html">pas_downloadParseRawData()</a></code> to use the new wrapper functions.</li>
 <li>Updated <code><a href="../reference/pas_enhanceRawData.html">pas_enhanceRawData()</a></code> and <code><a href="../reference/pas_createNew.html">pas_createNew()</a></code> to harmonize argument names.</li>
 <li>Addded <code><a href="../reference/pat_downloadParseRawData.html">pat_downloadParseRawData()</a></code> using the new wrapper functions.</li>
-<li>Added <code><a href="../reference/pat_createNew.html">pat_createNew()</a></code> and <code>example_pat</code> dataset.</li>
+<li>Added <code><a href="../reference/pat_create.html">pat_create()</a></code> and <code>example_pat</code> dataset.</li>
 <li>Added utility functions: <code><a href="../reference/pat_check.html">pat_check()</a></code>, <code><a href="../reference/pat_isValid.html">pat_isValid()</a></code>, <code><a href="../reference/pat_isEmpty.html">pat_isEmpty()</a></code>, <code><a href="../reference/pat_distinct.html">pat_distinct()</a></code>, <code><a href="../reference/pat_getDataFrame.html">pat_getData()</a></code>, <code><a href="../reference/pat_getDataFrame.html">pat_getMeta()</a></code>.</li>
 </ul></div>
     <div class="section level2">

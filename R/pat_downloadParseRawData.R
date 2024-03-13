@@ -86,12 +86,22 @@ pat_downloadParseRawData <- function(
 
   # ----- Request data ---------------------------------------------------------
 
+  # NOTE:  PA API docs state:
+  # NOTE:    Query is executed using data_timestamp >= start_timestamp
+  # NOTE:    Query is executed using data_timestamp < end_timestamp.
+  # NOTE:
+  # NOTE:  However, when requesting hourly data, it looks like PA truncates to
+  # NOTE:  the hour so an enddate of 23:59:59 is counted as hour 23 which is
+  # NOTE:  then NOT included in the output.
+  # NOTE:
+  # NOTE:  Here, we add one second to end_timestamp to account for that.
+
   tbl <-
     PurpleAir_getSensorHistoryCSV(
       api_key = api_key,
       sensor_index = sensor_index,
       start_timestamp = as.numeric(tRange[1]),
-      end_timestamp = as.numeric(tRange[2]),
+      end_timestamp = as.numeric(tRange[2]) + 1,
       average = average,
       fields = fields,
       baseUrl = baseUrl

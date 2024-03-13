@@ -165,7 +165,7 @@
 #' source("global_vars.R") # contains PurpleAir_API_READ_KEY
 #'
 #' example_pat <-
-#'   pat_createNew(
+#'   pat_create(
 #'     api_key = PurpleAir_API_READ_KEY,
 #'     pas = example_pas_metadata,
 #'     sensor_index = "95189",
