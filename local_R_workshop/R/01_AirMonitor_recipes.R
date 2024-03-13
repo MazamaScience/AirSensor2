@@ -109,6 +109,7 @@ riverside <-
   monitor_filter(countyName == "Riverside")
 
 nrow(riverside$meta)
+
 ncol(riverside$data)
 
 # Riverside time series plot
@@ -256,7 +257,7 @@ addAQILegend()
 # Where was HAZARDOUS encountered?
 
 # Check US_AQI object
-str(US_AQI)
+names(US_AQI)
 
 US_AQI$names_eng
 US_AQI$names_spa

@@ -58,12 +58,6 @@ pat_toMonitor <- function(
     ))
   }
 
-  # Check time axis
-  diffSecs <- as.numeric(pat$data$datetime) %>% diff()
-  if ( !all(diffSecs == 3600) ) {
-    stop("pat$data$datetime is not a regularly spaced hourly axis.")
-  }
-
   # ----- Create meta ----------------------------------------------------------
 
   monitor_metaNames <-
@@ -119,6 +113,16 @@ pat_toMonitor <- function(
   # Remove "PurpleAir_timeseries" and "synoptic" classes
   attributes(meta)$class <-
     setdiff(attributes(meta)$class, c("PurpleAir_timeseries", "synoptic"))
+
+  # ----- Guarantee uniform time axis ------------------------------------------
+
+  pat <-
+    MazamaTimeSeries::mts_setTimeAxis(
+      pat,
+      startdate = min(pat$data$datetime),
+      enddate = max(pat$data$datetime),
+      timezone = pat$meta$timezone
+    )
 
   # ----- Correct data ---------------------------------------------------------
 

@@ -70,6 +70,7 @@ pat_applyCorrection <- function(
     data$pm2.5_corrected <- as.numeric(NA)
 
     mask_low <- data$pm2.5_cf_1 <= 343
+    mask_low[is.na(mask_low)] <- TRUE    # NOTE:  Can't have NAs in a mask
 
     data$pm2.5_corrected[mask_low] <-
       0.52 * data$pm2.5_cf_1[mask_low] - 0.086 * data$humidity[mask_low] + 5.75

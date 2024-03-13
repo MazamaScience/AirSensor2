@@ -47,7 +47,7 @@ source("global_vars.R")
 # Check the key
 PurpleAir_checkAPIKey(PurpleAir_API_READ_KEY)
 
-# ----- PurpleAir Synoptic (PAT) -----------------------------------------------
+# ----- PurpleAir Timeseries (PAT) ---------------------------------------------
 
 # PAS Metadata only field names
 PurpleAir_PAS_METADATA_FIELDS  %>%
@@ -64,7 +64,7 @@ PurpleAir_PAT_QC_FIELDS  %>%
   stringr::str_split(",") %>%
   print(width = 75)
 
-# ----- Riverside Hourly PAS ---------------------------------------------------
+# ----- Riverside Hourly PAT ---------------------------------------------------
 
 # Add "confidence" to fields
 my_fields <-
@@ -113,8 +113,7 @@ RIVR_coloc_9_hourly <-
     sensor_index = 3537,
     startdate = "2024-03-01",
     enddate = "2024-03-09",
-    timezone = "America/Los_Angeles",
-    fields = PurpleAir_PAT_EPA_HOURLY_FIELDS
+    timezone = "America/Los_Angeles"
   )
 
 # Make a copy and leave original in memory (R is pass-by-copy, not pass-by-reference)

@@ -107,8 +107,6 @@ unique(pas$houseNumber)
 pas %>%
   pas_leaflet()
 
-?pas_leaflet
-
 # * PM2.5 -----
 pas %>%
   pas_leaflet(
