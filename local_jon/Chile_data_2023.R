@@ -2,7 +2,11 @@ library(AirSensor2)
 
 source("global_vars.R")
 
-logger.setup()
+logger.setup(
+  debugLog = "Chile_data_debug.log",
+  infoLog = "Chile_data_info.log",
+  errorLog = "Chile_data_error.log"
+)
 logger.setLevel(TRACE)
 
 initializeMazamaSpatialUtils()
@@ -35,10 +39,13 @@ dim(chile_2023_pas)
 
 pas_lifespanPlot(chile_2023_pas)
 
+logger.info("===== Downloading 2023 data for %d sensors =====", nrow(chile_2023_pas))
+
 for ( i in seq_len(nrow(chile_2023_pas)) ) {
 
   meta <- chile_2023_pas[i,]
   sensor_index <- meta$sensor_index
+
 
   name = sprintf("pat_%s", sensor_index)
   filePath = sprintf("data/%s.rda", name)
@@ -55,22 +62,39 @@ for ( i in seq_len(nrow(chile_2023_pas)) ) {
     sensor_end <- meta$last_seen
   }
 
-  pat <-
-    pat_createHourly(
-      api_key = PurpleAir_API_READ_KEY,
-      pas = chile_2023_pas,
-      sensor_index = sensor_index,
-      startdate = sensor_start,
-      enddate = sensor_start + lubridate::ddays(14),
-      timezone = timezone
-    )
+  logger.info("Working on %s ...", sensor_index)
+  logger.trace("start = %s", MazamaCoreUtils::timeStamp(sensor_start, timezone = timezone, style = "clock"))
+  logger.trace("end = %s", MazamaCoreUtils::timeStamp(sensor_end, timezone = timezone, style = "clock"))
 
-  if ( nrow(pat$data) == 0 ) {
-    logger.warn("Sensor")
+  result <- try({
+
+    pat <-
+      pat_createHourly(
+        api_key = PurpleAir_API_READ_KEY,
+        pas = chile_2023_pas,
+        sensor_index = sensor_index,
+        startdate = sensor_start,
+        enddate = sensor_end,
+        timezone = timezone
+      )
+
+  })
+
+  if ( "try-error" %in% class(result) ) {
+
+    err_msg <- geterrmessage()
+    logger.error(err_msg)
+
+  } else {
+
+    if ( nrow(pat$data) == 0 ) {
+      logger.warn("Sensor %s has no data", sensor_index)
+    }
+
+    assign(name, pat)
+    save(list = name, file = filePath)
+
   }
-
-  assign(name, pat)
-  save(list = name, file = filePath)
 
 }
 
