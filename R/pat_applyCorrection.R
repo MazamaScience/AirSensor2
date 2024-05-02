@@ -50,7 +50,11 @@ pat_applyCorrection <- function(
   MazamaCoreUtils::stopIfNull(pat)
   name <- match.arg(name)
 
-  if ( !all(PurpleAir_PAT_EPA_HOURLY_FIELDS %in% names(pat)) ) {
+  hourly_fields <-
+    PurpleAir_PAT_EPA_HOURLY_FIELDS %>%
+    stringr::str_split_1(",")
+
+  if ( !all(hourly_fields %in% names(pat$data)) ) {
     stop(sprintf(
       "Required fields missing from 'pat' which must include all of \"%s\"",
       PurpleAir_PAT_EPA_HOURLY_FIELDS

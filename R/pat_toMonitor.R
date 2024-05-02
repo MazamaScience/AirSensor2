@@ -44,11 +44,15 @@ pat_toMonitor <- function(
 
   MazamaCoreUtils::stopIfNull(pat)
 
-  if ( !all(PurpleAir_PAT_EPA_HOURLY_FIELDS %in% names(pat)) ) {
-    stop(
+  hourly_fields <-
+    PurpleAir_PAT_EPA_HOURLY_FIELDS %>%
+    stringr::str_split_1(",")
+
+  if ( !all(hourly_fields %in% names(pat$data)) ) {
+    stop(sprintf(
       "Required fields missing from 'pat' which must include all of \"%s\"",
       PurpleAir_PAT_EPA_HOURLY_FIELDS
-    )
+    ))
   }
 
   # ----- Create meta ----------------------------------------------------------
@@ -109,7 +113,10 @@ pat_toMonitor <- function(
 
   # ----- Correct data ---------------------------------------------------------
 
-  pat_corrected <- pat_applyCorrection(pat)
+  pat_corrected <-
+    pat %>%
+    pat_distinct() %>%
+    pat_applyCorrection()
 
   columns <- c("datetime", "pm2.5_corrected")
 

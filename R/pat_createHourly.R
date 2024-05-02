@@ -108,7 +108,8 @@ pat_createHourly <- function(
 
   # ----- Create hourly pat ----------------------------------------------------
 
-  pat <- pat_createNew(
+  pat <-
+    pat_createNew(
     api_key = api_key,
     pas = pas,
     sensor_index = sensor_index,
@@ -121,7 +122,8 @@ pat_createHourly <- function(
     parallel = parallel,
     baseUrl = baseUrl,
     verbose = verbose
-  )
+  ) %>%
+    pat_distinct()
 
   # ----- Return ---------------------------------------------------------------
 

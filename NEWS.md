@@ -1,3 +1,21 @@
+# AirSensor2 0.5.1
+
+* `pat_createNew()` now checks for and removes duplicate timesteps and guarantees
+that the returned object has class name 'sts' for "SingleTimeSeries" so that it 
+can work with functions from **MazamaTimeSeries**.
+* Fixed bug in `pat_toMonitor()` that always complained about missing fields.
+* Fixed a bug where the `sensor_index` field returned from PurpleAir was sometimes
+interpreted as an integer instead of a character. (Identifiers should always 
+be of character type as in "007" for James Bond.)
+* Fixed a bug in `pat_downloadParseRawData()` where timestamps representing
+number of seconds sometimes used exponential notation which the PurpleAir API
+does not understand. Example of the bug: 
+
+```
+> MazamaCoreUtils::parseDatetime("2023-05-02 03:59:59", timezone = "UTC") %>% as.numeric()
+[1] 1.683e+09
+```
+
 # AirSensor2 0.5.0
 
 Version 0.5 introduces changes in the default parameters that are requuested

@@ -90,8 +90,8 @@ pat_downloadParseRawData <- function(
     PurpleAir_getSensorHistoryCSV(
       api_key = api_key,
       sensor_index = sensor_index,
-      start_timestamp = as.numeric(tRange[1]),
-      end_timestamp = as.numeric(tRange[2]),
+      start_timestamp = sprintf("%d", as.numeric(tRange[1])),
+      end_timestamp = sprintf("%d", as.numeric(tRange[2])),
       average = average,
       fields = fields,
       baseUrl = baseUrl

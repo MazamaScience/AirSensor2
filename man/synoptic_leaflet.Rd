@@ -53,7 +53,7 @@ values:
 \details{
 The \code{maptype} argument is mapped onto leaflet "ProviderTile"
 names. Current mappings include:
-\enumerate{
+\describe{
 \item{"roadmap"}{ -- "OpenStreetMap"}
 \item{"satellite"}{ -- "Esri.WorldImagery"}
 \item{"terrain"}{ -- "Esri.WorldTopoMap"}
