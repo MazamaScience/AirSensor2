@@ -121,7 +121,8 @@ pat_createHourly <- function(
     parallel = parallel,
     baseUrl = baseUrl,
     verbose = verbose
-  )
+  ) %>%
+    pat_distinct()
 
   # ----- Return ---------------------------------------------------------------
 

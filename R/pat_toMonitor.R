@@ -47,11 +47,11 @@ pat_toMonitor <- function(
 
   MazamaCoreUtils::stopIfNull(pat)
 
-  requiredFields <-
+  hourly_fields <-
     PurpleAir_PAT_EPA_HOURLY_FIELDS %>%
     stringr::str_split_1(",")
 
-  if ( !all(requiredFields %in% names(pat$data)) ) {
+  if ( !all(hourly_fields %in% names(pat$data)) ) {
     stop(sprintf(
       "Required fields missing from 'pat' which must include all of \"%s\"",
       PurpleAir_PAT_EPA_HOURLY_FIELDS
@@ -116,6 +116,7 @@ pat_toMonitor <- function(
 
   # ----- Guarantee uniform time axis ------------------------------------------
 
+<<<<<<< HEAD
   pat <-
     MazamaTimeSeries::mts_setTimeAxis(
       pat,
@@ -123,6 +124,12 @@ pat_toMonitor <- function(
       enddate = max(pat$data$datetime),
       timezone = pat$meta$timezone
     )
+=======
+  pat_corrected <-
+    pat %>%
+    pat_distinct() %>%
+    pat_applyCorrection()
+>>>>>>> origin/version-0.5
 
   # ----- Correct data ---------------------------------------------------------
 

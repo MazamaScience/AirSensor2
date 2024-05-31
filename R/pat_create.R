@@ -289,6 +289,17 @@ pat_create <- function(
 
   } # END of sequential downloads
 
+  # NOTE:  Despite my efforts in lower levels of code, I am still seeing this
+  # NOTE:  error:
+  #
+  # Error in dplyr::bind_rows(dataList) :
+  #   Can't combine `..28$sensor_index` <character> and `..29$sensor_index` <double>.
+  #
+  # NOTE:  Fix that here
+  for ( i in seq_len(length(dataList)) ) {
+    dataList[[i]]$sensor_index <- as.character(dataList[[i]]$sensor_index)
+  }
+
   data <-
     dplyr::bind_rows(dataList) %>%
     dplyr::rename(datetime = .data$time_stamp) %>%
@@ -343,8 +354,11 @@ pat_create <- function(
   # ----- Return ---------------------------------------------------------------
 
   # Combine meta and data dataframes into a list
-  pat <- list(meta = meta, data = data)
-  class(pat) <- c("PurpleAir_timeseries", class(pat))
+  pat <-
+    list(meta = meta, data = data) %>%
+    pat_distinct()
+
+  class(pat) <- union(c("PurpleAir_timeseries", "sts"), class(pat))
 
   return(pat)
 

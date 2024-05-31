@@ -233,10 +233,10 @@ pas_createNew <- function(
 
     bbox <- sf::st_bbox(SFDF)
 
-    west <- bbox$xmin
-    east <- bbox$xmax
-    south <- bbox$ymin
-    north <- bbox$ymax
+    west <- as.numeric(bbox$xmin)
+    east <- as.numeric(bbox$xmax)
+    south <- as.numeric(bbox$ymin)
+    north <- as.numeric(bbox$ymax)
 
   }
 
