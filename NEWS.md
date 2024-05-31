@@ -1,4 +1,4 @@
-# AirSensor2 0.5.1
+# AirSensor2 0.5.2
 
 Updated the of data that can be requested in a single call in `pat_create()` to
 match updates to the PurpleAir API:
