@@ -116,20 +116,10 @@ pat_toMonitor <- function(
 
   # ----- Guarantee uniform time axis ------------------------------------------
 
-<<<<<<< HEAD
-  pat <-
-    MazamaTimeSeries::mts_setTimeAxis(
-      pat,
-      startdate = min(pat$data$datetime),
-      enddate = max(pat$data$datetime),
-      timezone = pat$meta$timezone
-    )
-=======
   pat_corrected <-
     pat %>%
     pat_distinct() %>%
     pat_applyCorrection()
->>>>>>> origin/version-0.5
 
   # ----- Correct data ---------------------------------------------------------
 
