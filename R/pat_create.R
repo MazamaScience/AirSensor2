@@ -26,8 +26,8 @@
 #' @return A PurpleAir Timeseries \emph{pat} object.
 #'
 #' @description Create a \code{pat} object for a specific \code{sensor_index}.
-#' This function splits up the requested time range into 2-day intervals (the
-#' maximum allowed by the PurpleAir API) and makes repeated calls to
+#' This function splits up the requested time range into multi-day intervals (as
+#' required by the PurpleAir API) and makes repeated calls to
 #' \code{pat_downloadParseRawData()}. The \code{sleep} parameter waits a small
 #' amount of time between API requests.
 #'
@@ -154,6 +154,7 @@ pat_create <- function(
 
   # Create a valid dateRange
   if ( !is.null(startdate) && !is.null(enddate) ) {
+
     # Don't require day boundaries
     dateRange <- MazamaCoreUtils::timeRange(
       starttime = startdate,
@@ -163,7 +164,9 @@ pat_create <- function(
       ceilingStart = FALSE,
       ceilingEnd = FALSE
     )
+
   } else {
+
     # Default to 2 days with day boundaries
     dateRange <- MazamaCoreUtils::dateRange(
       startdate = startdate,
@@ -174,10 +177,27 @@ pat_create <- function(
       ceilingEnd = FALSE,
       days = 2
     )
+
   }
 
-  # Create a sequence of every-2-days POSIXct times
-  dateSequence <- seq(dateRange[1], dateRange[2], by = lubridate::ddays(2))
+  # NOTE:  On 2024-05-03, PurpleAir announced expanded time limits for
+  # NOTE:  historical data requests as reflected here:
+
+  # raw data ( average == 0 )
+  dayCount <- 30
+
+  if ( average == 10 ) {
+    dayCount <- 60
+  } else if ( average == 30 ) {
+    dayCount <- 90
+  } else if ( average == 60 ) {
+    dayCount <- 180
+  } else {
+    dayCount <- 365
+  }
+
+  # Create a sequence of every-dayCount-days POSIXct times
+  dateSequence <- seq(dateRange[1], dateRange[2], by = lubridate::ddays(dayCount))
 
   # Tack on the final data if needed
   if ( dateRange[2] > utils::tail(dateSequence, 1) ) {
@@ -338,7 +358,7 @@ if ( FALSE ) {
   pas = example_pas_metadata
   sensor_index = "95189"
   startdate = "2024-01-01"
-  enddate = "2024-01-03"
+  enddate = "2024-01-15"
   timezone = "America/Los_Angeles"
   average = 0
   fields = PurpleAir_PAT_QC_FIELDS

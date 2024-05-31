@@ -54,8 +54,8 @@ A PurpleAir Timeseries \emph{pat} object.
 }
 \description{
 Create a \code{pat} object for a specific \code{sensor_index}.
-This function splits up the requested time range into 2-day intervals (the
-maximum allowed by the PurpleAir API) and makes repeated calls to
+This function splits up the requested time range into multi-day intervals (as
+required by the PurpleAir API) and makes repeated calls to
 \code{pat_downloadParseRawData()}. The \code{sleep} parameter waits a small
 amount of time between API requests.
 

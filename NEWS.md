@@ -1,3 +1,17 @@
+# AirSensor2 0.5.1
+
+Updated the of data that can be requested in a single call in `pat_create()` to
+match updates to the PurpleAir API:
+
+| Average Period | Previous Limit | New Limit |
+| -------------- | -------------- | --------- |
+| Real-Time | 2 Days | 30 Days |
+| 10 Minutes | 3 Days | 60 Days |
+| 30 Minutes | 7 Days | 90 Days |
+| 1 Hour | 14 Days | 180 Days |
+| 6 Hours | 90 Days | 1 Year |
+| 1 Day | 1 Year | 2 Years |
+
 # AirSensor2 0.5.0
 
 Version 0.5 introduces changes in the default parameters that are requested

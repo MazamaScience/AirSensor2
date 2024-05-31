@@ -1,6 +1,6 @@
 Type: Package
 Package: AirSensor2
-Version: 0.5.0
+Version: 0.5.1
 Title: Process and Display Data from Air Quality Sensors
 Authors@R: c(
     person("Jonathan", "Callahan", email="jonathan.s.callahan@gmail.com", role=c("aut","cre"))
@@ -27,7 +27,7 @@ Imports:
     magrittr,
     MazamaLocationUtils (>= 0.4.3),
     MazamaSpatialUtils (>= 0.8.6),
-    MazamaTimeSeries (>= 0.2.16),
+    MazamaTimeSeries (>= 0.3.0),
     readr,
     rlang,
     sf,
@@ -44,4 +44,4 @@ Language: en-US
 LazyData: true
 Repository: CRAN
 VignetteBuilder: knitr
-RoxygenNote: 7.2.3
+RoxygenNote: 7.3.1

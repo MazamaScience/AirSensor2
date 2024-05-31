@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AirSensor2</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.5.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.5.1</span>
       </span>
     </div>
 
@@ -66,6 +66,31 @@
       <small>Source: <a href="https://github.com/MazamaScience/AirSensor2/blob/HEAD/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
     </div>
 
+    <div class="section level2">
+<h2 class="page-header" data-toc-text="0.5.1" id="airsensor2-051">AirSensor2 0.5.1<a class="anchor" aria-label="anchor" href="#airsensor2-051"></a></h2>
+<p>Updated the of data that can be requested in a single call in <code><a href="../reference/pat_create.html">pat_create()</a></code> to match updates to the PurpleAir API:</p>
+<table class="table"><thead><tr class="header"><th>Average Period</th>
+<th>Previous Limit</th>
+<th>New Limit</th>
+</tr></thead><tbody><tr class="odd"><td>Real-Time</td>
+<td>2 Days</td>
+<td>30 Days</td>
+</tr><tr class="even"><td>10 Minutes</td>
+<td>3 Days</td>
+<td>60 Days</td>
+</tr><tr class="odd"><td>30 Minutes</td>
+<td>7 Days</td>
+<td>90 Days</td>
+</tr><tr class="even"><td>1 Hour</td>
+<td>14 Days</td>
+<td>180 Days</td>
+</tr><tr class="odd"><td>6 Hours</td>
+<td>90 Days</td>
+<td>1 Year</td>
+</tr><tr class="even"><td>1 Day</td>
+<td>1 Year</td>
+<td>2 Years</td>
+</tr></tbody></table></div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="0.5.0" id="airsensor2-050">AirSensor2 0.5.0<a class="anchor" aria-label="anchor" href="#airsensor2-050"></a></h2>
 <p>Version 0.5 introduces changes in the default parameters that are requested when making data requests from the PurpleAir API. In the past, when data was free, functions download <em>as many</em> potentially relevant parameters as possible. Now that a payment system is in place, <strong>AirSensor2</strong> will be focused on downloading <em>as few</em> parameters as required to accomplish a task. Many of the low level PurpleAir data access functions will thus behave differently.</p>

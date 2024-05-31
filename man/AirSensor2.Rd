@@ -2,6 +2,7 @@
 % Please edit documentation in R/AirSensor2.R
 \docType{package}
 \name{AirSensor2}
+\alias{AirSensor2-package}
 \alias{AirSensor2}
 \title{Air Quality Data Analysis for low-cost Sensors}
 \description{
@@ -21,4 +22,16 @@ produced by 'PurpleAir' <https://www2.purpleair.com>.
 \href{https://www2.purpleair.com/pages/license}{PurpleAir Data license}
 
 \href{https://www2.purpleair.com/pages/attribution}{PurpleAir Data Attribution}
+}
+\seealso{
+Useful links:
+\itemize{
+  \item \url{https://github.com/MazamaScience/AirSensor2}
+  \item Report bugs at \url{https://github.com/MazamaScience/AirSensor2/issues}
+}
+
+}
+\author{
+\strong{Maintainer}: Jonathan Callahan \email{jonathan.s.callahan@gmail.com}
+
 }
