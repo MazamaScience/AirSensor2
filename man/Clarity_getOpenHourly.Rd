@@ -7,7 +7,7 @@
 Clarity_getOpenHourly(
   api_key = NULL,
   datasourceId = NULL,
-  format = "USFS",
+  format = "USFS2",
   baseUrl = "https://clarity-data-api.clarity.io/v1/open/datasource-measurement"
 )
 }
@@ -17,7 +17,7 @@ will be obtained using \code{getAPIKey("Clarity-read")}.}
 
 \item{datasourceId}{Clarity sensor identifier.}
 
-\item{format}{Customized output format (currently only "USFS").}
+\item{format}{Customized output format ("USFS2", "USFS").}
 
 \item{baseUrl}{URL endpoint.}
 }
@@ -27,6 +27,9 @@ List containing five data frames: \code{meta}, \code{pm2.5_QCFlag},
 }
 \description{
 Sends a request to the Clarity API endpoint for Open Data.
+
+When \code{format = "USFS2"}, two additional fields are returned in the
+"meta" dataframe: \code{calibrationId} and \code{calibrationCategory}.
 
 \itemize{
   \item{\emph{Measurement data from} -- Drill down on one open datasource}
@@ -44,7 +47,7 @@ library(AirSensor2)
   Clarity_getOpenHourly(
     api_key = Clarity_API_READ_KEY,
     datasourceId = "DAABL1560",
-    format = "USFS"
+    format = "USFS2"
   )
 
 }, silent = FALSE)

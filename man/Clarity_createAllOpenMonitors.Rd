@@ -6,7 +6,7 @@
 \usage{
 Clarity_createAllOpenMonitors(
   api_key = NULL,
-  format = "USFS",
+  format = c("USFS2", "USFS"),
   parameter = c("pm2.5", "nowcast"),
   applyQC = TRUE,
   countryCodes = c("CA", "US", "MX")
@@ -16,7 +16,7 @@ Clarity_createAllOpenMonitors(
 \item{api_key}{Clarity API READ Key. If \code{api_key = NULL}, it
 will be obtained using \code{getAPIKey("Clarity-read")}.}
 
-\item{format}{Customized output format (currently only "USFS").}
+\item{format}{Customized output format ("USFS2", "USFS").}
 
 \item{parameter}{Parameter to use for data ("pm2.5" or "nowcast")}
 

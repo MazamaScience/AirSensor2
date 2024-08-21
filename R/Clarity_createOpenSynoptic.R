@@ -25,7 +25,7 @@
 #'
 #' @param api_key Clarity API READ Key. If \code{api_key = NULL}, it
 #' will be obtained using \code{getAPIKey("Clarity-read")}.
-#' @param format Customized output format (currently only "USFS").
+#' @param format Customized output format ("USFS2", "USFS").
 #' @param baseUrl Base URL for the PurpleAir API.
 #'
 #' @return A Clarity Synoptic \emph{pas} object.
@@ -42,7 +42,7 @@
 #' synoptic <-
 #'   Clarity_createOpenSynoptic(
 #'     api_key = Clarity_API_READ_KEY,
-#'     format = "USFS"
+#'     format = "USFS2"
 #'   )
 #'
 #' pas %>% pas_leaflet()
@@ -52,7 +52,7 @@
 
 Clarity_createOpenSynoptic <- function(
   api_key = NULL,
-  format = c("USFS"),
+  format = c("USFS2", "USFS"),
   baseUrl = "https://clarity-data-api.clarity.io/v1/open/all-recent-measurement/pm25/hourly"
 ) {
 

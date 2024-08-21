@@ -8,7 +8,7 @@ Clarity_createOpenMonitor(
   api_key = NULL,
   synoptic = NULL,
   datasourceId = NULL,
-  format = "USFS",
+  format = "USFS2",
   parameter = c("pm2.5", "nowcast"),
   applyQC = TRUE
 )
@@ -21,7 +21,7 @@ will be obtained using \code{getAPIKey("Clarity-read")}.}
 
 \item{datasourceId}{Clarity sensor identifier.}
 
-\item{format}{Customized output format (currently only "USFS").}
+\item{format}{Customized output format ("USFS2", "USFS").}
 
 \item{parameter}{Parameter to use for data ("pm2.5" or "nowcast")}
 

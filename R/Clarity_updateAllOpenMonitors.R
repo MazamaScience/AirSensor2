@@ -16,7 +16,7 @@
 #' @param api_key Clarity API READ Key. If \code{api_key = NULL}, it
 #' will be obtained using \code{getAPIKey("Clarity-read")}.
 #' @param monitor Previously generated \emph{mts_monitor} object.
-#' @param format Customized output format (currently only "USFS").
+#' @param format Customized output format ("USFS2", "USFS").
 #' @param parameter Parameter to use for data ("pm2.5" or "nowcast")
 #' @param applyQC Logical specifying whether to use the Clarity QCFlag to
 #' invalidate data values.
@@ -29,7 +29,7 @@
 Clarity_updateAllOpenMonitors <- function(
     api_key = NULL,
     monitor = NULL,
-    format = "USFS",
+    format = c("USFS2", "USFS"),
     parameter = c("pm2.5", "nowcast"),
     applyQC = TRUE,
     countryCodes = c("CA", "US", "MX")
@@ -42,8 +42,8 @@ Clarity_updateAllOpenMonitors <- function(
 
   MazamaCoreUtils::stopIfNull(api_key)
   MazamaCoreUtils::stopIfNull(monitor)
-  MazamaCoreUtils::stopIfNull(format)
 
+  format <- match.arg(format)
   parameter <- match.arg(parameter)
 
   # Check if MazamaSpatialUtils package has been initialized
@@ -99,7 +99,7 @@ if ( FALSE ) {
   monitor <- structure(monitor, class = c("mts_monitor", "mts", class(monitor)))
 
   api_key <- Clarity_API_READ_KEY
-  format <- "USFS"
+  format <- "USFS2"
   parameter <- "pm2.5"
   applyQC <- TRUE
 
