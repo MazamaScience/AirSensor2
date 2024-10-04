@@ -6,7 +6,7 @@
 \usage{
 Clarity_getAllOpenHourly(
   api_key = NULL,
-  format = "USFS",
+  format = c("USFS2", "USFS"),
   baseUrl =
     "https://clarity-data-api.clarity.io/v1/open/all-recent-measurement/pm25/hourly"
 )
@@ -15,7 +15,7 @@ Clarity_getAllOpenHourly(
 \item{api_key}{Clarity API READ Key. If \code{api_key = NULL}, it
 will be obtained using \code{getAPIKey("Clarity-read")}.}
 
-\item{format}{Customized output format (currently only "USFS").}
+\item{format}{Customized output format ("USFS2", "USFS").}
 
 \item{baseUrl}{URL endpoint.}
 }
@@ -25,6 +25,9 @@ List containing five data frames: \code{synoptic}, \code{pm2.5_QCFlag},
 }
 \description{
 Sends a request to the Clarity API endpoint for Open Data.
+
+When \code{format = "USFS2"}, two additional fields are returned in the
+"synoptic" dataframe: \code{calibrationId} and \code{calibrationCategory}.
 
 \itemize{
   \item{\emph{Measurement data from} -- All open datasources}
@@ -41,7 +44,7 @@ library(AirSensor2)
 
   Clarity_getAllOpenHourly(
     api_key = Clarity_API_READ_KEY,
-    format = "USFS"
+    format = "USFS2"
   )
 
 }, silent = FALSE)

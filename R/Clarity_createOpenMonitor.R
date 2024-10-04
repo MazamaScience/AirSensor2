@@ -13,7 +13,7 @@
 #' will be obtained using \code{getAPIKey("Clarity-read")}.
 #' @param synoptic Previously generated \emph{synoptic} object containing \code{datasourceId}.
 #' @param datasourceId Clarity sensor identifier.
-#' @param format Customized output format (currently only "USFS").
+#' @param format Customized output format ("USFS2", "USFS").
 #' @param parameter Parameter to use for data ("pm2.5" or "nowcast")
 #' @param applyQC Logical specifying whether to use the Clarity QCFlag to
 #' invalidate data values.
@@ -49,7 +49,7 @@ Clarity_createOpenMonitor <- function(
   api_key = NULL,
   synoptic = NULL,
   datasourceId = NULL,
-  format = "USFS",
+  format = "USFS2",
   parameter = c("pm2.5", "nowcast"),
   applyQC = TRUE
 ) {
@@ -95,17 +95,19 @@ Clarity_createOpenMonitor <- function(
   )
 
   # > dplyr::glimpse(tidyDF, width = 75)
-  # Rows: 240
-  # Columns: 9
-  # $ pm2.5_QCFlag   <dbl> 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,…
-  # $ pm2.5          <dbl> 5.30, 5.68, 5.90, 5.93, 5.67, 5.28, 5.53, 5.26, 5.…
-  # $ nowcast_QCFlag <dbl> 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,…
-  # $ nowcast        <dbl> 5.60, 5.72, 5.75, 5.69, 5.57, 5.53, 5.66, 5.73, 5.…
-  # $ datetime       <dttm> 2023-06-09 00:00:00, 2023-06-08 23:00:00, 2023-06…
-  # $ datasourceId   <chr> "DZZET7373", "DZZET7373", "DZZET7373", "DZZET7373"…
-  # $ locationName   <chr> "Sports Performance Center", "Sports Performance C…
-  # $ longitude      <dbl> -123.2817, -123.2817, -123.2817, -123.2817, -123.2…
-  # $ latitude       <dbl> 44.5611, 44.5611, 44.5611, 44.5611, 44.5611, 44.56…
+  # Rows: 49
+  # Columns: 11
+  # $ pm2.5_QCFlag        <dbl> 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, …
+  # $ pm2.5               <dbl> 9.45, 9.33, 8.64, 8.36, 8.37, 8.93, 9.19, 9.0…
+  # $ nowcast_QCFlag      <dbl> 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, …
+  # $ nowcast             <dbl> 8.96, 8.74, 8.54, 8.50, 8.57, 8.76, 8.65, 8.3…
+  # $ datetime            <dttm> 2024-08-21 12:00:00, 2024-08-21 11:00:00, 20…
+  # $ datasourceId        <chr> "DAABL1560", "DAABL1560", "DAABL1560", "DAABL…
+  # $ locationName        <chr> "Gates ES (4096)", "Gates ES (4096)", "Gates …
+  # $ longitude           <dbl> -118.2058, -118.2058, -118.2058, -118.2058, -…
+  # $ latitude            <dbl> 34.07283, 34.07283, 34.07283, 34.07283, 34.07…
+  # $ calibrationId       <chr> "CAHVV2Z9CH", "CAHVV2Z9CH", "CAHVV2Z9CH", "CA…
+  # $ calibrationCategory <chr> "global PM2.5 v2", "global PM2.5 v2", "global…
 
   # ----- Create meta ----------------------------------------------------------
 
@@ -128,7 +130,10 @@ Clarity_createOpenMonitor <- function(
       "postalCode",
       "datasourceId",
       "privacy",
-      "sensorManufacturer"
+      "sensorManufacturer",
+      # Calibration fields
+      "calibrationId",
+      "calibrationCategory"
     )
 
   # TODO: use setdiff() to add extra monitor core metadata
@@ -213,7 +218,7 @@ if ( FALSE ) {
 
   api_key <- Clarity_API_READ_KEY
   datasourceId <- "DMRGM1663"
-  format <- "USFS"
+  format <- "USFS2"
   parameter <- "pm2.5"
   applyQC <- TRUE
 
@@ -226,7 +231,7 @@ if ( FALSE ) {
       api_key,
       synoptic,
       datasourceId,
-      format = "USFS",
+      format = "USFS2",
       parameter
     )
 

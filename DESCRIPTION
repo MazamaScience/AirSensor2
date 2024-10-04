@@ -1,6 +1,6 @@
 Type: Package
 Package: AirSensor2
-Version: 0.5.2
+Version: 0.5.3
 Title: Process and Display Data from Air Quality Sensors
 Authors@R: c(
     person("Jonathan", "Callahan", email="jonathan.s.callahan@gmail.com", role=c("aut","cre"))
@@ -16,7 +16,7 @@ Depends:
     R (>= 4.0.0),
     MazamaCoreUtils (>= 0.5.2)
 Imports:
-    AirMonitor (>= 0.4.0),
+    AirMonitor (>= 0.4.1),
     countrycode,
     dplyr (>= 1.0.0),
     geodist,
@@ -25,7 +25,7 @@ Imports:
     leaflet,
     lubridate,
     magrittr,
-    MazamaLocationUtils (>= 0.4.3),
+    MazamaLocationUtils (>= 0.4.4),
     MazamaSpatialUtils (>= 0.8.6),
     MazamaTimeSeries (>= 0.3.0),
     readr,

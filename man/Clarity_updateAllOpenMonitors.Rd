@@ -7,7 +7,7 @@
 Clarity_updateAllOpenMonitors(
   api_key = NULL,
   monitor = NULL,
-  format = "USFS",
+  format = c("USFS2", "USFS"),
   parameter = c("pm2.5", "nowcast"),
   applyQC = TRUE,
   countryCodes = c("CA", "US", "MX")
@@ -19,7 +19,7 @@ will be obtained using \code{getAPIKey("Clarity-read")}.}
 
 \item{monitor}{Previously generated \emph{mts_monitor} object.}
 
-\item{format}{Customized output format (currently only "USFS").}
+\item{format}{Customized output format ("USFS2", "USFS").}
 
 \item{parameter}{Parameter to use for data ("pm2.5" or "nowcast")}
 

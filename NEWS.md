@@ -1,3 +1,8 @@
+# AirSensor2 0.5.3
+
+Updated all Clarity functions to default to `format = "USFS2"` which returns
+two extra fields: `calibrationId`, `calibrationCategory`.
+
 # AirSensor2 0.5.2
 
 Updated the of data that can be requested in a single call in `pat_create()` to

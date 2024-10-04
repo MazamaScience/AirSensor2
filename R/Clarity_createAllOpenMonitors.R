@@ -11,7 +11,7 @@
 #'
 #' @param api_key Clarity API READ Key. If \code{api_key = NULL}, it
 #' will be obtained using \code{getAPIKey("Clarity-read")}.
-#' @param format Customized output format (currently only "USFS").
+#' @param format Customized output format ("USFS2", "USFS").
 #' @param parameter Parameter to use for data ("pm2.5" or "nowcast")
 #' @param applyQC Logical specifying whether to use the Clarity QCFlag to
 #' invalidate data values.
@@ -23,7 +23,7 @@
 
 Clarity_createAllOpenMonitors <- function(
   api_key = NULL,
-  format = "USFS",
+  format = c("USFS2", "USFS"),
   parameter = c("pm2.5", "nowcast"),
   applyQC = TRUE,
   countryCodes = c("CA", "US", "MX")
@@ -35,8 +35,8 @@ Clarity_createAllOpenMonitors <- function(
     api_key <- MazamaCoreUtils::getAPIKey("Clarity-read")
 
   MazamaCoreUtils::stopIfNull(api_key)
-  MazamaCoreUtils::stopIfNull(format)
 
+  format <- match.arg(format)
   parameter <- match.arg(parameter)
 
   if ( is.null(countryCodes) )
@@ -101,7 +101,10 @@ Clarity_createAllOpenMonitors <- function(
       "postalCode",
       "datasourceId",
       "privacy",
-      "sensorManufacturer"
+      "sensorManufacturer",
+      # Calibration fields
+      "calibrationId",
+      "calibrationCategory"
     )
 
   # TODO: use setdiff() to add extra monitor core metadata
@@ -184,7 +187,7 @@ if ( FALSE ) {
   source("global_vars.R")
 
   api_key <- Clarity_API_READ_KEY
-  format <- "USFS"
+  format <- "USFS2"
   parameter <- "pm2.5"
   applyQC <- TRUE
 

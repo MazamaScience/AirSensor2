@@ -12,13 +12,16 @@
 #'
 #' @param api_key Clarity API READ Key. If \code{api_key = NULL}, it
 #' will be obtained using \code{getAPIKey("Clarity-read")}.
-#' @param format Customized output format (currently only "USFS").
+#' @param format Customized output format ("USFS2", "USFS").
 #' @param baseUrl URL endpoint.
 #'
 #' @return List containing five data frames: \code{synoptic}, \code{pm2.5_QCFlag},
 #' \code{pm2.5}, \code{nowcast_QCFlag} and \code{nowcast}.
 #'
 #' @description Sends a request to the Clarity API endpoint for Open Data.
+#'
+#' When \code{format = "USFS2"}, two additional fields are returned in the
+#' "synoptic" dataframe: \code{calibrationId} and \code{calibrationCategory}.
 #'
 #' \itemize{
 #'   \item{\emph{Measurement data from} -- All open datasources}
@@ -35,7 +38,7 @@
 #'
 #'   Clarity_getAllOpenHourly(
 #'     api_key = Clarity_API_READ_KEY,
-#'     format = "USFS"
+#'     format = "USFS2"
 #'   )
 #'
 #' }, silent = FALSE)
@@ -43,7 +46,7 @@
 
 Clarity_getAllOpenHourly <- function(
   api_key = NULL,
-  format = "USFS",
+  format = c("USFS2", "USFS"),
   baseUrl = "https://clarity-data-api.clarity.io/v1/open/all-recent-measurement/pm25/hourly"
 ) {
 
@@ -53,8 +56,9 @@ Clarity_getAllOpenHourly <- function(
     api_key <- MazamaCoreUtils::getAPIKey("Clarity-read")
 
   MazamaCoreUtils::stopIfNull(api_key)
-  MazamaCoreUtils::stopIfNull(format)
   MazamaCoreUtils::stopIfNull(baseUrl)
+
+  format <- match.arg(format)
 
   # ----- Request data ---------------------------------------------------------
 
@@ -86,11 +90,14 @@ Clarity_getAllOpenHourly <- function(
   # [1] "data.frame"
   # > dplyr::glimpse(responseDF, width = 75)
   # Rows: 605
-  # Columns: 4
-  # $ datasourceId <chr> "DAABL1560", "DAAZI7074", "DADKD2421", "DAENX0980", …
-  # $ lat          <dbl> 34.07283, 37.06706, 42.82760, 34.03556, 43.17658, 37…
-  # $ lon          <dbl> -118.20581, -122.05722, 74.58188, -118.36449, 76.897…
-  # $ data         <list> <"2023-05-02T23Z", "2023-05-02T22Z", "2023-05-02T21…
+  # Rows: 729
+  # Columns: 6
+  # $ datasourceId        <chr> "DAABL1560", "DAAUZ8818", "DAAZI7074", "DABNS…
+  # $ lat                 <dbl> 34.07283, 15.00045, 37.06706, 37.71934, 34.04…
+  # $ lon                 <dbl> -118.20581, 120.75050, -122.05722, -121.87298…
+  # $ data                <list> <"2024-08-20T17Z", "2024-08-20T16Z", "2024-0…
+  # $ calibrationId       <chr> "CAHVV2Z9CH", "CA43PUF7FW", "CAHVV2Z9CH", "CA…
+  # $ calibrationCategory <int> 4, 3, 4, 3, 4, 3, 3, 2, 4, 2, 4, 4, 2, 4, 2, …
   # > class(responseDF$data[1])
   # [1] "list"
   # > length(responseDF$data[1])
@@ -100,21 +107,23 @@ Clarity_getAllOpenHourly <- function(
   # > dim(responseDF$data[1][[1]])
   # [1] 3 5
   # > responseDF$data[1][[1]]
-  # [,1]             [,2] [,3]    [,4] [,5]
+  #      [,1]             [,2] [,3]    [,4] [,5]
   # [1,] "2023-06-08T17Z" "1"  "11.19" "1"  "11.52"
   # [2,] "2023-06-08T16Z" "1"  "11.22" "1"  "11.84"
   # [3,] "2023-06-08T15Z" "1"  "12.37" "1"  "12.46"
   #
   # All open datasources, hourly values
-  # GET /v1/open/all-recent-measurement/pm25/hourly ? format=USFS
+  # GET /v1/open/all-recent-measurement/pm25/hourly ? format=USFS2
   # returns a list of the following example object
   # {
   #   "datasourceId": "DABCX1234",
-  #   "lat": 42.194576
-  #   "lon": -122.709480
+  #   "lat": 42.194576,
+  #   "lon": -122.709480,
+  #   "calibrationId": "CA123456",
+  #   "calibrationCategory": 4,
   #   "data": [
   #     ["2023-03-07T14Z", 1, 14.02, 1, 14.43],
-  #     ["2023-03-07T13Z", 1, 13.97, 1, 12.78],
+  #     ["2023-03-07T13Z", 1, 13.97, 0, 12.78],
   #     ["2023-03-07T12Z", 1, 11.02, 1, 12.09]
   #   ]
   # }
@@ -131,18 +140,42 @@ Clarity_getAllOpenHourly <- function(
     datasourceId <- responseDF$datasourceId[i]
     longitude <- responseDF$lon[i]
     latitude <- responseDF$lat[i]
+    # These fields are only returned by 'format=USFS2' and will be NULL if not present
+    calibrationId <- responseDF$calibrationId[i]
+    calibrationCategory <- responseDF$calibrationCategory[i]
 
     matrix <- responseDF$data[i][[1]]
     colnames(matrix) <- c("timestamp", "pm2.5_QCFlag", "pm2.5", "nowcast_QCFlag", "nowcast")
 
     # NOTE: Each dataframe will have three hourly records with pm2.5_QCFlag, pm2.5, nowcast_QCFlag, nowcast and datasourceId
-    DFList[[datasourceId]] <-
-      dplyr::as_tibble(matrix) %>%
-      dplyr::mutate(
-        datasourceId = !!datasourceId,
-        longitude = !!longitude,
-        latitude = !!latitude
-      )
+
+    if ( format == "USFS" ) {
+
+      DFList[[datasourceId]] <-
+        dplyr::as_tibble(matrix) %>%
+        dplyr::mutate(
+          datasourceId = !!datasourceId,
+          longitude = !!longitude,
+          latitude = !!latitude,
+          # Calibration fields
+          calibrationId = as.character(NA),
+          calibrationCategory = as.character(NA)
+        )
+
+    } else if ( format == "USFS2" ) {
+
+      DFList[[datasourceId]] <-
+        dplyr::as_tibble(matrix) %>%
+        dplyr::mutate(
+          datasourceId = !!datasourceId,
+          longitude = !!longitude,
+          latitude = !!latitude,
+          # Calibration fields
+          calibrationId = !!calibrationId,
+          calibrationCategory = Clarity_assignCalibrationText(!!calibrationCategory)
+        )
+
+    }
 
   }
 
@@ -239,13 +272,16 @@ Clarity_getAllOpenHourly <- function(
 #'
 #' @param api_key Clarity API READ Key. If \code{api_key = NULL}, it
 #' will be obtained using \code{getAPIKey("Clarity-read")}.
-#' @param format Customized output format (currently only "USFS").
+#' @param format Customized output format ("USFS2", "USFS").
 #' @param baseUrl URL endpoint.
 #'
 #' @return List containing five data frames: \code{meta}, \code{pm2.5_QCFlag},
 #' \code{pm2.5}, \code{nowcast_QCFlag} and \code{nowcast}.
 #'
 #' @description Sends a request to the Clarity API endpoint for Open Data.
+#'
+#' When \code{format = "USFS2"}, two additional fields are returned in the
+#' "meta" dataframe: \code{calibrationId} and \code{calibrationCategory}.
 #'
 #' \itemize{
 #'   \item{\emph{Measurement data from} -- All open datasources}
@@ -263,15 +299,15 @@ Clarity_getAllOpenHourly <- function(
 #'
 #'   Clarity_getAllIndividualOpen(
 #'     api_key = Clarity_API_READ_KEY,
-#'     format = "USFS"
+#'     format = "USFS2"
 #'   )
 #'
 #' }, silent = FALSE)
 #' }
 
-Clarity_getAllOpenIndvidual <- function(
+Clarity_getAllOpenIndividual <- function(
   api_key = NULL,
-  format = "USFS",
+  format = c("USFS2", "USFS"),
   baseUrl = "https://clarity-data-api.clarity.io/v1/open/all-recent-measurement/pm25/individual"
 ) {
 
@@ -281,8 +317,9 @@ Clarity_getAllOpenIndvidual <- function(
     api_key <- MazamaCoreUtils::getAPIKey("Clarity-read")
 
   MazamaCoreUtils::stopIfNull(api_key)
-  MazamaCoreUtils::stopIfNull(format)
   MazamaCoreUtils::stopIfNull(baseUrl)
+
+  format <- match.arg(format)
 
   # ----- Request data ---------------------------------------------------------
 
@@ -324,12 +361,14 @@ Clarity_getAllOpenIndvidual <- function(
   # [6,] "2023-05-03T11:05:29Z" "1"  "3.43"
 
 
-  # GET /v1/open/all-recent-measurement/pm25/individual ? format=USFS
+  # GET /v1/open/all-recent-measurement/pm25/individual ? format=USFS2
   # returns a list of the following example object
   # {
   #   "datasourceId": "DABCX1234",
   #   "lat": 42.194576
   #   "lon": -122.709480
+  #   "calibrationId": "CAHW2Z9CH",
+  #.  "calibrationCategory": 4,
   #   "data": [
   #     ["2023-03-07T14:07:03Z", 1, 14.11],
   #     ["2023-03-07T13:49:11Z", 1, 13.87],
@@ -349,22 +388,50 @@ Clarity_getAllOpenIndvidual <- function(
     datasourceId <- responseDF$datasourceId[i]
     longitude <- responseDF$lon[i]
     latitude <- responseDF$lat[i]
+    # These fields are only returned by 'format=USFS2' and will be NULL if not present
+    calibrationId <- responseDF$calibrationId[i]
+    calibrationCategory <- responseDF$calibrationCategory[i]
 
     matrix <- responseDF$data[i][[1]]
     colnames(matrix) <- c("timestamp", "pm2.5_QCFlag", "pm2.5")
 
-    # NOTE: Each dataframe will an hours worth of raw records with pm2.5_QCFlag, pm2.5 and datasourceId
-    returnList[[datasourceId]] <-
-      dplyr::as_tibble(matrix) %>%
-      dplyr::mutate(
-        datetime = MazamaCoreUtils::parseDatetime(.data$timestamp, timezone = "UTC"),
-        pm2.5_QCFlag = as.numeric(.data$pm2.5_QCFlag),
-        pm2.5 = as.numeric(.data$pm2.5),
-        datasourceId = !!datasourceId,
-        longitude = !!longitude,
-        latitude = !!latitude
-      ) %>%
-      dplyr::select(-"timestamp")
+    # NOTE: Each dataframe will have an hours worth of raw records with pm2.5_QCFlag, pm2.5 and datasourceId
+
+    if ( format == "USFS" ) {
+
+      returnList[[datasourceId]] <-
+        dplyr::as_tibble(matrix) %>%
+        dplyr::mutate(
+          datetime = MazamaCoreUtils::parseDatetime(.data$timestamp, timezone = "UTC"),
+          pm2.5_QCFlag = as.numeric(.data$pm2.5_QCFlag),
+          pm2.5 = as.numeric(.data$pm2.5),
+          datasourceId = !!datasourceId,
+          longitude = !!longitude,
+          latitude = !!latitude,
+          # Calibration fields
+          calibrationId = as.character(NA),
+          calibrationCategory = as.character(NA)
+        ) %>%
+        dplyr::select(-"timestamp")
+
+    } else if ( format == "USFS2" ) {
+
+      returnList[[datasourceId]] <-
+        dplyr::as_tibble(matrix) %>%
+        dplyr::mutate(
+          datetime = MazamaCoreUtils::parseDatetime(.data$timestamp, timezone = "UTC"),
+          pm2.5_QCFlag = as.numeric(.data$pm2.5_QCFlag),
+          pm2.5 = as.numeric(.data$pm2.5),
+          datasourceId = !!datasourceId,
+          longitude = !!longitude,
+          latitude = !!latitude,
+          # Calibration fields
+          calibrationId = !!calibrationId,
+          calibrationCategory = Clarity_assignCalibrationText(!!calibrationCategory)
+        ) %>%
+        dplyr::select(-"timestamp")
+
+    }
 
   }
 
@@ -386,13 +453,16 @@ Clarity_getAllOpenIndvidual <- function(
 #' @param api_key Clarity API READ Key. If \code{api_key = NULL}, it
 #' will be obtained using \code{getAPIKey("Clarity-read")}.
 #' @param datasourceId Clarity sensor identifier.
-#' @param format Customized output format (currently only "USFS").
+#' @param format Customized output format ("USFS2", "USFS").
 #' @param baseUrl URL endpoint.
 #'
 #' @return List containing five data frames: \code{meta}, \code{pm2.5_QCFlag},
 #' \code{pm2.5}, \code{nowcast_QCFlag} and \code{nowcast}.
 #'
 #' @description Sends a request to the Clarity API endpoint for Open Data.
+#'
+#' When \code{format = "USFS2"}, two additional fields are returned in the
+#' "meta" dataframe: \code{calibrationId} and \code{calibrationCategory}.
 #'
 #' \itemize{
 #'   \item{\emph{Measurement data from} -- Drill down on one open datasource}
@@ -410,7 +480,7 @@ Clarity_getAllOpenIndvidual <- function(
 #'   Clarity_getOpenHourly(
 #'     api_key = Clarity_API_READ_KEY,
 #'     datasourceId = "DAABL1560",
-#'     format = "USFS"
+#'     format = "USFS2"
 #'   )
 #'
 #' }, silent = FALSE)
@@ -419,7 +489,7 @@ Clarity_getAllOpenIndvidual <- function(
 Clarity_getOpenHourly <- function(
   api_key = NULL,
   datasourceId = NULL,
-  format = "USFS",
+  format = "USFS2",
   baseUrl = "https://clarity-data-api.clarity.io/v1/open/datasource-measurement"
 ) {
 
@@ -430,8 +500,9 @@ Clarity_getOpenHourly <- function(
 
   MazamaCoreUtils::stopIfNull(api_key)
   MazamaCoreUtils::stopIfNull(datasourceId)
-  MazamaCoreUtils::stopIfNull(format)
   MazamaCoreUtils::stopIfNull(baseUrl)
+
+  format <- match.arg(format)
 
   # ----- Request data ---------------------------------------------------------
 
@@ -464,8 +535,10 @@ Clarity_getOpenHourly <- function(
   # {
   #   "datasourceId": "DABCX1234",
   #   "name": "Mariette-Lake Intersection",
-  #   "lat": 42.194576
-  #   "lon": -122.709480
+  #   "lat": 42.194576,
+  #   "lon": -122.709480,
+  #   "calibrationId": "CAHVV2Z9CH",
+  #   "calibrationCategory": 4,
   #   "data": [
   #     ["2023-03-07T14Z", 1, 14.02, 1, 14.43],
   #     ["2023-03-07T13Z", 1, 13.97, 1, 12.78],
@@ -490,25 +563,56 @@ Clarity_getOpenHourly <- function(
     longitude <- responseDF$lon[i]
     latitude <- responseDF$lat[i]
     locationName <- responseDF$name[i]
+    # These fields are only returned by 'format=USFS2' and will be NULL if not present
+    calibrationId <- responseDF$calibrationId[i]
+    calibrationCategory <- responseDF$calibrationCategory[i]
 
     matrix <- responseDF$data[i][[1]]
     colnames(matrix) <- c("timestamp", "pm2.5_QCFlag", "pm2.5", "nowcast_QCFlag", "nowcast")
 
     # NOTE: Each dataframe will an hours worth of raw records with pm2.5_QCFlag, pm2.5, nowcast_QCFlag, nowcast and datasourceId
-    DFList[[datasourceId]] <-
-      dplyr::as_tibble(matrix) %>%
-      dplyr::mutate(
-        datetime = MazamaCoreUtils::parseDatetime(.data$timestamp, timezone = "UTC"),
-        pm2.5_QCFlag = as.numeric(.data$pm2.5_QCFlag),
-        pm2.5 = as.numeric(.data$pm2.5),
-        nowcast_QCFlag = as.numeric(.data$nowcast_QCFlag),
-        nowcast = as.numeric(.data$nowcast),
-        datasourceId = !!datasourceId,
-        locationName = !!locationName,
-        longitude = !!longitude,
-        latitude = !!latitude
-      ) %>%
-      dplyr::select(-"timestamp")
+
+    if ( format == "USFS" ) {
+
+      DFList[[datasourceId]] <-
+        dplyr::as_tibble(matrix) %>%
+        dplyr::mutate(
+          datetime = MazamaCoreUtils::parseDatetime(.data$timestamp, timezone = "UTC"),
+          pm2.5_QCFlag = as.numeric(.data$pm2.5_QCFlag),
+          pm2.5 = as.numeric(.data$pm2.5),
+          nowcast_QCFlag = as.numeric(.data$nowcast_QCFlag),
+          nowcast = as.numeric(.data$nowcast),
+          datasourceId = !!datasourceId,
+          locationName = !!locationName,
+          longitude = !!longitude,
+          latitude = !!latitude,
+          # Calibration fields
+          calibrationId = as.character(NA),
+          calibrationCategory = as.character(NA)
+        ) %>%
+        dplyr::select(-"timestamp")
+
+    } else if ( format == "USFS2" ) {
+
+      DFList[[datasourceId]] <-
+        dplyr::as_tibble(matrix) %>%
+        dplyr::mutate(
+          datetime = MazamaCoreUtils::parseDatetime(.data$timestamp, timezone = "UTC"),
+          pm2.5_QCFlag = as.numeric(.data$pm2.5_QCFlag),
+          pm2.5 = as.numeric(.data$pm2.5),
+          nowcast_QCFlag = as.numeric(.data$nowcast_QCFlag),
+          nowcast = as.numeric(.data$nowcast),
+          datasourceId = !!datasourceId,
+          locationName = !!locationName,
+          longitude = !!longitude,
+          latitude = !!latitude,
+          # Calibration fields
+          calibrationId = !!calibrationId,
+          calibrationCategory = Clarity_assignCalibrationText(!!calibrationCategory)
+        ) %>%
+        dplyr::select(-"timestamp")
+
+    }
 
   }
 
@@ -528,13 +632,16 @@ Clarity_getOpenHourly <- function(
 #' @param api_key Clarity API READ Key. If \code{api_key = NULL}, it
 #' will be obtained using \code{getAPIKey("Clarity-read")}.
 #' @param datasourceId Clarity sensor identifier.
-#' @param format Customized output format (currently only "USFS").
+#' @param format Customized output format ("USFS2", "USFS").
 #' @param baseUrl URL endpoint.
 #'
 #' @return List containing five data frames: \code{meta}, \code{pm2.5_QCFlag},
 #' \code{pm2.5}, \code{nowcast_QCFlag} and \code{nowcast}.
 #'
 #' @description Sends a request to the Clarity API endpoint for Open Data.
+#'
+#' When \code{format = "USFS2"}, two additional fields are returned in the
+#' "meta" dataframe: \code{calibrationId} and \code{calibrationCategory}.
 #'
 #' \itemize{
 #'   \item{\emph{Measurement data from} -- Drill down on one open datasource}
@@ -552,7 +659,7 @@ Clarity_getOpenHourly <- function(
 #'   Clarity_getOpenIndividual(
 #'     api_key = Clarity_API_READ_KEY,
 #'     datasourceId = "DAABL1560",
-#'     format = "USFS"
+#'     format = "USFS2"
 #'   )
 #'
 #' }, silent = FALSE)
@@ -561,7 +668,7 @@ Clarity_getOpenHourly <- function(
 Clarity_getOpenIndividual <- function(
   api_key = NULL,
   datasourceId = NULL,
-  format = "USFS",
+  format = c("USFS2", "USFS"),
   baseUrl = "https://clarity-data-api.clarity.io/v1/open/datasource-measurement"
 ) {
 
@@ -572,8 +679,9 @@ Clarity_getOpenIndividual <- function(
 
   MazamaCoreUtils::stopIfNull(api_key)
   MazamaCoreUtils::stopIfNull(datasourceId)
-  MazamaCoreUtils::stopIfNull(format)
   MazamaCoreUtils::stopIfNull(baseUrl)
+
+  format <- match.arg(format)
 
   # ----- Request data ---------------------------------------------------------
 
@@ -606,8 +714,10 @@ Clarity_getOpenIndividual <- function(
   # {
   #   "datasourceId": "DABCX1234",
   #   "name": "Mariette-Lake Intersection",
-  #   "lat": 42.194576
-  #   "lon": -122.709480
+  #   "lat": 42.194576,
+  #   "lon": -122.709480,
+  #   "calibrationId": "CAHVV2Z9CH",
+  #   "calibrationCategory": 4,
   #   "data": [
   #     ["2023-03-07T14Z", 1, 14.02, 1, 14.43],
   #     ["2023-03-07T13Z", 1, 13.97, 1, 12.78],
@@ -632,25 +742,56 @@ Clarity_getOpenIndividual <- function(
     longitude <- responseDF$lon[i]
     latitude <- responseDF$lat[i]
     locationName <- responseDF$name[i]
+    # These fields are only returned by 'format=USFS2' and will be NULL if not present
+    calibrationId <- responseDF$calibrationId[i]
+    calibrationCategory <- responseDF$calibrationCategory[i]
 
     matrix <- responseDF$data[i][[1]]
     colnames(matrix) <- c("timestamp", "pm2.5_QCFlag", "pm2.5", "nowcast_QCFlag", "nowcast")
 
     # NOTE: Each dataframe will contain an hours worth of raw records with pm2.5_QCFlag, pm2.5, nowcast_QCFlag, nowcast and datasourceId
-    DFList[[datasourceId]] <-
-      dplyr::as_tibble(matrix) %>%
-      dplyr::mutate(
-        datetime = MazamaCoreUtils::parseDatetime(.data$timestamp, timezone = "UTC"),
-        pm2.5_QCFlag = as.numeric(.data$pm2.5_QCFlag),
-        pm2.5 = as.numeric(.data$pm2.5),
-        nowcast_QCFlag = as.numeric(.data$nowcast_QCFlag),
-        nowcast = as.numeric(.data$nowcast),
-        datasourceId = !!datasourceId,
-        locationName = !!locationName,
-        longitude = !!longitude,
-        latitude = !!latitude
-      ) %>%
-      dplyr::select(-"timestamp")
+
+    if ( format == "USFS" ) {
+
+      DFList[[datasourceId]] <-
+        dplyr::as_tibble(matrix) %>%
+        dplyr::mutate(
+          datetime = MazamaCoreUtils::parseDatetime(.data$timestamp, timezone = "UTC"),
+          pm2.5_QCFlag = as.numeric(.data$pm2.5_QCFlag),
+          pm2.5 = as.numeric(.data$pm2.5),
+          nowcast_QCFlag = as.numeric(.data$nowcast_QCFlag),
+          nowcast = as.numeric(.data$nowcast),
+          datasourceId = !!datasourceId,
+          locationName = !!locationName,
+          longitude = !!longitude,
+          latitude = !!latitude,
+          # Calibration fields
+          calibrationId = as.character(NA),
+          calibrationCategory = as.character(NA)
+        ) %>%
+        dplyr::select(-"timestamp")
+
+    } else if ( format == "USFS2" ) {
+
+      DFList[[datasourceId]] <-
+        dplyr::as_tibble(matrix) %>%
+        dplyr::mutate(
+          datetime = MazamaCoreUtils::parseDatetime(.data$timestamp, timezone = "UTC"),
+          pm2.5_QCFlag = as.numeric(.data$pm2.5_QCFlag),
+          pm2.5 = as.numeric(.data$pm2.5),
+          nowcast_QCFlag = as.numeric(.data$nowcast_QCFlag),
+          nowcast = as.numeric(.data$nowcast),
+          datasourceId = !!datasourceId,
+          locationName = !!locationName,
+          longitude = !!longitude,
+          latitude = !!latitude,
+          # Calibration fields
+          calibrationId = !!calibrationId,
+          calibrationCategory = Clarity_assignCalibrationText(!!calibrationCategory)
+        ) %>%
+        dplyr::select(-"timestamp")
+
+    }
 
   }
 
@@ -731,4 +872,29 @@ Clarity_API_GET <- function(
 
 }
 
+
+# Assign calibration text
+
+Clarity_assignCalibrationText <- function(x) {
+  # See: https://docs.google.com/document/d/16jLGz4OYB30bForiPQppCQ9s3jsw8F9OLeezo9XQw6g
+
+  # 0  Uncalibrated
+  # 1  Mixed calibrations
+  # 2  Custom calibrations
+  # 3  Global PM2.5 v1
+  # 4  Global PM2.5 v2
+
+  calibrationNames <- c(
+    "uncalibrated",
+    "mixed_calibrations",
+    "custom calibrations",
+    "global PM2.5 v1",
+    "global PM2.5 v2"
+  )
+
+  calibrationText <- calibrationNames[x + 1]
+
+  return(calibrationText)
+
+}
 
