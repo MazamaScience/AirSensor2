@@ -1,8 +1,10 @@
 FROM mazamascience/spatialutils:0.8.6
-MAINTAINER "Jonathan Callahan" jonathan.s.callahan@gmail.com
+LABEL maintainer="Jonathan Callahan jonathan.s.callahan@gmail.com"
 
 RUN installGithub.r \
-    MazamaScience/MazamaLocationUtils@0.3.11 \
-    MazamaScience/MazamaTimeSeries@0.2.15 \
-    MazamaScience/AirMonitor@0.3.12 \
-    MazamaScience/AirSensor2@0.3.7
+    MazamaScience/MazamaCoreUtils@0.5.2 \
+    MazamaScience/MazamaLocationUtils@0.4.4 \
+    MazamaScience/MazamaTimeSeries@0.3.0 \
+    MazamaScience/AirMonitor@0.4.2 \
+    MazamaScience/AirSensor2@0.5.3
+
