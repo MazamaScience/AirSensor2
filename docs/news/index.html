@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AirSensor2</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.5.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.5.3</span>
       </span>
     </div>
 
@@ -66,6 +66,10 @@
       <small>Source: <a href="https://github.com/MazamaScience/AirSensor2/blob/HEAD/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
     </div>
 
+    <div class="section level2">
+<h2 class="page-header" data-toc-text="0.5.3" id="airsensor2-053">AirSensor2 0.5.3<a class="anchor" aria-label="anchor" href="#airsensor2-053"></a></h2>
+<p>Updated all Clarity functions to default to <code>format = "USFS2"</code> which returns two extra fields: <code>calibrationId</code>, <code>calibrationCategory</code>.</p>
+</div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="0.5.2" id="airsensor2-052">AirSensor2 0.5.2<a class="anchor" aria-label="anchor" href="#airsensor2-052"></a></h2>
 <p>Updated the of data that can be requested in a single call in <code><a href="../reference/pat_create.html">pat_create()</a></code> to match updates to the PurpleAir API:</p>
@@ -198,7 +202,7 @@ AirMonitor (&gt;= 0.4.0),</code></pre>
 <li>Renamed <code>purple_air_synoptic</code> class to <code>PurpleAir_synoptic</code>.</li>
 </ul><p>Clarity “Open” datasets are available to those with an API key allowing access to this data. The following functions provide access to Clarity “Open” data:</p>
 <ul><li><code><a href="../reference/Clarity_getAllOpenHourly.html">Clarity_getAllOpenHourly()</a></code></li>
-<li><code>Clarity_getAllOpenIndividual()</code></li>
+<li><code><a href="../reference/Clarity_getAllOpenIndividual.html">Clarity_getAllOpenIndividual()</a></code></li>
 <li><code><a href="../reference/Clarity_getOpenHourly.html">Clarity_getOpenHourly()</a></code></li>
 <li><code><a href="../reference/Clarity_getOpenIndividual.html">Clarity_getOpenIndividual()</a></code></li>
 <li><code><a href="../reference/Clarity_createOpenSynoptic.html">Clarity_createOpenSynoptic()</a></code></li>
