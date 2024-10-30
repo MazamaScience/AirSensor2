@@ -141,11 +141,5 @@ pas_filterNearMonitor <- function(
 
 if ( FALSE ) {
 
-  library(AirMonitor)
-
-  pas <- example_pas %>% pas_filter(countyName == "Okanogan")
-  monitor <- NW_Megafires %>% monitor_filter(countyName == "Okanogan")
-  radius <- "1 km"
-
 
 }

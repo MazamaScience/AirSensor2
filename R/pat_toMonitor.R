@@ -28,13 +28,12 @@
 #'
 #' # AirSensor2 package
 #' library(AirSensor2)
-#'
 #' monitor <-
-#'   example_pat %>%
-#'   pat_toMonitor(
-#'   )
+#'   example_pat_epa %>%
+#'   pat_toMonitor()
 #'
 #' AirMonitor::monitor_timeseriesPlot(monitor, shadedNight = TRUE)
+#'
 #' }, silent = FALSE)
 #' }
 

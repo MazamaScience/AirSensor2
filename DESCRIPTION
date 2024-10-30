@@ -1,6 +1,6 @@
 Type: Package
 Package: AirSensor2
-Version: 0.5.3
+Version: 0.5.4
 Title: Process and Display Data from Air Quality Sensors
 Authors@R: c(
     person("Jonathan", "Callahan", email="jonathan.s.callahan@gmail.com", role=c("aut","cre"))
@@ -38,7 +38,8 @@ Suggests:
     markdown,
     testthat (>= 2.1.0),
     rmarkdown,
-    roxygen2
+    roxygen2,
+    webshot
 Encoding: UTF-8
 Language: en-US
 LazyData: true

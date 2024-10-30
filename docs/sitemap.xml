@@ -34,6 +34,9 @@
     <loc>/reference/APIKeys.html</loc>
   </url>
   <url>
+    <loc>/reference/AirSensor2-package.html</loc>
+  </url>
+  <url>
     <loc>/reference/AirSensor2.html</loc>
   </url>
   <url>
@@ -143,6 +146,9 @@
   </url>
   <url>
     <loc>/reference/example_pat.html</loc>
+  </url>
+  <url>
+    <loc>/reference/example_pat_epa.html</loc>
   </url>
   <url>
     <loc>/reference/index.html</loc>

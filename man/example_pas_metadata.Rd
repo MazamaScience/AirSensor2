@@ -15,8 +15,10 @@ https://www2.purpleair.com
 example_pas_metadata
 }
 \description{
-The \code{example_pas} dataset provides a quickly loadable
-version of a \emph{pas} object for practicing and code examples.
+The \code{example_pas_metadata} dataset provides a quickly loadable
+version of a \emph{pas} object for practicing and code examples. This
+object contains more metadata than other \code{example_pas_~} objects.
+
 This dataset contains data for sensors in Washington and Oregon
 and was generated on 2024-03-12 by running:
 

@@ -80,10 +80,10 @@ paeltte, \emph{e.g.} \code{"BuPu"} or \code{"Greens"}.
 library(AirSensor2)
 
 if ( interactive() ) {
-  pas_leaflet(example_pas, parameter = "pm2.5_60minute")
+  pas_leaflet(example_pas_pm25, parameter = "pm2.5_60minute")
 
-  pas_leaflet(example_pas, parameter = "temperature")
+  pas_leaflet(example_pas_pm25, parameter = "temperature")
 
-  pas_leaflet(example_pas, parameter = "humidity")
+  pas_leaflet(example_pas_pm25, parameter = "humidity")
 }
 }

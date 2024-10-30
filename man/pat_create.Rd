@@ -84,7 +84,7 @@ initializeMazamaSpatialUtils()
 # Create a pat object
 pat <-
   pat_create(
-    pas = example_pas,
+    pas = example_pas_pm25,
     sensor_index = "76545",
     startdate = "2023-01-01",
     enddate = "2023-01-03",
@@ -96,7 +96,7 @@ str(pat$meta)
 # Run data download in parallel (faster)
 pat <-
   pat_create(
-    pas = example_pas,
+    pas = example_pas_pm25,
     sensor_index = "76545",
     startdate = "2023-01-01",
     enddate = "2023-01-03",

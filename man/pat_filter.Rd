@@ -36,7 +36,7 @@ library(AirSensor2)
 
 # Unhealthy values
 example_pat \%>\%
-  pat_filter(pm2.5_atm_a > 55.5, pm2.5_atm_b > 55.5) \%>\%
+  pat_filter(pm2.5_atm_a > 25, pm2.5_atm_b > 25) \%>\%
   pat_getData() \%>\%
   head()
 

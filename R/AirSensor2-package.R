@@ -1,5 +1,6 @@
-#'
-#' @docType package
+#' @keywords internal
+"_PACKAGE"
+
 #' @name AirSensor2
 #' @title Air Quality Data Analysis for low-cost Sensors
 #' @description

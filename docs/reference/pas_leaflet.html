@@ -32,7 +32,7 @@ use the parameter argument to display pm25 values from one of:
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AirSensor2</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.5.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.5.4</span>
       </span>
     </div>
 
@@ -178,11 +178,11 @@ paeltte, <em>e.g.</em> <code>"BuPu"</code> or <code>"Greens"</code>.</p>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/MazamaScience/AirSensor2" class="external-link">AirSensor2</a></span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="kw">if</span> <span class="op">(</span> <span class="fu"><a href="https://rdrr.io/r/base/interactive.html" class="external-link">interactive</a></span><span class="op">(</span><span class="op">)</span> <span class="op">)</span> <span class="op">{</span></span></span>
-<span class="r-in"><span>  <span class="fu">pas_leaflet</span><span class="op">(</span><span class="va">example_pas</span>, parameter <span class="op">=</span> <span class="st">"pm2.5_60minute"</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="fu">pas_leaflet</span><span class="op">(</span><span class="va">example_pas_pm25</span>, parameter <span class="op">=</span> <span class="st">"pm2.5_60minute"</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span>  <span class="fu">pas_leaflet</span><span class="op">(</span><span class="va">example_pas</span>, parameter <span class="op">=</span> <span class="st">"temperature"</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="fu">pas_leaflet</span><span class="op">(</span><span class="va">example_pas_pm25</span>, parameter <span class="op">=</span> <span class="st">"temperature"</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span>  <span class="fu">pas_leaflet</span><span class="op">(</span><span class="va">example_pas</span>, parameter <span class="op">=</span> <span class="st">"humidity"</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="fu">pas_leaflet</span><span class="op">(</span><span class="va">example_pas_pm25</span>, parameter <span class="op">=</span> <span class="st">"humidity"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
 </code></pre></div>
     </div>

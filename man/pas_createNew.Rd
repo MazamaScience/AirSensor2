@@ -115,7 +115,9 @@ pas <-
     location_type = 0
   )
 
-pas \%>\% pas_leaflet()
+if ( interactive() ) {
+  pas \%>\% pas_leaflet()
+}
 
 }, silent = FALSE)
 }

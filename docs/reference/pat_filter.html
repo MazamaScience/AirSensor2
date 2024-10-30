@@ -24,7 +24,7 @@ for an empty pat object at the end of the pipeline."><!-- mathjax --><script src
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AirSensor2</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.5.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.5.4</span>
       </span>
     </div>
 
@@ -124,14 +124,20 @@ for an empty <em>pat</em> object at the end of the pipeline.</p>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Unhealthy values</span></span></span>
 <span class="r-in"><span><span class="va">example_pat</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span></span>
-<span class="r-in"><span>  <span class="fu">pat_filter</span><span class="op">(</span><span class="va">pm2.5_atm_a</span> <span class="op">&gt;</span> <span class="fl">55.5</span>, <span class="va">pm2.5_atm_b</span> <span class="op">&gt;</span> <span class="fl">55.5</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span></span>
+<span class="r-in"><span>  <span class="fu">pat_filter</span><span class="op">(</span><span class="va">pm2.5_atm_a</span> <span class="op">&gt;</span> <span class="fl">25</span>, <span class="va">pm2.5_atm_b</span> <span class="op">&gt;</span> <span class="fl">25</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="pat_getDataFrame.html">pat_getData</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 0 × 13</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 13 variables: datetime &lt;dttm&gt;, hardware &lt;chr&gt;, firmware_version &lt;dbl&gt;,</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   rssi &lt;dbl&gt;, uptime &lt;dbl&gt;, pa_latency &lt;dbl&gt;, memory &lt;dbl&gt;, humidity &lt;dbl&gt;,</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   temperature &lt;dbl&gt;, pressure &lt;dbl&gt;, pm2.5_atm &lt;dbl&gt;, pm2.5_atm_a &lt;dbl&gt;,</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   pm2.5_atm_b &lt;dbl&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 6 × 13</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   datetime            hardware   firmware_version  rssi uptime pa_latency memory</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dttm&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                 <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> 2024-03-02 <span style="color: #949494;">03:16:44</span> 2.0+OPENL…             7.02   -<span style="color: #BB0000;">84</span> 2.01<span style="color: #949494;">e</span>6        850  <span style="text-decoration: underline;">15</span>744</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> 2024-03-02 <span style="color: #949494;">03:18:42</span> 2.0+OPENL…             7.02   -<span style="color: #BB0000;">85</span> 2.01<span style="color: #949494;">e</span>6       <span style="text-decoration: underline;">2</span>480  <span style="text-decoration: underline;">15</span>576</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> 2024-03-02 <span style="color: #949494;">03:20:45</span> 2.0+OPENL…             7.02   -<span style="color: #BB0000;">83</span> 2.01<span style="color: #949494;">e</span>6        517  <span style="text-decoration: underline;">15</span>744</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> 2024-03-02 <span style="color: #949494;">03:22:43</span> 2.0+OPENL…             7.02   -<span style="color: #BB0000;">82</span> 2.01<span style="color: #949494;">e</span>6       <span style="text-decoration: underline;">3</span>815  <span style="text-decoration: underline;">15</span>576</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">5</span> 2024-03-02 <span style="color: #949494;">03:24:42</span> 2.0+OPENL…             7.02   -<span style="color: #BB0000;">83</span> 2.01<span style="color: #949494;">e</span>6       <span style="text-decoration: underline;">1</span>253  <span style="text-decoration: underline;">15</span>576</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">6</span> 2024-03-02 <span style="color: #949494;">03:26:42</span> 2.0+OPENL…             7.02   -<span style="color: #BB0000;">82</span> 2.01<span style="color: #949494;">e</span>6        674  <span style="text-decoration: underline;">15</span>576</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 6 more variables: humidity &lt;dbl&gt;, temperature &lt;dbl&gt;, pressure &lt;dbl&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   pm2.5_atm &lt;dbl&gt;, pm2.5_atm_a &lt;dbl&gt;, pm2.5_atm_b &lt;dbl&gt;</span></span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>

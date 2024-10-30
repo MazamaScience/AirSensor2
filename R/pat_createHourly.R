@@ -64,7 +64,7 @@
 #'
 #' pat <-
 #'   pat_createHourly(
-#'     pas = example_pas,
+#'     pas = example_pas_pm25,
 #'     sensor_index = "76545",
 #'     startdate = "2023-01-01",
 #'     enddate = "2023-01-08",
@@ -72,7 +72,7 @@
 #'     verbose = TRUE
 #'   )
 #'
-#' View(pat$meta[1:100,])
+#' View(pat$data[1:100,])
 #'
 #' }, silent = FALSE)
 #' }
@@ -135,7 +135,7 @@ pat_createHourly <- function(
 if ( FALSE ) {
 
   api_key = PurpleAir_API_READ_KEY
-  pas = example_pas
+  pas = example_pas_pm25
   sensor_index = "76545"
   startdate = "2023-01-01"
   enddate = "2023-01-09"

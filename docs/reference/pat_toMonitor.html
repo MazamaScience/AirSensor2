@@ -19,7 +19,7 @@ for use with the AirMonitor package."><!-- mathjax --><script src="https://cdnjs
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AirSensor2</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.5.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.5.4</span>
       </span>
     </div>
 
@@ -113,16 +113,14 @@ correction algorithm. (See <a href="pat_applyCorrection.html">pat_applyCorrectio
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># AirSensor2 package</span></span></span>
 <span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/MazamaScience/AirSensor2" class="external-link">AirSensor2</a></span><span class="op">)</span></span></span>
-<span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">monitor</span> <span class="op">&lt;-</span></span></span>
-<span class="r-in"><span>  <span class="va">example_pat</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span></span>
-<span class="r-in"><span>  <span class="fu">pat_toMonitor</span><span class="op">(</span></span></span>
-<span class="r-in"><span>  <span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="va">example_pat_epa</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span></span>
+<span class="r-in"><span>  <span class="fu">pat_toMonitor</span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu">AirMonitor</span><span class="fu">::</span><span class="fu"><a href="https://mazamascience.github.io/AirMonitor/reference/monitor_timeseriesPlot.html" class="external-link">monitor_timeseriesPlot</a></span><span class="op">(</span><span class="va">monitor</span>, shadedNight <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="op">}</span>, silent <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Error in pat_toMonitor(.) : </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Required fields missing from 'pat' which must include all of "humidity,temperature,pm2.5_cf_1,pm2.5_cf_1_a,pm2.5_cf_1_b"</span>
+<span class="r-plt img"><img src="pat_toMonitor-1.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span><span class="co"># }</span></span></span>
 </code></pre></div>
     </div>

@@ -1,3 +1,13 @@
+# AirSensor2 0.5.4
+
+- Updated various examples that referenced `example_pas` with the newer
+`example_pas_pm25`.
+- Added `example_pat_epa` with fields required to run `pat_applyCorrection()`.
+- Fixed the bug in `pat_create()` that generated:
+```
+Elements `last_modified`, `privacy`, `model`, `hardware`, `firmware_version`, etc. don't exist.
+```
+
 # AirSensor2 0.5.3
 
 Updated all Clarity functions to default to `format = "USFS2"` which returns

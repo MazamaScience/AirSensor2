@@ -64,7 +64,7 @@
 #' # Create a pat object
 #' pat <-
 #'   pat_create(
-#'     pas = example_pas,
+#'     pas = example_pas_pm25,
 #'     sensor_index = "76545",
 #'     startdate = "2023-01-01",
 #'     enddate = "2023-01-03",
@@ -76,7 +76,7 @@
 #' # Run data download in parallel (faster)
 #' pat <-
 #'   pat_create(
-#'     pas = example_pas,
+#'     pas = example_pas_pm25,
 #'     sensor_index = "76545",
 #'     startdate = "2023-01-01",
 #'     enddate = "2023-01-03",
@@ -338,9 +338,14 @@ pat_create <- function(
       "sensorManufacturer"
     )
 
+  # NOTE:  Typically, the following names will not be found in pas_single:
+  # NOTE:    last_modified, model, hardware, firmware_version, firmware_upgrade
+  available_metaNames <-
+    intersect(names(pas_single), pat_metaNames)
+
   meta <-
     pas_single %>%
-    dplyr::select(dplyr::all_of(pat_metaNames))
+    dplyr::select(dplyr::all_of(available_metaNames))
 
   # TODO:  This step can be removed when AirMonitor gets upgraded to replace
   # TODO:  'zip' with 'postalCode'.
@@ -380,6 +385,15 @@ if ( FALSE ) {
   sleep = 0.5
   parallel = FALSE
   verbose = TRUE
+
+
+
+  pas = example_pas_pm25
+  sensor_index = "76545"
+  startdate = "2023-01-01"
+  enddate = "2023-01-03"
+  timezone = "UTC"
+
 
 
   pat <-

@@ -2,9 +2,9 @@
 % Please edit documentation in R/data.R
 \docType{data}
 \encoding{UTF-8}
-\name{example_pat}
-\alias{example_pat}
-\title{Example PurpleAir Timeseries dataset}
+\name{example_pat_epa}
+\alias{example_pat_epa}
+\title{Example PurpleAir Timeseries dataset with EPA fields}
 \format{
 A list containing two tibbles named 'meta' and 'data'.
 }
@@ -12,20 +12,23 @@ A list containing two tibbles named 'meta' and 'data'.
 https://www2.purpleair.com
 }
 \usage{
-example_pat
+example_pat_epa
 }
 \description{
 The \code{example_pat} dataset provides a quickly loadable
-version of a \emph{pat} object for practicing and code examples.
+version of a \emph{pat} object for practicing and code examples. This
+\emph{pat} object contains the `pm2.5_cf` fields required for the EPA
+correction algorithm used in \link{pat_applyCorrection}.
+
 This dataset contains 24 hours worth of data for a single PurpleAir sensor
-and was generated on 2024-03-12 by running:
+and was generated on 2024-10-30 by running:
 
 \preformatted{
 library(AirSensor2)
 
 source("global_vars.R") # contains PurpleAir_API_READ_KEY
 
-example_pat <-
+example_pat_epa <-
   pat_create(
     api_key = PurpleAir_API_READ_KEY,
     pas = example_pas_metadata,
@@ -34,10 +37,10 @@ example_pat <-
     enddate = "2024-03-03",
     timezone = "America/Los_Angeles",
     average = 0,
-    fields = PurpleAir_PAT_QC_FIELDS
+    fields = PurpleAir_PAT_EPA_HOURLY_FIELDS
   )
 
-save(example_pat, file = "data/example_pat.rda")
+save(example_pat_epa, file = "data/example_pat_epa.rda")
 #' }
 }
 \seealso{
