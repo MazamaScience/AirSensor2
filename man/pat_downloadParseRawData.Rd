@@ -12,6 +12,7 @@ pat_downloadParseRawData(
   timezone = "UTC",
   average = 0,
   fields = PurpleAir_PAT_QC_FIELDS,
+  read_keys = NULL,
   baseUrl = "https://api.purpleair.com/v1/sensors"
 )
 }
@@ -32,6 +33,11 @@ See \code{MazamaCoreUtils::\link[MazamaCoreUtils:setAPIKey]{setAPIKey}}.}
 0 (raw), 10, 30, 60 (hour), 360, 1440 (day).}
 
 \item{fields}{Character string with PurpleAir field names for the Get Sensor Data API.}
+
+\item{read_keys}{Optional, comma separated list of sensor read_keys is required
+for private devices. It is separate from the api_key and each sensor has its own
+read_key. Submit multiple keys by separating them with a comma (,) character
+for example: \code{"key-one,key-two,key-three"}.}
 
 \item{baseUrl}{Base URL for the PurpleAir API.}
 }

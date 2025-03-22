@@ -171,6 +171,10 @@ PurpleAir_getSensorData <- function(
 #' @param average Temporal averaging in minutes performed by PurpleAir. One of:
 #' 0 (raw), 10, 30, 60 (hour), 360, 1440 (day).
 #' @param fields Character string specifying which 'sensor data fields' to include in the response.
+#' @param read_keys Optional, comma separated list of sensor read_keys is required
+#' for private devices. It is separate from the api_key and each sensor has its own
+#' read_key. Submit multiple keys by separating them with a comma (,) character
+#' for example: \code{"key-one,key-two,key-three"}.
 #' @param baseUrl URL endpoint for the "Get Sensor History (CSV)" API.
 #'
 #' @return Tibble with historical data for a single sensor.
@@ -212,6 +216,7 @@ PurpleAir_getSensorHistoryCSV <- function(
     end_timestamp = NULL,
     average = 10,
     fields = PurpleAir_PAT_QC_FIELDS,
+    read_keys = NULL,
     baseUrl = "https://api.purpleair.com/v1/sensors"
 ) {
 
@@ -235,11 +240,25 @@ PurpleAir_getSensorHistoryCSV <- function(
   # See: https://api.purpleair.com/#api-sensors-get-sensor-history-csv
   webserviceUrl <- sprintf("%s/%s/history/csv", baseUrl, sensor_index)
 
-  queryList <-
-    list(
-      average = average,
-      fields = fields
-    )
+  if ( is.null(read_keys) ) {
+
+    queryList <-
+      list(
+        average = average,
+        fields = fields
+      )
+
+  } else {
+
+    queryList <-
+      list(
+        average = average,
+        fields = fields,
+        read_key = read_keys, # uniform use of "read_keys" in all functions; change to "read_key" here to match API
+        private = "both"
+      )
+
+  }
 
   if ( !is.null(start_timestamp) ) {
     queryList$start_timestamp <- start_timestamp

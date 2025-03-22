@@ -27,5 +27,6 @@
 # ----- Mazama Science custom -----
 
 global_vars.R
+global_vars_Corrigan.R
 
 

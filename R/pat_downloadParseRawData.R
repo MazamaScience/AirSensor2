@@ -15,6 +15,10 @@
 #' @param average Temporal averaging in minutes performed by PurpleAir. One of:
 #' 0 (raw), 10, 30, 60 (hour), 360, 1440 (day).
 #' @param fields Character string with PurpleAir field names for the Get Sensor Data API.
+#' @param read_keys Optional, comma separated list of sensor read_keys is required
+#' for private devices. It is separate from the api_key and each sensor has its own
+#' read_key. Submit multiple keys by separating them with a comma (,) character
+#' for example: \code{"key-one,key-two,key-three"}.
 #' @param baseUrl Base URL for the PurpleAir API.
 #'
 #' @return Dataframe of time series PurpleAir data.
@@ -59,6 +63,7 @@ pat_downloadParseRawData <- function(
     timezone = "UTC",
     average = 0,
     fields = PurpleAir_PAT_QC_FIELDS,
+    read_keys = NULL,
     baseUrl = "https://api.purpleair.com/v1/sensors"
 ) {
 
@@ -104,6 +109,7 @@ pat_downloadParseRawData <- function(
       end_timestamp = sprintf("%d", as.numeric(tRange[2])),
       average = average,
       fields = fields,
+      read_keys = read_keys,
       baseUrl = baseUrl
     )
 

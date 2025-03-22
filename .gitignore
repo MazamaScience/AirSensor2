@@ -41,5 +41,6 @@ vignettes/*.pdf
 # ----- Mazama Science custom -----
 
 global_vars.R
+global_vars*.R
 
 .DS_Store

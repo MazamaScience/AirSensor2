@@ -14,6 +14,10 @@
 #' @param enddate Desired end time (ISO 8601) or \code{POSIXct}.
 #' @param timezone Olson timezone used to interpret dates.
 #' @param fields Character string with PurpleAir field names for the Get Sensor Data API.
+#' @param read_keys Optional, comma separated list of sensor read_keys is required
+#' for private devices. It is separate from the api_key and each sensor has its own
+#' read_key. Submit multiple keys by separating them with a comma (,) character
+#' for example: \code{"key-one,key-two,key-three"}.
 #' @param sleep Seconds to sleep between API requests.
 #' @param parallel Logical specifying whether to attempt simultaneous downloads
 #' using \code{parallel::\link[parallel:mcparallel]{mcparallel}}. (Not available
@@ -79,6 +83,7 @@ pat_createRaw <- function(
     enddate = NULL,
     timezone = "UTC",
     fields = PurpleAir_PAT_QC_FIELDS,
+    read_keys = NULL,
     sleep = 0.5,
     parallel = FALSE,
     baseUrl = "https://api.purpleair.com/v1/sensors",
@@ -112,6 +117,7 @@ pat_createRaw <- function(
       timezone = timezone,
       average = 0,
       fields = fields,
+      read_keys = read_keys,
       sleep = sleep,
       parallel = parallel,
       baseUrl = baseUrl,
