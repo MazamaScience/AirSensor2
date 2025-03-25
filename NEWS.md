@@ -1,3 +1,7 @@
+# AirSensor2 0.5.6
+
+Added support for Clarity `calibrationCategory = "global PM2.5 v2.1"`.
+
 # AirSensor2 0.5.5
 
 Added support for private sensors by adding `read_keys` parameter to the following
