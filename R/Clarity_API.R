@@ -883,13 +883,15 @@ Clarity_assignCalibrationText <- function(x) {
   # 2  Custom calibrations
   # 3  Global PM2.5 v1
   # 4  Global PM2.5 v2
+  # 5  Global PM2.5 v2.1
 
   calibrationNames <- c(
     "uncalibrated",
-    "mixed_calibrations",
+    "mixed calibrations",
     "custom calibrations",
     "global PM2.5 v1",
-    "global PM2.5 v2"
+    "global PM2.5 v2",
+    "global PM2.5 v2.1"
   )
 
   calibrationText <- calibrationNames[x + 1]
