@@ -1,6 +1,6 @@
 Type: Package
 Package: AirSensor2
-Version: 0.5.6
+Version: 0.5.7
 Title: Process and Display Data from Air Quality Sensors
 Authors@R: c(
     person("Jonathan", "Callahan", email="jonathan.s.callahan@gmail.com", role=c("aut","cre"))
@@ -45,4 +45,4 @@ Language: en-US
 LazyData: true
 Repository: CRAN
 VignetteBuilder: knitr
-RoxygenNote: 7.3.1
+RoxygenNote: 7.3.3

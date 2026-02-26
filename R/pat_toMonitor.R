@@ -81,8 +81,16 @@ pat_toMonitor <- function(
       "sensorManufacturer"
     )
 
+  meta_df <- pat$meta
+
+  model_value <-
+    if ("model" %in% names(meta_df))
+      meta_df$model
+  else
+    "PurpleAir sensor"
+
   meta <-
-    pat$meta %>%
+    meta_df %>%
     # Add more metadata used by the AirMonitor package
     dplyr::mutate(
       pollutant = "PM2.5",
@@ -94,7 +102,7 @@ pat_toMonitor <- function(
       fullAQSID = as.character(NA),
       deploymentType = as.character(NA),
       # Others required by monitor_leaflet
-      deviceType = .data$model,
+      deviceType = model_value,
       deviceDescription = as.character(NA),
       deviceExtra = as.character(NA),
       dataIngestURL = as.character(NA),

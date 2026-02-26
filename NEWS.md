@@ -1,3 +1,7 @@
+# AirSensor2 0.5.7
+
+* Fix bug so that `pat_toModel()` works with data from `pat_createHourly()`.
+
 # AirSensor2 0.5.6
 
 Added support for Clarity `calibrationCategory = "global PM2.5 v2.1"`.
