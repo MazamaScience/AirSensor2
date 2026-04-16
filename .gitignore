@@ -42,5 +42,6 @@ vignettes/*.pdf
 
 global_vars.R
 global_vars*.R
+.env*
 
 .DS_Store
