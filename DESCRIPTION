@@ -37,6 +37,7 @@ Suggests:
     knitr,
     markdown,
     testthat (>= 2.1.0),
+    openaq (>= 1.0.0),
     rmarkdown,
     roxygen2,
     webshot

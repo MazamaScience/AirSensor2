@@ -24,6 +24,7 @@ library(openaq)
 openaq::set_api_key(Sys.getenv("OPENAQ_API_KEY"))
 
 # Get reference dataframes
+countries <- openaq::list_countries(limit = 1000)
 instruments <- openaq::list_instruments(limit = 1000)
 licenses <- openaq::list_licenses(limit = 1000)
 manufacturers <- openaq::list_manufacturers(limit = 1000)
