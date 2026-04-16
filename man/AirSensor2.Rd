@@ -2,13 +2,11 @@
 % Please edit documentation in R/AirSensor2-package.R
 \name{AirSensor2}
 \alias{AirSensor2}
-\title{Air Quality Data Analysis for low-cost Sensors}
+\title{Air Quality Data Analysis for Low-Cost Sensors}
 \description{
-\code{
 Utilities for working with air quality monitoring data from low-cost sensors
 with a focus on small particulates (PM2.5). Initial focus is on sensors
 produced by 'PurpleAir' <https://www2.purpleair.com>.
-}
 }
 \references{
 [PurpleAir](https://www2.purpleair.com)
