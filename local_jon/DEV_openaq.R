@@ -23,114 +23,32 @@ Sys.getenv("OPENAQ_API_KEY")
 library(openaq)
 openaq::set_api_key(Sys.getenv("OPENAQ_API_KEY"))
 
-countries <- openaq::list_countries()
+# Get reference dataframes
+instruments <- openaq::list_instruments(limit = 1000)
+licenses <- openaq::list_licenses(limit = 1000)
+manufacturers <- openaq::list_manufacturers(limit = 1000)
+parameters <- openaq::list_parameters(limit = 1000)
+providers <- openaq::list_providers(limit = 1000)
 
-# Thailand id is 111
+manufacturers_id <-
+  manufacturers %>%
+  dplyr::filter(name == "AirGradient") %>%
+  dplyr::pull(id)
 
-locations <- openaq::list_locations(iso = "TH")
-
-# > dplyr::glimpse(locations, width = 75)
-# Rows: 100
-# Columns: 15
-# $ id             <int> 49, 57, 66, 94, 135, 138, 310, 418, 619, 701, 717,…
-# $ name           <chr> "Phahol Yothin Rd., Khet Chatuchak", "Khlong Nueng…
-# $ is_mobile      <lgl> FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, F…
-# $ is_monitor     <lgl> TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TR…
-# $ timezone       <fct> Asia/Bangkok, Asia/Bangkok, Asia/Bangkok, Asia/Ban…
-# $ countries_id   <dbl> 111, 111, 111, 111, 111, 111, 111, 111, 111, 111, …
-# $ country_name   <chr> "Thailand", "Thailand", "Thailand", "Thailand", "T…
-# $ country_iso    <fct> TH, TH, TH, TH, TH, TH, TH, TH, TH, TH, TH, TH, TH…
-# $ latitude       <dbl> 13.79786, 14.04030, 13.68423, 13.77537, 13.66409, …
-# $ longitude      <dbl> 100.55134, 100.60874, 100.44599, 100.56893, 100.54…
-# $ datetime_first <dbl> NA, 1472454000, NA, 1541484000, 1664910000, 145411…
-# $ datetime_last  <dbl> NA, 1589616000, NA, 1600153200, 1770148800, 160083…
-# $ owner_name     <fct> Unknown Governmental Organization, Unknown Governm…
-# $ providers_id   <dbl> 281, 281, 281, 281, 118, 281, 281, 118, 281, 118, …
-# $ provider_name  <chr> "Thailand", "Thailand", "Thailand", "Thailand", "A…
-
-
-locations <-
-  locations %>%
-  dplyr::mutate(
-    datetime_first = lubridate::as_datetime(datetime_first),
-    datetime_last = lubridate::as_datetime(datetime_last),
-  )
-
-MazamaLocationUtils::table_leaflet(
-  locations,
-  extraVars = c("id", "name", "datetime_first", "datetime_last")
-)
-
-
-
-# locations_list <- list_locations(
-#   parameters_id = 2,
-#   countries_id = 182,
-#   as_data_frame = FALSE
-# )[[1]]
-#
-#
-# locations_df <- list_locations(
-#   parameters_id = 2,
-#   countries_id = 182,
-#   as_data_frame = TRUE
-# )
-
-
-datetime_from <- MazamaCoreUtils::parseDatetime("2019-01-01", timezone = "UTC")
-datetime_to <- MazamaCoreUtils::parseDatetime("2019-09-23", timezone = "UTC")
-
-# DOESN'T WORK
-#
-# data <-
-#   list_location_measurements(
-#     locations_id = 7843,
-#     datetime_from = datetime_from,
-#     datetime_to = datetime_to
-#   )
-
-# Best to get sensors for a location
-
-sensors <-
-  list_location_sensors(
-    locations_id = 7843
-  )
-
-sensor_id <- 22752
-
-data_df <-
-  list_sensor_measurements(
-    sensors_id = 22752,
-    datetime_from = datetime_from,
-    datetime_to = datetime_to,
-    limit = 1000
-  )
-
-# Looks like one sensor per paramter_id/name
-
-# Function to take list of location IDs and
-# - query list_location_sensors() for each location
-# - create a combined DF, adding info from location
-#
-# With this we can filter down to the sensor ids we want.
-
-
-# Function to
-# - pull together an extended timeseries for a single sensor id
-# - put on regular time axis
-# - validate (hourly) measurements
-# - remove all unused columns
-
+providers_id <-
+  providers %>%
+  dplyr::filter(name == "AirGradient") %>%
+  dplyr::pull(id)
 
 locations <-
   openaq::list_locations(
+    providers_id = providers_id,
+    manufacturers_id = NULL,
+    monitor = FALSE,
+    mobile = FALSE,
+    instruments_id = NULL,
     iso = "TH",
-    parameters_id = 2,
-    monitor = FALSE # sensors only
-  ) %>%
-  dplyr::mutate(
-    datetime_first = lubridate::as_datetime(datetime_first),
-    datetime_last = lubridate::as_datetime(datetime_last),
+    limit = 1000
   )
 
 MazamaLocationUtils::table_leaflet(
@@ -138,17 +56,59 @@ MazamaLocationUtils::table_leaflet(
   extraVars = c("id", "name", "datetime_first", "datetime_last")
 )
 
-list_location_sensors(
-  locations_id = 2523394
-)
+locations_id <- 1236022
 
+#
+sensors <- openaq::list_location_sensors(locations_id)
 
-data_a <-
+starttime <- MazamaCoreUtils::parseDatetime("2026-04-01 00:00:00", timezone = "UTC")
+endtime <- MazamaCoreUtils::parseDatetime("2026-04-08 00:00:00", timezone = "UTC")
+
+pm25_sensors_id <- sensors %>% dplyr::filter(parameters_id == 2) %>% dplyr::pull(id)
+rel_hum_sensors_id <- sensors %>% dplyr::filter(parameters_id == 98) %>% dplyr::pull(id)
+temp_sensors_id <- sensors %>% dplyr::filter(parameters_id == 100) %>% dplyr::pull(id)
+
+pm25_df <-
   list_sensor_measurements(
-    sensors_id = 7974127,
-    datetime_from =  MazamaCoreUtils::parseDatetime("2026-01-01", timezone = "UTC"),
-    datetime_to = MazamaCoreUtils::parseDatetime("2026-01-08", timezone = "UTC"),
+    pm25_sensors_id,
+    data = "hours",
+    datetime_from = starttime,
+    datetime_to = endtime,
     limit = 1000
   )
 
-# Nice view of diurnal variation in a site in Thailand!
+rel_hum_df <-
+  list_sensor_measurements(
+    rel_hum_sensors_id,
+    data = "hours",
+    datetime_from = starttime,
+    datetime_to = endtime,
+    limit = 1000
+  )
+
+temp_df <-
+  list_sensor_measurements(
+    temp_sensors_id,
+    data = "hours",
+    datetime_from = starttime,
+    datetime_to = endtime,
+    limit = 1000
+  )
+
+pm25 <- pm25_df %>% dplyr::select(value, datetime_to) %>% dplyr::rename(pm25 = value, datetime = datetime_to)
+rel_hum <- rel_hum_df %>% dplyr::select(value, datetime_to) %>% dplyr::rename(rel_hum = value, datetime = datetime_to)
+temp <- temp_df %>% dplyr::select(value, datetime_to) %>% dplyr::rename(temp = value, datetime = datetime_to)
+
+df <-
+  pm25 %>%
+  dplyr::full_join(rel_hum, by = "datetime") %>%
+  dplyr::full_join(temp, by = "datetime") %>%
+  dplyr::select(datetime, pm25, temp, rel_hum) %>%
+  as_tibble()
+
+
+location_meta <- locations %>% dplyr::filter(id == locations_id)
+
+
+
+
