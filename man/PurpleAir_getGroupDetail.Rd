@@ -13,8 +13,8 @@ PurpleAir_getGroupDetail(
 \arguments{
 \item{api_key}{PurpleAir API READ key.}
 
-\item{group_id}{The \code{group_id} of the requested group. This group must
-be owned by the \code{api_key}.}
+\item{group_id}{The `group_id` of the requested group. This group must
+be owned by the `api_key`.}
 
 \item{baseUrl}{URL endpoint for the "Get Group Detail" API.}
 }

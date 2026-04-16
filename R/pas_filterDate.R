@@ -3,35 +3,35 @@
 #'
 #' @title Date filtering for PurpleAir Synoptic objects
 #'
-#' @param pas PurpleAir Synoptic \emph{pas} object.
+#' @param pas PurpleAir Synoptic *pas* object.
 #' @param startdate Desired start datetime (ISO 8601).
 #' @param enddate Desired end datetime (ISO 8601).
 #' @param timezone Optional Olson timezone used to interpret dates.
 #'
-#' @description Subsets a \emph{pas} object by date.
+#' @description Subsets a *pas* object by date.
 #'
-#' Dates can be anything that is understood by \code{MazamaCoreUtils::parseDatetime()}
+#' Dates can be anything that is understood by `MazamaCoreUtils::parseDatetime()`
 #' including either of the following recommended formats:
 #'
 #' \itemize{
-#' \item{\code{"YYYYmmdd"}}
-#' \item{\code{"YYYY-mm-dd"}}
+#' \item{`"YYYYmmdd"`}
+#' \item{`"YYYY-mm-dd"`}
 #' }
 #'
 #' Timezone determination precedence assumes that if you are passing in
-#' \code{POSIXct} values then you know what you are doing.
+#' `POSIXct` values then you know what you are doing.
 #'
 #' \enumerate{
-#' \item{get timezone from \code{startdate} if it is \code{POSIXct}}
-#' \item{use passed in \code{timezone}}
+#' \item{get timezone from `startdate` if it is `POSIXct`}
+#' \item{use passed in `timezone`}
 #' }
 #'
 #' @note
-#' The incoming \code{pas} object must contain the \code{date_created} and
-#' \code{last_modified} fields. The returned \emph{pas} object will retain sites
-#' where \code{startdate <= last_seen && enddate >=  pas$date_created}.
+#' The incoming `pas` object must contain the `date_created` and
+#' `last_modified` fields. The returned *pas* object will retain sites
+#' where `startdate <= last_seen && enddate >=  pas$date_created`.
 #'
-#' @seealso \link{pas_filter}
+#' @seealso [pas_filter()]
 #'
 #' @examples
 #' library(AirSensor2)

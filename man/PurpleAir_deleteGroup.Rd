@@ -13,8 +13,8 @@ PurpleAir_deleteGroup(
 \arguments{
 \item{api_key}{PurpleAir API WITE key.}
 
-\item{group_id}{The \code{group_id} to be deleted. This group must
-be owned by the \code{api_key}.}
+\item{group_id}{The `group_id` to be deleted. This group must
+be owned by the `api_key`.}
 
 \item{baseUrl}{URL endpoint for the "Delete Group" API.}
 }

@@ -2,16 +2,16 @@
 % Please edit documentation in R/utils-pas.R
 \name{pas_hasSpatial}
 \alias{pas_hasSpatial}
-\title{Test for spatial metadata in \emph{pas} object}
+\title{Test for spatial metadata in *pas* object}
 \usage{
 pas_hasSpatial(pas = NULL)
 }
 \arguments{
-\item{pas}{A PurpleAir Synoptic \emph{pas} object.}
+\item{pas}{A PurpleAir Synoptic *pas* object.}
 }
 \value{
-\code{TRUE} if \code{pas} contains core spatial metadata,
-\code{FALSE} otherwise.
+`TRUE` if `pas` contains core spatial metadata,
+`FALSE` otherwise.
 }
 \description{
 Tests for the existence of the following core spatial metadata

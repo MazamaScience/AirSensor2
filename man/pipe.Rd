@@ -7,6 +7,6 @@
 lhs \%>\% rhs
 }
 \description{
-See \code{magrittr::`\%>\%`} for details.
+See `magrittr::`\%>\%`` for details.
 }
 \keyword{internal}

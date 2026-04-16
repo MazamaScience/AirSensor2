@@ -3,7 +3,7 @@
 \docType{data}
 \name{PurpleAir_PAS_METADATA_FIELDS}
 \alias{PurpleAir_PAS_METADATA_FIELDS}
-\title{Comma-separated list of metadata fields used to create a \emph{pas} object}
+\title{Comma-separated list of metadata fields used to create a *pas* object}
 \format{
 String with comma-separated field names
 }
@@ -12,9 +12,9 @@ PurpleAir_PAS_METADATA_FIELDS
 }
 \description{
 Character string with PurpleAir field names used in
-\code{pas_downloadParseRawData()}. These fields exclude all measurements
-but retain many fields needed when creating a \emph{pat} object with
-\code{pat_create()}.
+`pas_downloadParseRawData()`. These fields exclude all measurements
+but retain many fields needed when creating a *pat* object with
+`pat_create()`.
 
 Included fields:
 \preformatted{
@@ -26,6 +26,6 @@ Included fields:
 }
 }
 \references{
-\href{https://api.purpleair.com/#api-sensors-get-sensors-data}{Get Sensors Data API}
+[Get Sensors Data API](https://api.purpleair.com/#api-sensors-get-sensors-data)
 }
 \keyword{datasets}

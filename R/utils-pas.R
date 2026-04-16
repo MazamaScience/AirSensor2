@@ -1,12 +1,12 @@
 #' @export
 #'
-#' @title Test for an empty \emph{pas} object
+#' @title Test for an empty *pas* object
 #'
-#' @param pas A \emph{PurpleAir_synoptic} object.
+#' @param pas A *PurpleAir_synoptic* object.
 #'
-#' @return \code{TRUE} if no data exist in \code{pas}, \code{FALSE} otherwise.
+#' @return `TRUE` if no data exist in `pas`, `FALSE` otherwise.
 #'
-#' @description Convenience function for \code{nrow(pas) == 0}.
+#' @description Convenience function for `nrow(pas) == 0`.
 #' This makes for more readable code in functions that need to test for this.
 #'
 #' @examples
@@ -20,12 +20,12 @@ pas_isEmpty <- function(pas = NULL) {
 
 #' @export
 #'
-#' @title Test for spatial metadata in \emph{pas} object
+#' @title Test for spatial metadata in *pas* object
 #'
-#' @param pas A PurpleAir Synoptic \emph{pas} object.
+#' @param pas A PurpleAir Synoptic *pas* object.
 #'
-#' @return \code{TRUE} if \code{pas} contains core spatial metadata,
-#' \code{FALSE} otherwise.
+#' @return `TRUE` if `pas` contains core spatial metadata,
+#' `FALSE` otherwise.
 #'
 #' @description Tests for the existence of the following core spatial metadata
 #' columns:

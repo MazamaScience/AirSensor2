@@ -15,11 +15,11 @@ synoptic_leaflet(
 )
 }
 \arguments{
-\item{synoptic}{Synoptic metadata \emph{~_synoptic} object.}
+\item{synoptic}{Synoptic metadata *~_synoptic* object.}
 
-\item{parameter}{Value to plot, e.g. \code{pm25}.}
+\item{parameter}{Value to plot, e.g. `pm25`.}
 
-\item{paletteName}{\pkg{RColorBrewer} palette name to use when \code{parameter}
+\item{paletteName}{\pkg{RColorBrewer} palette name to use when `parameter`
 is something other than:
 \itemize{
 \item{"pm2.5"}
@@ -31,7 +31,7 @@ is something other than:
 
 \item{opacity}{Opacity of monitor circles.}
 
-\item{maptype}{Optional name of leaflet ProviderTiles to use, e.g. \code{terrain}.}
+\item{maptype}{Optional name of leaflet ProviderTiles to use, e.g. `terrain`.}
 
 \item{extraVars}{Character vector of additional column names to be shown in
 leaflet popups.}
@@ -44,14 +44,14 @@ Rstudio's 'Viewer' tab.
 This function creates interactive maps that will be displayed in
 RStudio's 'Viewer' tab.
 
-Typical usage would be to use the \code{parameter} argument to display pm25
+Typical usage would be to use the `parameter` argument to display pm25
 values:
 \itemize{
 \item{"pm2.5"}
 }
 }
 \details{
-The \code{maptype} argument is mapped onto leaflet "ProviderTile"
+The `maptype` argument is mapped onto leaflet "ProviderTile"
 names. Current mappings include:
 \describe{
 \item{"roadmap"}{ -- "OpenStreetMap"}
@@ -66,6 +66,6 @@ underlying map tile if available. See
 "provider tiles" to use as the background map.
 }
 \note{
-The \code{paletteName} parameter can take the name of an RColorBrewer
-paeltte, \emph{e.g.} \code{"BuPu"} or \code{"Greens"}.
+The `paletteName` parameter can take the name of an RColorBrewer
+paeltte, *e.g.* `"BuPu"` or `"Greens"`.
 }

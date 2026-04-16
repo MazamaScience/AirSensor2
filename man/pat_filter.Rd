@@ -2,33 +2,33 @@
 % Please edit documentation in R/pat_filter.R
 \name{pat_filter}
 \alias{pat_filter}
-\title{General purpose data filtering for \emph{pat} time series objects}
+\title{General purpose data filtering for *pat* time series objects}
 \usage{
 pat_filter(pat, ...)
 }
 \arguments{
-\item{pat}{\emph{pat} object.}
+\item{pat}{*pat* object.}
 
 \item{...}{Logical predicates defined in terms of the variables in
-\code{pat$data}.}
+`pat$data`.}
 }
 \value{
-A subset of the incoming \code{pat} time series object.
-(A list with \code{meta} and \code{data} dataframes.)
+A subset of the incoming `pat` time series object.
+(A list with `meta` and `data` dataframes.)
 }
 \description{
-A generalized data filter for \emph{pat} objects to
+A generalized data filter for *pat* objects to
 choose rows/cases where conditions are true.  Multiple conditions are
-combined with \code{&} or separated by a comma. Only rows where the condition
-evaluates to TRUE are kept. Rows where the condition evaluates to \code{NA}
+combined with `&` or separated by a comma. Only rows where the condition
+evaluates to TRUE are kept. Rows where the condition evaluates to `NA`
 are dropped.
 
-If an empty \emph{pat} object is passed in, it is immediately returned,
+If an empty *pat* object is passed in, it is immediately returned,
 allowing for multiple filtering steps to be piped together and only checking
-for an empty \emph{pat} object at the end of the pipeline.
+for an empty *pat* object at the end of the pipeline.
 }
 \note{
-Filtering is done on values in \code{pat$data}.
+Filtering is done on values in `pat$data`.
 }
 \examples{
 
@@ -42,7 +42,7 @@ example_pat \%>\%
 
 }
 \seealso{
-\link{pat_filterDate}
+[pat_filterDate()]
 
-\link{pat_filterDatetime}
+[pat_filterDatetime()]
 }

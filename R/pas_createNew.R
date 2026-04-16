@@ -5,7 +5,7 @@
 #' @title Create a new PurpleAir synoptic dataset
 #'
 #' @description Download, parse and enhance synoptic data from PurpleAir and
-#' return the results as a useful tibble with class \code{PurpleAir_synoptic}.
+#' return the results as a useful tibble with class `PurpleAir_synoptic`.
 #'
 #' Steps include:
 #'
@@ -20,16 +20,16 @@
 #'   \item{stateCode -- ISO 3166-2 alpha-2}
 #' }
 #'
-#' 4) Convert data types from character to \code{POSIXct} and \code{numeric}.
+#' 4) Convert data types from character to `POSIXct` and `numeric`.
 #'
 #' Data requests are made with a bounding box determined from the required
-#' \code{countryCodes} parameter. If a single country is specified and additional
-#' \code{stateCodes} are specified, the bounding box will be limited to those
-#' states. Withing a single state, \code{counties} may be used to further limit
+#' `countryCodes` parameter. If a single country is specified and additional
+#' `stateCodes` are specified, the bounding box will be limited to those
+#' states. Withing a single state, `counties` may be used to further limit
 #' the sensors requested.
 #'
-#' If \code{show_only} is used to request specific sensors, the \code{countryCodes}
-#' and \code{stateCodes} information is ignored when requesting data. But these
+#' If `show_only` is used to request specific sensors, the `countryCodes`
+#' and `stateCodes` information is ignored when requesting data. But these
 #' are still used to help speed up the assignment of enhanced metadata..
 #'
 #' @param api_key PurpleAir API Read Key.
@@ -41,41 +41,41 @@
 #' @param counties US county names or 5-digit FIPS codes used to subset the data.
 #' Specifying counties is optional.
 #' @param lookbackDays Number of days to "look back" for valid data. Data are
-#' filtered to only include sensors with data more recent than \code{lookbackDays} ago.
-#' Use \code{lookbackDays = 0} to get all historical sensors.
-#' @param location_type The \code{location_type} of the sensors. Possible values
-#' are: 0 = Outside, 1 = Inside or \code{NULL} = both.
+#' filtered to only include sensors with data more recent than `lookbackDays` ago.
+#' Use `lookbackDays = 0` to get all historical sensors.
+#' @param location_type The `location_type` of the sensors. Possible values
+#' are: 0 = Outside, 1 = Inside or `NULL` = both.
 #' @param read_keys Optional, comma separated list of sensor read_keys is required
 #' for private devices. It is separate from the api_key and each sensor has its own
 #' read_key. Submit multiple keys by separating them with a comma (,) character
-#' for example: \code{"key-one,key-two,key-three"}.
+#' for example: `"key-one,key-two,key-three"`.
 #' @param show_only Optional, comma separated list of sensor_index values. When
 #' provided, results are requested only for the specified sensors.
 #' @param baseUrl Base URL for the PurpleAir API.
 #'
-#' @return A PurpleAir Synoptic \emph{pas} object.
+#' @return A PurpleAir Synoptic *pas* object.
 #'
-#' @note The \code{fields} parameter allows users to dial in which fields they
+#' @note The `fields` parameter allows users to dial in which fields they
 #' are interested in depending on their needs. However, the following fields
 #' will be added if not specified in order to guarantee compatibility with
-#' \code{pas_enhanceRawData()}:
-#' \code{"longitude,latitude,name,location_type,date_created,last_seen"}.
+#' `pas_enhanceRawData()`:
+#' `"longitude,latitude,name,location_type,date_created,last_seen"`.
 #'
 #' Pregenerated fields for use in this function include:
 #' \itemize{
-#'   \item{\code{/link{PurpleAir_PAS_MINIMAL_FIELDS}}} -- minimal set of fields
-#'   \item{\code{/link{PurpleAir_PAS_METADATA_FIELDS}}} -- instrument-only fields
-#'   \item{\code{/link{PurpleAir_PAS_AVG_PM25_FIELDS}}} -- includes measurements
+#'   \item{[PurpleAir_PAS_MINIMAL_FIELDS]} -- minimal set of fields
+#'   \item{[PurpleAir_PAS_METADATA_FIELDS]} -- instrument-only fields
+#'   \item{[PurpleAir_PAS_AVG_PM25_FIELDS]} -- includes measurements
 #' }
 #'
-#' @seealso \link{pas_downloadParseRawData}
-#' @seealso \link{pas_enhanceRawData}
+#' @seealso [pas_downloadParseRawData()]
+#' @seealso [pas_enhanceRawData()]
 #'
-#' @references \href{https://www2.purpleair.com}{PurpleAir}
-#' @references \href{https://api.purpleair.com/}{PurpleAir API}
-#' @references \href{https://www2.purpleair.com/policies/terms-of-service}{PurpleAir Terms of service}
-#' @references \href{https://www2.purpleair.com/pages/license}{PurpleAir Data license}
-#' @references \href{https://www2.purpleair.com/pages/attribution}{PurpleAir Data Attribution}
+#' @references [PurpleAir](https://www2.purpleair.com)
+#' @references [PurpleAir API](https://api.purpleair.com/)
+#' @references [PurpleAir Terms of service](https://www2.purpleair.com/policies/terms-of-service)
+#' @references [PurpleAir Data license](https://www2.purpleair.com/pages/license)
+#' @references [PurpleAir Data Attribution](https://www2.purpleair.com/pages/attribution)
 #'
 #' @examples
 #' \donttest{

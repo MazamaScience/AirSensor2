@@ -10,23 +10,23 @@
 #'
 #' @title Retrieve current hourly data for all Open Data sensors.
 #'
-#' @param api_key Clarity API READ Key. If \code{api_key = NULL}, it
-#' will be obtained using \code{getAPIKey("Clarity-read")}.
+#' @param api_key Clarity API READ Key. If `api_key = NULL`, it
+#' will be obtained using `getAPIKey("Clarity-read")`.
 #' @param format Customized output format ("USFS2", "USFS").
 #' @param baseUrl URL endpoint.
 #'
-#' @return List containing five data frames: \code{synoptic}, \code{pm2.5_QCFlag},
-#' \code{pm2.5}, \code{nowcast_QCFlag} and \code{nowcast}.
+#' @return List containing five data frames: `synoptic`, `pm2.5_QCFlag`,
+#' `pm2.5`, `nowcast_QCFlag` and `nowcast`.
 #'
 #' @description Sends a request to the Clarity API endpoint for Open Data.
 #'
-#' When \code{format = "USFS2"}, two additional fields are returned in the
-#' "synoptic" dataframe: \code{calibrationId} and \code{calibrationCategory}.
+#' When `format = "USFS2"`, two additional fields are returned in the
+#' "synoptic" dataframe: `calibrationId` and `calibrationCategory`.
 #'
 #' \itemize{
-#'   \item{\emph{Measurement data from} -- All open datasources}
-#'   \item{\emph{Measurements returned} -- Hourly values for last 3 hours}
-#'   \item{\emph{PM2.5 Mass Concentration} -- 1-Hour Mean Nowcast}
+#'   \item{*Measurement data from* -- All open datasources}
+#'   \item{*Measurements returned* -- Hourly values for last 3 hours}
+#'   \item{*PM2.5 Mass Concentration* -- 1-Hour Mean Nowcast}
 #' }
 #'
 #' @examples
@@ -270,24 +270,24 @@ Clarity_getAllOpenHourly <- function(
 #'
 #' @title Retrieve current individual records for all Open Data sensors.
 #'
-#' @param api_key Clarity API READ Key. If \code{api_key = NULL}, it
-#' will be obtained using \code{getAPIKey("Clarity-read")}.
+#' @param api_key Clarity API READ Key. If `api_key = NULL`, it
+#' will be obtained using `getAPIKey("Clarity-read")`.
 #' @param format Customized output format ("USFS2", "USFS").
 #' @param baseUrl URL endpoint.
 #'
-#' @return List containing five data frames: \code{meta}, \code{pm2.5_QCFlag},
-#' \code{pm2.5}, \code{nowcast_QCFlag} and \code{nowcast}.
+#' @return List containing five data frames: `meta`, `pm2.5_QCFlag`,
+#' `pm2.5`, `nowcast_QCFlag` and `nowcast`.
 #'
 #' @description Sends a request to the Clarity API endpoint for Open Data.
 #'
-#' When \code{format = "USFS2"}, two additional fields are returned in the
-#' "meta" dataframe: \code{calibrationId} and \code{calibrationCategory}.
+#' When `format = "USFS2"`, two additional fields are returned in the
+#' "meta" dataframe: `calibrationId` and `calibrationCategory`.
 #'
 #' \itemize{
-#'   \item{\emph{Measurement data from} -- All open datasources}
-#'   \item{\emph{Measurements returned} -- Individual values for last complete
+#'   \item{*Measurement data from* -- All open datasources}
+#'   \item{*Measurements returned* -- Individual values for last complete
 #'   hour (hour-aligned) plus fraction of current hour}
-#'   \item{\emph{PM2.5 Mass Concentration} -- Individual sample}
+#'   \item{*PM2.5 Mass Concentration* -- Individual sample}
 #' }
 #'
 #' @examples
@@ -450,24 +450,24 @@ Clarity_getAllOpenIndividual <- function(
 #'
 #' @title Retrieve current hourly data from a single source.
 #'
-#' @param api_key Clarity API READ Key. If \code{api_key = NULL}, it
-#' will be obtained using \code{getAPIKey("Clarity-read")}.
+#' @param api_key Clarity API READ Key. If `api_key = NULL`, it
+#' will be obtained using `getAPIKey("Clarity-read")`.
 #' @param datasourceId Clarity sensor identifier.
 #' @param format Customized output format ("USFS2", "USFS").
 #' @param baseUrl URL endpoint.
 #'
-#' @return List containing five data frames: \code{meta}, \code{pm2.5_QCFlag},
-#' \code{pm2.5}, \code{nowcast_QCFlag} and \code{nowcast}.
+#' @return List containing five data frames: `meta`, `pm2.5_QCFlag`,
+#' `pm2.5`, `nowcast_QCFlag` and `nowcast`.
 #'
 #' @description Sends a request to the Clarity API endpoint for Open Data.
 #'
-#' When \code{format = "USFS2"}, two additional fields are returned in the
-#' "meta" dataframe: \code{calibrationId} and \code{calibrationCategory}.
+#' When `format = "USFS2"`, two additional fields are returned in the
+#' "meta" dataframe: `calibrationId` and `calibrationCategory`.
 #'
 #' \itemize{
-#'   \item{\emph{Measurement data from} -- Drill down on one open datasource}
-#'   \item{\emph{Measurements returned} -- Hourly values  for last 10 days}
-#'   \item{\emph{PM2.5 Mass Concentration} -- 1-Hour Mean Nowcast}
+#'   \item{*Measurement data from* -- Drill down on one open datasource}
+#'   \item{*Measurements returned* -- Hourly values  for last 10 days}
+#'   \item{*PM2.5 Mass Concentration* -- 1-Hour Mean Nowcast}
 #' }
 #'
 #' @examples
@@ -629,24 +629,24 @@ Clarity_getOpenHourly <- function(
 #'
 #' @title Retrieve current individual records from a single source.
 #'
-#' @param api_key Clarity API READ Key. If \code{api_key = NULL}, it
-#' will be obtained using \code{getAPIKey("Clarity-read")}.
+#' @param api_key Clarity API READ Key. If `api_key = NULL`, it
+#' will be obtained using `getAPIKey("Clarity-read")`.
 #' @param datasourceId Clarity sensor identifier.
 #' @param format Customized output format ("USFS2", "USFS").
 #' @param baseUrl URL endpoint.
 #'
-#' @return List containing five data frames: \code{meta}, \code{pm2.5_QCFlag},
-#' \code{pm2.5}, \code{nowcast_QCFlag} and \code{nowcast}.
+#' @return List containing five data frames: `meta`, `pm2.5_QCFlag`,
+#' `pm2.5`, `nowcast_QCFlag` and `nowcast`.
 #'
 #' @description Sends a request to the Clarity API endpoint for Open Data.
 #'
-#' When \code{format = "USFS2"}, two additional fields are returned in the
-#' "meta" dataframe: \code{calibrationId} and \code{calibrationCategory}.
+#' When `format = "USFS2"`, two additional fields are returned in the
+#' "meta" dataframe: `calibrationId` and `calibrationCategory`.
 #'
 #' \itemize{
-#'   \item{\emph{Measurement data from} -- Drill down on one open datasource}
-#'   \item{\emph{Measurements returned} -- Individual values for last 3 days}
-#'   \item{\emph{PM2.5 Mass Concentration} -- Individual sample}
+#'   \item{*Measurement data from* -- Drill down on one open datasource}
+#'   \item{*Measurements returned* -- Individual values for last 3 days}
+#'   \item{*PM2.5 Mass Concentration* -- Individual sample}
 #' }
 #'
 #' @examples

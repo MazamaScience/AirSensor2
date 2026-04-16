@@ -5,13 +5,13 @@
 #'
 #' @title Create a new PurpleAir timeseries dataset.
 #'
-#' @param api_key PurpleAir API Read Key. If \code{api_key = NULL}, it
-#' will be obtained using \code{getAPIKey("PurpleAir-read")}.
-#' See \code{MazamaCoreUtils::\link[MazamaCoreUtils:setAPIKey]{setAPIKey}}.
-#' @param pas Previously generated \emph{pas} object containing \code{sensor_index}.
+#' @param api_key PurpleAir API Read Key. If `api_key = NULL`, it
+#' will be obtained using `getAPIKey("PurpleAir-read")`.
+#' See [MazamaCoreUtils::setAPIKey()].
+#' @param pas Previously generated *pas* object containing `sensor_index`.
 #' @param sensor_index PurpleAir sensor unique identifier.
-#' @param startdate Desired start time (ISO 8601) or \code{POSIXct}.
-#' @param enddate Desired end time (ISO 8601) or \code{POSIXct}.
+#' @param startdate Desired start time (ISO 8601) or `POSIXct`.
+#' @param enddate Desired end time (ISO 8601) or `POSIXct`.
 #' @param timezone Olson timezone used to interpret dates.
 #' @param average Temporal averaging in minutes performed by PurpleAir. One of:
 #' 0 (raw), 10, 30, 60 (hour), 360, 1440 (day).
@@ -19,36 +19,36 @@
 #' @param read_keys Optional, comma separated list of sensor read_keys is required
 #' for private devices. It is separate from the api_key and each sensor has its own
 #' read_key. Submit multiple keys by separating them with a comma (,) character
-#' for example: \code{"key-one,key-two,key-three"}.
+#' for example: `"key-one,key-two,key-three"`.
 #' @param sleep Seconds to sleep between API requests.
 #' @param parallel Logical specifying whether to attempt simultaneous downloads
-#' using \code{parallel::\link[parallel:mcparallel]{mcparallel}}. (Not available
+#' using [parallel::mcparallel()]. (Not available
 #' on Windows.)
 #' @param baseUrl Base URL for the PurpleAir API.
 #' @param verbose Logical controlling the generation of warning and error messages.
 #'
-#' @return A PurpleAir Timeseries \emph{pat} object.
+#' @return A PurpleAir Timeseries *pat* object.
 #'
-#' @description Create a \code{pat} object for a specific \code{sensor_index}.
+#' @description Create a `pat` object for a specific `sensor_index`.
 #' This function splits up the requested time range into multi-day intervals (as
 #' required by the PurpleAir API) and makes repeated calls to
-#' \code{pat_downloadParseRawData()}. The \code{sleep} parameter waits a small
+#' `pat_downloadParseRawData()`. The `sleep` parameter waits a small
 #' amount of time between API requests.
 #'
 #' The PurpleAir API will respond with "rate limiting" errors unless sleep is
-#' set appropriately. When \code{parallel = TRUE}, \code{sleep} is ignored.
+#' set appropriately. When `parallel = TRUE`, `sleep` is ignored.
 #'
-#' @note Parallel processing using \code{parallel = TRUE} is not available on
+#' @note Parallel processing using `parallel = TRUE` is not available on
 #' Windows machines.
 #'
 #' @seealso [pat_createHourly()]
 #' @seealso [pat_createRaw()]
 #'
-#' @references \href{https://www2.purpleair.com}{PurpleAir}
-#' @references \href{https://api.purpleair.com}{PurpleAir API}
-#' @references \href{https://www2.purpleair.com/policies/terms-of-service}{PurpleAir Terms of service}
-#' @references \href{https://www2.purpleair.com/pages/license}{PurpleAir Data license}
-#' @references \href{https://www2.purpleair.com/pages/attribution}{PurpleAir Data Attribution}
+#' @references [PurpleAir](https://www2.purpleair.com)
+#' @references [PurpleAir API](https://api.purpleair.com)
+#' @references [PurpleAir Terms of service](https://www2.purpleair.com/policies/terms-of-service)
+#' @references [PurpleAir Data license](https://www2.purpleair.com/pages/license)
+#' @references [PurpleAir Data Attribution](https://www2.purpleair.com/pages/attribution)
 #'
 #' @examples
 #' \donttest{

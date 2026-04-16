@@ -4,26 +4,26 @@
 \alias{pat_getDataFrame}
 \alias{pat_getData}
 \alias{pat_getMeta}
-\title{Extract dataframes from \emph{pat} objects}
+\title{Extract dataframes from *pat* objects}
 \usage{
 pat_getData(pat)
 
 pat_getMeta(pat)
 }
 \arguments{
-\item{pat}{\emph{pat} object to extract dataframe from.}
+\item{pat}{*pat* object to extract dataframe from.}
 }
 \value{
-A dataframe from the \emph{pat} object.
+A dataframe from the *pat* object.
 }
 \description{
 These functions are convenient wrappers for extracting the dataframes that
-comprise a \emph{pat} object. These functions are designed to be useful when
-manipulating data in a pipeline using \code{\%>\%}.
+comprise a *pat* object. These functions are designed to be useful when
+manipulating data in a pipeline using `\%>\%`.
 
 Below is a table showing equivalent operations for each function.
 
-\code{pat_getData(pat)} is equivalent to \code{pat$data}.
+`pat_getData(pat)` is equivalent to `pat$data`.
 
-\code{pat_getMeta(pat)} is equivalent to \code{pat$meta}.
+`pat_getMeta(pat)` is equivalent to `pat$meta`.
 }

@@ -14,10 +14,10 @@ Clarity_createOpenMonitor(
 )
 }
 \arguments{
-\item{api_key}{Clarity API READ Key. If \code{api_key = NULL}, it
-will be obtained using \code{getAPIKey("Clarity-read")}.}
+\item{api_key}{Clarity API READ Key. If `api_key = NULL`, it
+will be obtained using `getAPIKey("Clarity-read")`.}
 
-\item{synoptic}{Previously generated \emph{synoptic} object containing \code{datasourceId}.}
+\item{synoptic}{Previously generated *synoptic* object containing `datasourceId`.}
 
 \item{datasourceId}{Clarity sensor identifier.}
 
@@ -29,11 +29,11 @@ will be obtained using \code{getAPIKey("Clarity-read")}.}
 invalidate data values.}
 }
 \value{
-An AirMonitor package \emph{mts_monitor} object.
+An AirMonitor package *mts_monitor* object.
 }
 \description{
 Download, parse and enhance hourly timeseries data from Clarity
-and create an object of class \code{mts_monitor} for use with the AirMonitor
+and create an object of class `mts_monitor` for use with the AirMonitor
 package.
 }
 \examples{

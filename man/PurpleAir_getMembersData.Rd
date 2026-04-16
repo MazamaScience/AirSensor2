@@ -16,16 +16,16 @@ PurpleAir_getMembersData(
 \arguments{
 \item{api_key}{PurpleAir API READ key.}
 
-\item{group_id}{The \code{group_id} of the requested group. This group must
-be owned by the \code{api_key}.}
+\item{group_id}{The `group_id` of the requested group. This group must
+be owned by the `api_key`.}
 
 \item{fields}{Comma-separated list of 'sensor data fields' to include in the response.}
 
-\item{location_type}{The \code{location_type} of the sensors. Possible values
-are: 0 = Outside, 1 = Inside or \code{NULL} = both.}
+\item{location_type}{The `location_type` of the sensors. Possible values
+are: 0 = Outside, 1 = Inside or `NULL` = both.}
 
 \item{max_age}{Filter results to only include sensors modified or updated
-within the last \code{max_age} seconds. Using a value of 0 will match sensors of any age.}
+within the last `max_age` seconds. Using a value of 0 will match sensors of any age.}
 
 \item{baseUrl}{URL endpoint for the "Get Members Data" API.}
 }

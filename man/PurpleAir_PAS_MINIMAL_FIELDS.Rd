@@ -3,7 +3,7 @@
 \docType{data}
 \name{PurpleAir_PAS_MINIMAL_FIELDS}
 \alias{PurpleAir_PAS_MINIMAL_FIELDS}
-\title{Comma-separated list of metadata fields used to create a \emph{pas} object}
+\title{Comma-separated list of metadata fields used to create a *pas* object}
 \format{
 String with comma-separated field names
 }
@@ -12,12 +12,12 @@ PurpleAir_PAS_MINIMAL_FIELDS
 }
 \description{
 Character string with PurpleAir field names used in
-\code{pas_downloadParseRawData()}. These fields exclude all measurements
-but retains the minimal set of metadata required to create a \emph{pas} object.
-This \emph{pas} object can then be passed on to \emph{pat} creation functions.
+`pas_downloadParseRawData()`. These fields exclude all measurements
+but retains the minimal set of metadata required to create a *pas* object.
+This *pas* object can then be passed on to *pat* creation functions.
 
-A metadata-only \emph{pas} object can be useful when searching for historical
-data using \code{\link{pas_filterDate}}.
+A metadata-only *pas* object can be useful when searching for historical
+data using [pas_filterDate()].
 
 Included fields:
 \preformatted{
@@ -26,6 +26,6 @@ Included fields:
 }
 }
 \references{
-\href{https://api.purpleair.com/#api-sensors-get-sensors-data}{Get Sensors Data API}
+[Get Sensors Data API](https://api.purpleair.com/#api-sensors-get-sensors-data)
 }
 \keyword{datasets}

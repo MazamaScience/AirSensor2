@@ -1,21 +1,21 @@
 #' @export
 #' @importFrom rlang .data
 #'
-#' @title Trim \emph{pat} time series object to full days
+#' @title Trim *pat* time series object to full days
 #'
-#' @param pat \emph{pat} object.
+#' @param pat *pat* object.
 #' @param timezone Olson timezone used to interpret dates.
 #'
-#' @description Trims the date range of a \emph{pat} object to local time date
-#' boundaries which are \emph{within} the range of data. This has the effect
+#' @description Trims the date range of a *pat* object to local time date
+#' boundaries which are *within* the range of data. This has the effect
 #' of removing partial-day data records at the start and end of the timeseries
 #' and is useful when calculating full-day statistics.
 #'
-#' Day boundaries are calculated using the specified \code{timezone} or, if
-#' \code{NULL}, using \code{pat$meta$timezone}.
+#' Day boundaries are calculated using the specified `timezone` or, if
+#' `NULL`, using `pat$meta$timezone`.
 #'
-#' @return A subset of the incoming \emph{pat} time series object.
-#' (A list with \code{meta} and \code{data} dataframes.)
+#' @return A subset of the incoming *pat* time series object.
+#' (A list with `meta` and `data` dataframes.)
 #'
 # @examples
 # library(AirSensor2)

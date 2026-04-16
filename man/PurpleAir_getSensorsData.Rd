@@ -24,8 +24,8 @@ PurpleAir_getSensorsData(
 
 \item{fields}{Optional parameter specifying sensor data fields to return.}
 
-\item{location_type}{The \code{location_type} of the sensors. Possible values
-are: 0 = Outside, 1 = Inside or \code{NULL} = both.}
+\item{location_type}{The `location_type` of the sensors. Possible values
+are: 0 = Outside, 1 = Inside or `NULL` = both.}
 
 \item{read_keys}{Optional comma separated list of sensor read_keys is required
 for private devices. It is separate to the api_key and each sensor has its own
@@ -42,7 +42,7 @@ those with new values since the last request. Using a value of 0 will match
 sensors modified at any time.}
 
 \item{max_age}{Filter results to only include sensors modified or updated
-within the last \code{max_age} seconds. Using a value of 0 will match sensors of any age.}
+within the last `max_age` seconds. Using a value of 0 will match sensors of any age.}
 
 \item{nwlng}{A north west longitude for the bounding box.}
 
@@ -61,7 +61,7 @@ List containing latest data for multiple sensors.
 Sends a request to the PurpleAir API endpoint described at:
 \url{https://api.purpleair.com/#api-sensors-get-sensors-data}
 
-If \code{show_only} is used to request specific sensors, the bounding box
+If `show_only` is used to request specific sensors, the bounding box
 information is ignored.
 }
 \examples{

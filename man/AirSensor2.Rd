@@ -11,13 +11,13 @@ produced by 'PurpleAir' <https://www2.purpleair.com>.
 }
 }
 \references{
-\href{https://www2.purpleair.com}{PurpleAir}
+[PurpleAir](https://www2.purpleair.com)
 
-\href{https://api.purpleair.com}{PurpleAir API}
+[PurpleAir API](https://api.purpleair.com)
 
-\href{https://www2.purpleair.com/policies/terms-of-service}{PurpleAir Terms of service}
+[PurpleAir Terms of service](https://www2.purpleair.com/policies/terms-of-service)
 
-\href{https://www2.purpleair.com/pages/license}{PurpleAir Data license}
+[PurpleAir Data license](https://www2.purpleair.com/pages/license)
 
-\href{https://www2.purpleair.com/pages/attribution}{PurpleAir Data Attribution}
+[PurpleAir Data Attribution](https://www2.purpleair.com/pages/attribution)
 }

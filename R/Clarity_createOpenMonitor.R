@@ -6,19 +6,19 @@
 #' @title Create a new Clarity 'mts_monitor' object
 #'
 #' @description Download, parse and enhance hourly timeseries data from Clarity
-#' and create an object of class \code{mts_monitor} for use with the AirMonitor
+#' and create an object of class `mts_monitor` for use with the AirMonitor
 #' package.
 #'
-#' @param api_key Clarity API READ Key. If \code{api_key = NULL}, it
-#' will be obtained using \code{getAPIKey("Clarity-read")}.
-#' @param synoptic Previously generated \emph{synoptic} object containing \code{datasourceId}.
+#' @param api_key Clarity API READ Key. If `api_key = NULL`, it
+#' will be obtained using `getAPIKey("Clarity-read")`.
+#' @param synoptic Previously generated *synoptic* object containing `datasourceId`.
 #' @param datasourceId Clarity sensor identifier.
 #' @param format Customized output format ("USFS2", "USFS").
 #' @param parameter Parameter to use for data ("pm2.5" or "nowcast")
 #' @param applyQC Logical specifying whether to use the Clarity QCFlag to
 #' invalidate data values.
 #'
-#' @return An AirMonitor package \emph{mts_monitor} object.
+#' @return An AirMonitor package *mts_monitor* object.
 #'
 #' @examples
 #' \donttest{

@@ -12,9 +12,9 @@ PurpleAir_PAT_EPA_HOURLY_FIELDS
 }
 \description{
 Character string with a minimal set of PurpleAir field names
-used in \code{PurpleAir_createNewMonitor()}. These fields are sufficient to
+used in `PurpleAir_createNewMonitor()`. These fields are sufficient to
 apply the EPA correction algorithm used in the AirNow
-\href{https://fire.airnow.gov}{Fire & Smoke Map}.
+[Fire & Smoke Map](https://fire.airnow.gov).
 
 Included fields:
 \preformatted{
@@ -23,11 +23,11 @@ Included fields:
 }
 }
 \references{
-\href{https://www.epa.gov/sites/default/files/2021-05/documents/toolsresourceswebinar_purpleairsmoke_210519b.pdf}{EPA PurpleAir Correction}.
+[EPA PurpleAir Correction](https://www.epa.gov/sites/default/files/2021-05/documents/toolsresourceswebinar_purpleairsmoke_210519b.pdf).
 
-\href{https://api.purpleair.com/#api-sensors-get-sensor-history-csv}{Get Sensor History API}
+[Get Sensor History API](https://api.purpleair.com/#api-sensors-get-sensor-history-csv)
 }
 \seealso{
-\link{pat_applyCorrection}
+[pat_applyCorrection()]
 }
 \keyword{datasets}

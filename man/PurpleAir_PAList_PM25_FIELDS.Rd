@@ -12,7 +12,7 @@ PurpleAir_PAList_PM25_FIELDS
 }
 \description{
 Character string with default PurpleAir field names used in
-\code{PurpleAir_getSensorData()} and \code{PurpleAir_getMemberData()}. These
+`PurpleAir_getSensorData()` and `PurpleAir_getMemberData()`. These
 fields include most of the "information and status" fields, "humidity",
 "temperature", "pressure" and all the PM2.5 fields for both A and B channels.
 
@@ -37,6 +37,6 @@ Included fields:
 }
 }
 \references{
-\href{https://api.purpleair.com/#api-sensors-get-sensor-data}{Get Sensor Data API}
+[Get Sensor Data API](https://api.purpleair.com/#api-sensors-get-sensor-data)
 }
 \keyword{datasets}

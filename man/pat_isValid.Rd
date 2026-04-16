@@ -2,42 +2,42 @@
 % Please edit documentation in R/utils-pat.R
 \name{pat_isValid}
 \alias{pat_isValid}
-\title{Test \emph{pat} object for correct structure}
+\title{Test *pat* object for correct structure}
 \usage{
 pat_isValid(pat = NULL, verbose = FALSE)
 }
 \arguments{
-\item{pat}{\emph{pat} object}
+\item{pat}{*pat* object}
 
 \item{verbose}{Logical specifying whether to produce detailed warning messages.}
 }
 \value{
-\code{TRUE} if \code{pat} has the correct structure,
-\code{FALSE} otherwise.
+`TRUE` if `pat` has the correct structure,
+`FALSE` otherwise.
 }
 \description{
-The \code{pat} is checked for the presence of core
-\code{meta} and \code{data} columns.
+The `pat` is checked for the presence of core
+`meta` and `data` columns.
 
-Core \code{meta} columns include:
+Core `meta` columns include:
 
 \itemize{
-  \item{\code{deviceDeploymentID} -- unique identifier (see \pkg{MazmaLocationUtils})}
-  \item{\code{deviceID} -- device identifier}
-  \item{\code{locationID} -- location identifier (see \pkg{MazmaLocationUtils})}
-  \item{\code{locationName} -- English language name}
-  \item{\code{longitude} -- decimal degrees E}
-  \item{\code{latitude} -- decimal degrees N}
-  \item{\code{elevation} -- elevation of station in m}
-  \item{\code{countryCode} -- ISO 3166-1 alpha-2}
-  \item{\code{stateCode} -- ISO 3166-2 alpha-2}
-  \item{\code{timezone} -- Olson time zone}
+  \item{`deviceDeploymentID` -- unique identifier (see \pkg{MazmaLocationUtils})}
+  \item{`deviceID` -- device identifier}
+  \item{`locationID` -- location identifier (see \pkg{MazmaLocationUtils})}
+  \item{`locationName` -- English language name}
+  \item{`longitude` -- decimal degrees E}
+  \item{`latitude` -- decimal degrees N}
+  \item{`elevation` -- elevation of station in m}
+  \item{`countryCode` -- ISO 3166-1 alpha-2}
+  \item{`stateCode` -- ISO 3166-2 alpha-2}
+  \item{`timezone` -- Olson time zone}
 }
 
-Core \code{data} columns include:
+Core `data` columns include:
 
 \itemize{
-  \item{\code{datetime} -- measurement time (UTC)}
+  \item{`datetime` -- measurement time (UTC)}
 }
 }
 \examples{

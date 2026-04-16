@@ -2,26 +2,26 @@
 % Please edit documentation in R/utils-pat.R
 \name{pat_distinct}
 \alias{pat_distinct}
-\title{Retain only distinct data records in \code{pat$data}}
+\title{Retain only distinct data records in `pat$data`}
 \usage{
 pat_distinct(pat)
 }
 \arguments{
-\item{pat}{\emph{pat} object}
+\item{pat}{*pat* object}
 }
 \value{
-An \emph{pat} object where each record is associated with a unique
+An *pat* object where each record is associated with a unique
 time.
-(A list with \code{meta} and \code{data} dataframes.)
+(A list with `meta` and `data` dataframes.)
 }
 \description{
 Three successive steps are used to guarantee that the
-\code{datetime} axis contains no repeated values:
+`datetime` axis contains no repeated values:
 
 \enumerate{
 \item{remove any duplicate records}
-\item{guarantee that rows are in \code{datetime} order}
+\item{guarantee that rows are in `datetime` order}
 \item{average together fields for any remaining records that share the same
-\code{datetime}}
+`datetime`}
 }
 }

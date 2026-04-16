@@ -7,5 +7,5 @@
 Official, US EPA AQI levels, names, colors and action text are provided in a
 list for easy coloring and labeling.
 
-See \code{AirMonitor::\link[AirMonitor:US_AQI]{US_AQI}} for details.
+See [AirMonitor::US_AQI()] for details.
 }

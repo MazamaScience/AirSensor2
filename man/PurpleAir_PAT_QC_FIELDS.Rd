@@ -12,17 +12,17 @@ PurpleAir_PAT_QC_FIELDS
 }
 \description{
 Character string with default PurpleAir field names used in
-\code{pat_downloadParaseRawData()}. These fields are sufficient for most
+`pat_downloadParaseRawData()`. These fields are sufficient for most
 QC algorithms and include most of the "information and status" and
 "environmental" fields.
 }
 \note{
 The PM2.5 fields included here are the "_atm_" fields recommended by
 PurpleAir for outdoor sensors while those
-used in \link{PurpleAir_PAT_EPA_HOURLY_FIELDS} include the "_cf_1_" versions as
+used in [PurpleAir_PAT_EPA_HOURLY_FIELDS()] include the "_cf_1_" versions as
 specified by the EPA correction algorithm.
 
-The \href{https://api.purpleair.com/#api-sensors-get-sensors-data}{PurpleAir reference docs}
+The [PurpleAir reference docs](https://api.purpleair.com/#api-sensors-get-sensors-data)
 describe the two different variants as:
 "CF=1 variant for indoor, ATM variant for outdoor devices" which is why we
 include the "_atm_" versions in this set. For the purposes of identifying
@@ -35,6 +35,6 @@ Included fields:
 }
 }
 \references{
-\href{https://api.purpleair.com/#api-sensors-get-sensor-history-csv}{Get Sensor History API}
+[Get Sensor History API](https://api.purpleair.com/#api-sensors-get-sensor-history-csv)
 }
 \keyword{datasets}

@@ -6,7 +6,7 @@
 #' @title Create a new Clarity synoptic dataset
 #'
 #' @description Download, parse and enhance synoptic data from Clarity and
-#' return the results as a useful tibble with class \code{clarity_synoptic}.
+#' return the results as a useful tibble with class `clarity_synoptic`.
 #'
 #' Steps include:
 #'
@@ -21,14 +21,14 @@
 #'   \item{stateCode -- ISO 3166-2 alpha-2}
 #' }
 #'
-#' 4) Convert data types from character to \code{POSIXct} and \code{numeric}.
+#' 4) Convert data types from character to `POSIXct` and `numeric`.
 #'
-#' @param api_key Clarity API READ Key. If \code{api_key = NULL}, it
-#' will be obtained using \code{getAPIKey("Clarity-read")}.
+#' @param api_key Clarity API READ Key. If `api_key = NULL`, it
+#' will be obtained using `getAPIKey("Clarity-read")`.
 #' @param format Customized output format ("USFS2", "USFS").
 #' @param baseUrl Base URL for the PurpleAir API.
 #'
-#' @return A Clarity Synoptic \emph{pas} object.
+#' @return A Clarity Synoptic *pas* object.
 #'
 #' @examples
 #' \donttest{

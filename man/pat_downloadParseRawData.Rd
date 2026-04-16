@@ -17,9 +17,9 @@ pat_downloadParseRawData(
 )
 }
 \arguments{
-\item{api_key}{PurpleAir API Read Key. If \code{api_key = NULL}, it
-will be obtained using \code{getAPIKey("PurpleAir-read")}.
-See \code{MazamaCoreUtils::\link[MazamaCoreUtils:setAPIKey]{setAPIKey}}.}
+\item{api_key}{PurpleAir API Read Key. If `api_key = NULL`, it
+will be obtained using `getAPIKey("PurpleAir-read")`.
+See [MazamaCoreUtils::setAPIKey()].}
 
 \item{sensor_index}{PurpleAir sensor unique identifier.}
 
@@ -37,7 +37,7 @@ See \code{MazamaCoreUtils::\link[MazamaCoreUtils:setAPIKey]{setAPIKey}}.}
 \item{read_keys}{Optional, comma separated list of sensor read_keys is required
 for private devices. It is separate from the api_key and each sensor has its own
 read_key. Submit multiple keys by separating them with a comma (,) character
-for example: \code{"key-one,key-two,key-three"}.}
+for example: `"key-one,key-two,key-three"`.}
 
 \item{baseUrl}{Base URL for the PurpleAir API.}
 }
@@ -45,7 +45,7 @@ for example: \code{"key-one,key-two,key-three"}.}
 Dataframe of time series PurpleAir data.
 }
 \description{
-Download and parse time series data for a specific \code{sensor_index}.
+Download and parse time series data for a specific `sensor_index`.
 }
 \examples{
 \donttest{
@@ -72,13 +72,13 @@ head(pat_raw)
 }
 }
 \references{
-\href{https://www2.purpleair.com}{PurpleAir}
+[PurpleAir](https://www2.purpleair.com)
 
-\href{https://api.purpleair.com}{PurpleAir API}
+[PurpleAir API](https://api.purpleair.com)
 
-\href{https://www2.purpleair.com/policies/terms-of-service}{PurpleAir Terms of service}
+[PurpleAir Terms of service](https://www2.purpleair.com/policies/terms-of-service)
 
-\href{https://www2.purpleair.com/pages/license}{PurpleAir Data license}
+[PurpleAir Data license](https://www2.purpleair.com/pages/license)
 
-\href{https://www2.purpleair.com/pages/attribution}{PurpleAir Data Attribution}
+[PurpleAir Data Attribution](https://www2.purpleair.com/pages/attribution)
 }

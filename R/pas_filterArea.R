@@ -3,20 +3,20 @@
 #'
 #' @title Rectangle area filtering for PurpleAir Synoptic objects
 #'
-#' @param pas PurpleAir Synoptic \emph{pas} object.
+#' @param pas PurpleAir Synoptic *pas* object.
 #' @param w West edge of area bounding box (deg E).
 #' @param e East edge of area bounding box (deg E).
 #' @param s South edge of area bounding box (deg N).
 #' @param n North edge of area bounding box (deg N).
 #'
-#' @description Filters \emph{pas} object sensors based on a bounding box.
+#' @description Filters *pas* object sensors based on a bounding box.
 #'
-#' @return A subset of the given \emph{pas} object containing only records
+#' @return A subset of the given *pas* object containing only records
 #' within the bounding box. This includes sensors located precisely on a boundary.
 #'
-#' @seealso \link{pas_filter}
-#' @seealso \link{pas_filterNear}
-#' @seealso \link{pas_filterNearMonitor}
+#' @seealso [pas_filter()]
+#' @seealso [pas_filterNear()]
+#' @seealso [pas_filterNearMonitor()]
 #'
 #' @examples
 #' library(AirSensor2)

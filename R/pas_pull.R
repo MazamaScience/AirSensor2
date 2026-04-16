@@ -3,12 +3,12 @@
 #'
 #' @title Returns a column of data from a PurpleAir synoptic object
 #'
-#' @param pas PurpleAir Synoptic \emph{pas} object.
+#' @param pas PurpleAir Synoptic *pas* object.
 #' @param name Name of the data column to return.
 #'
-#' @description A simple wrapper around \code{dplyr::pull()} to help with
+#' @description A simple wrapper around `dplyr::pull()` to help with
 #' readability of user recipes.
-#' @return A single column of data from the incoming \emph{pas} object.
+#' @return A single column of data from the incoming *pas* object.
 #'
 #' @examples
 #' library(AirSensor2)

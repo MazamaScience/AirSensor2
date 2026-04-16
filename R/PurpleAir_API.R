@@ -7,7 +7,7 @@
 
 #' @export
 #'
-#' @title Check the validity and type for the provided \code{api_key}
+#' @title Check the validity and type for the provided `api_key`
 #'
 #' @param api_key PurpleAir API key.
 #' @param baseUrl URL endpoint for the "Check Key" API.
@@ -72,7 +72,7 @@ PurpleAir_checkAPIKey <- function(
 #' @title Retrieve the latest data of a single sensor
 #'
 #' @param api_key PurpleAir API READ key.
-#' @param sensor_index The \code{sensor_index} as found in the JSON for this
+#' @param sensor_index The `sensor_index` as found in the JSON for this
 #' specific sensor.
 #' @param fields Optional parameter specifying sensor data fields to return.
 #' @param baseUrl URL endpoint for the "Get Member Data" API.
@@ -164,7 +164,7 @@ PurpleAir_getSensorData <- function(
 #' @title Retrieve historical data for a single sensor as CSV
 #'
 #' @param api_key PurpleAir API READ key.
-#' @param sensor_index The \code{sensor_index} as found in the JSON for this
+#' @param sensor_index The `sensor_index` as found in the JSON for this
 #' specific sensor.
 #' @param start_timestamp Optional Unix timestamp in seconds since Jan 1, 1970.
 #' @param end_timestamp Optional Unix timestamp in seconds since Jan 1, 1970.
@@ -174,7 +174,7 @@ PurpleAir_getSensorData <- function(
 #' @param read_keys Optional, comma separated list of sensor read_keys is required
 #' for private devices. It is separate from the api_key and each sensor has its own
 #' read_key. Submit multiple keys by separating them with a comma (,) character
-#' for example: \code{"key-one,key-two,key-three"}.
+#' for example: `"key-one,key-two,key-three"`.
 #' @param baseUrl URL endpoint for the "Get Sensor History (CSV)" API.
 #'
 #' @return Tibble with historical data for a single sensor.
@@ -286,7 +286,7 @@ PurpleAir_getSensorHistoryCSV <- function(
 #' @title Retrieve historical data for a single sensor
 #'
 #' @param api_key PurpleAir API READ key.
-#' @param sensor_index The \code{sensor_index} as found in the JSON for this
+#' @param sensor_index The `sensor_index` as found in the JSON for this
 #' specific sensor.
 #' @param start_timestamp Optional Unix timestamp in seconds since Jan 1, 1970.
 #' @param end_timestamp Optional Unix timestamp in seconds since Jan 1, 1970.
@@ -408,8 +408,8 @@ PurpleAir_getSensorHistory <- function(
 #'
 #' @param api_key PurpleAir API READ key.
 #' @param fields Optional parameter specifying sensor data fields to return.
-#' @param location_type The \code{location_type} of the sensors. Possible values
-#' are: 0 = Outside, 1 = Inside or \code{NULL} = both.
+#' @param location_type The `location_type` of the sensors. Possible values
+#' are: 0 = Outside, 1 = Inside or `NULL` = both.
 #' @param read_keys Optional comma separated list of sensor read_keys is required
 #' for private devices. It is separate to the api_key and each sensor has its own
 #' read_key. Submit multiple keys by separating them with a comma (,) character
@@ -422,7 +422,7 @@ PurpleAir_getSensorHistory <- function(
 #' those with new values since the last request. Using a value of 0 will match
 #' sensors modified at any time.
 #' @param max_age Filter results to only include sensors modified or updated
-#' within the last \code{max_age} seconds. Using a value of 0 will match sensors of any age.
+#' within the last `max_age` seconds. Using a value of 0 will match sensors of any age.
 #' @param nwlng A north west longitude for the bounding box.
 #' @param nwlat A north west latitude for the bounding box.
 #' @param selng A south east longitude for the bounding box.
@@ -434,7 +434,7 @@ PurpleAir_getSensorHistory <- function(
 #' @description Sends a request to the PurpleAir API endpoint described at:
 #' \url{https://api.purpleair.com/#api-sensors-get-sensors-data}
 #'
-#' If \code{show_only} is used to request specific sensors, the bounding box
+#' If `show_only` is used to request specific sensors, the bounding box
 #' information is ignored.
 #'
 #' @examples
@@ -624,9 +624,9 @@ PurpleAir_createGroup <- function(
 #' @title Create a new member within the specified group
 #'
 #' @param api_key PurpleAir API WRITE key.
-#' @param group_id The \code{group_id} of the requested group. This group must
-#' be owned by the \code{api_key}.
-#' @param sensor_index Sensor index as returned by \code{PurpleAir_getSensorsData()}.
+#' @param group_id The `group_id` of the requested group. This group must
+#' be owned by the `api_key`.
+#' @param sensor_index Sensor index as returned by `PurpleAir_getSensorsData()`.
 #' @param baseUrl URL endpoint for the "Create Member" API.
 #'
 #' @return List containing data associated with this this sensor.
@@ -693,8 +693,8 @@ PurpleAir_createMember <- function(
 #' @title Delete the specified group
 #'
 #' @param api_key PurpleAir API WITE key.
-#' @param group_id The \code{group_id} to be deleted. This group must
-#' be owned by the \code{api_key}.
+#' @param group_id The `group_id` to be deleted. This group must
+#' be owned by the `api_key`.
 #' @param baseUrl URL endpoint for the "Delete Group" API.
 #'
 #' @return No return.
@@ -757,8 +757,8 @@ PurpleAir_deleteGroup <- function(
 #' @title Delete a member from the specified group
 #'
 #' @param api_key PurpleAir API WITE key.
-#' @param group_id The \code{group_id} of the requested group.
-#' @param member_id The \code{member_id} to be deleted.
+#' @param group_id The `group_id` of the requested group.
+#' @param member_id The `member_id` to be deleted.
 #' @param baseUrl URL endpoint for the "Delete Member" API.
 #'
 #' @return No return.
@@ -823,8 +823,8 @@ PurpleAir_deleteMember <- function(
 #' @title Retrieve all members of the specified group
 #'
 #' @param api_key PurpleAir API READ key.
-#' @param group_id The \code{group_id} of the requested group. This group must
-#' be owned by the \code{api_key}.
+#' @param group_id The `group_id` of the requested group. This group must
+#' be owned by the `api_key`.
 #' @param baseUrl URL endpoint for the "Get Group Detail" API.
 #'
 #' @return List containing all members of the specified group.
@@ -891,12 +891,12 @@ PurpleAir_getGroupDetail <- function(
 
 #' @export
 #'
-#' @title Retrieve all groups owned by the provided \code{api_key}
+#' @title Retrieve all groups owned by the provided `api_key`
 #'
 #' @param api_key PurpleAir API READ ey.
 #' @param baseUrl URL endpoint for the "Get Groups List" API.
 #'
-#' @return List containing all groups owned by \code{api_key}.
+#' @return List containing all groups owned by `api_key`.
 #'
 #' @description Sends a request to the PurpleAirAPI API endpoint described at:
 #' \url{https://api.purpleair.com/#api-groups-get-groups-list}
@@ -960,9 +960,9 @@ PurpleAir_getGroupsList <- function(
 #' @title Retrieve recent data for a single sensor in the specified group
 #'
 #' @param api_key PurpleAir API READ key.
-#' @param group_id The \code{group_id} of the requested group. This group must
-#' be owned by the \code{api_key}.
-#' @param member_id Unique \code{member_id} for a sensor within \code{group_id}.
+#' @param group_id The `group_id` of the requested group. This group must
+#' be owned by the `api_key`.
+#' @param member_id Unique `member_id` for a sensor within `group_id`.
 #' @param fields Optional parameter specifying sensor data fields to return.
 #' @param baseUrl URL endpoint for the "Get Member Data" API.
 #'
@@ -1054,9 +1054,9 @@ PurpleAir_getMemberData <- function(
 #' @title Retrieve historical data for a single sensor of the specified group
 #'
 #' @param api_key PurpleAir API READ key.
-#' @param group_id The \code{group_id} of the requested group. This group must
-#' be owned by the \code{api_key}.
-#' @param member_id Unique \code{member_id} for a sensor within \code{group_id}.
+#' @param group_id The `group_id` of the requested group. This group must
+#' be owned by the `api_key`.
+#' @param member_id Unique `member_id` for a sensor within `group_id`.
 #' @param start_timestamp Desired start datetime (ISO 8601).
 #' @param end_timestamp Desired end datetime (ISO 8601).
 #' @param average Temporal averaging in minutes performed by PurpleAir. One of:
@@ -1149,13 +1149,13 @@ PurpleAir_getMemberHistory <- function(
 #' @title Retrieve current data for all sensors in the specified group
 #'
 #' @param api_key PurpleAir API READ key.
-#' @param group_id The \code{group_id} of the requested group. This group must
-#' be owned by the \code{api_key}.
+#' @param group_id The `group_id` of the requested group. This group must
+#' be owned by the `api_key`.
 #' @param fields Comma-separated list of 'sensor data fields' to include in the response.
-#' @param location_type The \code{location_type} of the sensors. Possible values
-#' are: 0 = Outside, 1 = Inside or \code{NULL} = both.
+#' @param location_type The `location_type` of the sensors. Possible values
+#' are: 0 = Outside, 1 = Inside or `NULL` = both.
 #' @param max_age Filter results to only include sensors modified or updated
-#' within the last \code{max_age} seconds. Using a value of 0 will match sensors of any age.
+#' within the last `max_age` seconds. Using a value of 0 will match sensors of any age.
 #' @param baseUrl URL endpoint for the "Get Members Data" API.
 #'
 #' @return List containing current data for all sensors in the specified group.
@@ -1258,15 +1258,15 @@ PurpleAir_getMembersData <- function(
 #' @export
 #' @docType data
 #' @name PurpleAir_PAS_MINIMAL_FIELDS
-#' @title Comma-separated list of metadata fields used to create a \emph{pas} object
+#' @title Comma-separated list of metadata fields used to create a *pas* object
 #' @format String with comma-separated field names
 #' @description Character string with PurpleAir field names used in
-#' \code{pas_downloadParseRawData()}. These fields exclude all measurements
-#' but retains the minimal set of metadata required to create a \emph{pas} object.
-#' This \emph{pas} object can then be passed on to \emph{pat} creation functions.
+#' `pas_downloadParseRawData()`. These fields exclude all measurements
+#' but retains the minimal set of metadata required to create a *pas* object.
+#' This *pas* object can then be passed on to *pat* creation functions.
 #'
-#' A metadata-only \emph{pas} object can be useful when searching for historical
-#' data using \code{\link{pas_filterDate}}.
+#' A metadata-only *pas* object can be useful when searching for historical
+#' data using [pas_filterDate()].
 #'
 #' Included fields:
 #' \preformatted{
@@ -1274,7 +1274,7 @@ PurpleAir_getMembersData <- function(
 #' [5] "longitude"     "last_seen"     "date_created"
 #' }
 #'
-#' @references \href{https://api.purpleair.com/#api-sensors-get-sensors-data}{Get Sensors Data API}
+#' @references [Get Sensors Data API](https://api.purpleair.com/#api-sensors-get-sensors-data)
 
 PurpleAir_PAS_MINIMAL_FIELDS <-
   paste(
@@ -1317,12 +1317,12 @@ PurpleAir_PAS_MINIMAL_FIELDS <-
 #' @export
 #' @docType data
 #' @name PurpleAir_PAS_METADATA_FIELDS
-#' @title Comma-separated list of metadata fields used to create a \emph{pas} object
+#' @title Comma-separated list of metadata fields used to create a *pas* object
 #' @format String with comma-separated field names
 #' @description Character string with PurpleAir field names used in
-#' \code{pas_downloadParseRawData()}. These fields exclude all measurements
-#' but retain many fields needed when creating a \emph{pat} object with
-#' \code{pat_create()}.
+#' `pas_downloadParseRawData()`. These fields exclude all measurements
+#' but retain many fields needed when creating a *pat* object with
+#' `pat_create()`.
 #'
 #' Included fields:
 #' \preformatted{
@@ -1333,7 +1333,7 @@ PurpleAir_PAS_MINIMAL_FIELDS <-
 #' [13] "last_seen"        "last_modified"    "date_created"
 #' }
 #'
-#' @references \href{https://api.purpleair.com/#api-sensors-get-sensors-data}{Get Sensors Data API}
+#' @references [Get Sensors Data API](https://api.purpleair.com/#api-sensors-get-sensors-data)
 
 PurpleAir_PAS_METADATA_FIELDS <-
   paste(
@@ -1376,10 +1376,10 @@ PurpleAir_PAS_METADATA_FIELDS <-
 #' @export
 #' @docType data
 #' @name PurpleAir_PAS_AVG_PM25_FIELDS
-#' @title Comma-separated list of fields used to create a \emph{pas} object
+#' @title Comma-separated list of fields used to create a *pas* object
 #' @format String with comma-separated field names
 #' @description Character string with PurpleAir field names used in
-#' \code{pas_downloadParseRawData()}. These fields include most of the
+#' `pas_downloadParseRawData()`. These fields include most of the
 #' "information and status" fields, "humidity", "temperature", "pressure" and
 #' simple running average PM2.5 fields for different time periods.
 #'
@@ -1395,7 +1395,7 @@ PurpleAir_PAS_METADATA_FIELDS <-
 #' [17] "pm2.5_1week"
 #' }
 #'
-#' @references \href{https://api.purpleair.com/#api-sensors-get-sensors-data}{Get Sensors Data API}
+#' @references [Get Sensors Data API](https://api.purpleair.com/#api-sensors-get-sensors-data)
 
 PurpleAir_PAS_AVG_PM25_FIELDS <-
   paste(
@@ -1444,7 +1444,7 @@ PurpleAir_PAS_AVG_PM25_FIELDS <-
 #' @title Comma-separated list of fields needed for PM2.5 data analysis
 #' @format String with comma-separated field names
 #' @description Character string with default PurpleAir field names used in
-#' \code{PurpleAir_getSensorData()} and \code{PurpleAir_getMemberData()}. These
+#' `PurpleAir_getSensorData()` and `PurpleAir_getMemberData()`. These
 #' fields include most of the "information and status" fields, "humidity",
 #' "temperature", "pressure" and all the PM2.5 fields for both A and B channels.
 #'
@@ -1469,7 +1469,7 @@ PurpleAir_PAS_AVG_PM25_FIELDS <-
 #' }
 #'
 #'
-#' @references \href{https://api.purpleair.com/#api-sensors-get-sensor-data}{Get Sensor Data API}
+#' @references [Get Sensor Data API](https://api.purpleair.com/#api-sensors-get-sensor-data)
 
 PurpleAir_PAList_PM25_FIELDS <-
   paste(
@@ -1516,16 +1516,16 @@ PurpleAir_PAList_PM25_FIELDS <-
 #' @title Comma-separated list of fields needed for creating QC reports.
 #' @format String with comma-separated field names
 #' @description Character string with default PurpleAir field names used in
-#' \code{pat_downloadParaseRawData()}. These fields are sufficient for most
+#' `pat_downloadParaseRawData()`. These fields are sufficient for most
 #' QC algorithms and include most of the "information and status" and
 #' "environmental" fields.
 #'
 #' @note The PM2.5 fields included here are the "_atm_" fields recommended by
 #' PurpleAir for outdoor sensors while those
-#' used in \link{PurpleAir_PAT_EPA_HOURLY_FIELDS} include the "_cf_1_" versions as
+#' used in [PurpleAir_PAT_EPA_HOURLY_FIELDS()] include the "_cf_1_" versions as
 #' specified by the EPA correction algorithm.
 #'
-#' The \href{https://api.purpleair.com/#api-sensors-get-sensors-data}{PurpleAir reference docs}
+#' The [PurpleAir reference docs](https://api.purpleair.com/#api-sensors-get-sensors-data)
 #' describe the two different variants as:
 #' "CF=1 variant for indoor, ATM variant for outdoor devices" which is why we
 #' include the "_atm_" versions in this set. For the purposes of identifying
@@ -1537,7 +1537,7 @@ PurpleAir_PAList_PM25_FIELDS <-
 #' [6] "temperature" "pressure"    "pm2.5_atm"   "pm2.5_atm_a" "pm2.5_atm_b"
 #' }
 #'
-#' @references \href{https://api.purpleair.com/#api-sensors-get-sensor-history-csv}{Get Sensor History API}
+#' @references [Get Sensor History API](https://api.purpleair.com/#api-sensors-get-sensor-history-csv)
 
 # From: https://api.purpleair.com/#api-sensors-get-sensor-history-csv
 #
@@ -1589,9 +1589,9 @@ PurpleAir_PAT_QC_FIELDS <-
 #' @title Comma-separated list of fields needed for EPA correction
 #' @format String with comma-separated field names
 #' @description Character string with a minimal set of PurpleAir field names
-#' used in \code{PurpleAir_createNewMonitor()}. These fields are sufficient to
+#' used in `PurpleAir_createNewMonitor()`. These fields are sufficient to
 #' apply the EPA correction algorithm used in the AirNow
-#' \href{https://fire.airnow.gov}{Fire & Smoke Map}.
+#' [Fire & Smoke Map](https://fire.airnow.gov).
 #'
 #' Included fields:
 #' \preformatted{
@@ -1599,10 +1599,10 @@ PurpleAir_PAT_QC_FIELDS <-
 #' [5] "pm2.5_cf_1_b"
 #' }
 #'
-#' @seealso \link{pat_applyCorrection}
+#' @seealso [pat_applyCorrection()]
 #'
-#' @references \href{https://www.epa.gov/sites/default/files/2021-05/documents/toolsresourceswebinar_purpleairsmoke_210519b.pdf}{EPA PurpleAir Correction}.
-#' @references \href{https://api.purpleair.com/#api-sensors-get-sensor-history-csv}{Get Sensor History API}
+#' @references [EPA PurpleAir Correction](https://www.epa.gov/sites/default/files/2021-05/documents/toolsresourceswebinar_purpleairsmoke_210519b.pdf).
+#' @references [Get Sensor History API](https://api.purpleair.com/#api-sensors-get-sensor-history-csv)
 
 # From: https://api.purpleair.com/#api-sensors-get-sensor-history-csv
 #

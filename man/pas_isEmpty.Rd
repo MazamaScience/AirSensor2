@@ -2,18 +2,18 @@
 % Please edit documentation in R/utils-pas.R
 \name{pas_isEmpty}
 \alias{pas_isEmpty}
-\title{Test for an empty \emph{pas} object}
+\title{Test for an empty *pas* object}
 \usage{
 pas_isEmpty(pas = NULL)
 }
 \arguments{
-\item{pas}{A \emph{PurpleAir_synoptic} object.}
+\item{pas}{A *PurpleAir_synoptic* object.}
 }
 \value{
-\code{TRUE} if no data exist in \code{pas}, \code{FALSE} otherwise.
+`TRUE` if no data exist in `pas`, `FALSE` otherwise.
 }
 \description{
-Convenience function for \code{nrow(pas) == 0}.
+Convenience function for `nrow(pas) == 0`.
 This makes for more readable code in functions that need to test for this.
 }
 \examples{

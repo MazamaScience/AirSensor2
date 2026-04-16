@@ -5,9 +5,9 @@
 #'
 #' @title Download time series data from PurpleAir
 #'
-#' @param api_key PurpleAir API Read Key. If \code{api_key = NULL}, it
-#' will be obtained using \code{getAPIKey("PurpleAir-read")}.
-#' See \code{MazamaCoreUtils::\link[MazamaCoreUtils:setAPIKey]{setAPIKey}}.
+#' @param api_key PurpleAir API Read Key. If `api_key = NULL`, it
+#' will be obtained using `getAPIKey("PurpleAir-read")`.
+#' See [MazamaCoreUtils::setAPIKey()].
 #' @param sensor_index PurpleAir sensor unique identifier.
 #' @param startdate Desired start datetime (ISO 8601).
 #' @param enddate Desired end datetime (ISO 8601).
@@ -18,18 +18,18 @@
 #' @param read_keys Optional, comma separated list of sensor read_keys is required
 #' for private devices. It is separate from the api_key and each sensor has its own
 #' read_key. Submit multiple keys by separating them with a comma (,) character
-#' for example: \code{"key-one,key-two,key-three"}.
+#' for example: `"key-one,key-two,key-three"`.
 #' @param baseUrl Base URL for the PurpleAir API.
 #'
 #' @return Dataframe of time series PurpleAir data.
 #'
-#' @description Download and parse time series data for a specific \code{sensor_index}.
+#' @description Download and parse time series data for a specific `sensor_index`.
 #'
-#' @references \href{https://www2.purpleair.com}{PurpleAir}
-#' @references \href{https://api.purpleair.com}{PurpleAir API}
-#' @references \href{https://www2.purpleair.com/policies/terms-of-service}{PurpleAir Terms of service}
-#' @references \href{https://www2.purpleair.com/pages/license}{PurpleAir Data license}
-#' @references \href{https://www2.purpleair.com/pages/attribution}{PurpleAir Data Attribution}
+#' @references [PurpleAir](https://www2.purpleair.com)
+#' @references [PurpleAir API](https://api.purpleair.com)
+#' @references [PurpleAir Terms of service](https://www2.purpleair.com/policies/terms-of-service)
+#' @references [PurpleAir Data license](https://www2.purpleair.com/pages/license)
+#' @references [PurpleAir Data Attribution](https://www2.purpleair.com/pages/attribution)
 #'
 #' @examples
 #' \donttest{

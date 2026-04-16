@@ -7,18 +7,18 @@
 pat_toMonitor(pat = NULL, applyCorrection = TRUE)
 }
 \arguments{
-\item{pat}{Previously generated \emph{pat} object.}
+\item{pat}{Previously generated *pat* object.}
 
 \item{applyCorrection}{Logical specifying whether to apply the EPA
-correction algorithm. (See \link{pat_applyCorrection}.)}
+correction algorithm. (See [pat_applyCorrection()].)}
 }
 \value{
-An AirMonitor package \emph{mts_monitor} object.
+An AirMonitor package *mts_monitor* object.
 }
 \description{
-Enhance an hourly PurpleAir Timeseries \emph{pat} object created
-with \code{pat_createHourly()} and create an object of class \code{mts_monitor}
-for use with the \href{https://mazamascience.github.io/AirMonitor/}{AirMonitor} package.
+Enhance an hourly PurpleAir Timeseries *pat* object created
+with `pat_createHourly()` and create an object of class `mts_monitor`
+for use with the [AirMonitor](https://mazamascience.github.io/AirMonitor/) package.
 }
 \examples{
 \donttest{
@@ -37,13 +37,13 @@ AirMonitor::monitor_timeseriesPlot(monitor, shadedNight = TRUE)
 }
 }
 \references{
-\href{https://www2.purpleair.com}{PurpleAir}
+[PurpleAir](https://www2.purpleair.com)
 
-\href{https://api.purpleair.com}{PurpleAir API}
+[PurpleAir API](https://api.purpleair.com)
 
-\href{https://www2.purpleair.com/policies/terms-of-service}{PurpleAir Terms of service}
+[PurpleAir Terms of service](https://www2.purpleair.com/policies/terms-of-service)
 
-\href{https://www2.purpleair.com/pages/license}{PurpleAir Data license}
+[PurpleAir Data license](https://www2.purpleair.com/pages/license)
 
-\href{https://www2.purpleair.com/pages/attribution}{PurpleAir Data Attribution}
+[PurpleAir Data Attribution](https://www2.purpleair.com/pages/attribution)
 }

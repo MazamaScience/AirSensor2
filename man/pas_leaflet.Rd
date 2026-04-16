@@ -14,11 +14,11 @@ pas_leaflet(
 )
 }
 \arguments{
-\item{pas}{PurpleAir Synoptic \emph{pas} object.}
+\item{pas}{PurpleAir Synoptic *pas* object.}
 
-\item{parameter}{Optional parameter used to color locations, e.g. \code{pm25_1hr}.}
+\item{parameter}{Optional parameter used to color locations, e.g. `pm25_1hr`.}
 
-\item{paletteName}{\pkg{RColorBrewer} palette name to use when \code{parameter}
+\item{paletteName}{\pkg{RColorBrewer} palette name to use when `parameter`
 is something other than:
 \itemize{
 \item{"pm2.5_~"}
@@ -30,7 +30,7 @@ is something other than:
 
 \item{opacity}{Opacity of monitor circles.}
 
-\item{maptype}{Optional name of leaflet ProviderTiles to use, e.g. \code{terrain}.}
+\item{maptype}{Optional name of leaflet ProviderTiles to use, e.g. `terrain`.}
 }
 \value{
 A leaflet "plot" object which, if not assigned, is rendered in
@@ -40,14 +40,14 @@ Rstudio's 'Viewer' tab.
 This function creates interactive maps that will be displayed in
 RStudio's 'Viewer' tab.
 
-When \code{parameter} is not specified, a simple map is displayed. When the
+When `parameter` is not specified, a simple map is displayed. When the
 user clicks on a location, site metadata is displayed.
 
-When \code{parameter} is specified, it is assumed that a \emph{pas} object
+When `parameter` is specified, it is assumed that a *pas* object
 has been created with measured parameters for a particular moment in time.
 
-For a \emph{pas} object that includes measurements, typical usage would be to
-use the \code{parameter} argument to display pm25 values from one of:
+For a *pas* object that includes measurements, typical usage would be to
+use the `parameter` argument to display pm25 values from one of:
 \itemize{
 \item{"pm2.5_10minute"}
 \item{"pm2.5_30minute"}
@@ -58,7 +58,7 @@ use the \code{parameter} argument to display pm25 values from one of:
 }
 }
 \details{
-The \code{maptype} argument is mapped onto leaflet "ProviderTile"
+The `maptype` argument is mapped onto leaflet "ProviderTile"
 names. Current mappings include:
 \describe{
 \item{"roadmap"}{ -- "OpenStreetMap"}
@@ -73,8 +73,8 @@ underlying map tile if available. See
 "provider tiles" to use as the background map.
 }
 \note{
-The \code{paletteName} parameter can take the name of an RColorBrewer
-paeltte, \emph{e.g.} \code{"BuPu"} or \code{"Greens"}.
+The `paletteName` parameter can take the name of an RColorBrewer
+paeltte, *e.g.* `"BuPu"` or `"Greens"`.
 }
 \examples{
 library(AirSensor2)

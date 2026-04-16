@@ -12,27 +12,27 @@ Clarity_getAllOpenHourly(
 )
 }
 \arguments{
-\item{api_key}{Clarity API READ Key. If \code{api_key = NULL}, it
-will be obtained using \code{getAPIKey("Clarity-read")}.}
+\item{api_key}{Clarity API READ Key. If `api_key = NULL`, it
+will be obtained using `getAPIKey("Clarity-read")`.}
 
 \item{format}{Customized output format ("USFS2", "USFS").}
 
 \item{baseUrl}{URL endpoint.}
 }
 \value{
-List containing five data frames: \code{synoptic}, \code{pm2.5_QCFlag},
-\code{pm2.5}, \code{nowcast_QCFlag} and \code{nowcast}.
+List containing five data frames: `synoptic`, `pm2.5_QCFlag`,
+`pm2.5`, `nowcast_QCFlag` and `nowcast`.
 }
 \description{
 Sends a request to the Clarity API endpoint for Open Data.
 
-When \code{format = "USFS2"}, two additional fields are returned in the
-"synoptic" dataframe: \code{calibrationId} and \code{calibrationCategory}.
+When `format = "USFS2"`, two additional fields are returned in the
+"synoptic" dataframe: `calibrationId` and `calibrationCategory`.
 
 \itemize{
-  \item{\emph{Measurement data from} -- All open datasources}
-  \item{\emph{Measurements returned} -- Hourly values for last 3 hours}
-  \item{\emph{PM2.5 Mass Concentration} -- 1-Hour Mean Nowcast}
+  \item{*Measurement data from* -- All open datasources}
+  \item{*Measurements returned* -- Hourly values for last 3 hours}
+  \item{*PM2.5 Mass Concentration* -- 1-Hour Mean Nowcast}
 }
 }
 \examples{

@@ -1,7 +1,7 @@
 #' @encoding UTF-8
 #' @title Example raw PurpleAir Synoptic dataset
 #' @format A tibble with 39 rows and 18 columns of data.
-#' @description The \code{example_pas_pm25_raw} dataset provides a quickly loadable
+#' @description The `example_pas_pm25_raw` dataset provides a quickly loadable
 #' version of raw PurpleAir synoptic data for practicing and code examples
 #' This dataset contains data for sensors in a box around the Methow Valley
 #' in Washington state and was generated on 2024-03-12 by running:
@@ -29,7 +29,7 @@
 #' save(example_pas_pm25_raw, file = "data/example_pas_pm25_raw.rda")
 #' }
 #'
-#' This dataset can be converted into a standard \emph{pas} object with:
+#' This dataset can be converted into a standard *pas* object with:
 #'
 #' \preformatted{
 #' pas <-
@@ -48,10 +48,10 @@
 #' @encoding UTF-8
 #' @title Example enhanced PurpleAir Synoptic dataset
 #' @format A tibble with 2287 rows and 33 columns of data.
-#' @description The \code{example_pas_pm25} dataset provides a quickly loadable
-#' version of a \emph{pas} object for practicing and code examples. This
-#' object contains metadata appropriate for generating \emph{pat} objects
-#' with \link{pat_create}.
+#' @description The `example_pas_pm25` dataset provides a quickly loadable
+#' version of a *pas* object for practicing and code examples. This
+#' object contains metadata appropriate for generating *pat* objects
+#' with [pat_create()].
 #'
 #' This dataset contains data for sensors in Washington and Oregon
 #' and was generated on 2024-03-12 by running:
@@ -87,10 +87,10 @@
 #' @encoding UTF-8
 #' @title Example enhanced PurpleAir Synoptic dataset
 #' @format A tibble with 122 rows and 22 columns of data.
-#' @description The \code{example_pas_historical} dataset provides a quickly loadable
-#' version of a \emph{pas} object for practicing and code examples. This
-#' object contains fewer metadata fields than other \code{example_pas_~} objects
-#' and is intended for use with \link{pas_lifespanPlot}.
+#' @description The `example_pas_historical` dataset provides a quickly loadable
+#' version of a *pas* object for practicing and code examples. This
+#' object contains fewer metadata fields than other `example_pas_~` objects
+#' and is intended for use with [pas_lifespanPlot()].
 #'
 #' This dataset contains data for sensors in Washington and Oregon
 #' and was generated on 2024-03-12 by running:
@@ -125,9 +125,9 @@
 #' @encoding UTF-8
 #' @title Example enhanced PurpleAir Synoptic dataset
 #' @format A tibble with 122 rows and 31 columns of data.
-#' @description The \code{example_pas_metadata} dataset provides a quickly loadable
-#' version of a \emph{pas} object for practicing and code examples. This
-#' object contains more metadata than other \code{example_pas_~} objects.
+#' @description The `example_pas_metadata` dataset provides a quickly loadable
+#' version of a *pas* object for practicing and code examples. This
+#' object contains more metadata than other `example_pas_~` objects.
 #'
 #' This dataset contains data for sensors in Washington and Oregon
 #' and was generated on 2024-03-12 by running:
@@ -162,8 +162,8 @@
 #' @encoding UTF-8
 #' @title Example PurpleAir Timeseries dataset
 #' @format A list containing two tibbles named 'meta' and 'data'.
-#' @description The \code{example_pat} dataset provides a quickly loadable
-#' version of a \emph{pat} object for practicing and code examples.
+#' @description The `example_pat` dataset provides a quickly loadable
+#' version of a *pat* object for practicing and code examples.
 #' This dataset contains 24 hours worth of data for a single PurpleAir sensor
 #' and was generated on 2024-03-12 by running:
 #'
@@ -195,10 +195,10 @@
 #' @encoding UTF-8
 #' @title Example PurpleAir Timeseries dataset with EPA fields
 #' @format A list containing two tibbles named 'meta' and 'data'.
-#' @description The \code{example_pat} dataset provides a quickly loadable
-#' version of a \emph{pat} object for practicing and code examples. This
-#' \emph{pat} object contains the `pm2.5_cf` fields required for the EPA
-#' correction algorithm used in \link{pat_applyCorrection}.
+#' @description The `example_pat` dataset provides a quickly loadable
+#' version of a *pat* object for practicing and code examples. This
+#' *pat* object contains the `pm2.5_cf` fields required for the EPA
+#' correction algorithm used in [pat_applyCorrection()].
 #'
 #' This dataset contains 24 hours worth of data for a single PurpleAir sensor
 #' and was generated on 2024-10-30 by running:

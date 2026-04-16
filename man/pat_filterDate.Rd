@@ -2,7 +2,7 @@
 % Please edit documentation in R/pat_filterDate.R
 \name{pat_filterDate}
 \alias{pat_filterDate}
-\title{Date filtering for \emph{pat} time series objects}
+\title{Date filtering for *pat* time series objects}
 \usage{
 pat_filterDate(
   pat = NULL,
@@ -15,7 +15,7 @@ pat_filterDate(
 )
 }
 \arguments{
-\item{pat}{\emph{pat} object.}
+\item{pat}{*pat* object.}
 
 \item{startdate}{Desired start datetime (ISO 8601).}
 
@@ -26,48 +26,48 @@ pat_filterDate(
 \item{unit}{Units used to determine time at end-of-day.}
 
 \item{ceilingStart}{Logical instruction to apply
-\code{\link[lubridate]{ceiling_date}} to the \code{startdate} rather than
-\code{\link[lubridate]{floor_date}}}
+[lubridate::ceiling_date()] to the `startdate` rather than
+[lubridate::floor_date()]}
 
 \item{ceilingEnd}{Logical instruction to apply
-\code{\link[lubridate]{ceiling_date}} to the \code{enddate} rather than
-\code{\link[lubridate]{floor_date}}}
+[lubridate::ceiling_date()] to the `enddate` rather than
+[lubridate::floor_date()]}
 }
 \value{
-A subset of the incoming \emph{pat} time series object.
-(A list with \code{meta} and \code{data} dataframes.)
+A subset of the incoming *pat* time series object.
+(A list with `meta` and `data` dataframes.)
 }
 \description{
-Subsets a \emph{pat} object by date. This function
+Subsets a *pat* object by date. This function
 always filters to day-boundaries. For sub-day filtering, use
-\code{pat_filterDatetime()}.
+`pat_filterDatetime()`.
 
-Dates can be anything that is understood by \code{MazamaCoreUtils::parseDatetime()}
+Dates can be anything that is understood by `MazamaCoreUtils::parseDatetime()`
 including either of the following recommended formats:
 
 \itemize{
-\item{\code{"YYYYmmdd"}}
-\item{\code{"YYYY-mm-dd"}}
+\item{`"YYYYmmdd"`}
+\item{`"YYYY-mm-dd"`}
 }
 
 Timezone determination precedence assumes that if you are passing in
-\code{POSIXct} values then you know what you are doing.
+`POSIXct` values then you know what you are doing.
 
 \enumerate{
-\item{get timezone from \code{startdate} if it is \code{POSIXct}}
-\item{use passed in \code{timezone}}
-\item{get timezone from \code{pat}}
+\item{get timezone from `startdate` if it is `POSIXct`}
+\item{use passed in `timezone`}
+\item{get timezone from `pat`}
 }
 }
 \note{
-The returned data will run from the beginning of \code{startdate} until
-the \strong{beginning} of \code{enddate} -- \emph{i.e.} no values associated
-with \code{enddate} will be returned. The exception being when
-\code{enddate} is less than 24 hours after \code{startdate}. In that case, a
+The returned data will run from the beginning of `startdate` until
+the **beginning** of `enddate` -- *i.e.* no values associated
+with `enddate` will be returned. The exception being when
+`enddate` is less than 24 hours after `startdate`. In that case, a
 single day is returned.
 }
 \seealso{
-\link{pat_filter}
+[pat_filter()]
 
-\link{pat_filterDatetime}
+[pat_filterDatetime()]
 }

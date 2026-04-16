@@ -7,18 +7,18 @@
 pas_palette(pas = NULL, parameter = "pm2.5_60minute", paletteName = NULL, ...)
 }
 \arguments{
-\item{pas}{PurpleAir Synoptic \emph{pas} object.}
+\item{pas}{PurpleAir Synoptic *pas* object.}
 
-\item{parameter}{Value to generate colors for, e.g. \code{pm2.5_60minute}.}
+\item{parameter}{Value to generate colors for, e.g. `pm2.5_60minute`.}
 
-\item{paletteName}{Optional name of an RColorBrewer palette, \emph{e.g.}
-\code{"BuPu"} or \code{"Greens"} to use when a default palette is unavailable.}
+\item{paletteName}{Optional name of an RColorBrewer palette, *e.g.*
+`"BuPu"` or `"Greens"` to use when a default palette is unavailable.}
 
-\item{...}{Additional arguments passed on to \code{leaflet::color~} functions.}
+\item{...}{Additional arguments passed on to `leaflet::color~` functions.}
 }
 \value{
 A list containing: 1) a label and color dataframe; and 2)
-a vector of color values calculated from the data found in \code{pas}.
+a vector of color values calculated from the data found in `pas`.
 }
 \description{
 Generates color palettes for PurpleAir synoptic data with the

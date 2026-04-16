@@ -21,13 +21,13 @@
 #'   MazamaSpatialUtils::loadSpatialData("USCensusCounties.rda")
 #' }
 #'
-#' This function should be run before using \code{pas_load()}, as
-#' \code{pas_load()} uses the spatial data loaded by
-#' \code{initializeMazamaSpatialUtils()} to enhance raw synoptic data via
-#' \code{pas_enhanceData()}.
+#' This function should be run before using `pas_load()`, as
+#' `pas_load()` uses the spatial data loaded by
+#' `initializeMazamaSpatialUtils()` to enhance raw synoptic data via
+#' `pas_enhanceData()`.
 #'
 #' If file logging is desired, these commands should be run individually with
-#' output log files specified as arguments to \code{logger.setup()} from the
+#' output log files specified as arguments to `logger.setup()` from the
 #' \pkg{MazamaCoreUtils} package.
 #'
 
@@ -67,7 +67,7 @@ initializeMazamaSpatialUtils <- function(
 #' @title Check if MazamaSpatialUtils has been initialized
 #'
 #' @description Logical convenience function to check if
-#' \code{initializeMazamaSpatialUtils()} has been run.
+#' `initializeMazamaSpatialUtils()` has been run.
 #'
 #' @return Logical.
 

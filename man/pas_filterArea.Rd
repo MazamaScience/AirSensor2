@@ -7,7 +7,7 @@
 pas_filterArea(pas = NULL, w = NULL, e = NULL, s = NULL, n = NULL)
 }
 \arguments{
-\item{pas}{PurpleAir Synoptic \emph{pas} object.}
+\item{pas}{PurpleAir Synoptic *pas* object.}
 
 \item{w}{West edge of area bounding box (deg E).}
 
@@ -18,11 +18,11 @@ pas_filterArea(pas = NULL, w = NULL, e = NULL, s = NULL, n = NULL)
 \item{n}{North edge of area bounding box (deg N).}
 }
 \value{
-A subset of the given \emph{pas} object containing only records
+A subset of the given *pas* object containing only records
 within the bounding box. This includes sensors located precisely on a boundary.
 }
 \description{
-Filters \emph{pas} object sensors based on a bounding box.
+Filters *pas* object sensors based on a bounding box.
 }
 \examples{
 library(AirSensor2)
@@ -49,9 +49,9 @@ if ( interactive() ) {
 
 }
 \seealso{
-\link{pas_filter}
+[pas_filter()]
 
-\link{pas_filterNear}
+[pas_filterNear()]
 
-\link{pas_filterNearMonitor}
+[pas_filterNearMonitor()]
 }

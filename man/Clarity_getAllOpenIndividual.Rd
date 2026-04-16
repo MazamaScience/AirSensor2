@@ -12,28 +12,28 @@ Clarity_getAllOpenIndividual(
 )
 }
 \arguments{
-\item{api_key}{Clarity API READ Key. If \code{api_key = NULL}, it
-will be obtained using \code{getAPIKey("Clarity-read")}.}
+\item{api_key}{Clarity API READ Key. If `api_key = NULL`, it
+will be obtained using `getAPIKey("Clarity-read")`.}
 
 \item{format}{Customized output format ("USFS2", "USFS").}
 
 \item{baseUrl}{URL endpoint.}
 }
 \value{
-List containing five data frames: \code{meta}, \code{pm2.5_QCFlag},
-\code{pm2.5}, \code{nowcast_QCFlag} and \code{nowcast}.
+List containing five data frames: `meta`, `pm2.5_QCFlag`,
+`pm2.5`, `nowcast_QCFlag` and `nowcast`.
 }
 \description{
 Sends a request to the Clarity API endpoint for Open Data.
 
-When \code{format = "USFS2"}, two additional fields are returned in the
-"meta" dataframe: \code{calibrationId} and \code{calibrationCategory}.
+When `format = "USFS2"`, two additional fields are returned in the
+"meta" dataframe: `calibrationId` and `calibrationCategory`.
 
 \itemize{
-  \item{\emph{Measurement data from} -- All open datasources}
-  \item{\emph{Measurements returned} -- Individual values for last complete
+  \item{*Measurement data from* -- All open datasources}
+  \item{*Measurements returned* -- Individual values for last complete
   hour (hour-aligned) plus fraction of current hour}
-  \item{\emph{PM2.5 Mass Concentration} -- Individual sample}
+  \item{*PM2.5 Mass Concentration* -- Individual sample}
 }
 }
 \examples{

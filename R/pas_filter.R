@@ -3,23 +3,23 @@
 #'
 #' @title General purpose filtering for PurpleAir Synoptic objects
 #'
-#' @param pas PurpleAir Synoptic \emph{pas} object.
+#' @param pas PurpleAir Synoptic *pas* object.
 #' @param ... Logical predicates defined in terms of the variables in the
-#'   \code{pas}. Multiple conditions are combined with & or seperated by a comma.
+#'   `pas`. Multiple conditions are combined with & or seperated by a comma.
 #'   Only rows where the condition evaluates to TRUE are kept.
 #'
-#' @description A generalized data filter for \emph{pas} objects to
+#' @description A generalized data filter for *pas* objects to
 #'   choose rows/cases where conditions are true. Rows where the condition
 #'   evaluates to NA are dropped.
 #'
-#'   This function is essentially \code{dplyr::\link[dplyr:filter]{filter}}
-#'   with an extra check on the validity of the \emph{pas} object.
+#'   This function is essentially [dplyr::filter()]
+#'   with an extra check on the validity of the *pas* object.
 #'
-#' @return A subset of the incoming \emph{pas} object.
+#' @return A subset of the incoming *pas* object.
 #'
-#' @seealso \link{pas_filterArea}
-#' @seealso \link{pas_filterNear}
-#' @seealso \link{pas_filterNearMonitor}
+#' @seealso [pas_filterArea()]
+#' @seealso [pas_filterNear()]
+#' @seealso [pas_filterNearMonitor()]
 #'
 #' @examples
 #' library(AirSensor2)

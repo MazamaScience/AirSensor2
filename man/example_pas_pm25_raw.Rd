@@ -15,7 +15,7 @@ https://www2.purpleair.com
 example_pas_pm25_raw
 }
 \description{
-The \code{example_pas_pm25_raw} dataset provides a quickly loadable
+The `example_pas_pm25_raw` dataset provides a quickly loadable
 version of raw PurpleAir synoptic data for practicing and code examples
 This dataset contains data for sensors in a box around the Methow Valley
 in Washington state and was generated on 2024-03-12 by running:
@@ -43,7 +43,7 @@ example_pas_pm25_raw <-
 save(example_pas_pm25_raw, file = "data/example_pas_pm25_raw.rda")
 }
 
-This dataset can be converted into a standard \emph{pas} object with:
+This dataset can be converted into a standard *pas* object with:
 
 \preformatted{
 pas <-

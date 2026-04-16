@@ -4,19 +4,19 @@
 #'
 #' @title Apply correction to PurpleAir PM2.5 data.
 #'
-#' @param pat Previously generated \emph{houly pat} object.
-#' @param name Name of correction to apply. One of \code{"EPA_FASM"}
+#' @param pat Previously generated *houly pat* object.
+#' @param name Name of correction to apply. One of `"EPA_FASM"`
 #'
-#' @return A PurpleAir Timeseries \emph{pat} object with an additional
-#' \code{"pm2.5_corrected"} variable.
+#' @return A PurpleAir Timeseries *pat* object with an additional
+#' `"pm2.5_corrected"` variable.
 #'
 #' @description A correction equation is applied to fields of the incoming
-#' \emph{pat} object to generate a \code{"pm2.5_corrected"} time series which is
-#' added to the returned \emph{pat} object.
+#' *pat* object to generate a `"pm2.5_corrected"` time series which is
+#' added to the returned *pat* object.
 #'
-#' The default, \code{"EPA_FASM"} correction is described on slide 37 of a
+#' The default, `"EPA_FASM"` correction is described on slide 37 of a
 #' presentation on the correction of PurpleAir data for the
-#' \href{https://www.epa.gov/sites/default/files/2021-05/documents/toolsresourceswebinar_purpleairsmoke_210519b.pdf}{EPA Fire and Smoke Map}.
+#' [EPA Fire and Smoke Map](https://www.epa.gov/sites/default/files/2021-05/documents/toolsresourceswebinar_purpleairsmoke_210519b.pdf).
 #'
 #' This correction has two parts:
 #'

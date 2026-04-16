@@ -17,18 +17,18 @@
 #'   \item{stateCode -- ISO 3166-2 alpha-2}
 #' }
 #'
-#' 3) Convert data types from character to \code{POSIXct} and \code{numeric}.
+#' 3) Convert data types from character to `POSIXct` and `numeric`.
 #'
 #' 4) Add additional metadata items:
 #' \itemize{
 #' \item{sensorManufacturer = "Clarity"}
 #' }
 #'
-#' @param rawSynoptic 'synoptic' dataframe returned by \code{Clarity_getAllOpenHourly()}.
+#' @param rawSynoptic 'synoptic' dataframe returned by `Clarity_getAllOpenHourly()`.
 #'
 #' @return Enhanced dataframe of synoptic Clarity data.
 #'
-#' @seealso \link{Clarity_getAllOpenHourly}
+#' @seealso [Clarity_getAllOpenHourly()]
 #'
 
 Clarity_enhanceRawSynopticData <- function(

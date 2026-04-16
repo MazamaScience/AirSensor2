@@ -7,32 +7,32 @@
 pas_filterNearMonitor(pas = NULL, monitor = NULL, radius = "1 km")
 }
 \arguments{
-\item{pas}{PurpleAir \emph{pas} object.}
+\item{pas}{PurpleAir *pas* object.}
 
-\item{monitor}{\emph{mts_monitor} object from the \pkg{AirMonitor} package.}
+\item{monitor}{*mts_monitor* object from the \pkg{AirMonitor} package.}
 
 \item{radius}{Distance from target with unit (i.e "1000 m").}
 }
 \value{
-A subset of the incoming \emph{pas} object with additional fields.
+A subset of the incoming *pas* object with additional fields.
 }
 \description{
 Filter for PurpleAir sensors within a specified distance from
 a monitoring site.
 }
 \details{
-The \code{radius} parameter should be a numeric string with a metric
-unit separated by a space, such as \code{"250 m"} or \code{"10 km"}. The
-resulting \emph{pas} will be contain only those sensors that are within
-`radius` of one of the device-deployments in \code{monitor}.
+The `radius` parameter should be a numeric string with a metric
+unit separated by a space, such as `"250 m"` or `"10 km"`. The
+resulting *pas* will be contain only those sensors that are within
+`radius` of one of the device-deployments in `monitor`.
 
-Three additional columns of metadata will be added to the returned \emph{pas}
+Three additional columns of metadata will be added to the returned *pas*
 object:
 
 \enumerate{
-  \item{\code{monitor_DDID} -- nearest monitor deviceDeploymentID}
-  \item{\code{monitor_AQSID} -- nearest monitor AQSID (if any)}
-  \item{\code{monitor_distance} -- distance in meters to the nearest monitor}
+  \item{`monitor_DDID` -- nearest monitor deviceDeploymentID}
+  \item{`monitor_AQSID` -- nearest monitor AQSID (if any)}
+  \item{`monitor_distance` -- distance in meters to the nearest monitor}
 }
 }
 \examples{
@@ -58,9 +58,9 @@ pas_near_monitors \%>\%
 
 }
 \seealso{
-\link{pas_filter}
+[pas_filter()]
 
-\link{pas_filterArea}
+[pas_filterArea()]
 
-\link{pas_filterNear}
+[pas_filterNear()]
 }

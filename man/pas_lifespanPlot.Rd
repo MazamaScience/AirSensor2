@@ -13,9 +13,9 @@ pas_lifespanPlot(
 )
 }
 \arguments{
-\item{pas}{PurpleAir Synoptic \emph{pas} object.}
+\item{pas}{PurpleAir Synoptic *pas* object.}
 
-\item{showSensor}{Logical specifying inclusion of \code{pas$sensor_index} in the plot.}
+\item{showSensor}{Logical specifying inclusion of `pas$sensor_index` in the plot.}
 
 \item{sensorIdentifier}{Name of the column to use when identifying a sensor.}
 
@@ -30,12 +30,12 @@ active graphics device.
 }
 \description{
 Plots the lifespan of PurpleAir sensors -- the time range
-between \code{pas$date_created} and \code{pas$last_seen}.  You can use
-\code{dplyr::filter} and \code{dplyr::arrange()} to pre-process the \code{pas}
+between `pas$date_created` and `pas$last_seen`.  You can use
+`dplyr::filter` and `dplyr::arrange()` to pre-process the `pas`
 dataframe to generate informative results
 
-When \code{showSensor = TRUE}, typical values for \code{sensorIdentifier} would
-be either \code{sensorIndex} or \code{locationName}.
+When `showSensor = TRUE`, typical values for `sensorIdentifier` would
+be either `sensorIndex` or `locationName`.
 }
 \examples{
 library(AirSensor2)

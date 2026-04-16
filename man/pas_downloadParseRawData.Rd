@@ -20,14 +20,14 @@ pas_downloadParseRawData(
 )
 }
 \arguments{
-\item{api_key}{PurpleAir API READ Key. If \code{api_key = NULL}, it
-will be obtained using \code{getAPIKey("PurpleAir-read")}.
-See \code{MazamaCoreUtils::\link[MazamaCoreUtils:setAPIKey]{setAPIKey}}.}
+\item{api_key}{PurpleAir API READ Key. If `api_key = NULL`, it
+will be obtained using `getAPIKey("PurpleAir-read")`.
+See [MazamaCoreUtils::setAPIKey()].}
 
 \item{fields}{Character string with PurpleAir field names for the Get Sensor Data API.}
 
-\item{location_type}{The \code{location_type} of the sensors. Possible values
-are: 0 = Outside, 1 = Inside or \code{NULL} = both.}
+\item{location_type}{The `location_type` of the sensors. Possible values
+are: 0 = Outside, 1 = Inside or `NULL` = both.}
 
 \item{read_keys}{Optional comma separated list of sensor read_keys is required
 for private devices. It is separate to the api_key and each sensor has its own
@@ -37,14 +37,14 @@ for example: key-one,key-two,key-three.}
 \item{show_only}{Optional, comma separated list of sensor_index values. When
 provided, the results are limited only to the sensors included in this list.}
 
-\item{modified_since}{The \code{modified_since} parameter generates reults that
+\item{modified_since}{The `modified_since` parameter generates reults that
 include only sensors modified after the provided time stamp. Using the
 time stamp value associated with a previous call (recommended) will limit results to
 those with new values since the last request. Using a value of 0 will match
 sensors modified at any time.}
 
 \item{max_age}{Number of seconds used to filter results to only include sensors
-modified or updated within the the last \code{max_age} seconds. Using a value of 0 will match all sensors.}
+modified or updated within the the last `max_age` seconds. Using a value of 0 will match all sensors.}
 
 \item{west}{Longitude of the western edge of the bounding box in which to find sensors.}
 
@@ -63,29 +63,29 @@ Dataframe of synoptic PurpleAir data.
 Download and parse raw synoptic data from PurpleAir within the
 specified region.
 
-\emph{Synoptic} data provides access to data from many PurpleAir sensors
+*Synoptic* data provides access to data from many PurpleAir sensors
 at a moment in time and includes both metadata and recent PM2.5 averages for
 each sensor. Data returned by this function is typically used to create
 static or interactive maps.
 
-If \code{show_only} is used to request specific sensors, the bounding box
+If `show_only` is used to request specific sensors, the bounding box
 information is ignored.
 
-\strong{NOTE:} Most users will want to use the \code{\link{pas_createNew}} function
+**NOTE:** Most users will want to use the [pas_createNew()] function
 which enhances raw synoptic data with additional spatial metadata so that it
-meets the criteria for use as a \emph{pas} object.
+meets the criteria for use as a *pas* object.
 }
 \note{
-The \code{fields} parameter allows users to dial in which fields they
+The `fields` parameter allows users to dial in which fields they
 are interested in depending on their needs. However, the following fields
 will be added if not specified in order to guarantee compatibility with
-\code{pas_enhanceRawData()}:
-\code{"longitude,latitude,name,location_type,date_created,last_seen"}.
+`pas_enhanceRawData()`:
+`"longitude,latitude,name,location_type,date_created,last_seen"`.
 
 Pregenerated fields for use in this function include:
 \itemize{
-  \item{\code{/link{PurpleAir_PAS_METADATA_FIELDS}}} -- instrument-only fields
-  \item{\code{/link{PurpleAir_PAS_AVG_PM25_FIELDS}}} -- includes measurements
+  \item{[PurpleAir_PAS_METADATA_FIELDS]} -- instrument-only fields
+  \item{[PurpleAir_PAS_AVG_PM25_FIELDS]} -- includes measurements
 }
 }
 \examples{
@@ -132,13 +132,13 @@ View(pas_raw[1:100,])
 }
 }
 \references{
-\href{https://www2.purpleair.com}{PurpleAir}
+[PurpleAir](https://www2.purpleair.com)
 
-\href{https://api.purpleair.com}{PurpleAir API}
+[PurpleAir API](https://api.purpleair.com)
 
-\href{https://www2.purpleair.com/policies/terms-of-service}{PurpleAir Terms of service}
+[PurpleAir Terms of service](https://www2.purpleair.com/policies/terms-of-service)
 
-\href{https://www2.purpleair.com/pages/license}{PurpleAir Data license}
+[PurpleAir Data license](https://www2.purpleair.com/pages/license)
 
-\href{https://www2.purpleair.com/pages/attribution}{PurpleAir Data Attribution}
+[PurpleAir Data Attribution](https://www2.purpleair.com/pages/attribution)
 }

@@ -2,7 +2,7 @@
 % Please edit documentation in R/pat_filterDatetime.R
 \name{pat_filterDatetime}
 \alias{pat_filterDatetime}
-\title{Datetime filtering for \emph{pat} time series objects}
+\title{Datetime filtering for *pat* time series objects}
 \usage{
 pat_filterDatetime(
   pat = NULL,
@@ -15,7 +15,7 @@ pat_filterDatetime(
 )
 }
 \arguments{
-\item{pat}{\emph{pat} object.}
+\item{pat}{*pat* object.}
 
 \item{startdate}{Desired start datetime (ISO 8601).}
 
@@ -26,37 +26,37 @@ pat_filterDatetime(
 \item{unit}{Units used to determine time at end-of-day.}
 
 \item{ceilingStart}{Logical instruction to apply
-\code{\link[lubridate]{ceiling_date}} to the \code{startdate} rather than
-\code{\link[lubridate]{floor_date}}}
+[lubridate::ceiling_date()] to the `startdate` rather than
+[lubridate::floor_date()]}
 
 \item{ceilingEnd}{Logical instruction to apply
-\code{\link[lubridate]{ceiling_date}} to the \code{enddate} rather than
-\code{\link[lubridate]{floor_date}}}
+[lubridate::ceiling_date()] to the `enddate` rather than
+[lubridate::floor_date()]}
 }
 \value{
-A subset of the incoming \emph{pat} time series object.
-(A list with \code{meta} and \code{data} dataframes.)
+A subset of the incoming *pat* time series object.
+(A list with `meta` and `data` dataframes.)
 }
 \description{
-Subsets a \emph{pat} object by datetime. This function
-allows for sub-day filtering as opposed to \code{pat_filterDate()} which
+Subsets a *pat* object by datetime. This function
+allows for sub-day filtering as opposed to `pat_filterDate()` which
 always filters to day-boundaries.
 
 Datetimes can be anything that is understood by
-\code{MazamaCoreUtils::parseDatetime()}. For non-\code{POSIXct} values,
-the recommended format is \code{"YYYY-mm-dd HH:MM:SS"}.
+`MazamaCoreUtils::parseDatetime()`. For non-`POSIXct` values,
+the recommended format is `"YYYY-mm-dd HH:MM:SS"`.
 
 Timezone determination precedence assumes that if you are passing in
-\code{POSIXct} values then you know what you are doing.
+`POSIXct` values then you know what you are doing.
 
 \enumerate{
-\item{get timezone from \code{startdate} if it is \code{POSIXct}}
-\item{use passed in \code{timezone}}
-\item{get timezone from \code{pat}}
+\item{get timezone from `startdate` if it is `POSIXct`}
+\item{use passed in `timezone`}
+\item{get timezone from `pat`}
 }
 }
 \seealso{
-\link{pat_filter}
+[pat_filter()]
 
-\link{pat_filterDate}
+[pat_filterDate()]
 }

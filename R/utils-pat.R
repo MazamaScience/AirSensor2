@@ -1,15 +1,15 @@
 #' @export
 #'
-#' @title Check \emph{pat} object for validity
+#' @title Check *pat* object for validity
 #'
-#' @param pat \emph{pat} object.
+#' @param pat *pat* object.
 #'
-#' @description Checks on the validity of an \emph{pat} object. If any test
+#' @description Checks on the validity of an *pat* object. If any test
 #' fails, this function will stop with a warning message.
 #'
-#' @return Returns \code{TRUE} invisibly if the \emph{pat} object is valid.
+#' @return Returns `TRUE` invisibly if the *pat* object is valid.
 #'
-#' @seealso \link{pat_isValid}
+#' @seealso [pat_isValid()]
 #'
 #' @examples
 #' library(AirSensor2)
@@ -33,37 +33,37 @@ pat_check <- function(pat) {
 #' @export
 #'
 #' @name pat_isValid
-#' @title Test \emph{pat} object for correct structure
+#' @title Test *pat* object for correct structure
 #'
-#' @param pat \emph{pat} object
+#' @param pat *pat* object
 #' @param verbose Logical specifying whether to produce detailed warning messages.
 #'
-#' @description The \code{pat} is checked for the presence of core
-#' \code{meta} and \code{data} columns.
+#' @description The `pat` is checked for the presence of core
+#' `meta` and `data` columns.
 #'
-#' Core \code{meta} columns include:
-#'
-#' \itemize{
-#'   \item{\code{deviceDeploymentID} -- unique identifier (see \pkg{MazmaLocationUtils})}
-#'   \item{\code{deviceID} -- device identifier}
-#'   \item{\code{locationID} -- location identifier (see \pkg{MazmaLocationUtils})}
-#'   \item{\code{locationName} -- English language name}
-#'   \item{\code{longitude} -- decimal degrees E}
-#'   \item{\code{latitude} -- decimal degrees N}
-#'   \item{\code{elevation} -- elevation of station in m}
-#'   \item{\code{countryCode} -- ISO 3166-1 alpha-2}
-#'   \item{\code{stateCode} -- ISO 3166-2 alpha-2}
-#'   \item{\code{timezone} -- Olson time zone}
-#' }
-#'
-#' Core \code{data} columns include:
+#' Core `meta` columns include:
 #'
 #' \itemize{
-#'   \item{\code{datetime} -- measurement time (UTC)}
+#'   \item{`deviceDeploymentID` -- unique identifier (see \pkg{MazmaLocationUtils})}
+#'   \item{`deviceID` -- device identifier}
+#'   \item{`locationID` -- location identifier (see \pkg{MazmaLocationUtils})}
+#'   \item{`locationName` -- English language name}
+#'   \item{`longitude` -- decimal degrees E}
+#'   \item{`latitude` -- decimal degrees N}
+#'   \item{`elevation` -- elevation of station in m}
+#'   \item{`countryCode` -- ISO 3166-1 alpha-2}
+#'   \item{`stateCode` -- ISO 3166-2 alpha-2}
+#'   \item{`timezone` -- Olson time zone}
 #' }
 #'
-#' @return \code{TRUE} if \code{pat} has the correct structure,
-#' \code{FALSE} otherwise.
+#' Core `data` columns include:
+#'
+#' \itemize{
+#'   \item{`datetime` -- measurement time (UTC)}
+#' }
+#'
+#' @return `TRUE` if `pat` has the correct structure,
+#' `FALSE` otherwise.
 #'
 #' @examples
 #' library(AirSensor2)
@@ -80,13 +80,13 @@ pat_isValid <- function(
 
 #' @export
 #'
-#' @title Test for empty \emph{pat} object
+#' @title Test for empty *pat* object
 #'
-#' @param pat \emph{pat} object
+#' @param pat *pat* object
 #'
-#' @return \code{TRUE} if no data exist in \code{pat}, \code{FALSE} otherwise.
+#' @return `TRUE` if no data exist in `pat`, `FALSE` otherwise.
 #'
-#' @description Convenience function for \code{nrow(pat$data) == 0}.
+#' @description Convenience function for `nrow(pat$data) == 0`.
 #' This makes for more readable code in functions that need to test for this.
 #'
 #' @examples
@@ -102,22 +102,22 @@ pat_isEmpty <- function(pat) {
 #' @importFrom rlang .data
 #' @export
 #'
-#' @title Retain only distinct data records in \code{pat$data}
+#' @title Retain only distinct data records in `pat$data`
 #'
-#' @param pat \emph{pat} object
+#' @param pat *pat* object
 #'
-#' @return An \emph{pat} object where each record is associated with a unique
+#' @return An *pat* object where each record is associated with a unique
 #' time.
-#' (A list with \code{meta} and \code{data} dataframes.)
+#' (A list with `meta` and `data` dataframes.)
 #'
 #' @description Three successive steps are used to guarantee that the
-#' \code{datetime} axis contains no repeated values:
+#' `datetime` axis contains no repeated values:
 #'
 #' \enumerate{
 #' \item{remove any duplicate records}
-#' \item{guarantee that rows are in \code{datetime} order}
+#' \item{guarantee that rows are in `datetime` order}
 #' \item{average together fields for any remaining records that share the same
-#' \code{datetime}}
+#' `datetime`}
 #' }
 #'
 pat_distinct <- function(pat) {
@@ -125,22 +125,22 @@ pat_distinct <- function(pat) {
 }
 
 
-#' @title Extract dataframes from \emph{pat} objects
+#' @title Extract dataframes from *pat* objects
 #'
 #' @description
 #' These functions are convenient wrappers for extracting the dataframes that
-#' comprise a \emph{pat} object. These functions are designed to be useful when
-#' manipulating data in a pipeline using \code{\%>\%}.
+#' comprise a *pat* object. These functions are designed to be useful when
+#' manipulating data in a pipeline using `\%>\%`.
 #'
 #' Below is a table showing equivalent operations for each function.
 #'
-#' \code{pat_getData(pat)} is equivalent to \code{pat$data}.
+#' `pat_getData(pat)` is equivalent to `pat$data`.
 #'
-#' \code{pat_getMeta(pat)} is equivalent to \code{pat$meta}.
+#' `pat_getMeta(pat)` is equivalent to `pat$meta`.
 #'
-#' @param pat \emph{pat} object to extract dataframe from.
+#' @param pat *pat* object to extract dataframe from.
 #'
-#' @return A dataframe from the \emph{pat} object.
+#' @return A dataframe from the *pat* object.
 #'
 #' @name pat_getDataFrame
 #' @aliases pat_getData pat_getMeta

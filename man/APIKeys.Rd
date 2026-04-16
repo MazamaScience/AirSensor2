@@ -5,36 +5,36 @@
 \title{Work with API keys}
 \arguments{
 \item{provider}{Character string used to identify an API key. Used as the
-first argument to \code{setAPIKey()} and \code{getAPIKey()}.}
+first argument to `setAPIKey()` and `getAPIKey()`.}
 
-\item{key}{Character API key. Used as the second argument to \code{setAPIKey()}.}
+\item{key}{Character API key. Used as the second argument to `setAPIKey()`.}
 }
 \value{
-An API key string or a list of \code{provider:key} pairs.
+An API key string or a list of `provider:key` pairs.
 }
 \description{
 This package maintains an internal set of API keys which
-users can set using \code{setAPIKey()}. These keys will be remembered for
+users can set using `setAPIKey()`. These keys will be remembered for
 the duration of an R session. In functions that accept an API key argument,
-if the passed in API key is \code{NULL}, code will look up an appropriate
+if the passed in API key is `NULL`, code will look up an appropriate
 named API key to see if that key has been set globally. Setting keys globally
 is a convenience that simplifies scripts written by end users.
 
 Currently supported API keys include:
 
 \itemize{
-  \item{\code{"PurpleAir-read"} -- PurpleAir \code{API_READ_KEY}}
-  \item{\code{"PurpleAir-write"} -- PurpleAir \code{API_WRITE_KEY}}
-  \item{\code{"Clarity-read"} -- Clarity \code{API_READ_KEY}}
+  \item{`"PurpleAir-read"` -- PurpleAir `API_READ_KEY`}
+  \item{`"PurpleAir-write"` -- PurpleAir `API_WRITE_KEY`}
+  \item{`"Clarity-read"` -- Clarity `API_READ_KEY`}
 }
 }
 \details{
 Three API key support functions are imported from the \pkg{MazamaCoreUtils}
 package where they are described in more detail:
 \itemize{
-  \item{\code{MazamaCoreUtils::\link[MazamaCoreUtils:getAPIKey]{getAPIKey}}}
-  \item{\code{MazamaCoreUtils::\link[MazamaCoreUtils:setAPIKey]{setAPIKey}}}
-  \item{\code{MazamaCoreUtils::\link[MazamaCoreUtils:showAPIKeys]{showAPIKeys}}}
+  \item{[MazamaCoreUtils::getAPIKey()]}
+  \item{[MazamaCoreUtils::setAPIKey()]}
+  \item{[MazamaCoreUtils::showAPIKeys()]}
 }
 }
 \examples{
@@ -61,15 +61,15 @@ showAPIKeys()
 
 }
 \references{
-\href{https://www2.purpleair.com}{PurpleAir}
+[PurpleAir](https://www2.purpleair.com)
 
-\href{https://api.purpleair.com/}{PurpleAir API}
+[PurpleAir API](https://api.purpleair.com/)
 
-\href{https://www2.purpleair.com/policies/terms-of-service}{PurpleAir Terms of service}
+[PurpleAir Terms of service](https://www2.purpleair.com/policies/terms-of-service)
 
-\href{https://www2.purpleair.com/pages/license}{PurpleAir Data license}
+[PurpleAir Data license](https://www2.purpleair.com/pages/license)
 
-\href{https://www2.purpleair.com/pages/attribution}{PurpleAir Data Attribution}
+[PurpleAir Data Attribution](https://www2.purpleair.com/pages/attribution)
 
-\href{https://api-guide.clarity.io/getting-started/}{Clarity API Guide}
+[Clarity API Guide](https://api-guide.clarity.io/getting-started/)
 }

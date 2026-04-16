@@ -12,7 +12,7 @@ pas_enhanceRawData(
 )
 }
 \arguments{
-\item{pas_raw}{Dataframe returned by \link{pas_downloadParseRawData}.}
+\item{pas_raw}{Dataframe returned by [pas_downloadParseRawData()].}
 
 \item{countryCodes}{ISO 3166-1 alpha-2 country codes used to subset the data.}
 
@@ -38,7 +38,7 @@ Steps include:
   \item{stateCode -- ISO 3166-2 alpha-2}
 }
 
-3) Convert data types from character to \code{POSIXct} and \code{numeric}.
+3) Convert data types from character to `POSIXct` and `numeric`.
 
 4) Add additional metadata items:
 \itemize{
@@ -47,25 +47,25 @@ Steps include:
 
 Limiting spatial searches by country can greatly speed up the process of
 enhancement. This is performed by providing a vector of ISO country codes to
-the \code{countryCodes} argument. By default, no subsetting is performed.
+the `countryCodes` argument. By default, no subsetting is performed.
 
-Users may further improve performance by also specifying \code{stateCodes}
-when \code{countryCodes} is limited to a single country.
+Users may further improve performance by also specifying `stateCodes`
+when `countryCodes` is limited to a single country.
 
-When a single US state is specified, named \code{counties} may be specified
+When a single US state is specified, named `counties` may be specified
 to further speed up performance.
 }
 \references{
-\href{https://www2.purpleair.com}{PurpleAir}
+[PurpleAir](https://www2.purpleair.com)
 
-\href{https://api.purpleair.com/}{PurpleAir API}
+[PurpleAir API](https://api.purpleair.com/)
 
-\href{https://www2.purpleair.com/policies/terms-of-service}{PurpleAir Terms of service}
+[PurpleAir Terms of service](https://www2.purpleair.com/policies/terms-of-service)
 
-\href{https://www2.purpleair.com/pages/license}{PurpleAir Data license}
+[PurpleAir Data license](https://www2.purpleair.com/pages/license)
 
-\href{https://www2.purpleair.com/pages/attribution}{PurpleAir Data Attribution}
+[PurpleAir Data Attribution](https://www2.purpleair.com/pages/attribution)
 }
 \seealso{
-\link{pas_downloadParseRawData}
+[pas_downloadParseRawData()]
 }

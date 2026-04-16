@@ -7,22 +7,22 @@
 pas_filter(pas, ...)
 }
 \arguments{
-\item{pas}{PurpleAir Synoptic \emph{pas} object.}
+\item{pas}{PurpleAir Synoptic *pas* object.}
 
 \item{...}{Logical predicates defined in terms of the variables in the
-\code{pas}. Multiple conditions are combined with & or seperated by a comma.
+`pas`. Multiple conditions are combined with & or seperated by a comma.
 Only rows where the condition evaluates to TRUE are kept.}
 }
 \value{
-A subset of the incoming \emph{pas} object.
+A subset of the incoming *pas* object.
 }
 \description{
-A generalized data filter for \emph{pas} objects to
+A generalized data filter for *pas* objects to
   choose rows/cases where conditions are true. Rows where the condition
   evaluates to NA are dropped.
 
-  This function is essentially \code{dplyr::\link[dplyr:filter]{filter}}
-  with an extra check on the validity of the \emph{pas} object.
+  This function is essentially [dplyr::filter()]
+  with an extra check on the validity of the *pas* object.
 }
 \examples{
 library(AirSensor2)
@@ -45,9 +45,9 @@ Colville_Tribes_pas <-
 nrow(Colville_Tribes_pas)
 }
 \seealso{
-\link{pas_filterArea}
+[pas_filterArea()]
 
-\link{pas_filterNear}
+[pas_filterNear()]
 
-\link{pas_filterNearMonitor}
+[pas_filterNearMonitor()]
 }

@@ -17,7 +17,7 @@ PurpleAir_getSensorHistory(
 \arguments{
 \item{api_key}{PurpleAir API READ key.}
 
-\item{sensor_index}{The \code{sensor_index} as found in the JSON for this
+\item{sensor_index}{The `sensor_index` as found in the JSON for this
 specific sensor.}
 
 \item{start_timestamp}{Optional Unix timestamp in seconds since Jan 1, 1970.}

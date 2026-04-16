@@ -14,7 +14,7 @@ PurpleAir_getSensorData(
 \arguments{
 \item{api_key}{PurpleAir API READ key.}
 
-\item{sensor_index}{The \code{sensor_index} as found in the JSON for this
+\item{sensor_index}{The `sensor_index` as found in the JSON for this
 specific sensor.}
 
 \item{fields}{Optional parameter specifying sensor data fields to return.}

@@ -11,5 +11,5 @@ Logical.
 }
 \description{
 Logical convenience function to check if
-\code{initializeMazamaSpatialUtils()} has been run.
+`initializeMazamaSpatialUtils()` has been run.
 }

@@ -2,18 +2,18 @@
 % Please edit documentation in R/utils-pat.R
 \name{pat_check}
 \alias{pat_check}
-\title{Check \emph{pat} object for validity}
+\title{Check *pat* object for validity}
 \usage{
 pat_check(pat)
 }
 \arguments{
-\item{pat}{\emph{pat} object.}
+\item{pat}{*pat* object.}
 }
 \value{
-Returns \code{TRUE} invisibly if the \emph{pat} object is valid.
+Returns `TRUE` invisibly if the *pat* object is valid.
 }
 \description{
-Checks on the validity of an \emph{pat} object. If any test
+Checks on the validity of an *pat* object. If any test
 fails, this function will stop with a warning message.
 }
 \examples{
@@ -32,5 +32,5 @@ if ( FALSE ) {
 
 }
 \seealso{
-\link{pat_isValid}
+[pat_isValid()]
 }

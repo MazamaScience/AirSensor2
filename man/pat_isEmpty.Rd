@@ -2,18 +2,18 @@
 % Please edit documentation in R/utils-pat.R
 \name{pat_isEmpty}
 \alias{pat_isEmpty}
-\title{Test for empty \emph{pat} object}
+\title{Test for empty *pat* object}
 \usage{
 pat_isEmpty(pat)
 }
 \arguments{
-\item{pat}{\emph{pat} object}
+\item{pat}{*pat* object}
 }
 \value{
-\code{TRUE} if no data exist in \code{pat}, \code{FALSE} otherwise.
+`TRUE` if no data exist in `pat`, `FALSE` otherwise.
 }
 \description{
-Convenience function for \code{nrow(pat$data) == 0}.
+Convenience function for `nrow(pat$data) == 0`.
 This makes for more readable code in functions that need to test for this.
 }
 \examples{

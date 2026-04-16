@@ -2,7 +2,7 @@
 #'
 #' @title Find PurpleAir sensors within radial distance
 #'
-#' @param pas PurpleAir \emph{pas} object.
+#' @param pas PurpleAir *pas* object.
 #' @param longitude a Target longitude.
 #' @param latitude a Target latitude.
 #' @param radius Distance from target with unit (i.e "15 km").
@@ -10,14 +10,14 @@
 #' @description Filter for PurpleAir sensors within a specified distance from
 #' a target location.
 #'
-#' @details The \code{radius} parameter should be a numeric string with a metric unit
-#' separated by a space, such as \code{"250 m"} or \code{"10 km"}.
+#' @details The `radius` parameter should be a numeric string with a metric unit
+#' separated by a space, such as `"250 m"` or `"10 km"`.
 #'
-#' @return A subset of the incoming \emph{pas} object.
+#' @return A subset of the incoming *pas* object.
 #'
-#' @seealso \link{pas_filter}
-#' @seealso \link{pas_filterArea}
-#' @seealso \link{pas_filterNearMonitor}
+#' @seealso [pas_filter()]
+#' @seealso [pas_filterArea()]
+#' @seealso [pas_filterNearMonitor()]
 #'
 #' @examples
 #' library(AirSensor2)

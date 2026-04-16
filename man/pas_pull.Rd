@@ -7,15 +7,15 @@
 pas_pull(pas, name = NULL)
 }
 \arguments{
-\item{pas}{PurpleAir Synoptic \emph{pas} object.}
+\item{pas}{PurpleAir Synoptic *pas* object.}
 
 \item{name}{Name of the data column to return.}
 }
 \value{
-A single column of data from the incoming \emph{pas} object.
+A single column of data from the incoming *pas* object.
 }
 \description{
-A simple wrapper around \code{dplyr::pull()} to help with
+A simple wrapper around `dplyr::pull()` to help with
 readability of user recipes.
 }
 \examples{

@@ -2,25 +2,25 @@
 % Please edit documentation in R/pat_trimDate.R
 \name{pat_trimDate}
 \alias{pat_trimDate}
-\title{Trim \emph{pat} time series object to full days}
+\title{Trim *pat* time series object to full days}
 \usage{
 pat_trimDate(pat = NULL, timezone = NULL)
 }
 \arguments{
-\item{pat}{\emph{pat} object.}
+\item{pat}{*pat* object.}
 
 \item{timezone}{Olson timezone used to interpret dates.}
 }
 \value{
-A subset of the incoming \emph{pat} time series object.
-(A list with \code{meta} and \code{data} dataframes.)
+A subset of the incoming *pat* time series object.
+(A list with `meta` and `data` dataframes.)
 }
 \description{
-Trims the date range of a \emph{pat} object to local time date
-boundaries which are \emph{within} the range of data. This has the effect
+Trims the date range of a *pat* object to local time date
+boundaries which are *within* the range of data. This has the effect
 of removing partial-day data records at the start and end of the timeseries
 and is useful when calculating full-day statistics.
 
-Day boundaries are calculated using the specified \code{timezone} or, if
-\code{NULL}, using \code{pat$meta$timezone}.
+Day boundaries are calculated using the specified `timezone` or, if
+`NULL`, using `pat$meta$timezone`.
 }

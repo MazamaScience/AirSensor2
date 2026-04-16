@@ -18,10 +18,10 @@ PurpleAir_getMemberHistory(
 \arguments{
 \item{api_key}{PurpleAir API READ key.}
 
-\item{group_id}{The \code{group_id} of the requested group. This group must
-be owned by the \code{api_key}.}
+\item{group_id}{The `group_id` of the requested group. This group must
+be owned by the `api_key`.}
 
-\item{member_id}{Unique \code{member_id} for a sensor within \code{group_id}.}
+\item{member_id}{Unique `member_id` for a sensor within `group_id`.}
 
 \item{start_timestamp}{Desired start datetime (ISO 8601).}
 

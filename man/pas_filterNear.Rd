@@ -7,7 +7,7 @@
 pas_filterNear(pas = NULL, longitude = NULL, latitude = NULL, radius = "1 km")
 }
 \arguments{
-\item{pas}{PurpleAir \emph{pas} object.}
+\item{pas}{PurpleAir *pas* object.}
 
 \item{longitude}{a Target longitude.}
 
@@ -16,15 +16,15 @@ pas_filterNear(pas = NULL, longitude = NULL, latitude = NULL, radius = "1 km")
 \item{radius}{Distance from target with unit (i.e "15 km").}
 }
 \value{
-A subset of the incoming \emph{pas} object.
+A subset of the incoming *pas* object.
 }
 \description{
 Filter for PurpleAir sensors within a specified distance from
 a target location.
 }
 \details{
-The \code{radius} parameter should be a numeric string with a metric unit
-separated by a space, such as \code{"250 m"} or \code{"10 km"}.
+The `radius` parameter should be a numeric string with a metric unit
+separated by a space, such as `"250 m"` or `"10 km"`.
 }
 \examples{
 library(AirSensor2)
@@ -44,9 +44,9 @@ if ( interactive() ) {
 
 }
 \seealso{
-\link{pas_filter}
+[pas_filter()]
 
-\link{pas_filterArea}
+[pas_filterArea()]
 
-\link{pas_filterNearMonitor}
+[pas_filterNearMonitor()]
 }

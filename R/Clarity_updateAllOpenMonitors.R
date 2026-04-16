@@ -6,16 +6,16 @@
 #' @title Update a Clarity 'mts_monitor' object
 #'
 #' @description Download, parse and enhance the last 3 hours of data from all Clarity
-#' "open" sensors and append new data to the incoming Clarity \emph{mts_monitor} object
+#' "open" sensors and append new data to the incoming Clarity *mts_monitor* object
 #' package.
 #'
 #' @note Maintenance of unique device-deployments will be preserved. If any
 #' Clarity sensor is reported as having a new location, a new deployment will
 #' be created as a separate time series.
 #'
-#' @param api_key Clarity API READ Key. If \code{api_key = NULL}, it
-#' will be obtained using \code{getAPIKey("Clarity-read")}.
-#' @param monitor Previously generated \emph{mts_monitor} object.
+#' @param api_key Clarity API READ Key. If `api_key = NULL`, it
+#' will be obtained using `getAPIKey("Clarity-read")`.
+#' @param monitor Previously generated *mts_monitor* object.
 #' @param format Customized output format ("USFS2", "USFS").
 #' @param parameter Parameter to use for data ("pm2.5" or "nowcast")
 #' @param applyQC Logical specifying whether to use the Clarity QCFlag to
@@ -23,7 +23,7 @@
 #' @param countryCodes Vector of ISO 3166-1 alpha-2 country codes used to filter
 #' available data.
 #'
-#' @return An AirMonitor package \emph{mts_monitor} object.
+#' @return An AirMonitor package *mts_monitor* object.
 #'
 
 Clarity_updateAllOpenMonitors <- function(

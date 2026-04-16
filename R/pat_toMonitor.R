@@ -5,21 +5,21 @@
 #'
 #' @title Convert a PurpleAir Timeseries to a 'mts_monitor' object
 #'
-#' @param pat Previously generated \emph{pat} object.
+#' @param pat Previously generated *pat* object.
 #' @param applyCorrection Logical specifying whether to apply the EPA
-#' correction algorithm. (See \link{pat_applyCorrection}.)
+#' correction algorithm. (See [pat_applyCorrection()].)
 #'
-#' @description Enhance an hourly PurpleAir Timeseries \emph{pat} object created
-#' with \code{pat_createHourly()} and create an object of class \code{mts_monitor}
-#' for use with the \href{https://mazamascience.github.io/AirMonitor/}{AirMonitor} package.
+#' @description Enhance an hourly PurpleAir Timeseries *pat* object created
+#' with `pat_createHourly()` and create an object of class `mts_monitor`
+#' for use with the [AirMonitor](https://mazamascience.github.io/AirMonitor/) package.
 #'
-#' @return An AirMonitor package \emph{mts_monitor} object.
+#' @return An AirMonitor package *mts_monitor* object.
 #'
-#' @references \href{https://www2.purpleair.com}{PurpleAir}
-#' @references \href{https://api.purpleair.com}{PurpleAir API}
-#' @references \href{https://www2.purpleair.com/policies/terms-of-service}{PurpleAir Terms of service}
-#' @references \href{https://www2.purpleair.com/pages/license}{PurpleAir Data license}
-#' @references \href{https://www2.purpleair.com/pages/attribution}{PurpleAir Data Attribution}
+#' @references [PurpleAir](https://www2.purpleair.com)
+#' @references [PurpleAir API](https://api.purpleair.com)
+#' @references [PurpleAir Terms of service](https://www2.purpleair.com/policies/terms-of-service)
+#' @references [PurpleAir Data license](https://www2.purpleair.com/pages/license)
+#' @references [PurpleAir Data Attribution](https://www2.purpleair.com/pages/attribution)
 #'
 #' @examples
 #' \donttest{

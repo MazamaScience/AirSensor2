@@ -14,10 +14,10 @@ PurpleAir_createMember(
 \arguments{
 \item{api_key}{PurpleAir API WRITE key.}
 
-\item{group_id}{The \code{group_id} of the requested group. This group must
-be owned by the \code{api_key}.}
+\item{group_id}{The `group_id` of the requested group. This group must
+be owned by the `api_key`.}
 
-\item{sensor_index}{Sensor index as returned by \code{PurpleAir_getSensorsData()}.}
+\item{sensor_index}{Sensor index as returned by `PurpleAir_getSensorsData()`.}
 
 \item{baseUrl}{URL endpoint for the "Create Member" API.}
 }

@@ -17,7 +17,7 @@
 #'   \item{stateCode -- ISO 3166-2 alpha-2}
 #' }
 #'
-#' 3) Convert data types from character to \code{POSIXct} and \code{numeric}.
+#' 3) Convert data types from character to `POSIXct` and `numeric`.
 #'
 #' 4) Add additional metadata items:
 #' \itemize{
@@ -26,28 +26,28 @@
 #'
 #' Limiting spatial searches by country can greatly speed up the process of
 #' enhancement. This is performed by providing a vector of ISO country codes to
-#' the \code{countryCodes} argument. By default, no subsetting is performed.
+#' the `countryCodes` argument. By default, no subsetting is performed.
 #'
-#' Users may further improve performance by also specifying \code{stateCodes}
-#' when \code{countryCodes} is limited to a single country.
+#' Users may further improve performance by also specifying `stateCodes`
+#' when `countryCodes` is limited to a single country.
 #'
-#' When a single US state is specified, named \code{counties} may be specified
+#' When a single US state is specified, named `counties` may be specified
 #' to further speed up performance.
 #'
-#' @param pas_raw Dataframe returned by \link{pas_downloadParseRawData}.
+#' @param pas_raw Dataframe returned by [pas_downloadParseRawData()].
 #' @param countryCodes ISO 3166-1 alpha-2 country codes used to subset the data.
 #' @param stateCodes ISO-3166-2 alpha-2 state codes used to subset the data.
 #' @param counties US county names or 5-digit FIPS codes used to subset the data.
 #'
 #' @return Enhanced dataframe of synoptic PurpleAir data.
 #'
-#' @seealso \link{pas_downloadParseRawData}
+#' @seealso [pas_downloadParseRawData()]
 #'
-#' @references \href{https://www2.purpleair.com}{PurpleAir}
-#' @references \href{https://api.purpleair.com/}{PurpleAir API}
-#' @references \href{https://www2.purpleair.com/policies/terms-of-service}{PurpleAir Terms of service}
-#' @references \href{https://www2.purpleair.com/pages/license}{PurpleAir Data license}
-#' @references \href{https://www2.purpleair.com/pages/attribution}{PurpleAir Data Attribution}
+#' @references [PurpleAir](https://www2.purpleair.com)
+#' @references [PurpleAir API](https://api.purpleair.com/)
+#' @references [PurpleAir Terms of service](https://www2.purpleair.com/policies/terms-of-service)
+#' @references [PurpleAir Data license](https://www2.purpleair.com/pages/license)
+#' @references [PurpleAir Data Attribution](https://www2.purpleair.com/pages/attribution)
 #'
 
 pas_enhanceRawData <- function(

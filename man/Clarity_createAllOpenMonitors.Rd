@@ -13,8 +13,8 @@ Clarity_createAllOpenMonitors(
 )
 }
 \arguments{
-\item{api_key}{Clarity API READ Key. If \code{api_key = NULL}, it
-will be obtained using \code{getAPIKey("Clarity-read")}.}
+\item{api_key}{Clarity API READ Key. If `api_key = NULL`, it
+will be obtained using `getAPIKey("Clarity-read")`.}
 
 \item{format}{Customized output format ("USFS2", "USFS").}
 
@@ -27,10 +27,10 @@ invalidate data values.}
 available data.}
 }
 \value{
-An AirMonitor package \emph{mts_monitor} object.
+An AirMonitor package *mts_monitor* object.
 }
 \description{
 Download, parse and enhance the last 3 hours of data from all Clarity
-"open" sensors and create a new Clarity \emph{mts_monitor} object for use with the AirMonitor
+"open" sensors and create a new Clarity *mts_monitor* object for use with the AirMonitor
 package.
 }

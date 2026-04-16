@@ -14,9 +14,9 @@ PurpleAir_deleteMember(
 \arguments{
 \item{api_key}{PurpleAir API WITE key.}
 
-\item{group_id}{The \code{group_id} of the requested group.}
+\item{group_id}{The `group_id` of the requested group.}
 
-\item{member_id}{The \code{member_id} to be deleted.}
+\item{member_id}{The `member_id` to be deleted.}
 
 \item{baseUrl}{URL endpoint for the "Delete Member" API.}
 }

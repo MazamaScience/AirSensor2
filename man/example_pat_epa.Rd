@@ -15,10 +15,10 @@ https://www2.purpleair.com
 example_pat_epa
 }
 \description{
-The \code{example_pat} dataset provides a quickly loadable
-version of a \emph{pat} object for practicing and code examples. This
-\emph{pat} object contains the `pm2.5_cf` fields required for the EPA
-correction algorithm used in \link{pat_applyCorrection}.
+The `example_pat` dataset provides a quickly loadable
+version of a *pat* object for practicing and code examples. This
+*pat* object contains the `pm2.5_cf` fields required for the EPA
+correction algorithm used in [pat_applyCorrection()].
 
 This dataset contains 24 hours worth of data for a single PurpleAir sensor
 and was generated on 2024-10-30 by running:

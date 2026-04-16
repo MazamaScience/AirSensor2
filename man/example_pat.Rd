@@ -15,8 +15,8 @@ https://www2.purpleair.com
 example_pat
 }
 \description{
-The \code{example_pat} dataset provides a quickly loadable
-version of a \emph{pat} object for practicing and code examples.
+The `example_pat` dataset provides a quickly loadable
+version of a *pat* object for practicing and code examples.
 This dataset contains 24 hours worth of data for a single PurpleAir sensor
 and was generated on 2024-03-12 by running:
 
