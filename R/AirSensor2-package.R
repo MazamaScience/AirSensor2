@@ -26,8 +26,8 @@ NULL
 #'
 #' See [AirMonitor::US_AQI()] for details.
 #'
+#' @name US_AQI
 #' @rdname US_AQI
 #' @export
 #' @importFrom AirMonitor US_AQI
 NULL
-

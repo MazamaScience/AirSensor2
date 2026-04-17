@@ -3,39 +3,51 @@
 #' @importFrom MazamaCoreUtils logger.isInitialized logger.debug
 #' @importFrom MazamaCoreUtils getAPIKey
 #'
-#' @title Create a new OpenAQ synoptic dataset
+#' @title Create a new OpenAQ locations dataset
 #'
-#' @description Download, parse and enhance synoptic data from OpenAQ and
-#' return the results as a useful tibble with class `openaq_synoptic`.
+#' @description Download, parse and enhance locations data from OpenAQ and
+#' return the results as a plain tibble.
 #'
 #' Steps include:
 #'
-#' 1) Download and parse synoptic data
+#' 1) Download and parse locations data
 #'
-#' 2) Add spatial metadata for each sensor including:
+#' 2) Add spatial metadata for each location including:
 #' \itemize{
 #'   \item{timezone -- olson timezone}
 #'   \item{countryCode -- ISO 3166-1 alpha-2}
 #'   \item{stateCode -- ISO 3166-2 alpha-2}
 #' }
 #'
+#' @note
+#' Valid values for `countryCodes`, `providers` and `manufacturers` can be obtained with:
+#'
+#' \preformatted{
+#' OpenAQ_getCountries()
+#' OpenAQ_getProviders()
+#' OpenAQ_getManufacturers()
+#' }
+#'
+#' These functions return reference tables containing the available values.
+#' Matching is case-insensitive. Unmatched values are ignored.
+#'
 #' @param api_key OpenAQ API READ Key. If `api_key = NULL`, it
 #' will be obtained using `getAPIKey("OPENAQ")`.
 #' @param countryCodes ISO 3166-1 alpha-2 country codes used to subset the data.
-#' At least one countryCode must be specified.
+#' At least one countryCode must be specified. (Country names are also acceptible.)
 #' @param stateCodes ISO-3166-2 alpha-2 state codes used to subset the data.
 #' Specifying stateCodes is optional.
 #' @param counties US county names or 5-digit FIPS codes used to subset the data.
 #' Specifying counties is optional.
-#' @param lookbackDays Number of days to "look back" for valid data. Data are
-#' filtered to only include sensors with data more recent than `lookbackDays` ago.
-#' Use `lookbackDays = 0` to get all historical sensors.
-#' @param providers_id Numeric vector containing 1 or more provider ID(s) to use for filtering results.
-#' @param manufacturers_id TODO Numeric vector containing 1 or more manufacturer ID(s) to use for filtering results.
+#' @param lookbackDays Number of days to "look back" for locations with valid data. Locations are
+#' filtered to only include those with data more recent than `lookbackDays` ago.
+#' Use `lookbackDays = 0` to get all historical locations.
+#' @param providers Character vector of provider names or export prefixes used to subset the data. See note.
+#' @param manufacturers Character vector of manufacturer names used to subset the data. See note.
 #' @param monitor A logical to filter results to regulatory monitors (TRUE) or air sensors (FALSE), both are included if NULL.
 #' @param limit An integer specifying the maximum number of results to return, max is 1000.
 #'
-#' @return An OpenAQ  *synoptic* object.
+#' @return A tibble of location metadata.
 #'
 #' @examples
 #' \donttest{
@@ -46,24 +58,54 @@
 #'
 #' initializeMazamaSpatialUtils()
 #'
-#' synoptic <-
-#'   OpenAQ_createOpenSynoptic(
+#' locations <-
+#'   OpenAQ_createLocations(
+#'     countryCodes = "US",
+#'     stateCodes = "IL",
+#'     counties = "Cook",
 #'     api_key = OPENAQ_API_KEY
 #'   )
 #'
-#' synoptic %>% synoptic_leaflet()
+#' clarity <- locations %>% dplyr::filter(provider_name == "Clarity")
+#' map <-
+#'   MazamaLocationUtils::table_leaflet(
+#'     clarity,
+#'     extraVars = c("datetime_first", "datetime_last", "owner_name", "provider_name"),
+#'     jitter = 0,
+#'     radius = 5, fillColor = "blue"
+#'   )
+#'
+#' airnow <- locations %>% dplyr::filter(provider_name == "AirNow")
+#' map <- MazamaLocationUtils::table_leafletAdd(
+#'     map,
+#'     airnow,
+#'     extraVars = c("datetime_first", "datetime_last", "owner_name", "provider_name"),
+#'     jitter = 0,
+#'     radius = 10, color = "black", fillColor = "black"
+#'   )
+#'
+#' airgradient <- locations %>% dplyr::filter(provider_name == "AirGradient")
+#' map <- MazamaLocationUtils::table_leafletAdd(
+#'     map,
+#'     airgradient,
+#'     extraVars = c("datetime_first", "datetime_last", "owner_name", "provider_name"),
+#'     jitter = 0,
+#'     radius = 5, color = "orange", fillColor = "orange"
+#'   )
+#'
+#' print(map)
 #'
 #' }, silent = FALSE)
 #' }
 
-OpenAQ_createSynoptic <- function(
+OpenAQ_createLocations <- function(
     api_key = NULL,
     countryCodes = NULL,
     stateCodes = NULL,
     counties = NULL,
     lookbackDays = 1,
-    providers_id = NULL,
-    manufacturers_id = NULL,
+    providers = NULL,
+    manufacturers = NULL,
     monitor = NULL,
     limit = 1000
 ) {
@@ -120,17 +162,9 @@ OpenAQ_createSynoptic <- function(
   countries_id <- NULL
 
   if ( !is.null(countryCodes) ) {
-
-    if ( !exists("OpenAQ_countries") ) {
-      OpenAQ_countries <- openaq::list_countries(limit = 1000)
-    }
-    countries_id <-
-      OpenAQ_countries %>%
-      dplyr::filter(code %in% countryCodes) %>%
-      dplyr::pull(id)
-
+    countries_id <- OpenAQ_countryToID(countryCodes)
+    countries_id <- unique(countries_id[!is.na(countries_id)])
   }
-
 
   # ----- bbox -----------------------------------------------------------------
 
@@ -183,15 +217,23 @@ OpenAQ_createSynoptic <- function(
   # ----- providers_id ---------------------------------------------------------
 
   providers_id <- NULL
+  if ( !is.null(providers) ) {
+    providers_id <- OpenAQ_providerToID(providers)
+    providers_id <- unique(providers_id[!is.na(providers_id)])
+  }
 
   # ----- manufacturers_id -----------------------------------------------------
 
   manufacturers_id <- NULL
+  if ( !is.null(manufacturers) ) {
+    manufacturers_id <- OpenAQ_manufacturerToID(manufacturers)
+    manufacturers_id <- unique(manufacturers_id[!is.na(manufacturers_id)])
+  }
 
   # ----- Load data ------------------------------------------------------------
 
-  locations <-
-    list_locations(
+  openaq_raw <-
+    openaq::list_locations(
       bbox = bbox,
       ###coordinates = NULL,
       ###radius = NULL,
@@ -215,16 +257,44 @@ OpenAQ_createSynoptic <- function(
       api_key = api_key
     )
 
+  meta <- attr(openaq_raw, "meta")
+
+  if ( !is.null(meta$found) && !is.null(meta$limit) ) {
+    if ( meta$found > meta$limit ) {
+      warning(
+        "OpenAQ returned ", meta$found, " matching locations but only ",
+        meta$limit, " were retrieved.\n",
+        "OpenAQ can only return 1000 records. Please reduce the scope of your request by using subsetting parameters.",
+        call. = FALSE
+      )
+    }
+  }
+
   # ----- Filter ---------------------------------------------------------------
+
+  if ( !is.null(lookbackDays) && lookbackDays > 0 ) {
+
+    cutoff <- lubridate::now("UTC") - lubridate::days(lookbackDays)
+
+    openaq_raw <-
+      openaq_raw %>%
+      dplyr::filter(.data$datetime_last >= cutoff)
+
+  }
+
+  # ----- Enhance --------------------------------------------------------------
+
+  locations <-
+    OpenAQ_enhanceRawLocations(
+      openaq_raw,
+      countryCodes = countryCodes,
+      stateCodes = stateCodes,
+      counties = counties
+    )
 
   # ----- Return ---------------------------------------------------------------
 
-  message("Done!")
-
-  # Add a class name
-  class(synoptic) <- union("OpenAQ_synoptic", class(synoptic))
-
-  return(synoptic)
+  return(locations)
 
 }
 
@@ -240,19 +310,34 @@ if ( FALSE ) {
 
   Sys.getenv("OPENAQ_API_KEY")
 
+  OPENAQ_API_KEY <- Sys.getenv("OPENAQ_API_KEY")
+
   MazamaCoreUtils::setAPIKey("OpenAQ", Sys.getenv("OPENAQ_API_KEY"))
 
-  OpenAQ_createSynoptic(
-    api_key = NULL,
-    countryCodes = c("US"),
-    stateCodes = "IL",
-    counties = "Cook",
-    lookbackDays = 1,
-    providers_id = NULL,
-    manufacturers_id = NULL,
-    monitor = NULL,
-    limit = 1000
-  )
+
+  api_key = NULL
+  countryCodes = c("US")
+  stateCodes = "IL"
+  counties = "Cook"
+  lookbackDays = 1
+  providers = NULL
+  manufacturers = NULL
+  monitor = NULL
+  limit = 1000
+
+
+  df <-
+    OpenAQ_createLocations(
+      api_key = NULL,
+      countryCodes = c("US"),
+      stateCodes = "IL",
+      counties = "Cook",
+      lookbackDays = 1,
+      providers = NULL,
+      manufacturers = NULL,
+      monitor = NULL,
+      limit = 1000
+    )
 
 
 }
