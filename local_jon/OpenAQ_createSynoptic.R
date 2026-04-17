@@ -12,9 +12,7 @@
 #'
 #' 1) Download and parse synoptic data
 #'
-#' 2) Replace variable names with more consistent, more human readable names.
-#'
-#' 3) Add spatial metadata for each sensor including:
+#' 2) Add spatial metadata for each sensor including:
 #' \itemize{
 #'   \item{timezone -- olson timezone}
 #'   \item{countryCode -- ISO 3166-1 alpha-2}
@@ -22,7 +20,7 @@
 #' }
 #'
 #' @param api_key OpenAQ API READ Key. If `api_key = NULL`, it
-#' will be obtained using `getAPIKey("OpenAQ-read")`.
+#' will be obtained using `getAPIKey("OPENAQ")`.
 #' @param countryCodes ISO 3166-1 alpha-2 country codes used to subset the data.
 #' At least one countryCode must be specified.
 #' @param stateCodes ISO-3166-2 alpha-2 state codes used to subset the data.
@@ -71,6 +69,9 @@ OpenAQ_createSynoptic <- function(
 ) {
 
   # ----- Validate parameters --------------------------------------------------
+
+  if ( is.null(api_key) )
+    api_key <- MazamaCoreUtils::getAPIKey("OpenAQ")
 
   lookbackDays <- MazamaCoreUtils::setIfNull(lookbackDays, 1)
   limit <- MazamaCoreUtils::setIfNull(limit, 1000)
@@ -189,8 +190,32 @@ OpenAQ_createSynoptic <- function(
 
   # ----- Load data ------------------------------------------------------------
 
-  message("countries_id = ", paste0(countries_id, collapse = ","))
-  message("bbox = ", paste0(bbox, collapse = ","))
+  list_locations(
+    bbox = bbox,
+    ###coordinates = NULL,
+    ###radius = NULL,
+    providers_id = providers_id,
+    ###parameters_id = NULL,
+    ###owner_contacts_id = NULL,
+    manufacturers_id = manufacturers_id,
+    ###licenses_id = NULL,
+    monitor = monitor,
+    mobile = FALSE,
+    ###instruments_id = NULL,
+    ###iso = NULL,
+    countries_id = countries_id,
+    ###order_by = NULL,
+    ###sort_order = NULL,
+    limit = limit,
+    ###page = NULL,
+    ###as_data_frame = TRUE,
+    ###dry_run = FALSE,
+    ###rate_limit = FALSE,
+    api_key = api_key
+  )
+
+  # ----- Filter ------------------------------------------------------------
+
 
   message("Done!")
 
@@ -199,6 +224,16 @@ OpenAQ_createSynoptic <- function(
 # ===== DEBUGGING ==============================================================
 
 if ( FALSE ) {
+
+  library(AirSensor2)
+  initializeMazamaSpatialUtils()
+
+  library(dotenv)
+  dotenv::load_dot_env()
+
+  Sys.getenv("OPENAQ_API_KEY")
+
+  MazamaCoreUtils::setAPIKey("OpenAQ", Sys.getenv("OPENAQ_API_KEY"))
 
   OpenAQ_createSynoptic(
     api_key = NULL,
