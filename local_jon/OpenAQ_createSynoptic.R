@@ -57,15 +57,15 @@
 #' }
 
 OpenAQ_createSynoptic <- function(
-  api_key = NULL,
-  countryCodes = NULL,
-  stateCodes = NULL,
-  counties = NULL,
-  lookbackDays = 1,
-  providers_id = NULL,
-  manufacturers_id = NULL,
-  monitor = NULL,
-  limit = 1000
+    api_key = NULL,
+    countryCodes = NULL,
+    stateCodes = NULL,
+    counties = NULL,
+    lookbackDays = 1,
+    providers_id = NULL,
+    manufacturers_id = NULL,
+    monitor = NULL,
+    limit = 1000
 ) {
 
   # ----- Validate parameters --------------------------------------------------
@@ -122,7 +122,7 @@ OpenAQ_createSynoptic <- function(
   if ( !is.null(countryCodes) ) {
 
     if ( !exists("OpenAQ_countries") ) {
-      OpenAQ_countries <<- openaq::list_countries(limit = 1000)
+      OpenAQ_countries <- openaq::list_countries(limit = 1000)
     }
     countries_id <-
       OpenAQ_countries %>%
@@ -190,34 +190,41 @@ OpenAQ_createSynoptic <- function(
 
   # ----- Load data ------------------------------------------------------------
 
-  list_locations(
-    bbox = bbox,
-    ###coordinates = NULL,
-    ###radius = NULL,
-    providers_id = providers_id,
-    ###parameters_id = NULL,
-    ###owner_contacts_id = NULL,
-    manufacturers_id = manufacturers_id,
-    ###licenses_id = NULL,
-    monitor = monitor,
-    mobile = FALSE,
-    ###instruments_id = NULL,
-    ###iso = NULL,
-    countries_id = countries_id,
-    ###order_by = NULL,
-    ###sort_order = NULL,
-    limit = limit,
-    ###page = NULL,
-    ###as_data_frame = TRUE,
-    ###dry_run = FALSE,
-    ###rate_limit = FALSE,
-    api_key = api_key
-  )
+  locations <-
+    list_locations(
+      bbox = bbox,
+      ###coordinates = NULL,
+      ###radius = NULL,
+      providers_id = providers_id,
+      ###parameters_id = NULL,
+      ###owner_contacts_id = NULL,
+      manufacturers_id = manufacturers_id,
+      ###licenses_id = NULL,
+      monitor = monitor,
+      mobile = FALSE,
+      ###instruments_id = NULL,
+      ###iso = NULL,
+      countries_id = countries_id,
+      ###order_by = NULL,
+      ###sort_order = NULL,
+      limit = limit,
+      ###page = NULL,
+      ###as_data_frame = TRUE,
+      ###dry_run = FALSE,
+      ###rate_limit = FALSE,
+      api_key = api_key
+    )
 
-  # ----- Filter ------------------------------------------------------------
+  # ----- Filter ---------------------------------------------------------------
 
+  # ----- Return ---------------------------------------------------------------
 
   message("Done!")
+
+  # Add a class name
+  class(synoptic) <- union("OpenAQ_synoptic", class(synoptic))
+
+  return(synoptic)
 
 }
 
