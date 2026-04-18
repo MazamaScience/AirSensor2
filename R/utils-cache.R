@@ -6,6 +6,7 @@
 .pkg_cache$OpenAQ_instruments <- NULL
 .pkg_cache$OpenAQ_licenses <- NULL
 .pkg_cache$OpenAQ_manufacturers <- NULL
+.pkg_cache$OpenAQ_owners <- NULL
 .pkg_cache$OpenAQ_parameters <- NULL
 .pkg_cache$OpenAQ_providers <- NULL
 
@@ -96,6 +97,19 @@ internal_OpenAQ_getManufacturers <- function() {
   }
 
   return(.pkg_cache$OpenAQ_manufacturers)
+
+}
+
+
+#' @keywords internal
+internal_OpenAQ_getOwners <- function() {
+
+  if ( is.null(.pkg_cache$OpenAQ_owners) ) {
+    .pkg_cache$OpenAQ_owners <-
+      downloadOpenAQReferenceTable(openaq::list_owners)
+  }
+
+  return(.pkg_cache$OpenAQ_owners)
 
 }
 

@@ -7,6 +7,9 @@
 #'
 #' This function requires the optional package `openaq`.
 #'
+#' For more information about the OpenAQ data access API, see:
+#' \url{https://docs.openaq.org/about/about}
+#'
 #' @return A tibble of OpenAQ country metadata.
 #' @export
 OpenAQ_getCountries <- function() {
@@ -22,6 +25,9 @@ OpenAQ_getCountries <- function() {
 #' per R session and then cached for re-use.
 #'
 #' This function requires the optional package `openaq`.
+#'
+#' For more information about the OpenAQ data access API, see:
+#' \url{https://docs.openaq.org/about/about}
 #'
 #' @return A tibble of OpenAQ instrument metadata.
 #' @export
@@ -39,6 +45,9 @@ OpenAQ_getInstruments <- function() {
 #'
 #' This function requires the optional package `openaq`.
 #'
+#' For more information about the OpenAQ data access API, see:
+#' \url{https://docs.openaq.org/about/about}
+#'
 #' @return A tibble of OpenAQ license metadata.
 #' @export
 OpenAQ_getLicenses <- function() {
@@ -55,11 +64,33 @@ OpenAQ_getLicenses <- function() {
 #'
 #' This function requires the optional package `openaq`.
 #'
+#' For more information about the OpenAQ data access API, see:
+#' \url{https://docs.openaq.org/about/about}
+#'
 #' @return A tibble of OpenAQ manufacturer metadata.
 #' @export
 OpenAQ_getManufacturers <- function() {
 
   return(internal_OpenAQ_getManufacturers())
+
+}
+
+
+#' Get OpenAQ owner metadata
+#'
+#' Returns OpenAQ owner metadata as a tibble. Data are downloaded only once
+#' per R session and then cached for re-use.
+#'
+#' This function requires the optional package `openaq`.
+#'
+#' For more information about the OpenAQ data access API, see:
+#' \url{https://docs.openaq.org/about/about}
+#'
+#' @return A tibble of OpenAQ owner metadata.
+#' @export
+OpenAQ_getOwners <- function() {
+
+  return(internal_OpenAQ_getOwners())
 
 }
 
@@ -70,6 +101,9 @@ OpenAQ_getManufacturers <- function() {
 #' per R session and then cached for re-use.
 #'
 #' This function requires the optional package `openaq`.
+#'
+#' For more information about the OpenAQ data access API, see:
+#' \url{https://docs.openaq.org/about/about}
 #'
 #' @return A tibble of OpenAQ parameter metadata.
 #' @export
@@ -86,6 +120,9 @@ OpenAQ_getParameters <- function() {
 #' per R session and then cached for re-use.
 #'
 #' This function requires the optional package `openaq`.
+#'
+#' For more information about the OpenAQ data access API, see:
+#' \url{https://docs.openaq.org/about/about}
 #'
 #' @return A tibble of OpenAQ provider metadata.
 #' @export

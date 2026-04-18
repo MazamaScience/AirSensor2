@@ -105,7 +105,7 @@ OpenAQ_enhanceRawLocations <- function(
       locationName = .data$name,
 
       # OpenAQ location id as a stable device identifier
-      deviceID = paste0("openaq_", .data$id),
+      deviceID = paste0("openaq.", .data$id),
 
       # Consistent manufacturer/source field
       ###sensorManufacturer = "OpenAQ", # TODO: could figure it out with table queries

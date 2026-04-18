@@ -15,4 +15,7 @@ per R session and then cached for re-use.
 }
 \details{
 This function requires the optional package `openaq`.
+
+For more information about the OpenAQ data access API, see:
+\url{https://docs.openaq.org/about/about}
 }

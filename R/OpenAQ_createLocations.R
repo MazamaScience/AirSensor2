@@ -64,14 +64,17 @@
 #'     stateCodes = "IL",
 #'     counties = "Cook",
 #'     api_key = OPENAQ_API_KEY
+#'   ) %>%
+#'   dplyr::mutate(
+#'     start = format(.data$datetime_first, "%b %-d, %Y"),
+#'     end   = format(.data$datetime_last,  "%b %-d, %Y")
 #'   )
 #'
 #' clarity <- locations %>% dplyr::filter(provider_name == "Clarity")
 #' map <-
 #'   MazamaLocationUtils::table_leaflet(
 #'     clarity,
-#'     extraVars = c("datetime_first", "datetime_last", "owner_name", "provider_name"),
-#'     jitter = 0,
+#'     extraVars = c("deviceDeploymentID", "start", "end", "owner_name", "provider_name"),
 #'     radius = 5, fillColor = "blue"
 #'   )
 #'
@@ -79,8 +82,7 @@
 #' map <- MazamaLocationUtils::table_leafletAdd(
 #'     map,
 #'     airnow,
-#'     extraVars = c("datetime_first", "datetime_last", "owner_name", "provider_name"),
-#'     jitter = 0,
+#'     extraVars = c("deviceDeploymentID", "start", "end", "owner_name", "provider_name"),
 #'     radius = 10, color = "black", fillColor = "black"
 #'   )
 #'
@@ -88,8 +90,7 @@
 #' map <- MazamaLocationUtils::table_leafletAdd(
 #'     map,
 #'     airgradient,
-#'     extraVars = c("datetime_first", "datetime_last", "owner_name", "provider_name"),
-#'     jitter = 0,
+#'     extraVars = c("deviceDeploymentID", "start", "end", "owner_name", "provider_name"),
 #'     radius = 5, color = "orange", fillColor = "orange"
 #'   )
 #'
@@ -233,42 +234,18 @@ OpenAQ_createLocations <- function(
   # ----- Load data ------------------------------------------------------------
 
   openaq_raw <-
-    openaq::list_locations(
+    OpenAQ_downloadRawLocations(
+      api_key = api_key,
       bbox = bbox,
-      ###coordinates = NULL,
-      ###radius = NULL,
       providers_id = providers_id,
-      ###parameters_id = NULL,
-      ###owner_contacts_id = NULL,
       manufacturers_id = manufacturers_id,
-      ###licenses_id = NULL,
       monitor = monitor,
       mobile = FALSE,
-      ###instruments_id = NULL,
-      ###iso = NULL,
       countries_id = countries_id,
-      ###order_by = NULL,
-      ###sort_order = NULL,
       limit = limit,
-      ###page = NULL,
-      ###as_data_frame = TRUE,
-      ###dry_run = FALSE,
-      ###rate_limit = FALSE,
-      api_key = api_key
+      maxPages = 10,
+      sleepSeconds = 0.5
     )
-
-  meta <- attr(openaq_raw, "meta")
-
-  if ( !is.null(meta$found) && !is.null(meta$limit) ) {
-    if ( meta$found > meta$limit ) {
-      warning(
-        "OpenAQ returned ", meta$found, " matching locations but only ",
-        meta$limit, " were retrieved.\n",
-        "OpenAQ can only return 1000 records. Please reduce the scope of your request by using subsetting parameters.",
-        call. = FALSE
-      )
-    }
-  }
 
   # ----- Filter ---------------------------------------------------------------
 
@@ -317,8 +294,8 @@ if ( FALSE ) {
 
   api_key = NULL
   countryCodes = c("US")
-  stateCodes = "IL"
-  counties = "Cook"
+  stateCodes = "CA"
+  counties = NULL
   lookbackDays = 1
   providers = NULL
   manufacturers = NULL
@@ -329,10 +306,10 @@ if ( FALSE ) {
   df <-
     OpenAQ_createLocations(
       api_key = NULL,
-      countryCodes = c("US"),
-      stateCodes = "IL",
-      counties = "Cook",
-      lookbackDays = 1,
+      countryCodes = countryCodes,
+      stateCodes = stateCodes,
+      counties = counties,
+      lookbackDays = lookbackDays,
       providers = NULL,
       manufacturers = NULL,
       monitor = NULL,
