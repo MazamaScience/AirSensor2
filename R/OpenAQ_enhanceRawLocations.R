@@ -256,9 +256,15 @@ OpenAQ_enhanceRawLocations <- function(
       dplyr::filter(.data$countryCode %in% countryCodes)
   }
 
-  # ----- AirSensor2 compatibility cleanup ------------------------------------
+  # ----- Extras ---------------------------------------------------------------
 
-  # Nothing to do for now
+  # Add start and end date strings
+  openaq <-
+    openaq %>%
+      dplyr::mutate(
+        start = format(.data$datetime_first, "%b %d, %Y"),
+        end   = format(.data$datetime_last,  "%b %d, %Y")
+      )
 
   # ----- Return ---------------------------------------------------------------
 

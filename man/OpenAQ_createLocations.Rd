@@ -86,10 +86,6 @@ locations <-
     stateCodes = "IL",
     counties = "Cook",
     api_key = OPENAQ_API_KEY
-  ) \%>\%
-  dplyr::mutate(
-    start = format(.data$datetime_first, "\%b \%-d, \%Y"),
-    end   = format(.data$datetime_last,  "\%b \%-d, \%Y")
   )
 
 clarity <- locations \%>\% dplyr::filter(provider_name == "Clarity")
