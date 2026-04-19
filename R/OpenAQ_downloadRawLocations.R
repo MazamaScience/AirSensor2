@@ -9,7 +9,6 @@
 #' been retrieved, a warning is issued suggesting that the user narrow the
 #' request.
 #'
-#' @param api_key OpenAQ API key.
 #' @param bbox Bounding box passed to [openaq::list_locations()].
 #' @param providers_id Provider IDs passed to [openaq::list_locations()].
 #' @param manufacturers_id Manufacturer IDs passed to [openaq::list_locations()].
@@ -19,12 +18,11 @@
 #' @param limit Maximum number of records to request per page.
 #' @param maxPages Maximum number of pages to request automatically.
 #' @param sleepSeconds Number of seconds to pause between additional requests.
+#' @param api_key OpenAQ API key.
 #'
 #' @return A dataframe of raw OpenAQ location metadata.
 #' @export
-
 OpenAQ_downloadRawLocations <- function(
-    api_key = NULL,
     bbox = NULL,
     providers_id = NULL,
     manufacturers_id = NULL,
@@ -33,7 +31,8 @@ OpenAQ_downloadRawLocations <- function(
     countries_id = NULL,
     limit = 1000,
     maxPages = 1,
-    sleepSeconds = 0.2
+    sleepSeconds = 0.2,
+    api_key = NULL
 ) {
 
   # ----- Validate parameters --------------------------------------------------
@@ -53,118 +52,74 @@ OpenAQ_downloadRawLocations <- function(
   limit <- as.integer(limit)
   maxPages <- as.integer(maxPages)
 
-  # ----- Helper to request one page -------------------------------------------
+  # ----- Track metadata from requests -----------------------------------------
 
-  requestPage <- function(page) {
-    openaq::list_locations(
-      bbox = bbox,
-      ###coordinates = NULL,
-      ###radius = NULL,
-      providers_id = providers_id,
-      ###parameters_id = NULL,
-      ###owner_contacts_id = NULL,
-      manufacturers_id = manufacturers_id,
-      ###licenses_id = NULL,
-      monitor = monitor,
-      mobile = mobile,
-      ###instruments_id = NULL,
-      ###iso = NULL,
-      countries_id = countries_id,
-      ###order_by = NULL,
-      ###sort_order = NULL,
-      limit = limit,
-      page = page,
-      ###as_data_frame = TRUE,
-      ###dry_run = FALSE,
-      ###rate_limit = FALSE,
-      api_key = api_key
-    )
-  }
-
-  # ----- Request pages --------------------------------------------------------
-
-  dataList <- list()
+  firstMeta <- NULL
   lastMeta <- NULL
-  page <- 1
-  morePagesPossible <- FALSE
 
-  page <- 1
+  # ----- Download pages -------------------------------------------------------
 
-  while (page <= maxPages) {
+  openaq_raw <- OpenAQ_downloadPages(
+    fetchPageFUN = function(page, limit) {
 
-    if ( page > 1 && sleepSeconds > 0 ) {
-      Sys.sleep(sleepSeconds)
-    }
-
-    pageData <- requestPage(page = page)
-    pageDF <- as.data.frame(pageData, stringsAsFactors = FALSE)
-    pageMeta <- attr(pageData, "meta")
-
-    dataList[[page]] <- pageDF
-    lastMeta <- pageMeta
-
-    nReturned <- nrow(pageDF)
-
-    # Metadata from first page can help with user-facing warnings/messages,
-    # but row count is the most reliable signal for when pagination is done.
-    if ( page == 1 && !is.null(pageMeta$found) && !is.null(pageMeta$limit) ) {
-
-      found_raw <- pageMeta$found
-      meta_limit <- suppressWarnings(as.integer(pageMeta$limit))
-      found_num <- suppressWarnings(
-        as.integer(gsub("[^0-9]", "", as.character(found_raw)))
+      pageData <- openaq::list_locations(
+        bbox = bbox,
+        ###coordinates = NULL,
+        ###radius = NULL,
+        providers_id = providers_id,
+        ###parameters_id = NULL,
+        ###owner_contacts_id = NULL,
+        manufacturers_id = manufacturers_id,
+        ###licenses_id = NULL,
+        monitor = monitor,
+        mobile = mobile,
+        ###instruments_id = NULL,
+        ###iso = NULL,
+        countries_id = countries_id,
+        ###order_by = NULL,
+        ###sort_order = NULL,
+        limit = limit,
+        page = page,
+        ###as_data_frame = TRUE,
+        ###dry_run = FALSE,
+        ###rate_limit = FALSE,
+        api_key = api_key
       )
-      found_is_gt <- is.character(found_raw) && grepl("^\\s*>", found_raw)
 
-      if ( maxPages == 1 && !is.na(found_num) && !is.na(meta_limit) ) {
-        if ( found_is_gt || found_num > meta_limit ) {
-          warning(
-            "OpenAQ has ", found_raw, " matching locations, but only the first ",
-            meta_limit, " can be returned at once.\n",
-            "Try narrowing your request by specifying a state, county, or provider.",
-            call. = FALSE
-          )
-        }
+      pageMeta <- attr(pageData, "meta")
+
+      if ( is.null(firstMeta) ) {
+        firstMeta <- pageMeta
       }
 
-    }
+      lastMeta <<- pageMeta
 
-    # Stop when the current page is not full. This usually means we have reached
-    # the final page.
-    if ( nReturned < limit ) {
-      morePagesPossible <- FALSE
-      break
-    }
+      as.data.frame(pageData, stringsAsFactors = FALSE)
 
-    # If we have reached maxPages and still got a full page, there may be more.
-    if ( page >= maxPages ) {
-      morePagesPossible <- TRUE
-      break
-    }
+    },
+    limit = limit,
+    maxPages = maxPages,
+    sleepSeconds = sleepSeconds,
+    warnTruncated = FALSE
+  )
 
-    page <- page + 1
+  # ----- Preserve metadata from the last request ------------------------------
 
-  }
-
-  # ----- Combine results ------------------------------------------------------
-
-  openaq_raw <- dplyr::bind_rows(dataList)
-
-  # Preserve metadata from the last request, if available
   if ( !is.null(lastMeta) ) {
     attr(openaq_raw, "meta") <- lastMeta
-    attr(openaq_raw, "meta")$page <- page
+    attr(openaq_raw, "meta")$page <- attr(openaq_raw, "pagesRetrieved")
   }
 
   # ----- Warn if more pages may exist -----------------------------------------
 
-  if ( morePagesPossible ) {
+  possiblyTruncated <- isTRUE(attr(openaq_raw, "possiblyTruncated"))
 
-    meta <- attr(openaq_raw, "meta")
+  if ( possiblyTruncated ) {
+
     found_raw <- NULL
 
-    if ( !is.null(meta) && !is.null(meta$found) ) {
-      found_raw <- meta$found
+    if ( !is.null(firstMeta) && !is.null(firstMeta$found) ) {
+      found_raw <- firstMeta$found
     }
 
     if ( !is.null(found_raw) ) {
@@ -185,10 +140,10 @@ OpenAQ_downloadRawLocations <- function(
 
   }
 
-  # Remove any duplicates
+  # ----- Remove any duplicates ------------------------------------------------
+
   openaq_raw <- dplyr::distinct(openaq_raw)
 
   return(openaq_raw)
 
 }
-

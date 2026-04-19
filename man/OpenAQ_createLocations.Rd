@@ -5,7 +5,6 @@
 \title{Create a new OpenAQ locations dataset}
 \usage{
 OpenAQ_createLocations(
-  api_key = NULL,
   countryCodes = NULL,
   stateCodes = NULL,
   counties = NULL,
@@ -13,13 +12,11 @@ OpenAQ_createLocations(
   providers = NULL,
   manufacturers = NULL,
   monitor = NULL,
-  limit = 1000
+  limit = 1000,
+  api_key = NULL
 )
 }
 \arguments{
-\item{api_key}{OpenAQ API READ Key. If `api_key = NULL`, it
-will be obtained using `getAPIKey("OPENAQ")`.}
-
 \item{countryCodes}{ISO 3166-1 alpha-2 country codes used to subset the data.
 At least one countryCode must be specified. (Country names are also acceptible.)}
 
@@ -40,6 +37,9 @@ Use `lookbackDays = 0` to get all historical locations.}
 \item{monitor}{A logical to filter results to regulatory monitors (TRUE) or air sensors (FALSE), both are included if NULL.}
 
 \item{limit}{An integer specifying the maximum number of results to return, max is 1000.}
+
+\item{api_key}{OpenAQ API READ Key. If `api_key = NULL`, it
+will be obtained using `getAPIKey("OPENAQ")`.}
 }
 \value{
 A tibble of location metadata.
@@ -75,44 +75,46 @@ Matching is case-insensitive. Unmatched values are ignored.
 \donttest{
 # Fail gracefully if any resources are not available
 try({
+if ( interactive()) {
+  initializeMazamaSpatialUtils()
 
-library(AirSensor2)
+  locations <-
+    OpenAQ_createLocations(
+      countryCodes = "US",
+      stateCodes = "IL",
+      counties = "Cook",
+      api_key = OPENAQ_API_KEY
+    )
 
-initializeMazamaSpatialUtils()
+  table(locations$provider_name)
 
-locations <-
-  OpenAQ_createLocations(
-    countryCodes = "US",
-    stateCodes = "IL",
-    counties = "Cook",
-    api_key = OPENAQ_API_KEY
-  )
+  clarity <- locations \%>\% dplyr::filter(provider_name == "Clarity")
+  airnow <- locations \%>\% dplyr::filter(provider_name == "AirNow")
+  airgradient <- locations \%>\% dplyr::filter(provider_name == "AirGradient")
 
-clarity <- locations \%>\% dplyr::filter(provider_name == "Clarity")
-map <-
-  MazamaLocationUtils::table_leaflet(
-    clarity,
-    extraVars = c("deviceDeploymentID", "start", "end", "owner_name", "provider_name"),
-    radius = 5, fillColor = "blue"
-  )
+  map <-
+    MazamaLocationUtils::table_leaflet(
+      clarity,
+      extraVars = c("deviceDeploymentID", "start", "end", "owner_name", "provider_name"),
+      radius = 5, fillColor = "blue"
+    )
 
-airnow <- locations \%>\% dplyr::filter(provider_name == "AirNow")
-map <- MazamaLocationUtils::table_leafletAdd(
+  map <- MazamaLocationUtils::table_leafletAdd(
     map,
     airnow,
     extraVars = c("deviceDeploymentID", "start", "end", "owner_name", "provider_name"),
-    radius = 10, color = "black", fillColor = "black"
+    radius = 10, fillColor = "black"
   )
 
-airgradient <- locations \%>\% dplyr::filter(provider_name == "AirGradient")
-map <- MazamaLocationUtils::table_leafletAdd(
+  map <- MazamaLocationUtils::table_leafletAdd(
     map,
     airgradient,
     extraVars = c("deviceDeploymentID", "start", "end", "owner_name", "provider_name"),
-    radius = 5, color = "orange", fillColor = "orange"
+    radius = 5, fillColor = "red"
   )
 
-print(map)
+  print(map)
+}
 
 }, silent = FALSE)
 }

@@ -256,7 +256,7 @@ OpenAQ_enhanceRawLocations <- function(
       dplyr::filter(.data$countryCode %in% countryCodes)
   }
 
-  # ----- Extras ---------------------------------------------------------------
+  # ----- Extras ----------------------------------------------------------------
 
   # Add start and end date strings
   openaq <-

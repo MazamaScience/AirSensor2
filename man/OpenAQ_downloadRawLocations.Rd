@@ -5,7 +5,6 @@
 \title{Download raw OpenAQ location data}
 \usage{
 OpenAQ_downloadRawLocations(
-  api_key = NULL,
   bbox = NULL,
   providers_id = NULL,
   manufacturers_id = NULL,
@@ -14,12 +13,11 @@ OpenAQ_downloadRawLocations(
   countries_id = NULL,
   limit = 1000,
   maxPages = 1,
-  sleepSeconds = 0.2
+  sleepSeconds = 0.2,
+  api_key = NULL
 )
 }
 \arguments{
-\item{api_key}{OpenAQ API key.}
-
 \item{bbox}{Bounding box passed to [openaq::list_locations()].}
 
 \item{providers_id}{Provider IDs passed to [openaq::list_locations()].}
@@ -37,6 +35,8 @@ OpenAQ_downloadRawLocations(
 \item{maxPages}{Maximum number of pages to request automatically.}
 
 \item{sleepSeconds}{Number of seconds to pause between additional requests.}
+
+\item{api_key}{OpenAQ API key.}
 }
 \value{
 A dataframe of raw OpenAQ location metadata.
