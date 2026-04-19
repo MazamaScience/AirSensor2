@@ -42,7 +42,7 @@
 #' Use `lookbackDays = 0` to get all historical locations.
 #' @param providers Character vector of provider names or export prefixes used to subset the data. See note.
 #' @param manufacturers Character vector of manufacturer names used to subset the data. See note.
-#' @param monitor A logical to filter results to regulatory monitors (TRUE) or air sensors (FALSE), both are included if NULL.
+#' @param is_monitor A logical to filter results to regulatory monitors (TRUE) or air sensors (FALSE), both are included if NULL.
 #' @param limit An integer specifying the maximum number of results to return, max is 1000.
 #' @param api_key OpenAQ API READ Key. If `api_key = NULL`, it
 #' will be obtained using `getAPIKey("OPENAQ")`.
@@ -104,7 +104,7 @@ OpenAQ_createLocations <- function(
     lookbackDays = 1,
     providers = NULL,
     manufacturers = NULL,
-    monitor = NULL,
+    is_monitor = NULL,
     limit = 1000,
     api_key = NULL
 ) {
@@ -237,7 +237,7 @@ OpenAQ_createLocations <- function(
       bbox = bbox,
       providers_id = providers_id,
       manufacturers_id = manufacturers_id,
-      monitor = monitor,
+      monitor = is_monitor,
       mobile = FALSE,
       countries_id = countries_id,
       limit = limit,
@@ -297,7 +297,7 @@ if ( FALSE ) {
   lookbackDays = 1
   providers = NULL
   manufacturers = NULL
-  monitor = NULL
+  is_monitor = NULL
   limit = 1000
 
 
@@ -310,7 +310,7 @@ if ( FALSE ) {
       lookbackDays = lookbackDays,
       providers = NULL,
       manufacturers = NULL,
-      monitor = NULL,
+      is_monitor = NULL,
       limit = 1000
     )
 

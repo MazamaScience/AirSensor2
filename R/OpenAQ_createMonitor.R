@@ -9,28 +9,32 @@
 #' and create an object of class `mts_monitor` for use with the AirMonitor
 #' package.
 #'
-#' @param api_key OpenAQ API key. If `api_key = NULL`, it
-#' will be obtained using `getAPIKey("OpenAQ-read")`.
 #' @param locations Previously generated locations object containing `id`.
 #' @param locations_id OpenAQ location identifier.
+#' @param parameter Parameter to use for data. Currently only `"pm25"` is supported.
 #' @param startdate Start datetime in the requested timezone.
 #' @param enddate End datetime in the requested timezone.
 #' @param timezone Olson timezone used to interpret `startdate` and `enddate`.
-#' @param parameter Parameter to use for data. Currently only `"pm25"` is supported.
+#' @param maxPages Maximum number of pages to request automatically.
+#' @param sleepSeconds Number of seconds to pause between additional requests.
 #' @param applyQC Logical specifying whether to apply basic QC to invalidate
 #' bad data values.
+#' @param api_key OpenAQ API key. If `api_key = NULL`, it
+#' will be obtained using `getAPIKey("OpenAQ-read")`.
 #'
 #' @return An AirMonitor package `mts_monitor` object.
 #'
 OpenAQ_createMonitor <- function(
-    api_key = NULL,
     locations = NULL,
     locations_id = NULL,
+    parameter = c("pm25"),
     startdate = NULL,
     enddate = NULL,
     timezone = "UTC",
-    parameter = c("pm25"),
-    applyQC = TRUE
+    applyQC = TRUE,
+    maxPages = 1,
+    sleepSeconds = 0.2,
+    api_key = NULL
 ) {
 
   # ----- Validate parameters --------------------------------------------------
@@ -79,12 +83,13 @@ OpenAQ_createMonitor <- function(
 
   # ----- Create requested time window -----------------------------------------
 
-  requestedRange <- MazamaCoreUtils::timeRange(
-    starttime = startdate,
-    endtime = enddate,
-    timezone = timezone,
-    unit = "hour"
-  )
+  requestedRange <-
+    MazamaCoreUtils::timeRange(
+      starttime = startdate,
+      endtime = enddate,
+      timezone = timezone,
+      unit = "hour"
+    )
 
   startdate_utc <- lubridate::with_tz(requestedRange[1], "UTC")
   enddate_utc <- lubridate::with_tz(requestedRange[2], "UTC")
@@ -94,21 +99,35 @@ OpenAQ_createMonitor <- function(
   if ( logger.isInitialized() )
     logger.debug("----- OpenAQ_downloadRawData() -----")
 
-  tidyDF <-
+  openaq_data <-
     OpenAQ_downloadRawData(
       locations_id = locations_id,
       parameters = parameter,
       data = "hours",
       startdate = startdate_utc,
       enddate = enddate_utc,
+      limit = 1000,
+      maxPages = maxPages,
+      sleepSeconds = sleepSeconds,
       api_key = api_key
     )
 
-  # ----- Create meta ----------------------------------------------------------
+  # Guarantee a complete, monotonic, hourly UTC time axis.
+  hourly_axis <-
+    data.frame(
+      datetime = seq(
+        from = startdate_utc,
+        to = enddate_utc,
+        by = "1 hour"
+      )
+    )
 
-  if ( !"zip" %in% names(meta) ) {
-    meta$zip <- meta$postalCode
-  }
+  openaq_data <-
+    hourly_axis %>%
+    dplyr::left_join(openaq_data, by = "datetime") %>%
+    dplyr::arrange(.data$datetime)
+
+  # ----- Create meta ----------------------------------------------------------
 
   meta <-
     meta %>%
@@ -135,7 +154,7 @@ OpenAQ_createMonitor <- function(
   # ----- Create data ----------------------------------------------------------
 
   columns <- c("datetime", parameter)
-  data <- tidyDF %>% dplyr::select(dplyr::all_of(columns))
+  data <- openaq_data %>% dplyr::select(dplyr::all_of(columns))
 
   names(data) <- c("datetime", meta$deviceDeploymentID)
 
@@ -150,5 +169,65 @@ OpenAQ_createMonitor <- function(
   monitor <- structure(monitor, class = c("mts_monitor", "mts", class(monitor)))
 
   return(monitor)
+
+}
+# ===== DEBUGGING ==============================================================
+
+if ( FALSE ) {
+
+  library(AirSensor2)
+  initializeMazamaSpatialUtils()
+
+  library(dotenv)
+  dotenv::load_dot_env()
+
+  Sys.getenv("OPENAQ_API_KEY")
+
+  OPENAQ_API_KEY <- Sys.getenv("OPENAQ_API_KEY")
+
+  MazamaCoreUtils::setAPIKey("OPENAQ", Sys.getenv("OPENAQ_API_KEY"))
+
+  locations <-
+    OpenAQ_createLocations(
+      api_key = OPENAQ_API_KEY,
+      countryCodes = "US",
+      stateCodes = "IL",
+      counties = "Cook",
+      lookbackDays = 60,
+      providers = NULL,
+      manufacturers = NULL,
+      is_monitor = NULL,
+      limit = 1000
+    )
+
+
+  #locations_id <- 3301366  # AirNow
+  locations_id <- 6207297  # Clarity
+  #locations_id <- 1370216  # AirGradient
+  parameter <- "pm25"
+  startdate <- MazamaCoreUtils::parseDatetime("2026-04-01 00:00:00", timezone = "UTC")
+  enddate <- MazamaCoreUtils::parseDatetime("2026-04-15 00:00:00", timezone = "UTC")
+  timezone = "UTC"
+  limit <- 1000
+  maxPages <- 10
+  sleepSeconds <- 0.2
+  applyQC <- TRUE
+  api_key <- OPENAQ_API_KEY
+
+  monitor <-
+    OpenAQ_createMonitor(
+      locations = locations,
+      locations_id = locations_id,
+      parameter = "pm25",
+      startdate = startdate,
+      enddate = enddate,
+      timezone = "UTC",
+      applyQC = TRUE,
+      maxPages = maxPages,
+      sleepSeconds = sleepSeconds,
+      api_key = api_key
+    )
+
+  monitor %>% AirMonitor::monitor_timeseriesPlot(shadedNight = TRUE, addAQI = TRUE)
 
 }
