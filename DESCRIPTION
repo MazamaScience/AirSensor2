@@ -18,7 +18,7 @@ Depends:
 Imports:
     AirMonitor (>= 0.4.1),
     countrycode,
-dplyr (>= 1.0.0),
+    dplyr (>= 1.0.0),
     geodist,
     httr,
     jsonlite,

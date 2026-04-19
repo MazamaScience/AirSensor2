@@ -391,7 +391,8 @@ OpenAQ_parameterToID <- function(x) {
     idx_display <- match(x_upper[remaining], display_upper)
     matched_display <- !is.na(idx_display)
 
-    result[remaining][matched_display] <-
+    remaining_idx <- which(remaining)
+    result[remaining_idx[matched_display]] <-
       parameters$id[idx_display[matched_display]]
   }
 
