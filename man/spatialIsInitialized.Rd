@@ -2,14 +2,15 @@
 % Please edit documentation in R/initializeMazamaSpatialUtils.R
 \name{spatialIsInitialized}
 \alias{spatialIsInitialized}
-\title{Check if MazamaSpatialUtils has been initialized}
+\title{Check whether MazamaSpatialUtils has been initialized}
 \usage{
 spatialIsInitialized()
 }
 \value{
-Logical.
+Logical `TRUE` if initialization has been performed in the current
+  session, `FALSE` otherwise.
 }
 \description{
-Logical convenience function to check if
-`initializeMazamaSpatialUtils()` has been run.
+Convenience function that checks whether
+`initializeMazamaSpatialUtils()` has been run in the current R session.
 }

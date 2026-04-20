@@ -1,10 +1,11 @@
-#' @encoding UTF-8
-#' @title Example raw PurpleAir Synoptic dataset
-#' @format A tibble with 39 rows and 18 columns of data.
-#' @description The `example_pas_pm25_raw` dataset provides a quickly loadable
-#' version of raw PurpleAir synoptic data for practicing and code examples
+#' Example raw PurpleAir synoptic dataset
+#'
+#' A tibble with 39 rows and 18 columns of data.
+#'
+#' The `example_pas_pm25_raw` dataset provides a quickly loadable
+#' version of raw PurpleAir synoptic data for practice and code examples.
 #' This dataset contains data for sensors in a box around the Methow Valley
-#' in Washington state and was generated on 2024-03-12 by running:
+#' in Washington and was generated on 2024-03-12 by running:
 #'
 #' \preformatted{
 #' library(AirSensor2)
@@ -40,17 +41,19 @@
 #'   )
 #' }
 #'
+#' @format A tibble with 39 rows and 18 columns of data.
 #' @seealso example_pas_pm25
 #' @source https://www2.purpleair.com
 "example_pas_pm25_raw"
 
 
-#' @encoding UTF-8
-#' @title Example enhanced PurpleAir Synoptic dataset
-#' @format A tibble with 2287 rows and 33 columns of data.
-#' @description The `example_pas_pm25` dataset provides a quickly loadable
-#' version of a *pas* object for practicing and code examples. This
-#' object contains metadata appropriate for generating *pat* objects
+#' Example enhanced PurpleAir synoptic PM2.5 dataset
+#'
+#' A tibble with 2287 rows and 33 columns of data.
+#'
+#' The `example_pas_pm25` dataset provides a quickly loadable
+#' version of a *pas* object for practice and code examples. This
+#' object contains metadata suitable for generating *pat* objects
 #' with [pat_create()].
 #'
 #' This dataset contains data for sensors in Washington and Oregon
@@ -77,6 +80,7 @@
 #' save(example_pas_pm25, file = "data/example_pas_pm25.rda")
 #' }
 #'
+#' @format A tibble with 2287 rows and 33 columns of data.
 #' @seealso example_pas_pm25_raw
 #' @seealso example_pas_historical
 #' @seealso example_pas_metadata
@@ -84,11 +88,12 @@
 "example_pas_pm25"
 
 
-#' @encoding UTF-8
-#' @title Example enhanced PurpleAir Synoptic dataset
-#' @format A tibble with 122 rows and 22 columns of data.
-#' @description The `example_pas_historical` dataset provides a quickly loadable
-#' version of a *pas* object for practicing and code examples. This
+#' Example historical PurpleAir synoptic dataset
+#'
+#' A tibble with 122 rows and 22 columns of data.
+#'
+#' The `example_pas_historical` dataset provides a quickly loadable
+#' version of a *pas* object for practice and code examples. This
 #' object contains fewer metadata fields than other `example_pas_~` objects
 #' and is intended for use with [pas_lifespanPlot()].
 #'
@@ -116,17 +121,19 @@
 #' save(example_pas_historical, file = "data/example_pas_historical.rda")
 #' }
 #'
+#' @format A tibble with 122 rows and 22 columns of data.
 #' @seealso example_pas_pm25
 #' @seealso example_pas_metadata
 #' @source https://www2.purpleair.com
 "example_pas_historical"
 
 
-#' @encoding UTF-8
-#' @title Example enhanced PurpleAir Synoptic dataset
-#' @format A tibble with 122 rows and 31 columns of data.
-#' @description The `example_pas_metadata` dataset provides a quickly loadable
-#' version of a *pas* object for practicing and code examples. This
+#' Example PurpleAir synoptic dataset with extended metadata
+#'
+#' A tibble with 122 rows and 31 columns of data.
+#'
+#' The `example_pas_metadata` dataset provides a quickly loadable
+#' version of a *pas* object for practice and code examples. This
 #' object contains more metadata than other `example_pas_~` objects.
 #'
 #' This dataset contains data for sensors in Washington and Oregon
@@ -153,18 +160,20 @@
 #' save(example_pas_metadata, file = "data/example_pas_metadata.rda")
 #' }
 #'
+#' @format A tibble with 122 rows and 31 columns of data.
 #' @seealso example_pas_pm25
 #' @seealso example_pas_historical
 #' @source https://www2.purpleair.com
 "example_pas_metadata"
 
 
-#' @encoding UTF-8
-#' @title Example PurpleAir Timeseries dataset
-#' @format A list containing two tibbles named 'meta' and 'data'.
-#' @description The `example_pat` dataset provides a quickly loadable
-#' version of a *pat* object for practicing and code examples.
-#' This dataset contains 24 hours worth of data for a single PurpleAir sensor
+#' Example PurpleAir timeseries dataset
+#'
+#' A list containing two tibbles named `meta` and `data`.
+#'
+#' The `example_pat` dataset provides a quickly loadable
+#' version of a *pat* object for practice and code examples.
+#' This dataset contains 24 hours of data for a single PurpleAir sensor
 #' and was generated on 2024-03-12 by running:
 #'
 #' \preformatted{
@@ -185,22 +194,24 @@
 #'   )
 #'
 #' save(example_pat, file = "data/example_pat.rda")
-#' #' }
+#' }
 #'
+#' @format A list containing two tibbles named 'meta' and 'data'.
 #' @seealso example_pas_metadata
 #' @source https://www2.purpleair.com
 "example_pat"
 
 
-#' @encoding UTF-8
-#' @title Example PurpleAir Timeseries dataset with EPA fields
-#' @format A list containing two tibbles named 'meta' and 'data'.
-#' @description The `example_pat` dataset provides a quickly loadable
-#' version of a *pat* object for practicing and code examples. This
+#' Example PurpleAir timeseries dataset with EPA fields
+#'
+#' A list containing two tibbles named `meta` and `data`.
+#'
+#' The `example_pat_epa` dataset provides a quickly loadable
+#' version of a *pat* object for practice and code examples. This
 #' *pat* object contains the `pm2.5_cf` fields required for the EPA
 #' correction algorithm used in [pat_applyCorrection()].
 #'
-#' This dataset contains 24 hours worth of data for a single PurpleAir sensor
+#' This dataset contains 24 hours of data for a single PurpleAir sensor
 #' and was generated on 2024-10-30 by running:
 #'
 #' \preformatted{
@@ -221,12 +232,9 @@
 #'   )
 #'
 #' save(example_pat_epa, file = "data/example_pat_epa.rda")
-#' #' }
+#' }
 #'
+#' @format A list containing two tibbles named 'meta' and 'data'.
 #' @seealso example_pas_metadata
 #' @source https://www2.purpleair.com
 "example_pat_epa"
-
-
-
-

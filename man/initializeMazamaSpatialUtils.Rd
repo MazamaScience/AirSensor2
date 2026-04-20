@@ -2,7 +2,7 @@
 % Please edit documentation in R/initializeMazamaSpatialUtils.R
 \name{initializeMazamaSpatialUtils}
 \alias{initializeMazamaSpatialUtils}
-\title{Initialize MazamaSpatialUtils package}
+\title{Initialize MazamaSpatialUtils}
 \usage{
 initializeMazamaSpatialUtils(
   spatialDataDir = "~/Data/Spatial",
@@ -12,18 +12,26 @@ initializeMazamaSpatialUtils(
 )
 }
 \arguments{
-\item{spatialDataDir}{Directory where \pkg{MazamaSpatialUtils} datasets are found.}
+\item{spatialDataDir}{Directory containing external
+\pkg{MazamaSpatialUtils} spatial datasets.}
 
-\item{stateCodeDataset}{\pkg{MazamaSpatialUtils} dataset returning ISO 3166-2 .
-alpha-2 stateCodes.}
+\item{stateCodeDataset}{Name of the \pkg{MazamaSpatialUtils} dataset
+containing state or administrative-level boundaries and codes.}
 
-\item{USCountiesDataset}{\pkg{MazamaSpatialUtils} dataset returning US county names.}
+\item{USCountiesDataset}{Name of the \pkg{MazamaSpatialUtils} dataset
+containing US county names.}
 
-\item{logLevel}{Logging level used if logging has not already been
+\item{logLevel}{Logging level to use if logging has not already been
 initialized.}
 }
+\value{
+Invisible `NULL`.
+}
 \description{
-Convenience function that wraps:
+Convenience function that loads the spatial datasets needed by
+any of the "enhanceRaw" functions.
+
+This function wraps the equivalent sequence:
 
 \preformatted{
   data("SimpleCountriesEEZ", package = "MazamaSpatialUtils")
@@ -34,12 +42,10 @@ Convenience function that wraps:
   MazamaSpatialUtils::loadSpatialData("USCensusCounties.rda")
 }
 
-This function should be run before using `pas_load()`, as
-`pas_load()` uses the spatial data loaded by
-`initializeMazamaSpatialUtils()` to enhance raw synoptic data via
+It should be run before using `pas_load()`, because `pas_load()` uses the
+spatial data loaded here to enhance raw synoptic data via
 `pas_enhanceData()`.
 
-If file logging is desired, these commands should be run individually with
-output log files specified as arguments to `logger.setup()` from the
-\pkg{MazamaCoreUtils} package.
+If file logging is desired, the individual logging commands should be run
+separately with output files specified in `MazamaCoreUtils::logger.setup()`.
 }

@@ -1,16 +1,10 @@
-#' @export
-#' @importFrom MazamaCoreUtils logger.setup logger.setLevel WARN
+#' Initialize MazamaSpatialUtils
 #'
-#' @title Initialize MazamaSpatialUtils package
+#' @description
+#' Convenience function that loads the spatial datasets needed by
+#' any of the "enhanceRaw" functions.
 #'
-#' @param spatialDataDir Directory where \pkg{MazamaSpatialUtils} datasets are found.
-#' @param stateCodeDataset \pkg{MazamaSpatialUtils} dataset returning ISO 3166-2 .
-#' alpha-2 stateCodes.
-#' @param USCountiesDataset \pkg{MazamaSpatialUtils} dataset returning US county names.
-#' @param logLevel Logging level used if logging has not already been
-#' initialized.
-#'
-#' @description Convenience function that wraps:
+#' This function wraps the equivalent sequence:
 #'
 #' \preformatted{
 #'   data("SimpleCountriesEEZ", package = "MazamaSpatialUtils")
@@ -21,21 +15,31 @@
 #'   MazamaSpatialUtils::loadSpatialData("USCensusCounties.rda")
 #' }
 #'
-#' This function should be run before using `pas_load()`, as
-#' `pas_load()` uses the spatial data loaded by
-#' `initializeMazamaSpatialUtils()` to enhance raw synoptic data via
+#' It should be run before using `pas_load()`, because `pas_load()` uses the
+#' spatial data loaded here to enhance raw synoptic data via
 #' `pas_enhanceData()`.
 #'
-#' If file logging is desired, these commands should be run individually with
-#' output log files specified as arguments to `logger.setup()` from the
-#' \pkg{MazamaCoreUtils} package.
+#' If file logging is desired, the individual logging commands should be run
+#' separately with output files specified in `MazamaCoreUtils::logger.setup()`.
 #'
-
+#' @param spatialDataDir Directory containing external
+#'   \pkg{MazamaSpatialUtils} spatial datasets.
+#' @param stateCodeDataset Name of the \pkg{MazamaSpatialUtils} dataset
+#'   containing state or administrative-level boundaries and codes.
+#' @param USCountiesDataset Name of the \pkg{MazamaSpatialUtils} dataset
+#'   containing US county names.
+#' @param logLevel Logging level to use if logging has not already been
+#'   initialized.
+#'
+#' @return Invisible `NULL`.
+#'
+#' @export
+#' @importFrom MazamaCoreUtils logger.setup logger.setLevel WARN
 initializeMazamaSpatialUtils <- function(
-  spatialDataDir = "~/Data/Spatial",
-  stateCodeDataset = "NaturalEarthAdm1.rda",
-  USCountiesDataset = "USCensusCounties.rda",
-  logLevel = WARN
+    spatialDataDir = "~/Data/Spatial",
+    stateCodeDataset = "NaturalEarthAdm1.rda",
+    USCountiesDataset = "USCensusCounties.rda",
+    logLevel = WARN
 ) {
 
   # ----- Validate Parameters --------------------------------------------------
@@ -63,19 +67,16 @@ initializeMazamaSpatialUtils <- function(
   return(invisible(NULL))
 }
 
+#' Check whether MazamaSpatialUtils has been initialized
+#'
+#' @description
+#' Convenience function that checks whether
+#' `initializeMazamaSpatialUtils()` has been run in the current R session.
+#'
+#' @return Logical `TRUE` if initialization has been performed in the current
+#'   session, `FALSE` otherwise.
+#'
 #' @export
-#' @title Check if MazamaSpatialUtils has been initialized
-#'
-#' @description Logical convenience function to check if
-#' `initializeMazamaSpatialUtils()` has been run.
-#'
-#' @return Logical.
-
 spatialIsInitialized <- function() {
-  value <- as.logical(Sys.getenv("MAZAMA_SPATIAL_IS_INITIALIZED"))
-  if ( is.na(value) ) {
-    return(FALSE)
-  } else {
-    return(value)
-  }
+  identical(Sys.getenv("MAZAMA_SPATIAL_IS_INITIALIZED"), "TRUE")
 }
