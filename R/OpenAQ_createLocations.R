@@ -1,102 +1,88 @@
+#' Create an OpenAQ locations dataset
+#'
+#' Downloads location metadata from OpenAQ and returns an enhanced data frame
+#' suitable for analysis and mapping with \pkg{MazamaLocationUtils}.
+#'
+#' This function can filter locations by country, state, county, provider,
+#' manufacturer, and monitor type. It can also limit results to locations with
+#' recent data using `lookbackDays`. Returned data are enhanced with standardized
+#' identifiers and spatial metadata such as timezone, countryCode, and stateCode.
+#'
+#' Valid values for `countryCodes`, `providers`, and `manufacturers` can be
+#' explored with [OpenAQ_getCountries()], [OpenAQ_getProviders()], and
+#' [OpenAQ_getManufacturers()].
+#'
+#' @param countryCodes Optional ISO 3166-1 alpha-2 country codes used to subset
+#'   the data.
+#' @param stateCodes Optional ISO 3166-2 alpha-2 state codes used to subset
+#'   the data.
+#' @param counties Optional U.S. county names or 5-digit FIPS codes used to
+#'   subset the data.
+#' @param lookbackDays Number of days to look back for locations with recent
+#'   data. Use `lookbackDays = 0` to include all historical locations.
+#' @param providers Optional character vector of OpenAQ provider names or export
+#'   prefixes used to subset the data.
+#' @param manufacturers Optional character vector of manufacturer names used to
+#'   subset the data.
+#' @param is_monitor Optional logical used to filter results to regulatory
+#'   monitors (`TRUE`) or air sensors (`FALSE`). If `NULL`, both are included.
+#' @param limit Maximum number of locations to request per API call. Values
+#'   greater than 1000 are reset to 1000.
+#' @param api_key OpenAQ API read key. If `NULL`, the key is obtained with
+#'   `MazamaCoreUtils::getAPIKey("OpenAQ")`.
+#'
+#' @return A data frame of enhanced OpenAQ location metadata.
+#'
+#' @examples
+#' \donttest{
+#' try({
+#'   if (interactive()) {
+#'     initializeMazamaSpatialUtils()
+#'
+#'     locations <-
+#'       OpenAQ_createLocations(
+#'         countryCodes = "US",
+#'         stateCodes = "IL",
+#'         counties = "Cook",
+#'         api_key = OPENAQ_API_KEY
+#'       )
+#'
+#'     table(locations$provider_name)
+#'
+#'     clarity <- locations %>% dplyr::filter(provider_name == "Clarity")
+#'     airnow <- locations %>% dplyr::filter(provider_name == "AirNow")
+#'     airgradient <- locations %>% dplyr::filter(provider_name == "AirGradient")
+#'
+#'     map <-
+#'       MazamaLocationUtils::table_leaflet(
+#'         clarity,
+#'         extraVars = c("deviceDeploymentID", "start", "end", "owner_name", "provider_name"),
+#'         radius = 5, fillColor = "blue"
+#'       )
+#'
+#'     map <- MazamaLocationUtils::table_leafletAdd(
+#'       map,
+#'       airnow,
+#'       extraVars = c("deviceDeploymentID", "start", "end", "owner_name", "provider_name"),
+#'       radius = 10, fillColor = "black"
+#'     )
+#'
+#'     map <- MazamaLocationUtils::table_leafletAdd(
+#'       map,
+#'       airgradient,
+#'       extraVars = c("deviceDeploymentID", "start", "end", "owner_name", "provider_name"),
+#'       radius = 5, fillColor = "red"
+#'     )
+#'
+#'     print(map)
+#'   }
+#' }, silent = FALSE)
+#' }
+#'
 #' @export
 #' @importFrom rlang .data
 #' @importFrom MazamaCoreUtils logger.isInitialized logger.debug
 #' @importFrom MazamaCoreUtils getAPIKey
-#'
-#' @title Create a new OpenAQ locations dataset
-#'
-#' @description Download, parse and enhance locations data from OpenAQ and
-#' return the results as a plain tibble.
-#'
-#' Steps include:
-#'
-#' 1) Download and parse locations data
-#'
-#' 2) Add spatial metadata for each location including:
-#' \itemize{
-#'   \item{timezone -- olson timezone}
-#'   \item{countryCode -- ISO 3166-1 alpha-2}
-#'   \item{stateCode -- ISO 3166-2 alpha-2}
-#' }
-#'
-#' @note
-#' Valid values for `countryCodes`, `providers` and `manufacturers` can be obtained with:
-#'
-#' \preformatted{
-#' OpenAQ_getCountries()
-#' OpenAQ_getProviders()
-#' OpenAQ_getManufacturers()
-#' }
-#'
-#' These functions return reference tables containing the available values.
-#' Matching is case-insensitive. Unmatched values are ignored.
-#'
-#' @param countryCodes ISO 3166-1 alpha-2 country codes used to subset the data.
-#' At least one countryCode must be specified. (Country names are also acceptible.)
-#' @param stateCodes ISO-3166-2 alpha-2 state codes used to subset the data.
-#' Specifying stateCodes is optional.
-#' @param counties US county names or 5-digit FIPS codes used to subset the data.
-#' Specifying counties is optional.
-#' @param lookbackDays Number of days to "look back" for locations with valid data. Locations are
-#' filtered to only include those with data more recent than `lookbackDays` ago.
-#' Use `lookbackDays = 0` to get all historical locations.
-#' @param providers Character vector of provider names or export prefixes used to subset the data. See note.
-#' @param manufacturers Character vector of manufacturer names used to subset the data. See note.
-#' @param is_monitor A logical to filter results to regulatory monitors (TRUE) or air sensors (FALSE), both are included if NULL.
-#' @param limit An integer specifying the maximum number of results to return, max is 1000.
-#' @param api_key OpenAQ API READ Key. If `api_key = NULL`, it
-#' will be obtained using `getAPIKey("OPENAQ")`.
-#'
-#' @return A tibble of location metadata.
-#'
-#' @examples
-#' \donttest{
-#' # Fail gracefully if any resources are not available
-#' try({
-#' if ( interactive()) {
-#'   initializeMazamaSpatialUtils()
-#'
-#'   locations <-
-#'     OpenAQ_createLocations(
-#'       countryCodes = "US",
-#'       stateCodes = "IL",
-#'       counties = "Cook",
-#'       api_key = OPENAQ_API_KEY
-#'     )
-#'
-#'   table(locations$provider_name)
-#'
-#'   clarity <- locations %>% dplyr::filter(provider_name == "Clarity")
-#'   airnow <- locations %>% dplyr::filter(provider_name == "AirNow")
-#'   airgradient <- locations %>% dplyr::filter(provider_name == "AirGradient")
-#'
-#'   map <-
-#'     MazamaLocationUtils::table_leaflet(
-#'       clarity,
-#'       extraVars = c("deviceDeploymentID", "start", "end", "owner_name", "provider_name"),
-#'       radius = 5, fillColor = "blue"
-#'     )
-#'
-#'   map <- MazamaLocationUtils::table_leafletAdd(
-#'     map,
-#'     airnow,
-#'     extraVars = c("deviceDeploymentID", "start", "end", "owner_name", "provider_name"),
-#'     radius = 10, fillColor = "black"
-#'   )
-#'
-#'   map <- MazamaLocationUtils::table_leafletAdd(
-#'     map,
-#'     airgradient,
-#'     extraVars = c("deviceDeploymentID", "start", "end", "owner_name", "provider_name"),
-#'     radius = 5, fillColor = "red"
-#'   )
-#'
-#'   print(map)
-#' }
-#'
-#' }, silent = FALSE)
-#' }
-
 OpenAQ_createLocations <- function(
     countryCodes = NULL,
     stateCodes = NULL,
@@ -116,6 +102,7 @@ OpenAQ_createLocations <- function(
 
   lookbackDays <- MazamaCoreUtils::setIfNull(lookbackDays, 1)
   limit <- MazamaCoreUtils::setIfNull(limit, 1000)
+
   if ( limit > 1000 ) {
     message("Limit cannot be greater than 1000. Resetting to 1000.")
     limit <- 1000
@@ -126,32 +113,30 @@ OpenAQ_createLocations <- function(
     # Guarantee uppercase codes
     countryCodes <- toupper(countryCodes)
 
-    # NOTE:  stateCodes are optional
-
     # Validate countryCodes
-    if ( any(!(countryCodes %in% countrycode::codelist$iso2c)) )
+    if ( any(!(countryCodes %in% countrycode::codelist$iso2c)) ) {
       stop("parameter 'countryCodes' has values that are not recognized as ISO-2 country codes")
+    }
 
     if ( !is.null(stateCodes) ) {
       if ( length(countryCodes) != 1 ) {
         stop("please limit 'countryCodes' to a single country when using 'stateCodes'")
       }
+
       if ( !is.null(counties) ) {
         if ( length(stateCodes) != 1 ) {
           stop("please limit 'stateCodes' to a single state when using 'counties'")
         }
-
       }
     }
 
     # Check if MazamaSpatialUtils package has been initialized
-    # via initializeMazamaSpatialUtils()
     if ( !spatialIsInitialized() ) {
-      stop('`pas_createNew` requires MazamaSpatialUtils to be initialized:
-
-            initializeMazamaSpatialUtils()
-
-         Please see `?initializeMazamaSpatialUtils for more details.')
+      stop(
+        "`OpenAQ_createLocations()` requires MazamaSpatialUtils to be initialized:\n\n",
+        "  initializeMazamaSpatialUtils()\n\n",
+        "Please see `?initializeMazamaSpatialUtils` for more details."
+      )
     }
 
   }
@@ -187,10 +172,10 @@ OpenAQ_createLocations <- function(
             dplyr::filter(.data$stateCode %in% stateCodes) %>%
             dplyr::filter(.data$countyFIPS %in% counties)
         } else {
-          # Handle input inconsistencies
           counties <-
             stringr::str_to_title(counties) %>%
             stringr::str_replace(" County", "")
+
           SFDF <-
             get("USCensusCounties") %>%  # To pass R CMD check
             dplyr::filter(.data$stateCode %in% stateCodes) %>%
@@ -199,9 +184,8 @@ OpenAQ_createLocations <- function(
 
       } else {
 
-        # Use state but not counties
         SFDF <-
-          get("NaturalEarthAdm1") %>% # To pass R CMD check
+          get("NaturalEarthAdm1") %>%  # To pass R CMD check
           dplyr::filter(.data$countryCode %in% countryCodes) %>%
           dplyr::filter(.data$stateCode %in% stateCodes)
 
@@ -216,6 +200,7 @@ OpenAQ_createLocations <- function(
   # ----- providers_id ---------------------------------------------------------
 
   providers_id <- NULL
+
   if ( !is.null(providers) ) {
     providers_id <- OpenAQ_providerToID(providers)
     providers_id <- unique(providers_id[!is.na(providers_id)])
@@ -224,6 +209,7 @@ OpenAQ_createLocations <- function(
   # ----- manufacturers_id -----------------------------------------------------
 
   manufacturers_id <- NULL
+
   if ( !is.null(manufacturers) ) {
     manufacturers_id <- OpenAQ_manufacturerToID(manufacturers)
     manufacturers_id <- unique(manufacturers_id[!is.na(manufacturers_id)])
@@ -231,7 +217,7 @@ OpenAQ_createLocations <- function(
 
   # ----- Load data ------------------------------------------------------------
 
-  openaq_raw <-
+  locations_raw <-
     OpenAQ_downloadRawLocations(
       api_key = api_key,
       bbox = bbox,
@@ -251,8 +237,8 @@ OpenAQ_createLocations <- function(
 
     cutoff <- lubridate::now("UTC") - lubridate::days(lookbackDays)
 
-    openaq_raw <-
-      openaq_raw %>%
+    locations_raw <-
+      locations_raw %>%
       dplyr::filter(.data$datetime_last >= cutoff)
 
   }
@@ -261,7 +247,7 @@ OpenAQ_createLocations <- function(
 
   locations <-
     OpenAQ_enhanceRawLocations(
-      openaq_raw,
+      locations_raw,
       countryCodes = countryCodes,
       stateCodes = stateCodes,
       counties = counties
@@ -289,17 +275,15 @@ if ( FALSE ) {
 
   MazamaCoreUtils::setAPIKey("OPENAQ", Sys.getenv("OPENAQ_API_KEY"))
 
-
-  api_key = NULL
-  countryCodes = c("US")
-  stateCodes = "IL"
-  counties = "Cook"
-  lookbackDays = 1
-  providers = NULL
-  manufacturers = NULL
-  is_monitor = NULL
-  limit = 1000
-
+  api_key <- NULL
+  countryCodes <- c("US")
+  stateCodes <- "IL"
+  counties <- "Cook"
+  lookbackDays <- 1
+  providers <- NULL
+  manufacturers <- NULL
+  is_monitor <- NULL
+  limit <- 1000
 
   locations <-
     OpenAQ_createLocations(
@@ -313,6 +297,5 @@ if ( FALSE ) {
       is_monitor = NULL,
       limit = 1000
     )
-
 
 }

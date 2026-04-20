@@ -2,51 +2,41 @@
 % Please edit documentation in R/OpenAQ_enhanceRawLocations.R
 \name{OpenAQ_enhanceRawLocations}
 \alias{OpenAQ_enhanceRawLocations}
-\title{Enhance locations data from OpenAQ}
+\title{Enhance OpenAQ locations data}
 \usage{
 OpenAQ_enhanceRawLocations(
-  openaq_raw = NULL,
+  locations_raw = NULL,
   countryCodes = NULL,
   stateCodes = NULL,
   counties = NULL
 )
 }
 \arguments{
-\item{openaq_raw}{Dataframe returned by [openaq::list_locations()].}
+\item{locations_raw}{Data frame returned by [openaq::list_locations()].}
 
-\item{countryCodes}{ISO 3166-1 alpha-2 country codes used to subset the data.}
+\item{countryCodes}{Optional ISO 3166-1 alpha-2 country codes used to subset
+the data.}
 
-\item{stateCodes}{ISO-3166-2 alpha-2 state codes used to subset the data.}
+\item{stateCodes}{Optional ISO 3166-2 alpha-2 state codes used to subset
+the data.}
 
-\item{counties}{US county names or 5-digit FIPS codes used to subset the data.}
+\item{counties}{Optional U.S. county names or 5-digit FIPS codes used to
+subset the data.}
 }
 \value{
-Enhanced dataframe of location OpenAQ data.
+A data frame of enhanced OpenAQ location data with standardized
+  variable names, spatial metadata (e.g., timezone, countryCode, stateCode,
+  countyName), and device metadata (e.g., sensorManufacturer, deviceID,
+  deviceDeploymentID, locationName).
 }
 \description{
-Enhance raw location data from OpenAQ to create an
-improved dataframe compatible with the \pkg{MazamaLocationUtils} package and
-AirSensor2 conventions.
-
-Steps include:
-
-1) Replace variable names with more consistent, human readable names.
-
-2) Add spatial metadata for each location including:
-\itemize{
-  \item{timezone -- Olson timezone}
-  \item{countryCode -- ISO 3166-1 alpha-2}
-  \item{stateCode -- ISO 3166-2 alpha-2 when available}
-  \item{countyName -- US county name when appropriate}
+Enhances raw location data returned by [openaq::list_locations()] to create
+a standardized data frame compatible with \pkg{MazamaLocationUtils} and
+\pkg{AirSensor2} conventions.
 }
-
-3) Add additional metadata items:
-\itemize{
-  \item{sensorManufacturer}
-  \item{deviceID}
-  \item{deviceDeploymentID}
-  \item{locationName}
-}
-
-4) Filter by countryCodes, stateCodes, and counties when requested.
+\details{
+This function renames variables for clarity, adds spatial and device metadata,
+and optionally filters the data by country, state, or county. The resulting
+data frame includes consistent identifiers and metadata fields suitable for
+downstream analysis and mapping.
 }
