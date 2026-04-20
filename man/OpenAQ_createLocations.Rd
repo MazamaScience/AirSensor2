@@ -11,7 +11,7 @@ OpenAQ_createLocations(
   lookbackDays = 1,
   providers = NULL,
   manufacturers = NULL,
-  monitor = NULL,
+  is_monitor = NULL,
   limit = 1000,
   api_key = NULL
 )
@@ -34,7 +34,7 @@ Use `lookbackDays = 0` to get all historical locations.}
 
 \item{manufacturers}{Character vector of manufacturer names used to subset the data. See note.}
 
-\item{monitor}{A logical to filter results to regulatory monitors (TRUE) or air sensors (FALSE), both are included if NULL.}
+\item{is_monitor}{A logical to filter results to regulatory monitors (TRUE) or air sensors (FALSE), both are included if NULL.}
 
 \item{limit}{An integer specifying the maximum number of results to return, max is 1000.}
 

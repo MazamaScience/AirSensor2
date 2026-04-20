@@ -1,3 +1,170 @@
+# ===== Cached data ============================================================
+
+# Cached data ------------------------------------------------------------------
+
+#' @keywords internal
+internal_OpenAQ_cache <- function() {
+
+  internal_getProviderCache("OpenAQ")
+
+}
+
+
+# Internal helpers -------------------------------------------------------------
+
+#' @keywords internal
+internal_requireOpenAQ <- function() {
+
+  if ( !requireNamespace("openaq", quietly = TRUE) ) {
+    stop(
+      "Package 'openaq' is required for OpenAQ-related functionality. ",
+      "Please install it with install.packages('openaq').",
+      call. = FALSE
+    )
+  }
+
+}
+
+
+#' @keywords internal
+internal_downloadOpenAQReferenceTable <- function(downloadFunction) {
+
+  internal_requireOpenAQ()
+
+  tryCatch(
+    downloadFunction(limit = 1000),
+    error = function(e) {
+      stop(
+        "Unable to download OpenAQ reference data. ",
+        "Please check your internet connection and try again.\n",
+        "Original error: ", conditionMessage(e),
+        call. = FALSE
+      )
+    }
+  )
+
+}
+
+
+# OpenAQ reference table helpers -----------------------------------------------
+
+#' @keywords internal
+internal_OpenAQ_getCountries <- function() {
+
+  cache <- internal_OpenAQ_cache()
+
+  if ( is.null(cache$countries) ) {
+    cache$countries <- internal_downloadOpenAQReferenceTable(openaq::list_countries)
+  }
+
+  return(cache$countries)
+
+}
+
+
+#' @keywords internal
+internal_OpenAQ_getInstruments <- function() {
+
+  cache <- internal_OpenAQ_cache()
+
+  if ( is.null(cache$instruments) ) {
+    cache$instruments <- internal_downloadOpenAQReferenceTable(openaq::list_instruments)
+  }
+
+  return(cache$instruments)
+
+}
+
+
+#' @keywords internal
+internal_OpenAQ_getLicenses <- function() {
+
+  cache <- internal_OpenAQ_cache()
+
+  if ( is.null(cache$licenses) ) {
+    cache$licenses <- internal_downloadOpenAQReferenceTable(openaq::list_licenses)
+  }
+
+  return(cache$licenses)
+
+}
+
+
+#' @keywords internal
+internal_OpenAQ_getManufacturers <- function() {
+
+  cache <- internal_OpenAQ_cache()
+
+  if ( is.null(cache$manufacturers) ) {
+    cache$manufacturers <- internal_downloadOpenAQReferenceTable(openaq::list_manufacturers)
+  }
+
+  return(cache$manufacturers)
+
+}
+
+
+#' @keywords internal
+internal_OpenAQ_getOwners <- function() {
+
+  cache <- internal_OpenAQ_cache()
+
+  if ( is.null(cache$owners) ) {
+    cache$owners <- internal_downloadOpenAQReferenceTable(openaq::list_owners)
+  }
+
+  return(cache$owners)
+
+}
+
+
+#' @keywords internal
+internal_OpenAQ_getParameters <- function() {
+
+  cache <- internal_OpenAQ_cache()
+
+  if ( is.null(cache$parameters) ) {
+    cache$parameters <- internal_downloadOpenAQReferenceTable(openaq::list_parameters)
+  }
+
+  return(cache$parameters)
+
+}
+
+
+#' @keywords internal
+internal_OpenAQ_getProviders <- function() {
+
+  cache <- internal_OpenAQ_cache()
+
+  if ( is.null(cache$providers) ) {
+    cache$providers <- internal_downloadOpenAQReferenceTable(openaq::list_providers)
+  }
+
+  return(cache$providers)
+
+}
+
+
+# Reset helper -----------------------------------------------------------------
+
+#' @keywords internal
+internal_resetOpenAQCache <- function() {
+
+  cache <- internal_OpenAQ_cache()
+
+  cache$countries <- NULL
+  cache$instruments <- NULL
+  cache$licenses <- NULL
+  cache$manufacturers <- NULL
+  cache$owners <- NULL
+  cache$parameters <- NULL
+  cache$providers <- NULL
+
+  invisible(NULL)
+
+}
+
 # ===== Download data ==========================================================
 
 #' Get OpenAQ country metadata
