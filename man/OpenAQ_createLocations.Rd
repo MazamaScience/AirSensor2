@@ -42,7 +42,7 @@ monitors (`TRUE`) or air sensors (`FALSE`). If `NULL`, both are included.}
 greater than 1000 are reset to 1000.}
 
 \item{api_key}{OpenAQ API read key. If `NULL`, the key is obtained with
-`MazamaCoreUtils::getAPIKey("OpenAQ")`.}
+`MazamaCoreUtils::getAPIKey("OPENAQ")`.}
 }
 \value{
 A data frame of enhanced OpenAQ location metadata.

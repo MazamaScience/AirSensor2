@@ -1,261 +1,108 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>/404.html</loc>
-  </url>
-  <url>
-    <loc>/LICENSE-text.html</loc>
-  </url>
-  <url>
-    <loc>/articles/AirSensor2.html</loc>
-  </url>
-  <url>
-    <loc>/articles/Citations.html</loc>
-  </url>
-  <url>
-    <loc>/articles/Developer_Style_Guide.html</loc>
-  </url>
-  <url>
-    <loc>/articles/Working_with_PurpleAir_API_Keys.html</loc>
-  </url>
-  <url>
-    <loc>/articles/index.html</loc>
-  </url>
-  <url>
-    <loc>/authors.html</loc>
-  </url>
-  <url>
-    <loc>/index.html</loc>
-  </url>
-  <url>
-    <loc>/news/index.html</loc>
-  </url>
-  <url>
-    <loc>/reference/APIKeys.html</loc>
-  </url>
-  <url>
-    <loc>/reference/AirSensor2-package.html</loc>
-  </url>
-  <url>
-    <loc>/reference/AirSensor2.html</loc>
-  </url>
-  <url>
-    <loc>/reference/Clarity_createAllOpenMonitors.html</loc>
-  </url>
-  <url>
-    <loc>/reference/Clarity_createOpenMonitor.html</loc>
-  </url>
-  <url>
-    <loc>/reference/Clarity_createOpenSynoptic.html</loc>
-  </url>
-  <url>
-    <loc>/reference/Clarity_enhanceRawSynopticData.html</loc>
-  </url>
-  <url>
-    <loc>/reference/Clarity_getAllOpenHourly.html</loc>
-  </url>
-  <url>
-    <loc>/reference/Clarity_getAllOpenIndividual.html</loc>
-  </url>
-  <url>
-    <loc>/reference/Clarity_getAllOpenIndvidual.html</loc>
-  </url>
-  <url>
-    <loc>/reference/Clarity_getOpenHourly.html</loc>
-  </url>
-  <url>
-    <loc>/reference/Clarity_getOpenIndividual.html</loc>
-  </url>
-  <url>
-    <loc>/reference/Clarity_updateAllOpenMonitors.html</loc>
-  </url>
-  <url>
-    <loc>/reference/PurpleAir_PAList_PM25_FIELDS.html</loc>
-  </url>
-  <url>
-    <loc>/reference/PurpleAir_PAS_AVG_PM25_FIELDS.html</loc>
-  </url>
-  <url>
-    <loc>/reference/PurpleAir_PAS_METADATA_FIELDS.html</loc>
-  </url>
-  <url>
-    <loc>/reference/PurpleAir_PAS_MINIMAL_FIELDS.html</loc>
-  </url>
-  <url>
-    <loc>/reference/PurpleAir_PAT_EPA_HOURLY_FIELDS.html</loc>
-  </url>
-  <url>
-    <loc>/reference/PurpleAir_PAT_QC_FIELDS.html</loc>
-  </url>
-  <url>
-    <loc>/reference/PurpleAir_checkAPIKey.html</loc>
-  </url>
-  <url>
-    <loc>/reference/PurpleAir_createGroup.html</loc>
-  </url>
-  <url>
-    <loc>/reference/PurpleAir_createMember.html</loc>
-  </url>
-  <url>
-    <loc>/reference/PurpleAir_deleteGroup.html</loc>
-  </url>
-  <url>
-    <loc>/reference/PurpleAir_deleteMember.html</loc>
-  </url>
-  <url>
-    <loc>/reference/PurpleAir_getGroupDetail.html</loc>
-  </url>
-  <url>
-    <loc>/reference/PurpleAir_getGroupsList.html</loc>
-  </url>
-  <url>
-    <loc>/reference/PurpleAir_getMemberData.html</loc>
-  </url>
-  <url>
-    <loc>/reference/PurpleAir_getMemberHistory.html</loc>
-  </url>
-  <url>
-    <loc>/reference/PurpleAir_getMembersData.html</loc>
-  </url>
-  <url>
-    <loc>/reference/PurpleAir_getSensorData.html</loc>
-  </url>
-  <url>
-    <loc>/reference/PurpleAir_getSensorHistory.html</loc>
-  </url>
-  <url>
-    <loc>/reference/PurpleAir_getSensorHistoryCSV.html</loc>
-  </url>
-  <url>
-    <loc>/reference/PurpleAir_getSensorsData.html</loc>
-  </url>
-  <url>
-    <loc>/reference/US_AQI.html</loc>
-  </url>
-  <url>
-    <loc>/reference/example_pas_historical.html</loc>
-  </url>
-  <url>
-    <loc>/reference/example_pas_metadata.html</loc>
-  </url>
-  <url>
-    <loc>/reference/example_pas_pm25.html</loc>
-  </url>
-  <url>
-    <loc>/reference/example_pas_pm25_raw.html</loc>
-  </url>
-  <url>
-    <loc>/reference/example_pat.html</loc>
-  </url>
-  <url>
-    <loc>/reference/example_pat_epa.html</loc>
-  </url>
-  <url>
-    <loc>/reference/index.html</loc>
-  </url>
-  <url>
-    <loc>/reference/initializeMazamaSpatialUtils.html</loc>
-  </url>
-  <url>
-    <loc>/reference/pas_createNew.html</loc>
-  </url>
-  <url>
-    <loc>/reference/pas_downloadParseRawData.html</loc>
-  </url>
-  <url>
-    <loc>/reference/pas_enhanceRawData.html</loc>
-  </url>
-  <url>
-    <loc>/reference/pas_filter.html</loc>
-  </url>
-  <url>
-    <loc>/reference/pas_filterArea.html</loc>
-  </url>
-  <url>
-    <loc>/reference/pas_filterDate.html</loc>
-  </url>
-  <url>
-    <loc>/reference/pas_filterNear.html</loc>
-  </url>
-  <url>
-    <loc>/reference/pas_filterNearMonitor.html</loc>
-  </url>
-  <url>
-    <loc>/reference/pas_hasSpatial.html</loc>
-  </url>
-  <url>
-    <loc>/reference/pas_isEmpty.html</loc>
-  </url>
-  <url>
-    <loc>/reference/pas_leaflet.html</loc>
-  </url>
-  <url>
-    <loc>/reference/pas_lifespanPlot.html</loc>
-  </url>
-  <url>
-    <loc>/reference/pas_palette.html</loc>
-  </url>
-  <url>
-    <loc>/reference/pas_pull.html</loc>
-  </url>
-  <url>
-    <loc>/reference/pat_applyCorrection.html</loc>
-  </url>
-  <url>
-    <loc>/reference/pat_check.html</loc>
-  </url>
-  <url>
-    <loc>/reference/pat_create.html</loc>
-  </url>
-  <url>
-    <loc>/reference/pat_createHourly.html</loc>
-  </url>
-  <url>
-    <loc>/reference/pat_createNew.html</loc>
-  </url>
-  <url>
-    <loc>/reference/pat_createRaw.html</loc>
-  </url>
-  <url>
-    <loc>/reference/pat_distinct.html</loc>
-  </url>
-  <url>
-    <loc>/reference/pat_downloadParseRawData.html</loc>
-  </url>
-  <url>
-    <loc>/reference/pat_filter.html</loc>
-  </url>
-  <url>
-    <loc>/reference/pat_filterDate.html</loc>
-  </url>
-  <url>
-    <loc>/reference/pat_filterDatetime.html</loc>
-  </url>
-  <url>
-    <loc>/reference/pat_getDataFrame.html</loc>
-  </url>
-  <url>
-    <loc>/reference/pat_isEmpty.html</loc>
-  </url>
-  <url>
-    <loc>/reference/pat_isValid.html</loc>
-  </url>
-  <url>
-    <loc>/reference/pat_toMonitor.html</loc>
-  </url>
-  <url>
-    <loc>/reference/pat_trimDate.html</loc>
-  </url>
-  <url>
-    <loc>/reference/pipe.html</loc>
-  </url>
-  <url>
-    <loc>/reference/spatialIsInitialized.html</loc>
-  </url>
-  <url>
-    <loc>/reference/synoptic_leaflet.html</loc>
-  </url>
-  <url>
-    <loc>/reference/synoptic_palette.html</loc>
-  </url>
+<urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
+<url><loc>/404.html</loc></url>
+<url><loc>/LICENSE-text.html</loc></url>
+<url><loc>/articles/AirSensor2.html</loc></url>
+<url><loc>/articles/Citations.html</loc></url>
+<url><loc>/articles/Developer_Style_Guide.html</loc></url>
+<url><loc>/articles/Working_with_PurpleAir_API_Keys.html</loc></url>
+<url><loc>/articles/index.html</loc></url>
+<url><loc>/authors.html</loc></url>
+<url><loc>/index.html</loc></url>
+<url><loc>/news/index.html</loc></url>
+<url><loc>/reference/APIKeys.html</loc></url>
+<url><loc>/reference/AirSensor2-package.html</loc></url>
+<url><loc>/reference/AirSensor2.html</loc></url>
+<url><loc>/reference/Clarity_createAllOpenMonitors.html</loc></url>
+<url><loc>/reference/Clarity_createOpenMonitor.html</loc></url>
+<url><loc>/reference/Clarity_createOpenSynoptic.html</loc></url>
+<url><loc>/reference/Clarity_enhanceRawSynopticData.html</loc></url>
+<url><loc>/reference/Clarity_getAllOpenHourly.html</loc></url>
+<url><loc>/reference/Clarity_getAllOpenIndividual.html</loc></url>
+<url><loc>/reference/Clarity_getAllOpenIndvidual.html</loc></url>
+<url><loc>/reference/Clarity_getOpenHourly.html</loc></url>
+<url><loc>/reference/Clarity_getOpenIndividual.html</loc></url>
+<url><loc>/reference/Clarity_updateAllOpenMonitors.html</loc></url>
+<url><loc>/reference/OpenAQ_countryToID.html</loc></url>
+<url><loc>/reference/OpenAQ_createLocations.html</loc></url>
+<url><loc>/reference/OpenAQ_createMonitor.html</loc></url>
+<url><loc>/reference/OpenAQ_downloadRawData.html</loc></url>
+<url><loc>/reference/OpenAQ_downloadRawLocations.html</loc></url>
+<url><loc>/reference/OpenAQ_enhanceRawLocations.html</loc></url>
+<url><loc>/reference/OpenAQ_getCountries.html</loc></url>
+<url><loc>/reference/OpenAQ_getInstruments.html</loc></url>
+<url><loc>/reference/OpenAQ_getLicenses.html</loc></url>
+<url><loc>/reference/OpenAQ_getManufacturers.html</loc></url>
+<url><loc>/reference/OpenAQ_getOwners.html</loc></url>
+<url><loc>/reference/OpenAQ_getParameters.html</loc></url>
+<url><loc>/reference/OpenAQ_getProviders.html</loc></url>
+<url><loc>/reference/OpenAQ_instrumentToID.html</loc></url>
+<url><loc>/reference/OpenAQ_licenseToID.html</loc></url>
+<url><loc>/reference/OpenAQ_lifespanPlot.html</loc></url>
+<url><loc>/reference/OpenAQ_manufacturerToID.html</loc></url>
+<url><loc>/reference/OpenAQ_parameterToID.html</loc></url>
+<url><loc>/reference/OpenAQ_providerToID.html</loc></url>
+<url><loc>/reference/PurpleAir_PAList_PM25_FIELDS.html</loc></url>
+<url><loc>/reference/PurpleAir_PAS_AVG_PM25_FIELDS.html</loc></url>
+<url><loc>/reference/PurpleAir_PAS_METADATA_FIELDS.html</loc></url>
+<url><loc>/reference/PurpleAir_PAS_MINIMAL_FIELDS.html</loc></url>
+<url><loc>/reference/PurpleAir_PAT_EPA_HOURLY_FIELDS.html</loc></url>
+<url><loc>/reference/PurpleAir_PAT_QC_FIELDS.html</loc></url>
+<url><loc>/reference/PurpleAir_checkAPIKey.html</loc></url>
+<url><loc>/reference/PurpleAir_createGroup.html</loc></url>
+<url><loc>/reference/PurpleAir_createMember.html</loc></url>
+<url><loc>/reference/PurpleAir_deleteGroup.html</loc></url>
+<url><loc>/reference/PurpleAir_deleteMember.html</loc></url>
+<url><loc>/reference/PurpleAir_getGroupDetail.html</loc></url>
+<url><loc>/reference/PurpleAir_getGroupsList.html</loc></url>
+<url><loc>/reference/PurpleAir_getMemberData.html</loc></url>
+<url><loc>/reference/PurpleAir_getMemberHistory.html</loc></url>
+<url><loc>/reference/PurpleAir_getMembersData.html</loc></url>
+<url><loc>/reference/PurpleAir_getSensorData.html</loc></url>
+<url><loc>/reference/PurpleAir_getSensorHistory.html</loc></url>
+<url><loc>/reference/PurpleAir_getSensorHistoryCSV.html</loc></url>
+<url><loc>/reference/PurpleAir_getSensorsData.html</loc></url>
+<url><loc>/reference/US_AQI.html</loc></url>
+<url><loc>/reference/example_pas_historical.html</loc></url>
+<url><loc>/reference/example_pas_metadata.html</loc></url>
+<url><loc>/reference/example_pas_pm25.html</loc></url>
+<url><loc>/reference/example_pas_pm25_raw.html</loc></url>
+<url><loc>/reference/example_pat.html</loc></url>
+<url><loc>/reference/example_pat_epa.html</loc></url>
+<url><loc>/reference/index.html</loc></url>
+<url><loc>/reference/initializeMazamaSpatialUtils.html</loc></url>
+<url><loc>/reference/pas_createNew.html</loc></url>
+<url><loc>/reference/pas_downloadParseRawData.html</loc></url>
+<url><loc>/reference/pas_enhanceRawData.html</loc></url>
+<url><loc>/reference/pas_filter.html</loc></url>
+<url><loc>/reference/pas_filterArea.html</loc></url>
+<url><loc>/reference/pas_filterDate.html</loc></url>
+<url><loc>/reference/pas_filterNear.html</loc></url>
+<url><loc>/reference/pas_filterNearMonitor.html</loc></url>
+<url><loc>/reference/pas_hasSpatial.html</loc></url>
+<url><loc>/reference/pas_isEmpty.html</loc></url>
+<url><loc>/reference/pas_leaflet.html</loc></url>
+<url><loc>/reference/pas_lifespanPlot.html</loc></url>
+<url><loc>/reference/pas_palette.html</loc></url>
+<url><loc>/reference/pas_pull.html</loc></url>
+<url><loc>/reference/pat_applyCorrection.html</loc></url>
+<url><loc>/reference/pat_check.html</loc></url>
+<url><loc>/reference/pat_create.html</loc></url>
+<url><loc>/reference/pat_createHourly.html</loc></url>
+<url><loc>/reference/pat_createNew.html</loc></url>
+<url><loc>/reference/pat_createRaw.html</loc></url>
+<url><loc>/reference/pat_distinct.html</loc></url>
+<url><loc>/reference/pat_downloadParseRawData.html</loc></url>
+<url><loc>/reference/pat_filter.html</loc></url>
+<url><loc>/reference/pat_filterDate.html</loc></url>
+<url><loc>/reference/pat_filterDatetime.html</loc></url>
+<url><loc>/reference/pat_getDataFrame.html</loc></url>
+<url><loc>/reference/pat_isEmpty.html</loc></url>
+<url><loc>/reference/pat_isValid.html</loc></url>
+<url><loc>/reference/pat_toMonitor.html</loc></url>
+<url><loc>/reference/pat_trimDate.html</loc></url>
+<url><loc>/reference/pipe.html</loc></url>
+<url><loc>/reference/spatialIsInitialized.html</loc></url>
+<url><loc>/reference/synoptic_leaflet.html</loc></url>
+<url><loc>/reference/synoptic_palette.html</loc></url>
 </urlset>
+

@@ -38,7 +38,7 @@ bad data values.}
 \item{sleepSeconds}{Number of seconds to pause between additional requests.}
 
 \item{api_key}{OpenAQ API key. If `api_key = NULL`, it
-will be obtained using `getAPIKey("OpenAQ-read")`.}
+will be obtained using `getAPIKey("OPENAQ")`.}
 }
 \value{
 An AirMonitor package `mts_monitor` object.

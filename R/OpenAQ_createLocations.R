@@ -29,7 +29,7 @@
 #' @param limit Maximum number of locations to request per API call. Values
 #'   greater than 1000 are reset to 1000.
 #' @param api_key OpenAQ API read key. If `NULL`, the key is obtained with
-#'   `MazamaCoreUtils::getAPIKey("OpenAQ")`.
+#'   `MazamaCoreUtils::getAPIKey("OPENAQ")`.
 #'
 #' @return A data frame of enhanced OpenAQ location metadata.
 #'
@@ -98,7 +98,7 @@ OpenAQ_createLocations <- function(
   # ----- Validate parameters --------------------------------------------------
 
   if ( is.null(api_key) )
-    api_key <- MazamaCoreUtils::getAPIKey("OpenAQ")
+    api_key <- MazamaCoreUtils::getAPIKey("OPENAQ")
 
   lookbackDays <- MazamaCoreUtils::setIfNull(lookbackDays, 1)
   limit <- MazamaCoreUtils::setIfNull(limit, 1000)

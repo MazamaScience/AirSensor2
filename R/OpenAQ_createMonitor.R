@@ -20,7 +20,7 @@
 #' @param applyQC Logical specifying whether to apply basic QC to invalidate
 #' bad data values.
 #' @param api_key OpenAQ API key. If `api_key = NULL`, it
-#' will be obtained using `getAPIKey("OpenAQ-read")`.
+#' will be obtained using `getAPIKey("OPENAQ")`.
 #'
 #' @return An AirMonitor package `mts_monitor` object.
 #'
@@ -39,8 +39,9 @@ OpenAQ_createMonitor <- function(
 
   # ----- Validate parameters --------------------------------------------------
 
-  if ( is.null(api_key) )
-    api_key <- MazamaCoreUtils::getAPIKey("OpenAQ-read")
+  if (is.null(api_key)) {
+    api_key <- MazamaCoreUtils::getAPIKey("OPENAQ")
+  }
 
   MazamaCoreUtils::stopIfNull(api_key)
   MazamaCoreUtils::stopIfNull(locations)
@@ -51,34 +52,49 @@ OpenAQ_createMonitor <- function(
 
   parameter <- match.arg(parameter)
 
-  if ( parameter != "pm25" ) {
+  if (parameter != "pm25") {
     stop("Only parameter = 'pm25' is currently supported.")
   }
 
-  if ( !timezone %in% OlsonNames() ) {
+  if (!timezone %in% OlsonNames()) {
     stop(sprintf("timezone '%s' is not found in OlsonNames()", timezone))
   }
 
-  if ( !locations_id %in% locations$id ) {
+  if (!isTRUE(is.logical(applyQC) && length(applyQC) == 1)) {
+    stop("'applyQC' must be TRUE or FALSE.")
+  }
+
+  if (!is.numeric(maxPages) || length(maxPages) != 1 || is.na(maxPages) || maxPages < 1) {
+    stop("'maxPages' must be a single number >= 1.")
+  }
+
+  if (!is.numeric(sleepSeconds) || length(sleepSeconds) != 1 || is.na(sleepSeconds) || sleepSeconds < 0) {
+    stop("'sleepSeconds' must be a single number >= 0.")
+  }
+
+  locations_id <- as.character(locations_id)
+  locations_ids <- as.character(locations$id)
+
+  if (!locations_id %in% locations_ids) {
     stop(sprintf("locations_id '%s' is not found in locations$id", locations_id))
   }
 
-  if ( !spatialIsInitialized() ) {
-    stop('`OpenAQ_createMonitor` requires MazamaSpatialUtils to be initialized:
-
-            initializeMazamaSpatialUtils()
-
-         Please see `?initializeMazamaSpatialUtils` for more details.')
+  if (!spatialIsInitialized()) {
+    stop(
+      "`OpenAQ_createMonitor` requires MazamaSpatialUtils to be initialized:\n\n",
+      "  initializeMazamaSpatialUtils()\n\n",
+      "Please see `?initializeMazamaSpatialUtils` for more details."
+    )
   }
 
   # ----- Identify location ----------------------------------------------------
 
   meta <-
     locations %>%
-    dplyr::filter(.data$id == locations_id)
+    dplyr::filter(as.character(.data$id) == locations_id)
 
-  if ( nrow(meta) != 1 ) {
-    stop(sprintf("Multiple records in 'locations' match '%s'", locations_id))
+  if (nrow(meta) != 1) {
+    stop(sprintf("Expected exactly one record in 'locations' matching '%s'", locations_id))
   }
 
   # ----- Create requested time window -----------------------------------------
@@ -96,8 +112,9 @@ OpenAQ_createMonitor <- function(
 
   # ----- Load data ------------------------------------------------------------
 
-  if ( logger.isInitialized() )
+  if (logger.isInitialized()) {
     logger.debug("----- OpenAQ_downloadRawData() -----")
+  }
 
   openaq_data <-
     OpenAQ_downloadRawData(
@@ -112,6 +129,23 @@ OpenAQ_createMonitor <- function(
       api_key = api_key
     )
 
+  if (nrow(openaq_data) > 0) {
+    openaq_data <-
+      openaq_data %>%
+      dplyr::select(dplyr::all_of(c("datetime", parameter))) %>%
+      dplyr::distinct(.data$datetime, .keep_all = TRUE) %>%
+      dplyr::arrange(.data$datetime)
+  } else {
+    openaq_data <-
+      data.frame(
+        datetime = as.POSIXct(character()),
+        value = numeric(),
+        stringsAsFactors = FALSE
+      )
+
+    names(openaq_data) <- c("datetime", parameter)
+  }
+
   # Guarantee a complete, monotonic, hourly UTC time axis.
   hourly_axis <-
     data.frame(
@@ -122,7 +156,7 @@ OpenAQ_createMonitor <- function(
       )
     )
 
-  openaq_data <-
+  data <-
     hourly_axis %>%
     dplyr::left_join(openaq_data, by = "datetime") %>%
     dplyr::arrange(.data$datetime)
@@ -135,32 +169,29 @@ OpenAQ_createMonitor <- function(
       pollutant = "PM2.5",
       units = "UG/M3",
       address = as.character(NA),
-      dataIngestSource = "OpenAQ",
-      dataIngestUrl = as.character(NA),
       AQSID = as.character(NA),
       fullAQSID = as.character(NA),
       deploymentType = as.character(NA),
+      deviceType = ifelse(.data$is_monitor == TRUE, "Monitor", "Sensor"),
       deviceDescription = as.character(NA),
       deviceExtra = as.character(NA),
-      dataIngestURL = as.character(NA),
+      dataIngestSource = "OpenAQ",
       dataIngestUnitID = as.character(.data$id),
+      dataIngestURL = as.character(NA),
       dataIngestExtra = as.character(NA),
       dataIngestDescription = as.character(NA)
     )
 
-  attributes(meta)$class <-
-    setdiff(attributes(meta)$class, c("OpenAQ_locations", "locations"))
+  class(meta) <- setdiff(class(meta), c("OpenAQ_locations", "locations"))
 
-  # ----- Create data ----------------------------------------------------------
-
-  columns <- c("datetime", parameter)
-  data <- openaq_data %>% dplyr::select(dplyr::all_of(columns))
+  # ----- Finalize data --------------------------------------------------------
 
   names(data) <- c("datetime", meta$deviceDeploymentID)
 
-  if ( applyQC ) {
-    bad_mask <- is.na(data[[2]]) | data[[2]] < 0
-    data[bad_mask, 2] <- as.numeric(NA)
+  if (applyQC) {
+    bad_mask <- data[[2]] < 0
+    bad_mask[is.na(bad_mask)] <- FALSE
+    data[bad_mask, 2] <- NA_real_
   }
 
   # ----- Return ---------------------------------------------------------------
@@ -171,6 +202,7 @@ OpenAQ_createMonitor <- function(
   return(monitor)
 
 }
+
 # ===== DEBUGGING ==============================================================
 
 if ( FALSE ) {
@@ -231,3 +263,4 @@ if ( FALSE ) {
   monitor %>% AirMonitor::monitor_timeseriesPlot(shadedNight = TRUE, addAQI = TRUE)
 
 }
+

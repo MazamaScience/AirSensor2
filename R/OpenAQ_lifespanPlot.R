@@ -25,31 +25,43 @@
 #'
 #' @examples
 #' \donttest{
-#' # Plot all lifespans
-#' locations %>%
-#'   OpenAQ_lifespanPlot()
+#' try({
+#'   if (interactive()) {
+#'     initializeMazamaSpatialUtils()
 #'
-#' # Label locations with OpenAQ integer ids
-#' locations %>%
-#'   OpenAQ_lifespanPlot(
-#'     showLocation = TRUE,
-#'     locationIdentifier = "id",
-#'     cex = 0.6,
-#'     lwd = 2,
-#'     moreSpace = 0.3
-#'   )
+#'     locations <-
+#'       OpenAQ_createLocations(
+#'         countryCodes = "US",
+#'         stateCodes = "IL",
+#'         counties = "Cook",
+#'         api_key = OPENAQ_API_KEY
+#'       )
 #'
-#' # Arrange by lifespan before plotting
-#' locations %>%
-#'   dplyr::mutate(lifespan = .data$datetime_last - .data$datetime_first) %>%
-#'   dplyr::arrange(.data$lifespan) %>%
-#'   OpenAQ_lifespanPlot(
-#'     showLocation = TRUE,
-#'     locationIdentifier = "locationID",
-#'     cex = 0.6,
-#'     lwd = 2,
-#'     moreSpace = 0.3
-#'   )
+#'     # Plot all lifespans
+#'     locations %>%
+#'       OpenAQ_lifespanPlot()
+#'
+#'     # Label locations with OpenAQ integer ids
+#'     locations %>%
+#'       OpenAQ_lifespanPlot(
+#'         showLocation = TRUE,
+#'         cex = 0.6,
+#'         lwd = 2,
+#'         moreSpace = 0.3
+#'       )
+#'
+#'     # Arrange by lifespan before plotting
+#'     locations %>%
+#'       dplyr::mutate(lifespan = .data$datetime_last - .data$datetime_first) %>%
+#'       dplyr::arrange(.data$lifespan) %>%
+#'       OpenAQ_lifespanPlot(
+#'         showLocation = TRUE,
+#'         cex = 0.6,
+#'         lwd = 2,
+#'         moreSpace = 0.3
+#'       )
+#'   }
+#' }, silent = FALSE)
 #' }
 #'
 #' @export

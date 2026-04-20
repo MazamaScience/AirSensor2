@@ -38,7 +38,7 @@ OpenAQ_downloadRawData <- function(
   # ----- Validate parameters --------------------------------------------------
 
   if ( is.null(api_key) ) {
-    api_key <- MazamaCoreUtils::getAPIKey("OpenAQ-read")
+    api_key <- MazamaCoreUtils::getAPIKey("OPENAQ")
   }
 
   MazamaCoreUtils::stopIfNull(api_key)
@@ -70,23 +70,43 @@ OpenAQ_downloadRawData <- function(
   # ----- Helper to return an empty result ------------------------------------
 
   empty_result <- function(parameters) {
-    data <- data.frame(datetime = as.POSIXct(character(), tz = "UTC"))
+    df <- data.frame(datetime = as.POSIXct(character(), tz = "UTC"))
     for ( parameter_name in parameters ) {
-      data[[parameter_name]] <- numeric(0)
+      df[[parameter_name]] <- numeric(0)
     }
-    return(data)
+    return(df)
+  }
+
+  # ----- Helper for improved error messages -----------------------------------
+
+  safeOpenAQCall <- function(expr, context) {
+    tryCatch(
+      expr,
+      error = function(e) {
+        stop(
+          context, "\n",
+          "Original error: ", conditionMessage(e),
+          call. = FALSE
+        )
+      }
+    )
   }
 
   # ----- Load sensors ---------------------------------------------------------
 
-  sensors <-
+  sensors <- safeOpenAQCall(
     openaq::list_location_sensors(
       locations_id = locations_id,
       as_data_frame = TRUE,
       dry_run = FALSE,
       rate_limit = FALSE,
       api_key = api_key
+    ),
+    paste0(
+      "Unable to download sensor metadata for OpenAQ location ",
+      locations_id, "."
     )
+  )
 
   sensors <- as.data.frame(sensors, stringsAsFactors = FALSE)
 
@@ -164,23 +184,29 @@ OpenAQ_downloadRawData <- function(
 
       sensor_data <- OpenAQ_downloadPages(
         fetchPageFUN = function(page, limit) {
-          openaq::list_sensor_measurements(
-            sensors_id = sensor_id,
-            data = data,
-            datetime_from = startdate,
-            datetime_to = enddate,
-            limit = limit,
-            page = page,
-            as_data_frame = TRUE,
-            dry_run = FALSE,
-            rate_limit = FALSE,
-            api_key = api_key
+          safeOpenAQCall(
+            openaq::list_sensor_measurements(
+              sensors_id = sensor_id,
+              data = data,
+              datetime_from = startdate,
+              datetime_to = enddate,
+              limit = limit,
+              page = page,
+              as_data_frame = TRUE,
+              dry_run = FALSE,
+              rate_limit = FALSE,
+              api_key = api_key
+            ),
+            paste0(
+              "Unable to download OpenAQ measurements for sensor ",
+              sensor_id, " (parameter '", parameter_name, "')."
+            )
           )
         },
         limit = limit,
         maxPages = maxPages,
         sleepSeconds = sleepSeconds,
-        warnTruncated = TRUE
+        warnTruncated = FALSE
       )
 
       sensor_data <- as.data.frame(sensor_data, stringsAsFactors = FALSE)
@@ -241,7 +267,7 @@ OpenAQ_downloadRawData <- function(
     return(empty_result(parameters))
   }
 
-  openaq_raw <-
+  measurements <-
     Reduce(
       f = function(x, y) dplyr::full_join(x, y, by = "datetime"),
       x = dataList
@@ -253,12 +279,12 @@ OpenAQ_downloadRawData <- function(
   missing_parameters <- setdiff(parameters, names(dataList))
 
   for ( parameter_name in missing_parameters ) {
-    openaq_raw[[parameter_name]] <- NA_real_
+    measurements[[parameter_name]] <- NA_real_
   }
 
-  openaq_raw <- openaq_raw[, c("datetime", parameters), drop = FALSE]
+  measurements <- measurements[, c("datetime", parameters), drop = FALSE]
 
-  return(openaq_raw)
+  return(measurements)
 
 }
 
