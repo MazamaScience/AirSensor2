@@ -20,7 +20,6 @@ pat_applyCorrection <- function(
   # ----- Validate parameters --------------------------------------------------
 
   MazamaCoreUtils::stopIfNull(pat)
-  name <- match.arg(name)
 
   hourly_fields <-
     PurpleAir_PAT_EPA_HOURLY_FIELDS %>%
