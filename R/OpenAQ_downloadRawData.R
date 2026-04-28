@@ -23,14 +23,38 @@
 #' @return A data frame with columns `datetime` plus one column for each
 #'   requested parameter.
 #' @export
+#'
+#' @examples
+#' \donttest{
+#' try({
+#'   if (interactive()) {
+#'     initializeMazamaSpatialUtils()
+#'
+#'     # NOTE:  Read environment vars from .env file with dotenv::load_dot_env()
+#'     OPENAQ_API_KEY <- Sys.getenv("OPENAQ_API_KEY")
+#'
+#'     raw_data <-
+#'       OpenAQ_downloadRawData(
+#'         locations_id = 1370216,
+#'         startdate = "2026-04-01",
+#'         enddate = "2026-04-15",
+#'         api_key = OPENAQ_API_KEY
+#'       )
+#'
+#'     raw_data %>% plot()
+#'
+#'   }
+#' }, silent = FALSE)
+#' }
+
 OpenAQ_downloadRawData <- function(
     locations_id = NULL,
-    parameters = c("pm2.5", "temperature", "humidity"),
+    parameters = c("pm25", "temperature", "relativehumidity"),
     data = c("hours", "measurements"),
     startdate = NULL,
     enddate = NULL,
     limit = 1000,
-    maxPages = 1,
+    maxPages = 10,
     sleepSeconds = 0.2,
     api_key = NULL
 ) {
@@ -71,8 +95,8 @@ OpenAQ_downloadRawData <- function(
 
   empty_result <- function(parameters) {
     df <- data.frame(datetime = as.POSIXct(character(), tz = "UTC"))
-    for ( parameter_name in parameters ) {
-      df[[parameter_name]] <- numeric(0)
+    for ( parameter in parameters ) {
+      df[[parameter]] <- numeric(0)
     }
     return(df)
   }
@@ -127,6 +151,11 @@ OpenAQ_downloadRawData <- function(
 
   sensors <-
     sensors %>%
+    # Drop sensors with missing time information
+    dplyr::filter(
+      !is.na(.data$datetime_first_utc),
+      !is.na(.data$datetime_last_utc),
+    ) %>%
     dplyr::filter(.data$parameters_id %in% parameter_ids) %>%
     dplyr::left_join(parameter_lookup, by = "parameters_id")
 
@@ -146,8 +175,6 @@ OpenAQ_downloadRawData <- function(
       datetime_last_utc  = as.POSIXct(.data$datetime_last_utc,  tz = "UTC")
     ) %>%
     dplyr::filter(
-      !is.na(.data$datetime_first_utc),
-      !is.na(.data$datetime_last_utc),
       .data$datetime_last_utc >= startdate,
       .data$datetime_first_utc <= enddate
     )
@@ -164,11 +191,11 @@ OpenAQ_downloadRawData <- function(
 
   dataList <- list()
 
-  for ( parameter_name in parameters ) {
+  for ( parameter in parameters ) {
 
     parameter_sensors <-
       sensors %>%
-      dplyr::filter(.data$parameter_name == parameter_name) %>%
+      dplyr::filter(.data$parameter_name == parameter) %>%
       dplyr::arrange(dplyr::desc(.data$datetime_last_utc), dplyr::desc(.data$id))
 
     if ( nrow(parameter_sensors) == 0 ) {
@@ -199,7 +226,7 @@ OpenAQ_downloadRawData <- function(
             ),
             paste0(
               "Unable to download OpenAQ measurements for sensor ",
-              sensor_id, " (parameter '", parameter_name, "')."
+              sensor_id, " (parameter '", parameter, "')."
             )
           )
         },
@@ -251,9 +278,9 @@ OpenAQ_downloadRawData <- function(
       ) %>%
       dplyr::arrange(.data$datetime)
 
-    names(parameter_data)[names(parameter_data) == "value"] <- parameter_name
+    names(parameter_data)[names(parameter_data) == "value"] <- parameter
 
-    dataList[[parameter_name]] <- parameter_data
+    dataList[[parameter]] <- parameter_data
 
   }
 
@@ -278,8 +305,8 @@ OpenAQ_downloadRawData <- function(
 
   missing_parameters <- setdiff(parameters, names(dataList))
 
-  for ( parameter_name in missing_parameters ) {
-    measurements[[parameter_name]] <- NA_real_
+  for ( parameter in missing_parameters ) {
+    measurements[[parameter]] <- NA_real_
   }
 
   measurements <- measurements[, c("datetime", parameters), drop = FALSE]

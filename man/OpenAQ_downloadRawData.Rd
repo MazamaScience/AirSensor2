@@ -6,12 +6,12 @@
 \usage{
 OpenAQ_downloadRawData(
   locations_id = NULL,
-  parameters = c("pm2.5", "temperature", "humidity"),
+  parameters = c("pm25", "temperature", "relativehumidity"),
   data = c("hours", "measurements"),
   startdate = NULL,
   enddate = NULL,
   limit = 1000,
-  maxPages = 1,
+  maxPages = 10,
   sleepSeconds = 0.2,
   api_key = NULL
 )
@@ -50,4 +50,27 @@ the requested location, downloads all available pages of measurements up to
 deduplicates by keeping the record from the most recently active sensor.
 The final data frame is created by joining parameter-specific measurement
 tables by `datetime`.
+}
+\examples{
+\donttest{
+try({
+  if (interactive()) {
+    initializeMazamaSpatialUtils()
+
+    # NOTE:  Read environment vars from .env file with dotenv::load_dot_env()
+    OPENAQ_API_KEY <- Sys.getenv("OPENAQ_API_KEY")
+
+    raw_data <-
+      OpenAQ_downloadRawData(
+        locations_id = 1370216,
+        startdate = "2026-04-01",
+        enddate = "2026-04-15",
+        api_key = OPENAQ_API_KEY
+      )
+
+    raw_data \%>\% plot()
+
+  }
+}, silent = FALSE)
+}
 }
