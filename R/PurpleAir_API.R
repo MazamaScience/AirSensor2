@@ -1595,13 +1595,13 @@ PurpleAir_PAT_QC_FIELDS <-
 #'
 #' Included fields:
 #' \preformatted{
-#' [1] "humidity"     "temperature"  "pm2.5_cf_1"   "pm2.5_cf_1_a"
-#' [5] "pm2.5_cf_1_b"
+#' [1] "humidity"     "temperature"  "pm2.5_atm"   "pm2.5_atm_a"
+#' [5] "pm2.5_atm_b"
 #' }
 #'
 #' @seealso [pat_applyCorrection()]
 #'
-#' @references [EPA PurpleAir Correction](https://www.epa.gov/sites/default/files/2021-05/documents/toolsresourceswebinar_purpleairsmoke_210519b.pdf).
+#' @references [EPA PurpleAir Correction](https://document.airnow.gov/airnow-fire-and-smoke-map-questions-and-answers.pdf).
 #' @references [Get Sensor History API](https://api.purpleair.com/#api-sensors-get-sensor-history-csv)
 
 # From: https://api.purpleair.com/#api-sensors-get-sensor-history-csv
@@ -1629,7 +1629,7 @@ PurpleAir_PAT_EPA_HOURLY_FIELDS <-
     #
     # PM2.5 fields:
     ###"pm2.5_alt, pm2.5_alt_a, pm2.5_alt_b, pm2.5_atm, pm2.5_atm_a, pm2.5_atm_b, pm2.5_cf_1, pm2.5_cf_1_a, pm2.5_cf_1_b",
-    "pm2.5_cf_1, pm2.5_cf_1_a, pm2.5_cf_1_b",
+    "pm2.5_atm, pm2.5_atm_a, pm2.5_atm_b",
     #
     # PM10.0 fields:
     #   "pm10.0_atm, pm10.0_atm_a, pm10.0_atm_b, pm10.0_cf_1, pm10.0_cf_1_a, pm10.0_cf_1_b",

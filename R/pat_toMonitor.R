@@ -135,7 +135,7 @@ pat_toMonitor <- function(
     columns <- c("datetime", "pm2.5_corrected")
     data <- pat_corrected$data %>% dplyr::select(dplyr::all_of(columns))
   } else {
-    columns <- c("datetime", "pm2.5_cf_1")
+    columns <- c("datetime", "pm2.5_atm")
     data <- pat_corrected$data %>% dplyr::select(dplyr::all_of(columns))
   }
 

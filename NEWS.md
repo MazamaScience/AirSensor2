@@ -1,3 +1,12 @@
+# AirSensor2 0.6.0
+
+* Added OpenAQ integration for creating monitor objects from OpenAQ data.
+* New `OpenAQ_createLocations()` for discovering available locations with filtering and lookback support.
+* New `OpenAQ_createMonitor()` to generate AirSensor monitor objects with a guaranteed hourly time axis.
+* New `OpenAQ_downloadRawData()` with built-in pagination, rate limiting, and multi-sensor handling.
+* Added parameter and provider helper functions for working with OpenAQ metadata.
+* Implemented caching of OpenAQ metadata to improve performance.
+
 # AirSensor2 0.5.7
 
 * Fix bug so that `pat_toModel()` works with data from `pat_createHourly()`.

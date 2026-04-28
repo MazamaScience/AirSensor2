@@ -45,3 +45,4 @@ global_vars*.R
 .env*
 
 .DS_Store
+.positai

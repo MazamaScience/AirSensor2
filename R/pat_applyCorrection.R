@@ -1,48 +1,20 @@
+#' Apply correction to PurpleAir PM2.5 data
+#'
+#' A correction equation is applied to fields of the incoming *pat* object to
+#' generate a `pm2.5_corrected` time series which is added to the returned
+#' *pat* object.
+#'
+#' @param pat Previously generated *hourly pat* object.
+#'
+#' @return A PurpleAir Timeseries *pat* object with an additional
+#' `pm2.5_corrected` variable.
+#'
 #' @export
 #' @importFrom rlang .data
 #' @importFrom MazamaCoreUtils logger.error logger.debug logger.isInitialized
-#'
-#' @title Apply correction to PurpleAir PM2.5 data.
-#'
-#' @param pat Previously generated *houly pat* object.
-#' @param name Name of correction to apply. One of `"EPA_FASM"`
-#'
-#' @return A PurpleAir Timeseries *pat* object with an additional
-#' `"pm2.5_corrected"` variable.
-#'
-#' @description A correction equation is applied to fields of the incoming
-#' *pat* object to generate a `"pm2.5_corrected"` time series which is
-#' added to the returned *pat* object.
-#'
-#' The default, `"EPA_FASM"` correction is described on slide 37 of a
-#' presentation on the correction of PurpleAir data for the
-#' [EPA Fire and Smoke Map](https://www.epa.gov/sites/default/files/2021-05/documents/toolsresourceswebinar_purpleairsmoke_210519b.pdf).
-#'
-#' This correction has two parts:
-#'
-#'   Low Concentration (\eqn{pm2.5\_cf\_1 <= 343 \mu g/m^3}):
-#'
-#'   \eqn{pm2.5\_corrected = 0.52 * pm\_2.5\_cf\_1 - 0.086 * humidity + 5.75}
-#'
-#' High Concentration (\eqn{pm2.5\_cf\_1 > 343 \mu g/m^3}):
-#'
-#'   \eqn{pm2.5\_corrected = 0.46 * pm2.5\_cf\_1 + 3.93 * 10^{-4} * pm2.5\_cf\_1^2 + 2.97}
-#'
-# @examples
-# \donttest{
-# # Fail gracefully if any resources are not available
-# try({
-#
-# library(AirSensor2)
-#
-#
-#
-# }, silent = FALSE)
-# }
 
 pat_applyCorrection <- function(
-    pat = NULL,
-    name = c("EPA_FASM")
+    pat = NULL
 ) {
 
   # ----- Validate parameters --------------------------------------------------
@@ -65,20 +37,58 @@ pat_applyCorrection <- function(
 
   # ----- Apply correction -----------------------------------------------------
 
-  if ( name == "EPA_FASM" ) {
+  PAcfatm <- data$pm2.5_atm
+  RH <- data$humidity
 
-    data$pm2.5_corrected <- as.numeric(NA)
+  data$pm2.5_corrected <- as.numeric(NA)
 
-    mask_low <- data$pm2.5_cf_1 <= 343
-    mask_low[is.na(mask_low)] <- TRUE    # NOTE:  Can't have NAs in a mask
+  # PAcfatm < 30
+  mask <- !is.na(PAcfatm) & PAcfatm < 30
 
-    data$pm2.5_corrected[mask_low] <-
-      0.52 * data$pm2.5_cf_1[mask_low] - 0.086 * data$humidity[mask_low] + 5.75
+  data$pm2.5_corrected[mask] <-
+    0.524 * PAcfatm[mask] -
+    0.0862 * RH[mask] +
+    5.75
 
-    data$pm2.5_corrected[!mask_low] <-
-      0.46 * data$pm2.5_cf_1[!mask_low] + 3.93 * .0001 * data$pm2.5_cf_1[!mask_low]^2 + 2.97
+  # 30 <= PAcfatm < 50
+  mask <- !is.na(PAcfatm) & PAcfatm >= 30 & PAcfatm < 50
+  x <- PAcfatm[mask] / 20 - 3 / 2
 
-  }
+  data$pm2.5_corrected[mask] <-
+    (0.786 * x + 0.524 * (1 - x)) * PAcfatm[mask] -
+    0.0862 * RH[mask] +
+    5.75
+
+  # 50 <= PAcfatm < 210
+  mask <- !is.na(PAcfatm) & PAcfatm >= 50 & PAcfatm < 210
+
+  data$pm2.5_corrected[mask] <-
+    0.786 * PAcfatm[mask] -
+    0.0862 * RH[mask] +
+    5.75
+
+  # 210 <= PAcfatm < 260
+  mask <- !is.na(PAcfatm) & PAcfatm >= 210 & PAcfatm < 260
+  x <- PAcfatm[mask] / 50 - 21 / 5
+
+  data$pm2.5_corrected[mask] <-
+    (0.69 * x + 0.786 * (1 - x)) * PAcfatm[mask] -
+    0.0862 * RH[mask] * (1 - x) +
+    2.966 * x +
+    5.75 * (1 - x) +
+    8.84e-4 * PAcfatm[mask]^2 * x
+
+  # 260 <= PAcfatm
+  mask <- !is.na(PAcfatm) & PAcfatm >= 260
+
+  data$pm2.5_corrected[mask] <-
+    2.966 +
+    0.69 * PAcfatm[mask] +
+    8.84e-4 * PAcfatm[mask]^2
+
+  # EPA guidance recommends setting negative corrected values to zero.
+  data$pm2.5_corrected <-
+    pmax(data$pm2.5_corrected, 0, na.rm = FALSE)
 
   # ----- Return ---------------------------------------------------------------
 
