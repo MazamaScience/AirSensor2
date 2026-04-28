@@ -90,7 +90,7 @@
                         <h4 data-toc-skip class="author">Jonathan
 Callahan</h4>
             
-            <h4 data-toc-skip class="date">2023-09-22</h4>
+            <h4 data-toc-skip class="date">2026-04-28</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/MazamaScience/AirSensor2/blob/HEAD/vignettes/AirSensor2.Rmd" class="external-link"><code>vignettes/AirSensor2.Rmd</code></a></small>
       <div class="hidden name"><code>AirSensor2.Rmd</code></div>
@@ -194,13 +194,14 @@ particular <em>&lt;action&gt;</em> on data provided by a specific
 <p>Currently supported sources of data include:</p>
 <ul>
 <li><code>Clarity</code></li>
+<li><code>OpenAQ</code></li>
 <li><code>PurpleAir</code></li>
 </ul>
 <p>In addition, functions with names of the form
 <code>&lt;structure&gt;_&lt;action&gt;()</code> are designed to perform
 a particular <em>&lt;action&gt;</em> on data that has been converted
 into a particular <em>&lt;structure&gt;</em> (aka “class”).</p>
-<p>Currently supported data structures include:</p>
+<p>Currently supported PurpleAir data structures include:</p>
 <ul>
 <li>
 <code>pas</code> –
@@ -218,6 +219,10 @@ object is a list with two tibbles: <code>meta</code> and
 specific point in time. Each <em>synoptic</em> object is a simple
 tibble.</li>
 </ul>
+<p>Synoptic and time series dataframes returned by
+<code>Clarity_~</code> and <code>OpenAQ_~</code> functions have no
+dedicated functions but are easily manipulated using the
+<strong>dplyr</strong> package.</p>
 </div>
 <div class="section level2">
 <h2 id="data-pipelines">Data pipelines<a class="anchor" aria-label="anchor" href="#data-pipelines"></a>

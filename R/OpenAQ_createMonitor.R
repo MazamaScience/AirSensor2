@@ -24,6 +24,42 @@
 #'
 #' @return An AirMonitor package `mts_monitor` object.
 #'
+#' @examples
+#' \donttest{
+#' try({
+#'   if (interactive()) {
+#'     initializeMazamaSpatialUtils()
+#'
+#'     # NOTE:  Read environment vars from .env file with dotenv::load_dot_env()
+#'     OPENAQ_API_KEY <- Sys.getenv("OPENAQ_API_KEY")
+#'
+#'     locations <-
+#'       OpenAQ_createLocations(
+#'         api_key = OPENAQ_API_KEY,
+#'         countryCodes = "US",
+#'         stateCodes = "IL",
+#'         counties = "Cook",
+#'         lookbackDays = 60
+#'       )
+#'
+#'     monitor <-
+#'       OpenAQ_createMonitor(
+#'         locations = locations,
+#'         locations_id = 6207297,
+#'         parameter = "pm25",
+#'         startdate = "2026-04-01",
+#'         enddate = "2026-04-15",
+#'         timezone = "America/Chicago",
+#'         api_key = OPENAQ_API_KEY
+#'       )
+#'
+#'     monitor %>%
+#'       AirMonitor::monitor_timeseriesPlot(shadedNight = TRUE, addAQI = TRUE)
+#'
+#'   }
+#' }, silent = FALSE)
+#' }
+#'
 OpenAQ_createMonitor <- function(
     locations = NULL,
     locations_id = NULL,
@@ -32,7 +68,7 @@ OpenAQ_createMonitor <- function(
     enddate = NULL,
     timezone = "UTC",
     applyQC = TRUE,
-    maxPages = 1,
+    maxPages = 10,
     sleepSeconds = 0.2,
     api_key = NULL
 ) {

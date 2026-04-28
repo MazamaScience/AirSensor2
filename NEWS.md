@@ -6,6 +6,8 @@
 * New `OpenAQ_downloadRawData()` with built-in pagination, rate limiting, and multi-sensor handling.
 * Added parameter and provider helper functions for working with OpenAQ metadata.
 * Implemented caching of OpenAQ metadata to improve performance.
+* Updated `pat_applyCorrection()` to latest EPA correction algorithm.
+* Added `AirGradient_applyCorrection()`.
 
 # AirSensor2 0.5.7
 

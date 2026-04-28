@@ -2,35 +2,19 @@
 % Please edit documentation in R/pat_applyCorrection.R
 \name{pat_applyCorrection}
 \alias{pat_applyCorrection}
-\title{Apply correction to PurpleAir PM2.5 data.}
+\title{Apply correction to PurpleAir PM2.5 data}
 \usage{
-pat_applyCorrection(pat = NULL, name = c("EPA_FASM"))
+pat_applyCorrection(pat = NULL)
 }
 \arguments{
-\item{pat}{Previously generated *houly pat* object.}
-
-\item{name}{Name of correction to apply. One of `"EPA_FASM"`}
+\item{pat}{Previously generated *hourly pat* object.}
 }
 \value{
 A PurpleAir Timeseries *pat* object with an additional
-`"pm2.5_corrected"` variable.
+`pm2.5_corrected` variable.
 }
 \description{
-A correction equation is applied to fields of the incoming
-*pat* object to generate a `"pm2.5_corrected"` time series which is
-added to the returned *pat* object.
-
-The default, `"EPA_FASM"` correction is described on slide 37 of a
-presentation on the correction of PurpleAir data for the
-[EPA Fire and Smoke Map](https://www.epa.gov/sites/default/files/2021-05/documents/toolsresourceswebinar_purpleairsmoke_210519b.pdf).
-
-This correction has two parts:
-
-  Low Concentration (\eqn{pm2.5\_cf\_1 <= 343 \mu g/m^3}):
-
-  \eqn{pm2.5\_corrected = 0.52 * pm\_2.5\_cf\_1 - 0.086 * humidity + 5.75}
-
-High Concentration (\eqn{pm2.5\_cf\_1 > 343 \mu g/m^3}):
-
-  \eqn{pm2.5\_corrected = 0.46 * pm2.5\_cf\_1 + 3.93 * 10^{-4} * pm2.5\_cf\_1^2 + 2.97}
+A correction equation is applied to fields of the incoming *pat* object to
+generate a `pm2.5_corrected` time series which is added to the returned
+*pat* object.
 }

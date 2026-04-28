@@ -18,12 +18,12 @@ apply the EPA correction algorithm used in the AirNow
 
 Included fields:
 \preformatted{
-[1] "humidity"     "temperature"  "pm2.5_cf_1"   "pm2.5_cf_1_a"
-[5] "pm2.5_cf_1_b"
+[1] "humidity"     "temperature"  "pm2.5_atm"   "pm2.5_atm_a"
+[5] "pm2.5_atm_b"
 }
 }
 \references{
-[EPA PurpleAir Correction](https://www.epa.gov/sites/default/files/2021-05/documents/toolsresourceswebinar_purpleairsmoke_210519b.pdf).
+[EPA PurpleAir Correction](https://document.airnow.gov/airnow-fire-and-smoke-map-questions-and-answers.pdf).
 
 [Get Sensor History API](https://api.purpleair.com/#api-sensors-get-sensor-history-csv)
 }

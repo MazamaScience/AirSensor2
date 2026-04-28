@@ -1,7 +1,7 @@
 ---
 title: "Introduction to AirSensor2"
 author: "Jonathan Callahan"
-date: "2023-09-22"
+date: "2026-04-28"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Introduction to AirSensor2}
@@ -111,13 +111,14 @@ to perform a particular _\<action>_ on data provided by a specific _\<source>_.
 Currently supported sources of data include:
 
 * `Clarity`
+* `OpenAQ`
 * `PurpleAir`
 
 In addition, functions with names of the form `<structure>_<action>()` are designed
 to perform a particular _\<action>_ on data that has been converted into a 
 particular _\<structure>_ (aka "class").
 
-Currently supported data structures include:
+Currently supported PurpleAir data structures include:
 
 * `pas` -- **P**urple**A**ir**S**ynoptic. Data for many PurpleAir sensors
 at a specific point in time. Each _pas_ object is a simple tibble.
@@ -126,6 +127,8 @@ PurpleAir sensor. Each _pat_ object is a list with two tibbles: `meta` and `data
 * `synoptic` -- Generic synoptic data for many sensors at a specific point in time.
 Each _synoptic_ object is a simple tibble.
 
+Synoptic and time series dataframes returned by `Clarity_~` and `OpenAQ_~` functions
+have no dedicated functions but are easily manipulated using the **dplyr** package.
 
 ## Data pipelines
 

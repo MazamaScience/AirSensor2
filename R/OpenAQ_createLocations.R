@@ -39,6 +39,9 @@
 #'   if (interactive()) {
 #'     initializeMazamaSpatialUtils()
 #'
+#'     # NOTE:  Read environment vars from .env file with dotenv::load_dot_env()
+#'     OPENAQ_API_KEY <- Sys.getenv("OPENAQ_API_KEY")
+#'
 #'     locations <-
 #'       OpenAQ_createLocations(
 #'         countryCodes = "US",

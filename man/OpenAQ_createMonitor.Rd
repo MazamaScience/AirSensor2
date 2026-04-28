@@ -12,7 +12,7 @@ OpenAQ_createMonitor(
   enddate = NULL,
   timezone = "UTC",
   applyQC = TRUE,
-  maxPages = 1,
+  maxPages = 10,
   sleepSeconds = 0.2,
   api_key = NULL
 )
@@ -47,4 +47,41 @@ An AirMonitor package `mts_monitor` object.
 Download, parse and enhance hourly timeseries data from OpenAQ
 and create an object of class `mts_monitor` for use with the AirMonitor
 package.
+}
+\examples{
+\donttest{
+try({
+  if (interactive()) {
+    initializeMazamaSpatialUtils()
+
+    # NOTE:  Read environment vars from .env file with dotenv::load_dot_env()
+    OPENAQ_API_KEY <- Sys.getenv("OPENAQ_API_KEY")
+
+    locations <-
+      OpenAQ_createLocations(
+        api_key = OPENAQ_API_KEY,
+        countryCodes = "US",
+        stateCodes = "IL",
+        counties = "Cook",
+        lookbackDays = 60
+      )
+
+    monitor <-
+      OpenAQ_createMonitor(
+        locations = locations,
+        locations_id = 6207297,
+        parameter = "pm25",
+        startdate = "2026-04-01",
+        enddate = "2026-04-15",
+        timezone = "America/Chicago",
+        api_key = OPENAQ_API_KEY
+      )
+
+    monitor \%>\%
+      AirMonitor::monitor_timeseriesPlot(shadedNight = TRUE, addAQI = TRUE)
+
+  }
+}, silent = FALSE)
+}
+
 }
