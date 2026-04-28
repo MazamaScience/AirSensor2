@@ -7,7 +7,7 @@
 OpenAQ_lifespanPlot(
   locations,
   showLocation = FALSE,
-  locationIdentifier = c("id", "locationID"),
+  locationIdentifier = c("locationName", "id", "locationID"),
   moreSpace = 0,
   ...
 )
@@ -19,7 +19,7 @@ similarly structured OpenAQ locations data frame.}
 \item{showLocation}{Logical specifying whether to label locations on the plot.}
 
 \item{locationIdentifier}{Name of the column to use when identifying a
-location. Typical values are `"id"` or `"locationID"`.}
+location. Typical values are `"locationName"`, `"id"` or `"locationID"`.}
 
 \item{moreSpace}{Fractional amount by which to expand the time axis to allow
 more room for location labels.}
@@ -68,6 +68,7 @@ try({
     locations \%>\%
       OpenAQ_lifespanPlot(
         showLocation = TRUE,
+        locationIdentifier = "locationName",
         cex = 0.6,
         lwd = 2,
         moreSpace = 0.3
@@ -79,6 +80,7 @@ try({
       dplyr::arrange(.data$lifespan) \%>\%
       OpenAQ_lifespanPlot(
         showLocation = TRUE,
+        locationIdentifier = "locationName",
         cex = 0.6,
         lwd = 2,
         moreSpace = 0.3

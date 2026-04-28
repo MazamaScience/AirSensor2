@@ -77,7 +77,7 @@
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">OpenAQ_lifespanPlot</span><span class="op">(</span></span>
 <span>  <span class="va">locations</span>,</span>
 <span>  showLocation <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  locationIdentifier <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"id"</span>, <span class="st">"locationID"</span><span class="op">)</span>,</span>
+<span>  locationIdentifier <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"locationName"</span>, <span class="st">"id"</span>, <span class="st">"locationID"</span><span class="op">)</span>,</span>
 <span>  moreSpace <span class="op">=</span> <span class="fl">0</span>,</span>
 <span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span></code></pre></div>
@@ -98,7 +98,7 @@ similarly structured OpenAQ locations data frame.</p></dd>
 
 <dt id="arg-locationidentifier">locationIdentifier<a class="anchor" aria-label="anchor" href="#arg-locationidentifier"></a></dt>
 <dd><p>Name of the column to use when identifying a
-location. Typical values are `"id"` or `"locationID"`.</p></dd>
+location. Typical values are `"locationName"`, `"id"` or `"locationID"`.</p></dd>
 
 
 <dt id="arg-morespace">moreSpace<a class="anchor" aria-label="anchor" href="#arg-morespace"></a></dt>
@@ -151,6 +151,7 @@ data frame before plotting.</p>
 <span class="r-in"><span>    <span class="va">locations</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span></span>
 <span class="r-in"><span>      <span class="fu">OpenAQ_lifespanPlot</span><span class="op">(</span></span></span>
 <span class="r-in"><span>        showLocation <span class="op">=</span> <span class="cn">TRUE</span>,</span></span>
+<span class="r-in"><span>        locationIdentifier <span class="op">=</span> <span class="st">"locationName"</span>,</span></span>
 <span class="r-in"><span>        cex <span class="op">=</span> <span class="fl">0.6</span>,</span></span>
 <span class="r-in"><span>        lwd <span class="op">=</span> <span class="fl">2</span>,</span></span>
 <span class="r-in"><span>        moreSpace <span class="op">=</span> <span class="fl">0.3</span></span></span>
@@ -162,6 +163,7 @@ data frame before plotting.</p>
 <span class="r-in"><span>      <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html" class="external-link">arrange</a></span><span class="op">(</span><span class="va">.data</span><span class="op">$</span><span class="va">lifespan</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span></span>
 <span class="r-in"><span>      <span class="fu">OpenAQ_lifespanPlot</span><span class="op">(</span></span></span>
 <span class="r-in"><span>        showLocation <span class="op">=</span> <span class="cn">TRUE</span>,</span></span>
+<span class="r-in"><span>        locationIdentifier <span class="op">=</span> <span class="st">"locationName"</span>,</span></span>
 <span class="r-in"><span>        cex <span class="op">=</span> <span class="fl">0.6</span>,</span></span>
 <span class="r-in"><span>        lwd <span class="op">=</span> <span class="fl">2</span>,</span></span>
 <span class="r-in"><span>        moreSpace <span class="op">=</span> <span class="fl">0.3</span></span></span>
