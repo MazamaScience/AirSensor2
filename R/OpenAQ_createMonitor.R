@@ -146,6 +146,12 @@ OpenAQ_createMonitor <- function(
   startdate_utc <- lubridate::with_tz(requestedRange[1], "UTC")
   enddate_utc <- lubridate::with_tz(requestedRange[2], "UTC")
 
+  # ----- Handle different providers -------------------------------------------
+
+  # TODO:  check on the provider_name
+  # TODO:  bail with a warning if other than airgradient, airnow or clarity
+  # TODO:  adjust parameters if airgradient
+
   # ----- Load data ------------------------------------------------------------
 
   if (logger.isInitialized()) {
@@ -164,6 +170,8 @@ OpenAQ_createMonitor <- function(
       sleepSeconds = sleepSeconds,
       api_key = api_key
     )
+
+  # TODO:  If Clarity, perform QC and rename 'corrected_pm25' to 'pm25'
 
   if (nrow(openaq_data) > 0) {
     openaq_data <-
