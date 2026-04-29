@@ -17,8 +17,6 @@
 #' @param timezone Olson timezone used to interpret `startdate` and `enddate`.
 #' @param maxPages Maximum number of pages to request automatically.
 #' @param sleepSeconds Number of seconds to pause between additional requests.
-#' @param applyQC Logical specifying whether to apply basic QC to invalidate
-#' bad data values.
 #' @param api_key OpenAQ API key. If `api_key = NULL`, it
 #' will be obtained using `getAPIKey("OPENAQ")`.
 #'
@@ -67,7 +65,6 @@ OpenAQ_createMonitor <- function(
     startdate = NULL,
     enddate = NULL,
     timezone = "UTC",
-    applyQC = TRUE,
     maxPages = 10,
     sleepSeconds = 0.2,
     api_key = NULL
@@ -94,10 +91,6 @@ OpenAQ_createMonitor <- function(
 
   if (!timezone %in% OlsonNames()) {
     stop(sprintf("timezone '%s' is not found in OlsonNames()", timezone))
-  }
-
-  if (!isTRUE(is.logical(applyQC) && length(applyQC) == 1)) {
-    stop("'applyQC' must be TRUE or FALSE.")
   }
 
   if (!is.numeric(maxPages) || length(maxPages) != 1 || is.na(maxPages) || maxPages < 1) {
@@ -148,9 +141,29 @@ OpenAQ_createMonitor <- function(
 
   # ----- Handle different providers -------------------------------------------
 
-  # TODO:  check on the provider_name
-  # TODO:  bail with a warning if other than airgradient, airnow or clarity
-  # TODO:  adjust parameters if airgradient
+  provider_name <- meta$provider_name[1]
+
+  valid_provider_names <- c("AirNow", "AirGradient", "Clarity")
+
+  if ( length(provider_name) != 1 ||
+       is.na(provider_name) ||
+       !(provider_name %in% valid_provider_names) ) {
+
+    stop(
+      sprintf(
+        "Invalid provider_name for this location: '%s'\n\nThe provider must be one of: %s",
+        provider_name,
+        paste(valid_provider_names, collapse = ", ")
+      ),
+      call. = FALSE
+    )
+  }
+
+  if ( provider_name == "AirGradient" ) {
+    parameter <- c("pm25", "relativehumidity")
+  } else {
+    parameter <- "pm25"
+  }
 
   # ----- Load data ------------------------------------------------------------
 
@@ -171,7 +184,17 @@ OpenAQ_createMonitor <- function(
       api_key = api_key
     )
 
-  # TODO:  If Clarity, perform QC and rename 'corrected_pm25' to 'pm25'
+  # Apply correction for AirGradient
+  if ( provider_name == "AirGradient" ) {
+    openaq_data <-
+      openaq_data %>%
+      AirGradient_applyCorrection() %>%
+      dplyr::mutate(pm25 = .data$pm25_corrected) %>%
+      dplyr::select(.data$datetime, .data$pm25)
+    # Reset parameter
+    parameter <- "pm25"
+    message("correction equation was used")
+  }
 
   if (nrow(openaq_data) > 0) {
     openaq_data <-
@@ -232,12 +255,6 @@ OpenAQ_createMonitor <- function(
 
   names(data) <- c("datetime", meta$deviceDeploymentID)
 
-  if (applyQC) {
-    bad_mask <- data[[2]] < 0
-    bad_mask[is.na(bad_mask)] <- FALSE
-    data[bad_mask, 2] <- NA_real_
-  }
-
   # ----- Return ---------------------------------------------------------------
 
   monitor <- list(meta = meta, data = data)
@@ -279,7 +296,7 @@ if ( FALSE ) {
 
   #locations_id <- 3301366  # AirNow
   locations_id <- 6207297  # Clarity
-  #locations_id <- 1370216  # AirGradient
+  locations_id <- 1370216  # AirGradient
   parameter <- "pm25"
   startdate <- MazamaCoreUtils::parseDatetime("2026-04-01 00:00:00", timezone = "UTC")
   enddate <- MazamaCoreUtils::parseDatetime("2026-04-15 00:00:00", timezone = "UTC")

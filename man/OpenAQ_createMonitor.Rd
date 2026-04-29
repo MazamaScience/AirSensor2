@@ -11,7 +11,6 @@ OpenAQ_createMonitor(
   startdate = NULL,
   enddate = NULL,
   timezone = "UTC",
-  applyQC = TRUE,
   maxPages = 10,
   sleepSeconds = 0.2,
   api_key = NULL
@@ -29,9 +28,6 @@ OpenAQ_createMonitor(
 \item{enddate}{End datetime in the requested timezone.}
 
 \item{timezone}{Olson timezone used to interpret `startdate` and `enddate`.}
-
-\item{applyQC}{Logical specifying whether to apply basic QC to invalidate
-bad data values.}
 
 \item{maxPages}{Maximum number of pages to request automatically.}
 

@@ -7,7 +7,6 @@
 #'
 #' * `datetime`
 #' * `pm25`
-#' * `temperature`
 #' * `relativehumidity`
 #'
 #' A new `pm25_corrected` column is added. Negative corrected values are set
@@ -27,7 +26,6 @@ AirGradient_applyCorrection <- function(data = NULL) {
   requiredNames <- c(
     "datetime",
     "pm25",
-    "temperature",
     "relativehumidity"
   )
 
@@ -92,7 +90,7 @@ AirGradient_applyCorrection <- function(data = NULL) {
 
   # AirGradient recommends setting negative corrected values to zero.
   data$pm25_corrected <-
-    pmax(data$pm25_corrected, 0, na.rm = FALSE)
+    round(pmax(data$pm25_corrected, 0, na.rm = FALSE), 1)
 
   return(data)
 

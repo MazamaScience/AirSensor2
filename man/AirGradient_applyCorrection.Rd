@@ -21,7 +21,6 @@ The input `data` must include:
 
 * `datetime`
 * `pm25`
-* `temperature`
 * `relativehumidity`
 
 A new `pm25_corrected` column is added. Negative corrected values are set

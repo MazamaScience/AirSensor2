@@ -157,6 +157,9 @@ OpenAQ_enhanceRawLocations <- function(
       deviceDeploymentID = paste0(.data$locationID, "_", .data$deviceID)
     )
 
+  # TODO:  Remove this when AirMonitor and AirMonitorPlots no longer require zip
+  locations$zip <- as.character(NA)
+
   # Put identifiers in front
   startingIDs <- c("deviceDeploymentID", "deviceID", "locationID")
   otherColumns <- setdiff(names(locations), startingIDs)
