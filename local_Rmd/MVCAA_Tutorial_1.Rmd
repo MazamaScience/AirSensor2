@@ -9,7 +9,7 @@ output: html_document
 knitr::opts_chunk$set(fig.width = 7, fig.height = 5)
 ```
 
-## Introductionget
+## Introduction
 
 This tutorial demonstrates how to create  _pas_, _pat_ and
 _monitor_ objects for PurpleAir sensors in a particular community. 
@@ -299,7 +299,9 @@ trailhead_monitor %>%
 
 # Use AirMonitorPlots to create a "diurnal" plot
 trailhead_monitor %>%
-  AirMonitorPlots::monitor_ggDailyByHour_archival()
+  AirMonitorPlots::monitor_ggDailyByHour_archival(
+    title = "Mazama Trailhead"
+  )
 ```
 
 -----
