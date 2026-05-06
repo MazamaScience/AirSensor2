@@ -1,7 +1,7 @@
 ---
 title: "Test PurpleAir QC Report"
 author: "Jonathan Callahan"
-date: "2023-09-11"
+date: "2026-05-06"
 output: html_document
 ---
 
@@ -18,7 +18,10 @@ knitr::opts_chunk$set(fig.width = 7, fig.height = 5)
 library(AirSensor2)
 
 # Set user's PurpleAir_API_READ_KEY
-source('/Users/jonathancallahan/Projects/MazamaScience/AirSensor2/global_vars.R')
+library(dotenv)
+dotenv::load_dot_env()
+
+PurpleAir_API_READ_KEY <- Sys.getenv("PurpleAir_API_READ_KEY")
 
 # Initialize spatial datasets
 initializeMazamaSpatialUtils()
@@ -30,7 +33,7 @@ champaign_pas <-
     countryCodes = "US",
     stateCodes = "IL",
     counties = c("Champaign"),
-    lookbackDays = 365,         # all sensors from the past year
+    lookbackDays = 0,           # all historical sensors
     location_type = 0           # outdoor sensors only
   )
 

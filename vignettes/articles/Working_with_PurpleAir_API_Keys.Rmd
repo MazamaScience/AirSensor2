@@ -27,20 +27,21 @@ When working with PurpleAir data, you should be aware of the following:
 PurpleAir maintains a community forum with a page dedicated to obtaining an API
 Key:  https://community.purpleair.com/t/how-to-obtain-an-api-key
 
-## Create a `global_vars.R` file
+## Create a `.env` file
 
 It is useful to create a file where all API keys and passwords are kept.
-I recommend keeping this information in a file named `global_vars.R` which can
+I recommend keeping this information in a file named `.env` which can
 be sourced at the RStudio prompt or at the beginning of a script. Here is an
 example:
 
 ```
+# ----- Air Quality API keys ----------------------------------------------------------
+
+PurpleAir_API_READ_KEY=8C087B59-***-****-****-***
+
+OPENAQ_API_KEY=d010897***
+
 # global_vars.R file
-
-# ----- PurpleAir API keys ----------------------------------------------------
-
-PurpleAir_API_READ_KEY <- "********-2A00-11EB-A8CD-42010A800126"     # associated.email@gmail.com
-PurpleAir_API_WRITE_KEY <- "********-2A00-11EB-A8CD-42010A800126"    # associated.email@gmail.com
 ```
 
 ## Update the `.gitignore` file
@@ -89,13 +90,13 @@ vignettes/*.pdf
 *.utf8.md
 *.knit.md
 
-# R Environment Variables
+# R environment variables
 .Renviron
 
 # ----- Local customization -----
 
-# API Keys
-global_vars.R
+# Private environment variables
+.env
 ```
 
 ## Use API keys in your scripts
@@ -111,8 +112,6 @@ Currently supported API keys and associated functions include:
 
 * `"PurpleAir-read"` – PurpleAir api_key used in `pas_downloadParseRawData()`
 `pat_downloadParseRawData()`, `pat_create()`.
-* `"Clarity-read"` -- Clarity api_key used in `Clarity_createOpenMonitor()`,
-`Clarity_createOpenSynoptic()`.
 
 Scripts can take advantage of this as seen below:
 
@@ -121,7 +120,10 @@ Scripts can take advantage of this as seen below:
 library(AirSensor2)
 
 # Set user's PurpleAir_API_READ_KEY
-source('global_vars.R')
+library(dotenv)
+dotenv::load_dot_env()
+
+PurpleAir_API_READ_KEY <- Sys.getenv("PurpleAir_API_READ_KEY")
 setAPIKey("PurpleAir-read", PurpleAir_API_READ_KEY)
 
 # Initialize spatial datasets
@@ -130,8 +132,9 @@ initializeMazamaSpatialUtils()
 ...
 ```
 
-From this point on in the R session, all **AirSensor2** functions that need to pull data from
-the PurpleAir API will send the appropriate API key and everything should work.
+From this point on in the R session, all **AirSensor2** functions that need to 
+pull data from the PurpleAir API will send the appropriate API key and everything 
+should work.
 
 ----
 

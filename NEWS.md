@@ -1,3 +1,7 @@
+# AirSensor2 0.6.1
+
+* Added `MVCAA Tutorial 1` article.
+
 # AirSensor2 0.6.0
 
 * Added OpenAQ integration for creating monitor objects from OpenAQ data.

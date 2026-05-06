@@ -26,6 +26,8 @@
 
 # ----- Mazama Science custom -----
 
+^vignettes/articles$
+
 ^global_vars.R
 ^global_vars_Corrigan.R
 ^\.env.*
