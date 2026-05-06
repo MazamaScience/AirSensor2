@@ -1,0 +1,123 @@
+# Developer Style Guide
+
+## R Style Guide
+
+This document describes the coding style used within the package. Having
+a consistent style enhances the readability and “understand-ability” of
+the code and makes it easier for users and developers to work with this
+package and with other, related [Mazama Science
+packages](https://github.com/MazamaScience).
+
+### Naming Objects
+
+Naming variables is one of the most important things to get right to
+make your code readable and understandable to future readers of the code
+*(perhaps even yourself!)*. Having a system for creating names also
+makes it easier to come up with new ones.
+
+Mazama Science packages embrace **`lowerCamelCase`** for object names.
+
+With the casing settled, we use an ornithologist’s sensibility for how
+to identify things:
+
+- What is it? — a `bird`
+- What kind of bird is it? — a `blackBird`
+- What kind of blackBird is it? — a `redwingedBlackBird`
+
+It’s a simple system: start with a noun and prefix it with descriptors
+until it is uniquely identified.
+
+In this system we would never have a variable called: `num_hours`.
+Instead we go through our process:
+
+- What is it? — *(Hmm. What noun describes this? Ah yes!)* — a `count`
+- What kind of count is it? — *(It’s not a “head count” or a “body
+  count”.)* It’s an `hourCount`.
+
+For complex objects it is often helpful to give readers of the code a
+hint as to what type of object it is so they will know how to work with
+it. We often use variable names like:
+
+- `monitor` — a *mts_monitor* object
+- `dataList` – a *list* of dataframes
+
+We occasionally use ‘\_’ to create classes of similar variables that are
+otherwise hard to name, e.g.:
+
+    QC_negativeValues
+
+### Naming Functions
+
+Most functions should strive to be atomic in nature and should do one
+thing really well. Think of them as individual *Lego* bricks that we
+click together to achieve more advanced functionality. Where objects are
+***well described nouns***, functions are ***well described verbs***
+that describe what they do as in:
+
+    pas_createNew()
+    pas_filter()
+    pas_filterArea()
+    ...
+
+All of these functions begin with `pas_` because they are for creating
+or working with *pas* objects. Many of these functions accept a *pas*
+object as their first argument and return a modified *pas*. This means
+that they can be used with the `%>%` “pipe” operator and chained
+together as in:
+
+    Okanogan_pas <-
+      example_pas %>%
+      pas_filter(stateCode == "WA") %>%
+      pas_filter(countyName %in% c("Okanogan"))
+
+### Naming Files
+
+Each file should contain a single function of the same name. Thus, the
+function named
+[`pas_filterArea()`](https://mazamascience.github.io/AirSensor2/reference/pas_filterArea.md)
+is defined in `pas_filterArea.R`. An exception is made for small, mostly
+internal functions used in conjunction with a particular type of object
+or activity. These can be stored together in a file named `utils-~`:
+
+    utils-plot.R
+
+### Syntax
+
+We generally adhere to the [Wickham Style
+Guide](http://adv-r.had.co.nz/Style.md) for syntax with a few
+exceptions:
+
+#### Spacing
+
+**Do** place spaces around code in parentheses if it is an `if` test:
+
+    if ( <logical expression part1> && <logical expression part2> ) {
+      ...
+    }
+
+When debugging, this makes it much easier to select the logical test
+with a cursor and paste it into the RStudio console.
+
+#### Lists
+
+We generally like to specify R lists with each `parameter = value` pair
+on a separate line. This goes for regular lists and for named argument
+lists passed to a function:
+
+      pas_createNew(
+        countryCodes = "US",
+        stateCodes = "WA",
+        lookbackDays = 1,
+        location_type = 0
+      )
+
+Coding this way makes it easy to see which function arguments are being
+passed. It also eases future refactoring of the code when arguments need
+to be added or commented out or when the order of arguments need to be
+changed.
+
+------------------------------------------------------------------------
+
+It is our belief that good code should be both readable and
+understandable and should inspire others to copy and innovate on their
+own.

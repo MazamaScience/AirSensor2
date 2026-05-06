@@ -1,0 +1,25 @@
+url: https://mazamascience.github.io/AirSensor2/
+
+template:
+  bootstrap: 5
+
+navbar:
+  structure:
+    left:  [intro, reference, articles, tutorials, news]
+    right: [search, github]
+
+  components:
+
+    tutorials:
+      text: Tutorials
+      menu:
+      - text: "MVCAA Tutorial 1: Exploring PurpleAir Data"
+        href: articles/MVCAA_Tutorial_1.html
+
+articles:
+- title: Articles
+  contents:
+  - AirSensor2
+  - articles/Working_with_PurpleAir_API_Keys
+  - articles/Citations
+  - Developer_Style_Guide

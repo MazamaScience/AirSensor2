@@ -1,0 +1,42 @@
+# Comma-separated list of fields needed for PM2.5 data analysis
+
+Character string with default PurpleAir field names used in
+\`PurpleAir_getSensorData()\` and \`PurpleAir_getMemberData()\`. These
+fields include most of the "information and status" fields, "humidity",
+"temperature", "pressure" and all the PM2.5 fields for both A and B
+channels.
+
+These fields are useful only for detailed, engineering-level analysis of
+the performance of an individual sensor.
+
+Included fields:
+
+
+     [1] "name"                 "model"                "hardware"
+     [4] "location_type"        "private"              "latitude"
+     [7] "longitude"            "led_brightness"       "firmware_version"
+    [10] "firmware_upgrade"     "rssi"                 "uptime"
+    [13] "pa_latency"           "memory"               "last_seen"
+    [16] "last_modified"        "date_created"         "channel_state"
+    [19] "channel_flags"        "channel_flags_manual" "channel_flags_auto"
+    [22] "confidence"           "confidence_manual"    "confidence_auto"
+    [25] "humidity"             "temperature"          "pressure"
+    [28] "pm2.5_alt"            "pm2.5_alt_a"          "pm2.5_alt_b"
+    [31] "pm2.5"                "pm2.5_a"              "pm2.5_b"
+    [34] "pm2.5_atm"            "pm2.5_atm_a"          "pm2.5_atm_b"
+    [37] "pm2.5_cf_1"           "pm2.5_cf_1_a"         "pm2.5_cf_1_b"
+
+## Usage
+
+``` r
+PurpleAir_PAList_PM25_FIELDS
+```
+
+## Format
+
+String with comma-separated field names
+
+## References
+
+\[Get Sensor Data
+API\](https://api.purpleair.com/#api-sensors-get-sensor-data)

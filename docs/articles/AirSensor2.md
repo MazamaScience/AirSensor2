@@ -1,0 +1,148 @@
+# Introduction to AirSensor2
+
+## Installation
+
+Install the latest version from GitHub with:
+
+`devtools::install_github('mazamascience/AirSensor2')`
+
+## Install Spatial Data
+
+The **AirSensor2** package uses the
+[MazamaSpatialUtils](https://mazamascience.github.io/MazamaSpatialUtils/)
+package to enhance data downloaded from PurpleAir with additional
+spatial metadata. In order to work properly, you must specify a spatial
+directory and install additional datasets.
+
+If you don’t already have a spatial data directory specified, the
+following setup is recommended:
+
+    if ( !file.exists("~/Data/Spatial") ) {
+      dir.create("~/Data/Spatial")
+    }
+
+    MazamaSpatialUtils::setSpatialDataDir("~/Data/Spatial")
+
+    # Install datasets
+    MazamaSpatialUtils::installSpatialData("NaturalEarthAdm1")
+    MazamaSpatialUtils::installSpatialData("USCensusCounties")
+
+    # Check installed datasets
+    MazamaSpatialUtils::installedSpatialData()
+
+## Manage PurpleAir API Key
+
+Please see the article on [Working with PurpleAir API
+Keys](https://mazamascience.github.io/AirSensor2/articles/Working_with_PurpleAir_API_Keys.html).
+
+The following code chunks assume that you have set up a `global_vars.R`
+file which sets your `PurpleAir_API_READ_KEY`.
+
+## Data Models
+
+**Synoptic data** (many measurements at a single point in time) are
+stored as a tibble (modern dataframe) for easy use with **dplyr**.
+
+**Time series data** for stationary time series are stored using the
+[MazamaTimeSeries](https://mazamascience.github.io/MazamaTimeSeries/)
+**S**ingle**T**ime**S**eries (*sts*) data model:
+
+Time series data from a single environmental sensor typically consists
+of multiple parameters measured at successive times. This data is stored
+in an **R** list containing two dataframes.
+
+`sts$meta` – 1 row = unique device-deployment; cols = device/location
+metadata
+
+`sts$data` – rows = UTC times; cols = measured parameters (plus an
+additional `datetime` column)
+
+## Synoptic Data Example
+
+The following example creates a *PurpleAir_synoptic* (or “pas”) object
+with recent measurements for all PurpleAir sensors in Washington state.
+
+    # AirSensor2 package
+    library(AirSensor2)
+
+    # Set user's PurpleAir_API_READ_KEY
+    source('global_vars.R')
+    setAPIKey("PurpleAir-read", PurpleAir_API_READ_KEY)
+
+    # Initialize spatial datasets
+    initializeMazamaSpatialUtils()
+
+    # All sensors in Washington state
+    WA_pas <-
+      pas_createNew(
+        countryCodes = "US",
+        stateCodes = "WA",
+        lookbackDays = 1,
+        location_type = 0
+      )
+      
+    pas_leaflet(WA_pas)
+
+## Function classes
+
+The **AirSensor2** package handles a variety of data sources within the
+world of low-cost sensors with various functions tailored to the
+specifics of each data source.
+
+Functions with names of the form `<source>_<action>()` are designed to
+perform a particular *\<action\>* on data provided by a specific
+*\<source\>*.
+
+Currently supported sources of data include:
+
+- `Clarity`
+- `OpenAQ`
+- `PurpleAir`
+
+In addition, functions with names of the form `<structure>_<action>()`
+are designed to perform a particular *\<action\>* on data that has been
+converted into a particular *\<structure\>* (aka “class”).
+
+Currently supported PurpleAir data structures include:
+
+- `pas` – **P**urple**A**ir**S**ynoptic. Data for many PurpleAir sensors
+  at a specific point in time. Each *pas* object is a simple tibble.
+- `pat` – **P**uruple**A**ir**T**imeseries. Time series data for a
+  specific PurpleAir sensor. Each *pat* object is a list with two
+  tibbles: `meta` and `data`.
+- `synoptic` – Generic synoptic data for many sensors at a specific
+  point in time. Each *synoptic* object is a simple tibble.
+
+Synoptic and time series dataframes returned by `Clarity_~` and
+`OpenAQ_~` functions have no dedicated functions but are easily
+manipulated using the **dplyr** package.
+
+## Data pipelines
+
+We encourage people to embrace “data pipeline” style coding as
+encouraged by **dplyr** and related packages. The special `%>%` operator
+uses the output of one function as the first argument of the next
+function, thus allowing for easy “chaining” of results. Many of the
+functions supporting a particular data class take an object of that
+class as their first argument and return an object of that class. As a
+result, they can be chained together as in:
+
+    # Okanogan county high elevation sites
+    okanogan_high_pas <-
+      WA_pas %>%
+      pas_filter(countyName %in% c("Okanogan")) %>%
+      pas_filter(elevation >= 800)
+      
+    pas_leaflet(okanogan_high_pas)
+
+    # Okanogan county low elevation sites
+    okanogan_low_pas <-
+      WA_pas %>%
+      pas_filter(countyName %in% c("Okanogan")) %>%
+      pas_filter(elevation < 800)
+      
+    pas_leaflet(okanogan_low_pas)
+
+------------------------------------------------------------------------
+
+*Best of luck analyzing your local air quality data!*

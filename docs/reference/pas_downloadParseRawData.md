@@ -1,0 +1,184 @@
+# Download synoptic data from PurpleAir
+
+Download and parse raw synoptic data from PurpleAir within the specified
+region.
+
+\*Synoptic\* data provides access to data from many PurpleAir sensors at
+a moment in time and includes both metadata and recent PM2.5 averages
+for each sensor. Data returned by this function is typically used to
+create static or interactive maps.
+
+If \`show_only\` is used to request specific sensors, the bounding box
+information is ignored.
+
+\*\*NOTE:\*\* Most users will want to use the \[pas_createNew()\]
+function which enhances raw synoptic data with additional spatial
+metadata so that it meets the criteria for use as a \*pas\* object.
+
+## Usage
+
+``` r
+pas_downloadParseRawData(
+  api_key = NULL,
+  fields = PurpleAir_PAS_MINIMAL_FIELDS,
+  location_type = 0,
+  read_keys = NULL,
+  show_only = NULL,
+  modified_since = NULL,
+  max_age = 3600 * 24 * 7,
+  west = NULL,
+  east = NULL,
+  south = NULL,
+  north = NULL,
+  baseUrl = "https://api.purpleair.com/v1/sensors"
+)
+```
+
+## Arguments
+
+- api_key:
+
+  PurpleAir API READ Key. If \`api_key = NULL\`, it will be obtained
+  using \`getAPIKey("PurpleAir-read")\`. See
+  \[MazamaCoreUtils::setAPIKey()\].
+
+- fields:
+
+  Character string with PurpleAir field names for the Get Sensor Data
+  API.
+
+- location_type:
+
+  The \`location_type\` of the sensors. Possible values are: 0 =
+  Outside, 1 = Inside or \`NULL\` = both.
+
+- read_keys:
+
+  Optional comma separated list of sensor read_keys is required for
+  private devices. It is separate to the api_key and each sensor has its
+  own read_key. Submit multiple keys by separating them with a comma (,)
+  character for example: key-one,key-two,key-three.
+
+- show_only:
+
+  Optional, comma separated list of sensor_index values. When provided,
+  the results are limited only to the sensors included in this list.
+
+- modified_since:
+
+  The \`modified_since\` parameter generates reults that include only
+  sensors modified after the provided time stamp. Using the time stamp
+  value associated with a previous call (recommended) will limit results
+  to those with new values since the last request. Using a value of 0
+  will match sensors modified at any time.
+
+- max_age:
+
+  Number of seconds used to filter results to only include sensors
+  modified or updated within the the last \`max_age\` seconds. Using a
+  value of 0 will match all sensors.
+
+- west:
+
+  Longitude of the western edge of the bounding box in which to find
+  sensors.
+
+- east:
+
+  Longitude of the eastern edge of the bounding box in which to find
+  sensors.
+
+- south:
+
+  Latitude of the southern edge of the bounding box in which to find
+  sensors.
+
+- north:
+
+  Latitude of the northern edge of the bounding box in which to find
+  sensors.
+
+- baseUrl:
+
+  Base URL for the PurpleAir API.
+
+## Value
+
+Dataframe of synoptic PurpleAir data.
+
+## Note
+
+The \`fields\` parameter allows users to dial in which fields they are
+interested in depending on their needs. However, the following fields
+will be added if not specified in order to guarantee compatibility with
+\`pas_enhanceRawData()\`:
+\`"longitude,latitude,name,location_type,date_created,last_seen"\`.
+
+Pregenerated fields for use in this function include:
+
+- \[PurpleAir_PAS_METADATA_FIELDS\] – instrument-only fields
+
+- \[PurpleAir_PAS_AVG_PM25_FIELDS\] – includes measurements
+
+## References
+
+\[PurpleAir\](https://www2.purpleair.com)
+
+\[PurpleAir API\](https://api.purpleair.com)
+
+\[PurpleAir Terms of
+service\](https://www2.purpleair.com/policies/terms-of-service)
+
+\[PurpleAir Data license\](https://www2.purpleair.com/pages/license)
+
+\[PurpleAir Data
+Attribution\](https://www2.purpleair.com/pages/attribution)
+
+## Examples
+
+``` r
+# \donttest{
+# Fail gracefully if any resources are not available
+try({
+
+library(AirSensor2)
+
+initializeMazamaSpatialUtils()
+
+source("global_vars.R") # contains PurpleAir_API_READ_KEY
+
+# Download minimal fields, set max_age = 0, to look for historical data
+pas_raw <-
+  pas_downloadParseRawData(
+    api_key = PurpleAir_API_READ_KEY,
+    max_age = 0,
+    west = -120.5,
+    east = -120,
+    south = 48.2,
+    north = 48.7
+  )
+
+View(pas_raw)
+
+# Download metadata, PM2.5 and weather parameter fields
+pas_raw <-
+  pas_downloadParseRawData(
+    api_key = PurpleAir_API_READ_KEY,
+    fields = PurpleAir_PAS_AVG_PM25_FIELDS,
+    location_type = 0,
+    modified_since = NULL,
+    max_age = 3600 * 24,
+    west = -120.5,
+    east = -120,
+    south = 48.2,
+    north = 48.7
+  )
+
+View(pas_raw[1:100,])
+
+}, silent = FALSE)
+#> Warning: cannot open file 'global_vars.R': No such file or directory
+#> Error in file(filename, "r", encoding = encoding) : 
+#>   cannot open the connection
+# }
+```

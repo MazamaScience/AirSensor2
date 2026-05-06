@@ -1,0 +1,105 @@
+# Plot the reporting lifespan of OpenAQ locations
+
+Plots the reporting lifespan of OpenAQ locations as the time range
+between \`datetime_first\` and \`datetime_last\`.
+
+## Usage
+
+``` r
+OpenAQ_lifespanPlot(
+  locations,
+  showLocation = FALSE,
+  locationIdentifier = c("locationName", "id", "locationID"),
+  moreSpace = 0,
+  ...
+)
+```
+
+## Arguments
+
+- locations:
+
+  Data frame returned by \[OpenAQ_createLocations()\] or a similarly
+  structured OpenAQ locations data frame.
+
+- showLocation:
+
+  Logical specifying whether to label locations on the plot.
+
+- locationIdentifier:
+
+  Name of the column to use when identifying a location. Typical values
+  are \`"locationName"\`, \`"id"\` or \`"locationID"\`.
+
+- moreSpace:
+
+  Fractional amount by which to expand the time axis to allow more room
+  for location labels.
+
+- ...:
+
+  Additional arguments passed to \[graphics::plot.default()\].
+
+## Value
+
+No return value. This function is called for its side effect of creating
+a plot on the active graphics device.
+
+## Details
+
+This function is useful for exploring which locations have long
+reporting histories and which appear only briefly in the OpenAQ archive.
+You can use \`dplyr::filter()\` and \`dplyr::arrange()\` to pre-process
+the \`locations\` data frame before plotting.
+
+When \`showLocation = TRUE\`, typical values for \`locationIdentifier\`
+are \`"id"\` or \`"locationID"\`.
+
+## Examples
+
+``` r
+# \donttest{
+try({
+  if (interactive()) {
+    initializeMazamaSpatialUtils()
+
+    # NOTE:  Read environment vars from .env file with dotenv::load_dot_env()
+    OPENAQ_API_KEY <- Sys.getenv("OPENAQ_API_KEY")
+
+    locations <-
+      OpenAQ_createLocations(
+        countryCodes = "US",
+        stateCodes = "IL",
+        counties = "Cook",
+        api_key = OPENAQ_API_KEY
+      )
+
+    # Plot all lifespans
+    locations %>%
+      OpenAQ_lifespanPlot()
+
+    # Label locations with OpenAQ integer ids
+    locations %>%
+      OpenAQ_lifespanPlot(
+        showLocation = TRUE,
+        locationIdentifier = "locationName",
+        cex = 0.6,
+        lwd = 2,
+        moreSpace = 0.3
+      )
+
+    # Arrange by lifespan before plotting
+    locations %>%
+      dplyr::mutate(lifespan = .data$datetime_last - .data$datetime_first) %>%
+      dplyr::arrange(.data$lifespan) %>%
+      OpenAQ_lifespanPlot(
+        showLocation = TRUE,
+        locationIdentifier = "locationName",
+        cex = 0.6,
+        lwd = 2,
+        moreSpace = 0.3
+      )
+  }
+}, silent = FALSE)
+# }
+```

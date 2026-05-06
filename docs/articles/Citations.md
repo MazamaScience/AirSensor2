@@ -1,0 +1,44 @@
+# Citations
+
+The **AirSensor2** package’s predecessor, the
+[AirSensor](https://github.com/MazamaScience/AirSensor) package has been
+widely used in air quality analysis throughout North America and the
+world. This document provides links to projects and publications that
+mention the **AirSensor** or **AirSensor2** packages.
+
+### Publications using the **AirSensor2** package
+
+- **Jul, 2023 – EGUSphere**  
+  <https://doi.org/10.5194/egusphere-2023-1031>  
+  A model for rapid wildfire smoke exposure estimates using
+  routinely-available data - rapidfire v0.1.3
+
+### Publications using the **AirSensor** package
+
+- **Jul, 2023 – Frontiers in Environmental Science**  
+  <https://doi.org/10.3389/fenvs.2023.1223160>  
+  Developing high-resolution PM2.5 exposure models by integrating
+  low-cost sensors, automated machine learning, and big human mobility
+  data
+
+- **Mar, 2022 – Sensors for Indoor and Outdoor Air Quality Monitoring:
+  From Research to Citizen Science Applications**  
+  <https://doi.org/10.3390/s22072543>  
+  Towards the Development of a Sensor Educational Toolkit to Support
+  Community and Citizen Science
+
+- **Feb, 2022 – Environmental Modeling & Software**  
+  <https://doi.org/10.1016/j.envsoft.2021.105256>  
+  AirSensor v1.0: Enhancements to the open-source R package to enable
+  deep understanding of the long-term performance and reliability of
+  PurpleAir sensors
+
+- **Jan, 2022 – Journal of Aerosol Science**  
+  <https://doi.org/10.1016/j.jaerosci.2021.105872>  
+  Tutorial: Guidelines for implementing low-cost sensor networks for
+  aerosol monitoring
+
+- **Dec, 2020 – Environmental Modeling & Software**  
+  <https://doi.org/10.1016/j.envsoft.2020.104832>  
+  The AirSensor open-source R-package and DataViewer web application for
+  interpreting community data collected by low-cost sensor networks

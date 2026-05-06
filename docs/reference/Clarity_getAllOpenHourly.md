@@ -1,0 +1,62 @@
+# Retrieve current hourly data for all Open Data sensors.
+
+Sends a request to the Clarity API endpoint for Open Data.
+
+When \`format = "USFS2"\`, two additional fields are returned in the
+"synoptic" dataframe: \`calibrationId\` and \`calibrationCategory\`.
+
+- \*Measurement data from\* – All open datasources
+
+- \*Measurements returned\* – Hourly values for last 3 hours
+
+- \*PM2.5 Mass Concentration\* – 1-Hour Mean Nowcast
+
+## Usage
+
+``` r
+Clarity_getAllOpenHourly(
+  api_key = NULL,
+  format = c("USFS2", "USFS"),
+  baseUrl =
+    "https://clarity-data-api.clarity.io/v1/open/all-recent-measurement/pm25/hourly"
+)
+```
+
+## Arguments
+
+- api_key:
+
+  Clarity API READ Key. If \`api_key = NULL\`, it will be obtained using
+  \`getAPIKey("Clarity-read")\`.
+
+- format:
+
+  Customized output format ("USFS2", "USFS").
+
+- baseUrl:
+
+  URL endpoint.
+
+## Value
+
+List containing five data frames: \`synoptic\`, \`pm2.5_QCFlag\`,
+\`pm2.5\`, \`nowcast_QCFlag\` and \`nowcast\`.
+
+## Examples
+
+``` r
+# \donttest{
+# Fail gracefully if any resources are not available
+try({
+
+library(AirSensor2)
+
+  Clarity_getAllOpenHourly(
+    api_key = Clarity_API_READ_KEY,
+    format = "USFS2"
+  )
+
+}, silent = FALSE)
+#> Error in eval(expr, envir) : object 'Clarity_API_READ_KEY' not found
+# }
+```

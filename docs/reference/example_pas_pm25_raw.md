@@ -1,0 +1,60 @@
+# Example raw PurpleAir synoptic dataset
+
+A tibble with 39 rows and 18 columns of data.
+
+## Usage
+
+``` r
+example_pas_pm25_raw
+```
+
+## Format
+
+A tibble with 39 rows and 18 columns of data.
+
+## Source
+
+https://www2.purpleair.com
+
+## Details
+
+The \`example_pas_pm25_raw\` dataset provides a quickly loadable version
+of raw PurpleAir synoptic data for practice and code examples. This
+dataset contains data for sensors in a box around the Methow Valley in
+Washington and was generated on 2024-03-12 by running:
+
+
+    library(AirSensor2)
+
+    initializeMazamaSpatialUtils()
+
+    source("global_vars.R") # contains PurpleAir_API_READ_KEY
+
+    example_pas_pm25_raw <-
+      pas_downloadParseRawData(
+        PurpleAir_API_READ_KEY,
+        fields = PurpleAir_PAS_AVG_PM25_FIELDS,
+        location_type = 0,
+        modified_since = NULL,
+        max_age = 3600 * 24,
+        west = -120.5,
+        east = -120,
+        south = 48.2,
+        north = 48.7
+      )
+
+    save(example_pas_pm25_raw, file = "data/example_pas_pm25_raw.rda")
+
+This dataset can be converted into a standard \*pas\* object with:
+
+
+    pas <-
+      pas_enhanceRawData(
+        example_pas_pm25_raw,
+        countryCodes = "US",
+        stateCodes = "WA"
+      )
+
+## See also
+
+example_pas_pm25

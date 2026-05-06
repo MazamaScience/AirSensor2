@@ -1,0 +1,41 @@
+# Comma-separated list of fields needed for creating QC reports.
+
+Character string with default PurpleAir field names used in
+\`pat_downloadParaseRawData()\`. These fields are sufficient for most QC
+algorithms and include most of the "information and status" and
+"environmental" fields.
+
+## Usage
+
+``` r
+PurpleAir_PAT_QC_FIELDS
+```
+
+## Format
+
+String with comma-separated field names
+
+## Note
+
+The PM2.5 fields included here are the "\_atm\_" fields recommended by
+PurpleAir for outdoor sensors while those used in
+\[PurpleAir_PAT_EPA_HOURLY_FIELDS()\] include the "\_cf_1\_" versions as
+specified by the EPA correction algorithm.
+
+The \[PurpleAir reference
+docs\](https://api.purpleair.com/#api-sensors-get-sensors-data) describe
+the two different variants as: "CF=1 variant for indoor, ATM variant for
+outdoor devices" which is why we include the "\_atm\_" versions in this
+set. For the purposes of identifying when the A and B channels are in
+agreement, either version is fine.
+
+Included fields:
+
+
+    [1] "rssi"        "uptime"      "pa_latency"  "memory"      "humidity"
+    [6] "temperature" "pressure"    "pm2.5_atm"   "pm2.5_atm_a" "pm2.5_atm_b"
+
+## References
+
+\[Get Sensor History
+API\](https://api.purpleair.com/#api-sensors-get-sensor-history-csv)

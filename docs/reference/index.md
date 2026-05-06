@@ -1,0 +1,190 @@
+# Package index
+
+## All functions
+
+- [`APIKeys`](https://mazamascience.github.io/AirSensor2/reference/APIKeys.md)
+  : Work with API keys
+- [`AirGradient_applyCorrection()`](https://mazamascience.github.io/AirSensor2/reference/AirGradient_applyCorrection.md)
+  : Apply AirGradient PM2.5 correction
+- [`AirSensor2`](https://mazamascience.github.io/AirSensor2/reference/AirSensor2.md)
+  : Air Quality Data Analysis for Low-Cost Sensors
+- [`Clarity_createAllOpenMonitors()`](https://mazamascience.github.io/AirSensor2/reference/Clarity_createAllOpenMonitors.md)
+  : Update a Clarity 'mts_monitor' object
+- [`Clarity_createOpenMonitor()`](https://mazamascience.github.io/AirSensor2/reference/Clarity_createOpenMonitor.md)
+  : Create a new Clarity 'mts_monitor' object
+- [`Clarity_createOpenSynoptic()`](https://mazamascience.github.io/AirSensor2/reference/Clarity_createOpenSynoptic.md)
+  : Create a new Clarity synoptic dataset
+- [`Clarity_enhanceRawSynopticData()`](https://mazamascience.github.io/AirSensor2/reference/Clarity_enhanceRawSynopticData.md)
+  : Enhance synoptic data from Clarity
+- [`Clarity_getAllOpenHourly()`](https://mazamascience.github.io/AirSensor2/reference/Clarity_getAllOpenHourly.md)
+  : Retrieve current hourly data for all Open Data sensors.
+- [`Clarity_getAllOpenIndividual()`](https://mazamascience.github.io/AirSensor2/reference/Clarity_getAllOpenIndividual.md)
+  : Retrieve current individual records for all Open Data sensors.
+- [`Clarity_getOpenHourly()`](https://mazamascience.github.io/AirSensor2/reference/Clarity_getOpenHourly.md)
+  : Retrieve current hourly data from a single source.
+- [`Clarity_getOpenIndividual()`](https://mazamascience.github.io/AirSensor2/reference/Clarity_getOpenIndividual.md)
+  : Retrieve current individual records from a single source.
+- [`Clarity_updateAllOpenMonitors()`](https://mazamascience.github.io/AirSensor2/reference/Clarity_updateAllOpenMonitors.md)
+  : Update a Clarity 'mts_monitor' object
+- [`OpenAQ_countryToID()`](https://mazamascience.github.io/AirSensor2/reference/OpenAQ_countryToID.md)
+  : Convert country codes or names to OpenAQ country IDs
+- [`OpenAQ_createLocations()`](https://mazamascience.github.io/AirSensor2/reference/OpenAQ_createLocations.md)
+  : Create an OpenAQ locations dataset
+- [`OpenAQ_createMonitor()`](https://mazamascience.github.io/AirSensor2/reference/OpenAQ_createMonitor.md)
+  : Create a new OpenAQ 'mts_monitor' object
+- [`OpenAQ_downloadRawData()`](https://mazamascience.github.io/AirSensor2/reference/OpenAQ_downloadRawData.md)
+  : Download raw OpenAQ measurements
+- [`OpenAQ_downloadRawLocations()`](https://mazamascience.github.io/AirSensor2/reference/OpenAQ_downloadRawLocations.md)
+  : Download raw OpenAQ location data
+- [`OpenAQ_enhanceRawLocations()`](https://mazamascience.github.io/AirSensor2/reference/OpenAQ_enhanceRawLocations.md)
+  : Enhance OpenAQ locations data
+- [`OpenAQ_getCountries()`](https://mazamascience.github.io/AirSensor2/reference/OpenAQ_getCountries.md)
+  : Get OpenAQ country metadata
+- [`OpenAQ_getInstruments()`](https://mazamascience.github.io/AirSensor2/reference/OpenAQ_getInstruments.md)
+  : Get OpenAQ instrument metadata
+- [`OpenAQ_getLicenses()`](https://mazamascience.github.io/AirSensor2/reference/OpenAQ_getLicenses.md)
+  : Get OpenAQ license metadata
+- [`OpenAQ_getManufacturers()`](https://mazamascience.github.io/AirSensor2/reference/OpenAQ_getManufacturers.md)
+  : Get OpenAQ manufacturer metadata
+- [`OpenAQ_getOwners()`](https://mazamascience.github.io/AirSensor2/reference/OpenAQ_getOwners.md)
+  : Get OpenAQ owner metadata
+- [`OpenAQ_getParameters()`](https://mazamascience.github.io/AirSensor2/reference/OpenAQ_getParameters.md)
+  : Get OpenAQ parameter metadata
+- [`OpenAQ_getProviders()`](https://mazamascience.github.io/AirSensor2/reference/OpenAQ_getProviders.md)
+  : Get OpenAQ provider metadata
+- [`OpenAQ_instrumentToID()`](https://mazamascience.github.io/AirSensor2/reference/OpenAQ_instrumentToID.md)
+  : Convert instrument names to OpenAQ instrument IDs
+- [`OpenAQ_licenseToID()`](https://mazamascience.github.io/AirSensor2/reference/OpenAQ_licenseToID.md)
+  : Convert license names to OpenAQ license IDs
+- [`OpenAQ_lifespanPlot()`](https://mazamascience.github.io/AirSensor2/reference/OpenAQ_lifespanPlot.md)
+  : Plot the reporting lifespan of OpenAQ locations
+- [`OpenAQ_manufacturerToID()`](https://mazamascience.github.io/AirSensor2/reference/OpenAQ_manufacturerToID.md)
+  : Convert manufacturer names to OpenAQ manufacturer IDs
+- [`OpenAQ_parameterToID()`](https://mazamascience.github.io/AirSensor2/reference/OpenAQ_parameterToID.md)
+  : Convert parameter names to OpenAQ parameter IDs
+- [`OpenAQ_providerToID()`](https://mazamascience.github.io/AirSensor2/reference/OpenAQ_providerToID.md)
+  : Convert provider names to OpenAQ provider IDs
+- [`PurpleAir_PAList_PM25_FIELDS`](https://mazamascience.github.io/AirSensor2/reference/PurpleAir_PAList_PM25_FIELDS.md)
+  : Comma-separated list of fields needed for PM2.5 data analysis
+- [`PurpleAir_PAS_AVG_PM25_FIELDS`](https://mazamascience.github.io/AirSensor2/reference/PurpleAir_PAS_AVG_PM25_FIELDS.md)
+  : Comma-separated list of fields used to create a \*pas\* object
+- [`PurpleAir_PAS_METADATA_FIELDS`](https://mazamascience.github.io/AirSensor2/reference/PurpleAir_PAS_METADATA_FIELDS.md)
+  : Comma-separated list of metadata fields used to create a \*pas\*
+  object
+- [`PurpleAir_PAS_MINIMAL_FIELDS`](https://mazamascience.github.io/AirSensor2/reference/PurpleAir_PAS_MINIMAL_FIELDS.md)
+  : Comma-separated list of metadata fields used to create a \*pas\*
+  object
+- [`PurpleAir_PAT_EPA_HOURLY_FIELDS`](https://mazamascience.github.io/AirSensor2/reference/PurpleAir_PAT_EPA_HOURLY_FIELDS.md)
+  : Comma-separated list of fields needed for EPA correction
+- [`PurpleAir_PAT_QC_FIELDS`](https://mazamascience.github.io/AirSensor2/reference/PurpleAir_PAT_QC_FIELDS.md)
+  : Comma-separated list of fields needed for creating QC reports.
+- [`PurpleAir_checkAPIKey()`](https://mazamascience.github.io/AirSensor2/reference/PurpleAir_checkAPIKey.md)
+  : Check the validity and type for the provided \`api_key\`
+- [`PurpleAir_createGroup()`](https://mazamascience.github.io/AirSensor2/reference/PurpleAir_createGroup.md)
+  : Create a new group
+- [`PurpleAir_createMember()`](https://mazamascience.github.io/AirSensor2/reference/PurpleAir_createMember.md)
+  : Create a new member within the specified group
+- [`PurpleAir_deleteGroup()`](https://mazamascience.github.io/AirSensor2/reference/PurpleAir_deleteGroup.md)
+  : Delete the specified group
+- [`PurpleAir_deleteMember()`](https://mazamascience.github.io/AirSensor2/reference/PurpleAir_deleteMember.md)
+  : Delete a member from the specified group
+- [`PurpleAir_getGroupDetail()`](https://mazamascience.github.io/AirSensor2/reference/PurpleAir_getGroupDetail.md)
+  : Retrieve all members of the specified group
+- [`PurpleAir_getGroupsList()`](https://mazamascience.github.io/AirSensor2/reference/PurpleAir_getGroupsList.md)
+  : Retrieve all groups owned by the provided \`api_key\`
+- [`PurpleAir_getMemberData()`](https://mazamascience.github.io/AirSensor2/reference/PurpleAir_getMemberData.md)
+  : Retrieve recent data for a single sensor in the specified group
+- [`PurpleAir_getMemberHistory()`](https://mazamascience.github.io/AirSensor2/reference/PurpleAir_getMemberHistory.md)
+  : Retrieve historical data for a single sensor of the specified group
+- [`PurpleAir_getMembersData()`](https://mazamascience.github.io/AirSensor2/reference/PurpleAir_getMembersData.md)
+  : Retrieve current data for all sensors in the specified group
+- [`PurpleAir_getSensorData()`](https://mazamascience.github.io/AirSensor2/reference/PurpleAir_getSensorData.md)
+  : Retrieve the latest data of a single sensor
+- [`PurpleAir_getSensorHistory()`](https://mazamascience.github.io/AirSensor2/reference/PurpleAir_getSensorHistory.md)
+  : Retrieve historical data for a single sensor
+- [`PurpleAir_getSensorHistoryCSV()`](https://mazamascience.github.io/AirSensor2/reference/PurpleAir_getSensorHistoryCSV.md)
+  : Retrieve historical data for a single sensor as CSV
+- [`PurpleAir_getSensorsData()`](https://mazamascience.github.io/AirSensor2/reference/PurpleAir_getSensorsData.md)
+  : Retrieve the latest data of multiple sensors matching the provided
+  parameters
+- [`US_AQI`](https://mazamascience.github.io/AirSensor2/reference/US_AQI.md)
+  : US EPA AQI Index levels, names, colors and action text
+- [`example_pas_historical`](https://mazamascience.github.io/AirSensor2/reference/example_pas_historical.md)
+  : Example historical PurpleAir synoptic dataset
+- [`example_pas_metadata`](https://mazamascience.github.io/AirSensor2/reference/example_pas_metadata.md)
+  : Example PurpleAir synoptic dataset with extended metadata
+- [`example_pas_pm25`](https://mazamascience.github.io/AirSensor2/reference/example_pas_pm25.md)
+  : Example enhanced PurpleAir synoptic PM2.5 dataset
+- [`example_pas_pm25_raw`](https://mazamascience.github.io/AirSensor2/reference/example_pas_pm25_raw.md)
+  : Example raw PurpleAir synoptic dataset
+- [`example_pat`](https://mazamascience.github.io/AirSensor2/reference/example_pat.md)
+  : Example PurpleAir timeseries dataset
+- [`example_pat_epa`](https://mazamascience.github.io/AirSensor2/reference/example_pat_epa.md)
+  : Example PurpleAir timeseries dataset with EPA fields
+- [`initializeMazamaSpatialUtils()`](https://mazamascience.github.io/AirSensor2/reference/initializeMazamaSpatialUtils.md)
+  : Initialize MazamaSpatialUtils
+- [`pas_createNew()`](https://mazamascience.github.io/AirSensor2/reference/pas_createNew.md)
+  : Create a new PurpleAir synoptic dataset
+- [`pas_downloadParseRawData()`](https://mazamascience.github.io/AirSensor2/reference/pas_downloadParseRawData.md)
+  : Download synoptic data from PurpleAir
+- [`pas_enhanceRawData()`](https://mazamascience.github.io/AirSensor2/reference/pas_enhanceRawData.md)
+  : Enhance synoptic data from PurpleAir
+- [`pas_filter()`](https://mazamascience.github.io/AirSensor2/reference/pas_filter.md)
+  : General purpose filtering for PurpleAir Synoptic objects
+- [`pas_filterArea()`](https://mazamascience.github.io/AirSensor2/reference/pas_filterArea.md)
+  : Rectangle area filtering for PurpleAir Synoptic objects
+- [`pas_filterDate()`](https://mazamascience.github.io/AirSensor2/reference/pas_filterDate.md)
+  : Date filtering for PurpleAir Synoptic objects
+- [`pas_filterNear()`](https://mazamascience.github.io/AirSensor2/reference/pas_filterNear.md)
+  : Find PurpleAir sensors within radial distance
+- [`pas_filterNearMonitor()`](https://mazamascience.github.io/AirSensor2/reference/pas_filterNearMonitor.md)
+  : Find PurpleAir sensors near a monitor
+- [`pas_hasSpatial()`](https://mazamascience.github.io/AirSensor2/reference/pas_hasSpatial.md)
+  : Test for spatial metadata in \*pas\* object
+- [`pas_isEmpty()`](https://mazamascience.github.io/AirSensor2/reference/pas_isEmpty.md)
+  : Test for an empty \*pas\* object
+- [`pas_leaflet()`](https://mazamascience.github.io/AirSensor2/reference/pas_leaflet.md)
+  : Leaflet interactive map of PurpleAir sensors
+- [`pas_lifespanPlot()`](https://mazamascience.github.io/AirSensor2/reference/pas_lifespanPlot.md)
+  : Time range plot showing the lifespan of individual PurpleAir sensors
+- [`pas_palette()`](https://mazamascience.github.io/AirSensor2/reference/pas_palette.md)
+  : Color palettes for PurpleAir
+- [`pas_pull()`](https://mazamascience.github.io/AirSensor2/reference/pas_pull.md)
+  : Returns a column of data from a PurpleAir synoptic object
+- [`pat_applyCorrection()`](https://mazamascience.github.io/AirSensor2/reference/pat_applyCorrection.md)
+  : Apply correction to PurpleAir PM2.5 data
+- [`pat_check()`](https://mazamascience.github.io/AirSensor2/reference/pat_check.md)
+  : Check \*pat\* object for validity
+- [`pat_create()`](https://mazamascience.github.io/AirSensor2/reference/pat_create.md)
+  : Create a new PurpleAir timeseries dataset.
+- [`pat_createHourly()`](https://mazamascience.github.io/AirSensor2/reference/pat_createHourly.md)
+  : Create a new PurpleAir hourly timeseries dataset.
+- [`pat_createRaw()`](https://mazamascience.github.io/AirSensor2/reference/pat_createRaw.md)
+  : Create a raw data PurpleAir timeseries dataset.
+- [`pat_distinct()`](https://mazamascience.github.io/AirSensor2/reference/pat_distinct.md)
+  : Retain only distinct data records in \`pat\$data\`
+- [`pat_downloadParseRawData()`](https://mazamascience.github.io/AirSensor2/reference/pat_downloadParseRawData.md)
+  : Download time series data from PurpleAir
+- [`pat_filter()`](https://mazamascience.github.io/AirSensor2/reference/pat_filter.md)
+  : General purpose data filtering for \*pat\* time series objects
+- [`pat_filterDate()`](https://mazamascience.github.io/AirSensor2/reference/pat_filterDate.md)
+  : Date filtering for \*pat\* time series objects
+- [`pat_filterDatetime()`](https://mazamascience.github.io/AirSensor2/reference/pat_filterDatetime.md)
+  : Datetime filtering for \*pat\* time series objects
+- [`pat_getData()`](https://mazamascience.github.io/AirSensor2/reference/pat_getDataFrame.md)
+  [`pat_getMeta()`](https://mazamascience.github.io/AirSensor2/reference/pat_getDataFrame.md)
+  : Extract dataframes from \*pat\* objects
+- [`pat_isEmpty()`](https://mazamascience.github.io/AirSensor2/reference/pat_isEmpty.md)
+  : Test for empty \*pat\* object
+- [`pat_isValid()`](https://mazamascience.github.io/AirSensor2/reference/pat_isValid.md)
+  : Test \*pat\* object for correct structure
+- [`pat_toMonitor()`](https://mazamascience.github.io/AirSensor2/reference/pat_toMonitor.md)
+  : Convert a PurpleAir Timeseries to a 'mts_monitor' object
+- [`pat_trimDate()`](https://mazamascience.github.io/AirSensor2/reference/pat_trimDate.md)
+  : Trim \*pat\* time series object to full days
+- [`spatialIsInitialized()`](https://mazamascience.github.io/AirSensor2/reference/spatialIsInitialized.md)
+  : Check whether MazamaSpatialUtils has been initialized
+- [`synoptic_leaflet()`](https://mazamascience.github.io/AirSensor2/reference/synoptic_leaflet.md)
+  : Leaflet interactive map sensor metadata
+- [`synoptic_palette()`](https://mazamascience.github.io/AirSensor2/reference/synoptic_palette.md)
+  : Color palettes for Synoptic data
